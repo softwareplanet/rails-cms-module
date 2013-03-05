@@ -1,0 +1,19 @@
+activity = '#{@activity}'
+object = '#{@object}'
+
+var panel_to_show = '.panel_' + object;
+var panel_content = panel_to_show + ' .content';
+$(panel_content).html("");
+
+/Tool bar actions
+- case @activity
+  - when 'load'
+    - case @object
+      - when 'structure'
+        $(panel_content).html("#{ escape_javascript(render(:partial => 'layout', :collection => @layouts)) }");
+      - when 'new-page'
+        $(panel_content).html("#{ escape_javascript(render(:partial => 'layout', :collection => @layouts)) }");
+      - else
+        $(panel_content).html("<br>&nbsp;&nbsp;..nothing to show yet");
+
+

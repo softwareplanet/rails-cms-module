@@ -1,0 +1,24 @@
+var activity = '#{@activity}';
+var object = '#{@object}';
+
+/Tool bar actions
+- case @activity
+  - when 'click'
+    /When icon clicks, hide all panels
+    console.log(123);
+    var panel_to_show = '.panel_' + object;
+    console.log('panel to show:' + panel_to_show);
+    if ( $(panel_to_show).data('level') != 'child' ) {
+    $('.panel').hide();
+    }
+
+    $('.spinner').remove();
+    /And show only related to this icon
+    $(panel_to_show).show();
+    $(panel_to_show + ' .content').html("");
+    /And starts with ajax data retrieving..
+    console.log(panel_to_show + ' .content');
+    addSpinner(panel_to_show + ' .content');
+
+    request_json = {object: object, activity: 'load'}
+    $.ajax({url: '/source_manager/menu_bar', type: 'GET', data: request_json });

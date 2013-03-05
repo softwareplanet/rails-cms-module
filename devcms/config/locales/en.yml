@@ -1,0 +1,16 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  login:
+    title: Login
+    username: Username
+    password: Password
+    button: Log In
+    wrong: Invalid username or password
+    success: You are welcome!
+
+  access:
+    denied: Access denied, please authorize
+
+  credentials: Since 2000, the company Interlink provides full cycle of software projects, including analysis, design, programming, testing and development of graphic design.

@@ -1,0 +1,29 @@
+- css_id = Devcms::ID_PREFIX + Devcms::SourceType::CSS.to_s + Devcms::ID_DIVIDER + layout.type.to_s + Devcms::TARGET_DIVIDER + layout.get_name
+.layout-row
+  .inner
+    .list
+    .name
+      = layout.name
+    .counter
+      0 страниц
+    %a.properties{"data-toggle" => "tooltip", :href => "#", :title => "preferences", "data-source_id" => layout.get_id, "data-source_name" => layout.get_name}
+    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-css_id" => css_id, "data-source_id" => layout.get_id, "data-source_name" => layout.get_name}
+    .short-counter
+      0
+.line
+-#
+  %tr
+    %td= layout.name
+    %td
+      %a{ :href => '/page_layouts/'+layout.id.to_s }
+        .preview-layout.btn.btn-primary{ 'data-id' => layout.id}
+          %i.icon-list-alt
+          preview
+    %td
+      .edit-layout.btn.btn-primary{ 'data-id' => layout.id}
+        %i.icon-edit
+        edit
+    %td
+      .delete-layout.btn.btn-danger{ 'data-id' => layout.id}
+        %i.icon-remove
+        delete

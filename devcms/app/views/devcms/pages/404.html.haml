@@ -1,0 +1,23 @@
+!!!
+%html
+  %head
+    %title The page you were looking for doesn't exist (404)
+    :css
+      body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
+      div.dialog {
+        width: 27em;
+        height: 5em;
+        padding: 450px 4em 0 4em;
+        margin: 4em auto auto auto;
+        border: 1px solid #eee;
+        border-right-color: #bbb;
+        border-bottom-color: #bbb;
+        background: url(http://fresh-newspaper.ru/wp-content/uploads/2011/04/404.jpg) no-repeat;
+      }
+      h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
+    %body
+    .dialog
+      /%h1 The page you were looking for doesn't exist.
+      /%p You may have mistyped the address or the page may have moved.
+      %i
+        = @fail_reason.html_safe

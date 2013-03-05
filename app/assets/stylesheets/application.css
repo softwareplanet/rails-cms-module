@@ -1,0 +1,8 @@
+/*
+*= require bootstrap
+*= require devcms/application
+*= require aloha
+*= require codemirror
+ *= require_self
+ *= require_tree .
+ */

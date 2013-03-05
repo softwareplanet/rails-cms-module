@@ -1,0 +1,11 @@
+$(".spinner").remove()
+$(".gallery-content").append("\
+<div class='img-box' data-name = '#{@img.name}' 'data-id' = '#{@img.get_id}' >\
+<div class='delete-image' style = 'opacity: 0; float: right;' onclick = 'delete_image(this)'></div>\
+<div class='img-container'>\
+<img id='#{@img.get_id}' src='#{@img.get_image_path}' class='box gallery-image' onclick='on_gallery_image_select(this)'/>\
+</div>\
+<input type='text' class='image-name' value='#{@img.name}' onkeyup='on_gallery_name_keyup(event, this)' data-source-name='#{@img.name}'/>\
+<br/>\
+<div class='imgsize'><div class='imgsize-description'>Image size (width, height):</div>#{@img.get_image_size[0]}x#{@img.get_image_size[1]}</div>\
+</div>")

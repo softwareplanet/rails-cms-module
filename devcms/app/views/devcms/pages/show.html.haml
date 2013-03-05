@@ -1,0 +1,77 @@
+- begin
+  - if @without_cache
+    - output = Haml::Engine.new(@html, :format => :html5).render(Object.new, :app => @application_data )
+    != output
+    =# render :partial => "devcms/source_manager/popups", :locals => {images: @images, aloha: true} if @application_data[:admin?]
+
+  != @compiled_file_content
+
+- rescue Exception => e
+  :css
+    html {height: 95%; }
+    body {height: 100%; background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; padding-top: 10px; }
+    div.title {
+      color: blue;
+      text-align: center;
+      padding-bottom: 20px;
+    }
+    div.dialog {
+      width: 37em;
+      height: 8em;
+      padding: 45px 4em 0 4em;
+      margin: 4em auto auto auto;
+      border: 1px solid #eee;
+      border-right-color: #bbb;
+      border-bottom-color: #bbb;
+      /*background: url(http://fresh-newspaper.ru/wp-content/uploads/2011/04/404.jpg) no-repeat;*/
+    }
+    h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
+  .dialog
+    .title
+      Haml parsing error layout: #{@layout.upcase}
+    %i
+      = "Line #{(e.respond_to? :line) && e.line || 'unknown'}: #{e.message}"
+
+-# Disable all links in aloha mode:
+- if @application_data[:admin?]
+  :css
+    .link-tag {
+      position: relative;
+    }
+    .link-anchor {
+      z-index: 9999;
+      position:absolute;
+      display: none;
+      right:0;
+      bottom:50%;
+      padding: 2px 3px;
+      border-radius: 2px;
+      background: #6666FF;
+      color: white!important;
+      font-size: 14px;
+      text-decoration: none;
+      text-shadow: none;
+
+      transition: background-color .3s;
+      -moz-transition: background-color .3s;
+      -ms-transition: background-color .3s;
+      -o-transition: background-color .3s;
+      -webkit-transition: background-color .3s;
+    }
+    .link-anchor:hover {
+      background: #6600FF;
+      color: white;
+      text-decoration: none!important;
+    }
+    .link-tag:hover .link-anchor {
+      display: inline;
+    }
+  :javascript
+    $(document).ready(function() {
+      /* build link anchor */
+      //$('a').not(".carousel-control").click(function(){return false;});
+      //$("a").not(".carousel-control").addClass("link-tag")
+      //$("a").not(".carousel-control").each(function(){
+      //  $(this).prepend("<div class='link-anchor' onclick=\"window.location='"+$(this).attr('href')+"'\">link</div");
+      //})
+    });

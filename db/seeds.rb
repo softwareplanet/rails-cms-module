@@ -1,0 +1,1 @@
+Devcms::Engine.load_seed

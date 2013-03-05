@@ -1,0 +1,16 @@
+.container
+  .row.login-form{:style => "padding-top: 20px;"}
+    .span4.offset4.well
+      %legend= t('login.title')
+      - flash.each do |name, msg|
+        - if msg.is_a?(String)
+          %div{:class => "alert alert-#{name == :notice ? "success" : "error"}"}
+            %a.close{"data-dismiss" => "alert", :href => "#"} ×
+            = content_tag :span, msg, :id => "flash_#{name}"
+      %form{"accept-charset" => "UTF-8", :action => "/adm/login_submit", :method => "POST"}
+        %input#username.span4{:name => "username", :autocomplete => "off", :placeholder => t('login.username'), :type => "text"}
+        %input#password.span4{:name => "password", :autocomplete => "off", :placeholder => t('login.password'), :type => "password"}
+          %label.checkbox
+            %input{:name => "remember", :type => "checkbox", :value => "1"}
+              Remember Me
+        %button.btn.btn-info.btn-block{:name => "submit", :type => "submit"}= t('login.button')

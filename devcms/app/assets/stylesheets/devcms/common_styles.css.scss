@@ -1,0 +1,66 @@
+// Place all the common styles related to the application controller here.
+// They will automatically be included in application.css.
+
+.calign {
+  text-align: center;
+}
+.ralign {
+  text-align: right;
+}
+.fright {
+  float: right;
+}
+.fleft {
+  float: left;
+}
+.ptop20 {
+  padding-top: 20px;
+}
+.ib {
+  display: inline-block;
+}
+
+html, body {
+  background-color: #edeceb;
+}
+
+.container {
+  /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.changeable-image {
+  border:1px solid yellow;
+}
+.changeable-image:hover {
+  cursor: pointer;
+  border:1px solid black;
+}
+
+
+.hidden {
+  display: none!important;
+}
+
+
+
+.moreinfo {
+  display: inline-block;
+  padding: 3px 16px 4px;
+  vertical-align: top;
+
+  border-radius: 19px;
+  background: black;
+  opacity: 0.2;
+  color: white;
+  font-size: 16px;
+
+  transition: all ease-in-out 0.15s;
+  -webkit-transition: all ease-in-out 0.15s;
+  -moz-transition: all ease-in-out 0.15s;
+
+}
+.moreinfo:hover {
+  opacity: 1;
+  color: white;
+}

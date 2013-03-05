@@ -1,0 +1,23 @@
+!!!
+%html
+  %head
+    =""
+    /
+      _|  _|      _|  _|_|_|_|_|  _|_|_|_|  _|_|_|    _|      _|  _|      _|  _|    _|
+      _|  _|_|    _|      _|      _|        _|    _|  _|      _|  _|_|    _|  _|  _|
+      _|  _|  _|  _|      _|      _|_|_|    _|_|_|    _|      _|  _|  _|  _|  _|_|
+      _|  _|    _|_|      _|      _|        _|    _|  _|      _|  _|    _|_|  _|  _|
+      _|  _|      _|      _|      _|_|_|_|  _|    _|  _|_|_|  _|  _|      _|  _|    _|
+    = @seo_tags.html_safe
+    = ""
+    %link{:href => "http://fonts.googleapis.com/css?family=Arimo&subset=latin,cyrillic-ext", :rel => "stylesheet", :type => "text/css"}
+    = stylesheet_link_tag    "application", :media => "all"
+    - @stylesheets.each do |style_file|
+      = stylesheet_link_tag style_file
+    = javascript_include_tag "application"
+    = ""
+    = csrf_meta_tags
+  %body
+    = aloha! if @aloha_enable
+    %div.page-wrapper{:id => @wrapper_id}
+      = yield

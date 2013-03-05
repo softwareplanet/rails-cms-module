@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %title InterlinkSite
+    / HTML5 shim, for IE6-8 support of HTML5 elements
+    /[if lt IE 9]
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+
+    = csrf_meta_tags
+    %meta{:charset => "utf-8"}
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+
+  %body{:style => "padding-top:0"}
+    .container
+      = yield

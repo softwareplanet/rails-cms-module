@@ -1,0 +1,9 @@
+Description:
+    Installs Aloha configuration files (initializer and js config).
+
+Example:
+    rails generate aloha:install
+
+    This will create:
+        app/assets/javascripts/aloha-config.coffee
+        config/initializers/aloha.rb
