@@ -39,6 +39,7 @@ Devcms::Engine.routes.draw do
 
       get 'tool_bar'
       get 'menu_bar'
+      get 'editor'
     end
   end
 

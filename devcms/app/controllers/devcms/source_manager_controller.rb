@@ -130,7 +130,6 @@ module Devcms
       @activity = params[:activity]
     end
     def menu_bar
-      sleep 0.3
       @object = params[:object]
       @activity = params[:activity]
       case @activity
@@ -139,6 +138,14 @@ module Devcms
             when "structure"
               @layouts = Source.where :type => SourceType::LAYOUT
           end
+      end
+    end
+    def editor
+      @object = params[:object]
+      @activity = params[:activity]
+      case @activity
+        when "edit"
+          @source = Source.find_by_id @object
       end
     end
 

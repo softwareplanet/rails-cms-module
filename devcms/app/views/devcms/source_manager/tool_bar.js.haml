@@ -5,7 +5,6 @@ var object = '#{@object}';
 - case @activity
   - when 'click'
     /When icon clicks, hide all panels
-    console.log(123);
     var panel_to_show = '.panel_' + object;
     console.log('panel to show:' + panel_to_show);
     if ( $(panel_to_show).data('level') != 'child' ) {

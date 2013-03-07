@@ -1,4 +1,7 @@
-- css_id = Devcms::ID_PREFIX + Devcms::SourceType::CSS.to_s + Devcms::ID_DIVIDER + layout.type.to_s + Devcms::TARGET_DIVIDER + layout.get_name
+-# css_id = Devcms::ID_PREFIX + Devcms::SourceType::CSS.to_s + Devcms::ID_DIVIDER + layout.type.to_s + Devcms::TARGET_DIVIDER + layout.get_name
+
+- my_id = layout.get_id
+
 .layout-row
   .inner
     .list
@@ -6,24 +9,15 @@
       = layout.name
     .counter
       0 страниц
-    %a.properties{"data-toggle" => "tooltip", :href => "#", :title => "preferences", "data-source_id" => layout.get_id, "data-source_name" => layout.get_name}
-    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-css_id" => css_id, "data-source_id" => layout.get_id, "data-source_name" => layout.get_name}
+    %a.properties{"data-toggle" => "tooltip", :href => "#", :title => "preferences", "data-source_id" => my_id}
+    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-source_id" => my_id}
     .short-counter
       0
 .line
--#
-  %tr
-    %td= layout.name
-    %td
-      %a{ :href => '/page_layouts/'+layout.id.to_s }
-        .preview-layout.btn.btn-primary{ 'data-id' => layout.id}
-          %i.icon-list-alt
-          preview
-    %td
-      .edit-layout.btn.btn-primary{ 'data-id' => layout.id}
-        %i.icon-edit
-        edit
-    %td
-      .delete-layout.btn.btn-danger{ 'data-id' => layout.id}
-        %i.icon-remove
-        delete
+
+%script{:type => 'text/javascript'}
+  $('.edit').bind('click', function() {
+  request_json = { object: $(this).data("source_id"), activity: "edit" }
+  $.ajax({url: '/source_manager/editor.js', type: 'GET', data: request_json });
+  console.log($(this).data('source_id'));
+  });

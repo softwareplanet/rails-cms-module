@@ -92,22 +92,27 @@ $(document).ready ->
 
   $("body").click ->
 
-  $(".edit").click ->
-    $(".layout-row").removeClass "layout-row-selected"
-    $(this).parents(".layout-row").addClass "layout-row-selected"
-    $(".menu-bar").addClass "menu-bar-inactive"
-    source_id = $(this).data("source_id")
-    source_name = $(this).data("source_name")
-    $(".editor-panel .title").html source_name
-    editorManager.getEditor("haml_editor").setRequestPath "/source_manager/"
-    editorManager.getEditor("haml_editor").getRequestSource source_id
-    editorManager.getEditor("haml_editor").setSourceId source_id
-    $(".preview-navtab a").attr "data-preview", source_name
-    css_id = $(this).data("css_id")
-    editorManager.getEditor("css_editor").setRequestPath "/source_manager/"
-    editorManager.getEditor("css_editor").getRequestSource css_id
-    editorManager.getEditor("css_editor").setSourceId css_id
-    $(".editor-panel").show()
+#  $('.edit').click  ->
+#
+#    $.get({
+#      url: "/source_manager/menu_bar",
+#      data: request_json
+#    })
+#    $(".layout-row").removeClass "layout-row-selected"
+#    $(this).parents(".layout-row").addClass "layout-row-selected"
+#    $(".menu-bar").addClass "menu-bar-inactive"
+#    source_id = $(this).data("source_id")
+#    source_name = $(this).data("source_name")
+#    $(".editor-panel .title").html source_name
+#    editorManager.getEditor("haml_editor").setRequestPath "/source_manager/"
+#    editorManager.getEditor("haml_editor").getRequestSource source_id
+#    editorManager.getEditor("haml_editor").setSourceId source_id
+#    $(".preview-navtab a").attr "data-preview", source_name
+#    css_id = $(this).data("css_id")
+#    editorManager.getEditor("css_editor").setRequestPath "/source_manager/"
+#    editorManager.getEditor("css_editor").getRequestSource css_id
+#    editorManager.getEditor("css_editor").setSourceId css_id
+#    $(".editor-panel").show()
 
   $(".properties").click ->
     SwitchTo(".page-properties")
