@@ -1,5 +1,582 @@
 #pre1-id-green{/*do not remove first and last line manually!*/
-color:red;
-background: grey;
+/* <----------------------Fonts----------------------> */
+
+@font-face {
+    font-family: "OpenSansLightRegular";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../fonts/opensans-light-webfont.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/opensans-light-webfont.svg#OpenSansLightRegular") format("svg");
+}
+
+@font-face {
+    font-family: 'ArialRegular';
+    src: url('../fonts/arial-webfont.eot');
+    src: url('../fonts/arial-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/arial-webfont.svg#ArialRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Custom';
+    src: url('../fonts/carousel_text.png');
+    font-weight: lighter;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "KozukaGothicPro";
+    src: url('../fonts/KOZGOPRO-REGULAR.OTF');
+}
+
+@font-face {
+    font-family: "KozukaExtraLight";
+    src: url('../fonts/KOZGOPRO-EXTRALIGHT.OTF');
+}
+
+@font-face {
+    font-family: "KozukaLight";
+    src: url('../fonts/KOZGOPRO-LIGHT.OTF');
+
+}
+
+/* <----------------------Fonts-END----------------------> */
+
+/* <----------------------Main-Preferences----------------------> */
+img {
+    border: 0 none;
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+body {
+    margin-top: 150px !important;
+    min-width: 1300px !important;
+    padding: 0 !important;
+}
+
+.footer {
+    padding-top: 49px;
+    padding-bottom: 50px;
+    background-color: #191919;
+}
+
+.footer-nav {
+    color: #b4b4b4 !important;
+    font-size: 18px;
+}
+
+.footer-nav span {
+    padding-right: 20px;
+}
+
+.footer-nav a {
+    color: #b4b4b4 !important
+}
+
+.footer-nav a:hover {
+    color: #b4b4b4 !important
+}
+
+.copyrights {
+    float: left;
+    color: #5d5d5d;
+}
+
+.main-header-padding {
+    padding-top: 25px;
+    padding-bottom: 33px;
+    max-height: 60px;
+}
+
+.header-logo {
+    float: left;
+}
+
+.header-nav-wrapper {
+    float: right;
+}
+
+.nav-layout {
+    margin-left: 60px !important;
+    padding-top: 12px;
+    display: inline-block;
+}
+
+.nav-layout span {
+    margin-right: 20px !important;
+}
+
+.nav.nav-layout a {
+    color: #000000 !important;
+    font-family: ArialRegular, sans-serif;
+    font-size: 12pt;
+    font-weight: 500 !important;
+    text-shadow: none !important;
+}
+
+.main-header {
+    background-color: #ffffff !important;
+    background-image: none !important;
+    border-bottom: 0;
+}
+
+/* <----------------------Main-Preferences-END----------------------> */
+
+/* <----------------------Home-page----------------------> */
+
+.carousel{
+    background-image: url(../img/carousel-background.png);
+}
+
+.carousel-section {
+    background-image: url(/static/img/carousel-background.png);
+    margin-top: -51px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.carousel-image {
+    /*width: 100%;*/
+    box-shadow: 0 0 20px #333333;
+    height: 415px;
+    box-sizing: border-box !important;
+}
+
+.carousel-content{
+    color: rgb(255, 255, 255);
+    padding-top: 45px;
+    overflow: hidden;
+}
+
+.carousel-icon-block {
+    padding-top: 17px;
+}
+
+.carousel-icon-block img {
+    width: 93px;
+    height: 130px;
+}
+
+.carousel-button {
+    padding-top: 30px;
+    margin-left: 0;
+}
+
+.carousel-green-button {
+    background-color: #5BB65B;
+    background-image: linear-gradient(to bottom, #62C462, #51A351);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    padding: 8px 17px;
+    font-size: 17px;
+}
+
+.carousel-title {
+    font-size: 400%;
+    padding-bottom: 20px;
+    font-family: 'KozukaExtraLight', sans-serif;
+    font-weight: lighter;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-height: 40px;
+}
+
+.carousel-pagging {
+    margin-top: 40px;
+    float: right !important;
+    margin-left: 0;
+    padding-left: 20px;
+    width: 100px;
+}
+
+.reasons {
+    padding-top: 34px;
+    padding-bottom: 44px;
+    min-width: 1250px;
+}
+
+.reasons-header {
+    color:  #483d5c;
+    font-family: 'KozukaExtraLight', sans-serif;
+    font-weight: lighter;
+    font-size: 400%
+}
+
+.reasons p {
+    color: #555454;
+    font-family: OpenSansLightRegular, sans-serif;
+    font-size: 16px;
+    float: right;
+    width: 68.5%;
+}
+
+.reasons article {
+    width: 25.82%!important;
+}
+
+.reasons section {
+    padding-top: 33px;
+}
+
+.reasons img {
+    float: left;
+}
+
+.pragmatic-software {
+    overflow: hidden;
+    padding-top: 50px;
+    padding-bottom: 54px;
+    background-image: url("../img/sp_pragmatic_software_development_background.png");
+    background-repeat: no-repeat !important;
+    height: 100% !important;
+    background-size: cover;
+}
+
+.pragmatic-software-title {
+    font-size: 400%;
+    color: #43464a;
+    font-family: 'KozukaLight', sans-serif;
+    font-weight: lighter;
+}
+
+.pragmatic-software-content-first {
+    padding-top: 52px;
+    color: #62666c;
+}
+
+.pragmatic-software-content-second {
+    padding-top: 28px;
+    color: #62666c;
+}
+
+.pragmatic-software-projects-button {
+    background: none repeat scroll 0 0 black;
+    border-radius: 19px 19px 19px 19px;
+    color: white;
+    font-size: 17px;
+    padding: 10px 26px;
+    display: inline-block;
+    float: right;
+}
+
+.pragmatic-software-content-text {
+    font-family: OpenSansLightRegular, sans-serif;
+    font-size: 16px;
+    width: 38.97% !important;
+}
+
+.pragmatic-software-content-button {
+    margin-top: 27px;
+    float: right;
+}
+
+.pragmatic-software-icon-container img {
+    min-width: 97px;
+    min-height: 94px;
+}
+
+.pragmatic-software-icon-container div {
+    margin-bottom: 20px;
+    margin-right: 10px;
+    width: 20%!important;
+}
+
+.news {
+    padding-top: 44px;
+    padding-bottom: 45px;
+}
+
+.news-header {
+    color: #483d5c;
+    font-size: 400%;
+    font-family: 'KozukaExtraLight', sans-serif;
+}
+
+.news-title {
+    line-height: 32px;
+}
+
+.news-icon {
+    float: left;
+    height: 56px;
+    width: 66px;
+}
+
+.piece-of-news {
+    float: left;
+    margin-left: 21px;
+    font-size: 26px;
+    color: #151515;
+    font-family: 'KozukaLight',sans-serif;
+}
+
+.piece-of-news-date {
+    padding-top: 7px;
+    font-size: 14px;
+    font-family: OpenSansLightRegular, sans-serif;
+    color: #797979;
+}
+
+.news-content {
+    padding-top: 18px;
+    color: #6c6b6b;
+}
+
+.news-content-text {
+    font-size: 16px;
+    font-family: OpenSansLightRegular, sans-serif;
+    width: 38.97% !important;
+}
+
+.collaborators {
+    background-color: #7a7a7a;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.collaborators img {
+    padding-right: 32px;
+}
+
+/* <----------------------Home-page-END----------------------> */
+
+/* <----------------------Who-We-Are----------------------> */
+.headline h1{
+    font-family: 'KozukaExtraLight', sans-serif;
+    font-weight: lighter;
+    color:  #483d5c;
+    font-size: 400%;
+}
+
+.headline p{
+    font-family: OpenSansLightRegular, sans-serif;
+    color: #6c6b6b;
+    font-size: 110%;
+}
+
+.approach-header {
+    font-family: 'KozukaExtraLight', sans-serif;
+    font-weight: lighter;
+    color:  #483d5c;
+    font-size: 400%;
+}
+
+.approach-title-block {
+    padding-bottom: 20px;
+    line-height: 32px;
+}
+
+.approach-title {
+    font-family: 'KozukaLight', sans-serif;
+    font-size: 225%;
+    color: #151515 ;
+    font-weight: 500;
+    width: 26.25% !important;
+}
+
+.approach-text-blocks div {
+    width: 26.25% !important;
+}
+
+.approach-text {
+    font-family: 'OpenSansLightRegular', sans-serif;
+    color: #6c6b6b;
+    font-size: 110%
+}
+
+
+.team-header {
+    font-family: 'KozukaExtraLight', sans-serif;
+    font-weight: lighter;
+    color:  #483d5c;
+    font-size: 400%;
+}
+
+.team p{
+    text-align: center;
+    font-family: 'OpenSansLightRegular', sans-serif;
+    font-weight: normal;
+    margin-top: -5px !important;
+    color: #8b8b8b;
+}
+
+.team h3{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-family: 'KozukaLight', sans-serif;
+    color: #151515;
+}
+
+.team-img {
+    margin-bottom: 35px;
+    margin-left: 8.4% !important;
+    width: 14.463% !important;
+}
+
+.team-img img {
+    width: 100%;
+}
+
+/* <----------------------Who-We-Are-END----------------------> */
+
+/* <----------------------Our-Projects----------------------> */
+.our-projects-section {
+    margin-bottom: 44px;
+}
+
+.our-projects-section h1 {
+    color: #483d5c;
+    margin-bottom: 64px;
+    font-family: 'KozukaExtraLight', sans-serif;
+    font-weight: lighter;
+    font-size: 400%;
+    line-height: 74px;
+    margin-top: 0;
+}
+
+.our-projects-section h3 {
+    color: #151515;
+    margin-bottom: 30px;
+    font-family: 'KozukaExtraLight', sans-serif;
+    font-weight: 600;
+}
+
+.our-projects-section p {
+    font-family: 'OpenSansLightRegular', sans-serif;
+    color: #555454;
+    font-size: 15px;
+}
+
+/* <----------------------Our-projects-END----------------------> */
+
+/* <----------------------Contact-Us----------------------> */
+
+.contact-us-background {
+    min-height: 410px;
+    background-image: url("../img/sp_contact_background.png");
+    margin-bottom: 44px;
+    margin-top: -51px;
+}
+
+.contact-us-main-section {
+    margin-bottom: 44px;
+}
+
+.contact-us-main-section h1 {
+    color: #483d5c;
+    font-family: 'KozukaExtraLight', sans-serif;
+    font-weight: lighter;
+    font-size: 350%;
+    line-height: 74px;
+    margin-top: 0;
+}
+
+.contact-us-main-section-text {
+    color: #555454;
+    padding-bottom: 29px;
+    font-family: 'OpenSansLightRegular', sans-serif;
+}
+
+.contact-us-main-section-footer {
+    font-family: 'OpenSansLightRegular', sans-serif;
+    color: #151515;
+    font-size: 14px;
+}
+
+.magic-form {
+    background-image: url("http://softwareplanetpro.com/static/img/sp_contact_form_letter_stamp.png");
+    background-repeat: no-repeat !important;
+    /*min-height: 500px !important;*/
+    /*float: left;*/
+    min-height: 335px;
+    padding: 0;
+    /*padding: 20px;*/
+    background-size: 100%;
+}
+
+.magic-form-label {
+    font-family: 'KozukaExtraLight', sans-serif;
+    color: #151515 !important;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.magic-form-title {
+    font-size: inherit;
+    margin-bottom: 20px;
+}
+
+.magic-form-send-button {
+    background-color: #000000;
+    background-image: linear-gradient(to bottom, #000000, #000000);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    padding: 8px 17px;
+    font-size: 24px;
+}
+
+
+/* <----------------------Contact-Us-END----------------------> */
+
+/* <----------------------What-we-do----------------------> */
+
+.what-we-do-header {
+    font-family: 'KozukaExtraLight', sans-serif;
+    color: #483d5c;
+    font-weight: lighter;
+    font-size: 400%;
+    margin-bottom: 57px;
+}
+
+.what-we-do-plain-text {
+    color: #555454;
+    font-family: 'OpenSansLightRegular', sans-serif;
+}
+
+.what-we-do-article {
+    width: 23.635% !important;
+    margin-left: 6% !important;
+}
+
+.what-we-do-article h2 {
+    color: #151515;
+    font-family: 'KozukaExtraLight', sans-serif;
+    font-weight: 900;
+    float: left;
+    font-size: 23px;
+    margin-bottom: 20px;
+}
+
+.what-we-do-article p {
+    color: #555454;
+    font-family: 'OpenSansLightRegular', sans-serif;
+    float: left;
+}
+
+.what-we-do-article img{
+    float: left;
+    padding-right: 15px !important;
+}
+
+/* <----------------------What-we-do-END----------------------> */
+
+
+
 
 }/*do not remove first and last line manually!*/

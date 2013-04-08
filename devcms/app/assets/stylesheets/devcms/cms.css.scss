@@ -207,10 +207,9 @@ html.cms, body.cms {
   overflow-y: auto;
   overflow-x: hidden;*/
 
-
   box-shadow: 0px 0px 11px #333;
   .title {
-    margin: 50px 15px 20px 20px;
+    margin: 63px 15px 20px 20px;
     color: white;
     font-size: 22px;
     font-weight: bold;
@@ -227,6 +226,115 @@ html.cms, body.cms {
     left: -7px;
   }
 }
+
+.panel_gallery {
+  float: left;
+  width: 100%;
+  position: static;
+  margin-left: -100px;
+  background-color: white;
+  .header {
+    background-color: white;
+    margin-left: 100px;
+    .title {
+      color: #000000;
+      margin-left: 46px;
+      margin-right: 46px;
+      .navigation_panel {
+        float: right;
+        height: 19px;
+        #load_new_image {
+          float: right;
+          margin-right: 23px;
+          cursor: pointer;
+          width: 19px;
+          height: 19px;
+          overflow: hidden;
+          background: url(#{$assets_path}/icons/plus2.png);
+        }
+        #help_icon {
+          float: right;
+          cursor: pointer;
+          width: 12px;
+          height: 19px;
+          overflow: hidden;
+          background: url(#{$assets_path}/icons/icon-help2.png);
+        }
+        form {
+          opacity: 0;
+          margin: 40px 0 0 0;
+        }
+      }
+    }
+  }
+  .content > div:hover {
+    .delete_image {
+      display: block;
+    }
+  }
+  .content {
+    padding-top: 5px;
+    font-size: 13px;
+    color: black;
+    margin-left: 123px;
+    margin-right: 123px;
+    background-color: white;
+    display: inline-block;
+    .delete_image {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      z-index: 100;
+      margin-left: 150px;
+      font-size: 13px;
+      color: lightgray;
+      background-color: #000000;
+      opacity: 0.5;
+      float: right;
+      border-radius: 3px;
+      display: none;
+      cursor: pointer;
+    }
+    .delete_image:hover {
+      color: red;
+    }
+    input {
+      position: absolute;
+      z-index: 100;
+      display: none;
+      width: 166px;
+      margin-top:127px;
+    }
+    .image_description {
+      line-height: 30px;
+      text-align: left;
+    }
+    .gallery-image {
+      //text-align: center;
+      position: relative;
+      //width: 176px;
+      height: 130px;
+      line-height: 126px;
+
+      img {
+        max-width: 170px;
+        vertical-align: middle;
+        max-height: 130px;
+      }
+    }
+
+  }
+  .content > div {
+    width: 170px;
+    height: 130px;
+    text-align: center;
+    background-color: gainsboro;
+    margin: 0px 19px 46px 23px;
+    //vertical-align: middle;
+    display: inline-block;
+  }
+}
+
 .panel_structure {
   .add-structure {
     float: right;

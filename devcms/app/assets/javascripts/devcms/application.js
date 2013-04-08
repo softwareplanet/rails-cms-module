@@ -1,4 +1,5 @@
 // require /uploadify/jquery.uploadify.min.js
+// require /uploadify/jquery.form.uploadify.js
 
 //= require codemirror
 

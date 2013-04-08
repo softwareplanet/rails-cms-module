@@ -43,8 +43,14 @@
   .header
     .rect
     .title
-      Галлерея
-    .line
+      Галерея
+      .navigation_panel
+        #help_icon
+        #load_new_image
+        %form{:id => "load_image", :action => "source_manager/upload", :method => "post", :enctype => "multipart/form-data"}
+          %input{:type => 'file', :id => "image_src", :name => "Filedata"}
+          %button{:type => "submit"}
+
   .content
 .panel.panel_settings
   .header

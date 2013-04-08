@@ -1,5 +1,4 @@
 require_dependency "devcms/application_controller"
-
 module Devcms
   class SourceManagerController < ApplicationController
 
@@ -101,7 +100,7 @@ module Devcms
       @img_src.data = uploaded_io.read
       @img_src.save!
       session[:last_image_name] = @img_src.name
-      render :nothing => true
+      @image = Source.find_by_id(@img_src.get_id)
     end
 
     def upload_success
@@ -119,10 +118,11 @@ module Devcms
       @sourceObject = Source.find_by_id(params[:id])
       @old_id = @sourceObject.get_id
       @sourceObject.rename(params[:name])
-      render :nothing => true
     end
 
-
+    def get_images
+      @images = Source.where :type => SourceType::IMAGE
+    end
 
     # Actions related to ToolBar
     def tool_bar
@@ -137,6 +137,8 @@ module Devcms
           case @object
             when "structure"
               @layouts = Source.where :type => SourceType::LAYOUT
+            when "gallery"
+              @images = Source.where :type => SourceType::IMAGE
           end
       end
     end
