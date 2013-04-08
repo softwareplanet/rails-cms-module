@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   # engine dependencies:
   s.add_dependency "rails"
   s.add_dependency "haml"
+  s.add_dependency "minitest"
   s.add_dependency "jquery-rails"
   s.add_dependency "aloha-rails"
   s.add_dependency "bootstrap-sass"

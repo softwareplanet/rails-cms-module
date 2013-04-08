@@ -9,6 +9,7 @@ PATH
       haml
       imagesize
       jquery-rails
+      minitest
       rails
       sass-rails
       uglifier
@@ -77,6 +78,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.21)
+    minitest (4.7.0)
     multi_json (1.6.1)
     mysql2 (0.3.11)
     polyglot (0.3.3)

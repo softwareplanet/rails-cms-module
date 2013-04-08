@@ -7,8 +7,16 @@ desc "Setup script"
 
   namespace :cms do
 
+    task :testme do
+      puts 'hello'
+      ruby = File.join(*RbConfig::CONFIG.values_at('bindir', 'RUBY_INSTALL_NAME'))
+      Dir.glob("devcms/test/*_test.rb").all? do |file|
+        puts "test #{file}"
+        sh(ruby, '-Ilib:test', file)
+      end or raise "Failures"
+    end
+
     # Installation script wizard should be able to roll back if the last run was not successful.
-    
     task :wizard do
       
       OWNER_RAILS_ROOT=File.join(File.dirname(__FILE__), '../../../')
