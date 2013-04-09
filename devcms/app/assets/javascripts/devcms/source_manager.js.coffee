@@ -89,6 +89,13 @@ window.saveSource = (this_ptr) ->
   editor = editorManager.getEditor(editor_name)
   editor.saveSource()
 
+  #DELETE SOURCE WITH CONFIRMATION
+window.deleteSourceWithConfirmation = (obj) ->
+  id_to_delete = $(obj).data("source_id")
+  name = $(obj).data("source_name")
+  deleteSource('Layout', id_to_delete, name)
+  $(".icon.icon-structure").click()
+
   #DELETE
 window.deleteSource = (type, id, name) ->
   if confirm("Are you sure to delete " + type + ' \'' + name + "\' ?")

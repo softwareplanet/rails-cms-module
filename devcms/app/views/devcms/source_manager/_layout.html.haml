@@ -16,7 +16,7 @@
       .edit-properties
         %div
         Редактировать свойства
-      .delete-page
+      .delete-page{:onclick => 'deleteSourceWithConfirmation(this)',"data-source_name" => layout.name, "data-source_id" => my_id}
         %div
         Удалить страницу
     .short-counter
@@ -29,3 +29,8 @@
   $.ajax({url: '/source_manager/editor.js', type: 'GET', data: request_json });
   console.log($(this).data('source_id'));
   });
+  -#$('.delete-page').bind('click', function() {
+  -#
+  -#console.log($('.delete-page').first().parent().parent().getElementsByClassName('name').value());
+  -#window.deleteSource = (type, id, name) ->
+  -#});
