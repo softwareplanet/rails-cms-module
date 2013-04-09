@@ -16,11 +16,12 @@ $(document).ready ->
 
 # Handlers
 $(document).ready ->
-  $('.icon').hover (->
-    tooltip_text = $(this).data("tooltip")
-    $(this).append $("<div class='icon-tooltip'><ins></ins>" + tooltip_text + "</div>")
-  ), ->
-    $(this).find('.icon-tooltip').remove()
+# do not remove next 5 lines!
+#  $('.icon').hover (->
+#    tooltip_text = $(this).data("tooltip")
+#    $(this).append $("<div class='icon-tooltip'><ins></ins>" + tooltip_text + "</div>")
+#  ), ->
+#    $(this).find('.icon-tooltip').remove()
 
   $('.icon').click ->
     request_json = {

@@ -9,8 +9,16 @@
       = layout.name
     .counter
       0 страниц
-    %a.properties{"data-toggle" => "tooltip", :href => "#", :title => "preferences", "data-source_id" => my_id}
+    %a.properties{"data-toggle" => "tooltip", :href => "#", :title => "preferences", "data-source_id" => my_id, :onclick => "properties(this)"}
     %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-source_id" => my_id}
+    .preferences
+      .preferences-rect
+      .edit-properties
+        %div
+        Редактировать свойства
+      .delete-page
+        %div
+        Удалить страницу
     .short-counter
       0
 .line

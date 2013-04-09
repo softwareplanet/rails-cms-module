@@ -104,10 +104,11 @@ html.cms, body.cms {
 
 .toolbar {
   position: relative;
+  left:  0;
   width: 100px;
   height: 100%;
   background: #222;
-  padding-top: 10px;
+  //padding-top: 10px;
   text-align: center;
   float: left;
   -webkit-box-shadow: 0px 0px 11px #333;
@@ -115,7 +116,7 @@ html.cms, body.cms {
 
   .icon {
     position: relative;
-    margin-top: 10px;
+    margin-top: 24px;
     width: 90px;
     height: 70px;
     cursor: pointer;
@@ -197,7 +198,7 @@ html.cms, body.cms {
 .panel {
   float: left;
   display: none;
-  width: 300px;
+  width: 369px;
   height: 100%;
   position: relative;
   background: #2681dc;
@@ -308,6 +309,8 @@ html.cms, body.cms {
     .image_description {
       line-height: 30px;
       text-align: left;
+      max-height: 30px;
+      overflow: hidden;
     }
     .gallery-image {
       //text-align: center;
@@ -424,7 +427,65 @@ html.cms, body.cms {
 
     .inner {
       display: inline-block;
+      position: relative;
       width: 100%;
+      .preferences {
+        cursor: pointer;
+        z-index: 1;
+        display: none;
+        position: absolute;
+        top: 27px;
+        left: 317px;
+        width: 229px;
+        .preferences-rect {
+          background: url(#{$assets_path}/rect.png) no-repeat;
+          height: 10px;
+          width: 17px;
+        }
+        div {
+          height: 49px;
+          width: 100%;
+          //padding: 16px 0 0 47px;
+        }
+        .edit-properties {
+          color: black;
+          background-color: white;
+          div {
+            font-size: 14px;
+            margin: 19px 10px 0 22px;
+            width: 11px;
+            height: 12px;
+            display: inline-block;
+            background: url(#{$assets_path}/icons/pen2.png) no-repeat;
+          }
+        }
+        .delete-page {
+          color: black;
+          background-color: white;
+          div {
+            font-size: 14px;
+            margin: 16px 10px 0 22px;
+            width: 11px;
+            height: 13px;
+            display: inline-block;
+            background: url(#{$assets_path}/icons/delete.png) no-repeat;
+          }
+        }
+        .edit-properties:hover {
+          color: white;
+          background-color: #539ce5;
+          div {
+            background: url(#{$assets_path}/icons/pen.png) no-repeat;
+          }
+        }
+        .delete-page:hover {
+          color: white;
+          background-color: #539ce5;
+          div {
+            background: url(#{$assets_path}/icons/delete2.png) no-repeat;
+          }
+        }
+      }
       .counter {
         float: right;
         font-size: 12px;

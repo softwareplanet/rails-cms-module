@@ -129,6 +129,7 @@ module Devcms
       @object = params[:object]
       @activity = params[:activity]
     end
+
     def menu_bar
       @object = params[:object]
       @activity = params[:activity]
@@ -142,6 +143,7 @@ module Devcms
           end
       end
     end
+
     def editor
       @object = params[:object]
       @activity = params[:activity]

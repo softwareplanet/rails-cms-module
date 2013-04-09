@@ -147,6 +147,10 @@ window.checkKeyForDelete = (image) ->
   if window.event.keyCode == 13
     rename_finish image
 
+window.properties = (obj) ->
+  $(".panel_editor").html ""
+  console.log 1
+  $(obj).parent().find(".preferences").toggle()
 
 
 
