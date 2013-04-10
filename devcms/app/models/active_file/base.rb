@@ -1,17 +1,11 @@
-# ActiveFile v0.01
-
-require "active_support/inflector"
-
-module ActiveFile
+module ActiveFile # v0.01: <active_support-required version>
   require 'ostruct'
+  require 'active_support/core_ext/object/blank'
 
-  # This class defines abstract dependency relation
   module Dependency
-
     HAS_ONE = "has_one";
     HAS_MANY = "has_many";
     BELONGS_TO = "belongs_to";
-
     class DependencyClass
       attr_accessor :dependency_type,:dependency_owner,:dependency_target
       def initialize(dependency_type, dependency_owner, dependency_target)
@@ -22,19 +16,41 @@ module ActiveFile
     end
   end
 
-  class Base < OpenStruct
-    #include Adapter
-    #extend Adapter::ClassMethods
+  module Relation
+    attr_accessor :dependency_type, :dependency_target
+    def initialize(dependency_type, dependency_target)
+      @dependency_type = dependency_type
+      @dependency_target = dependency_target
+    end
+  end
 
-    @short_name = ""
+  # This class defines ActiveFile functionality
+  class Base < OpenStruct
+    require "active_support/inflector"
+
     @@dependency_classes = []
+    @relations = {}
+    @short_name = ''
 
     def initialize(*args)
       args.each do |arg|
         @short_name = arg if arg.is_a?(String)
-
+        if arg.is_a?(Hash)
+          key, value = arg.to_a.first[0], arg.to_a.first[1]
+          @short_name = value if key==:name
+        end
       end
 
+      raise "#{type.camelize} object should be initialized with some name. For example: User.new('Joe') or User.new(:name => 'Joe')" if @short_name.blank?
+      raise "#{type.camelize} named '#{@short_name}' already exists. Use dynamic finder." unless new_record?
+    end
+    def new_record?
+      true
+    end
+    def save
+    end
+    def inspect
+      "asasdasd"
     end
     def type
       class_name = self.class.to_s
@@ -74,8 +90,14 @@ module ActiveFile
     def method_missing(m, *args, &block)
       method = m[-1] == '=' ? m[0..-2] : m
       operator = m[-1] == '=' ? '=' : ''
-      dependency = @@dependency_classes.select{ |e| e.dependency_target.to_s.camelize == method.to_s.camelize }
-      return Adapter.method_missing(m, args, block) if dependency.empty?
+      i = 0
+      dependency = @@dependency_classes.select{ |e|
+        i = i+1
+        puts i
+        e.dependency_target.to_s.camelize == method.to_s.camelize
+      }
+      raise "Adapter request for #{m}" if dependency.empty?
+      #return Adapter.method_missing(m, args, block) if dependency.empty?
       if operator == '='
         lvalue = method_getter(dependency.first)
         lvalue = nil if lvalue.empty?
@@ -108,7 +130,6 @@ module ActiveFile
       target_cname = dependency.dependency_target.to_s
       target_class = target_cname.safe_constantize
       dependency_type = dependency.dependency_type
-      pluralize(1, owner_cname)
       attach =
           case dependency_type
             when ActiveFile::Dependency::HAS_ONE
