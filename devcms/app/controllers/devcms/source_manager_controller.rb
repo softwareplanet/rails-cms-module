@@ -81,7 +81,7 @@ module Devcms
 
     def upload
       uploaded_io = params[:Filedata]
-      uploaded_filename = uploaded_io.original_filename
+      uploaded_filename = uploaded_io.original_filename.downcase
 
       basename = File.basename(uploaded_filename, '.*')
       extension = File.extname(uploaded_filename)[1..-1]
@@ -117,7 +117,7 @@ module Devcms
     def rename_image
       @sourceObject = Source.find_by_id(params[:id])
       @old_id = @sourceObject.get_id
-      @sourceObject.rename(params[:name])
+      @sourceObject.rename(params[:name].downcase)
     end
 
     def get_images
