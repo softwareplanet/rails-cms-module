@@ -6,7 +6,7 @@
       x
     %input{:onfocusout => "rename_finish(this)", :onkeypress => "checkKeyForDelete(this)"}
     .gallery-image
-      %img{:src => image.get_image_path}
+      %img{:src => image.get_image_path, "data-href" => image.get_image_path}
     %div{:ondblclick => "rename_image(this)", :class => "image_description", :data => {'info' => "#{image_info}"}} #{truncate(image_info, :length => 25, :omission => '...')}
 
 

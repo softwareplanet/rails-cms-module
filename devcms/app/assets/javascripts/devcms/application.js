@@ -1,8 +1,4 @@
-// require /uploadify/jquery.uploadify.min.js
-// require /uploadify/jquery.form.uploadify.js
-
 //= require codemirror
-
 //= require codemirror/modes/apl
 //= require codemirror/modes/asterisk
 //= require codemirror/modes/clike
@@ -62,8 +58,6 @@
 //= require codemirror/modes/xquery
 //= require codemirror/modes/yaml
 //= require codemirror/modes/z80
-
-
 
 
 //= require_tree .

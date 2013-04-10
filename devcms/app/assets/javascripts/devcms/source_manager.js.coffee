@@ -29,7 +29,7 @@ $(document).ready ->
     on_gallery_image_select(this)
 
   # Image Gallery upload:
-  $("#file_upload").uploadify
+#  $("#file_upload").uploadify
     swf: window.uploadify_asset_path #<-from _popups partial
     uploader : '/source_manager/upload.js'
     buttonText  : 'Add image!'
