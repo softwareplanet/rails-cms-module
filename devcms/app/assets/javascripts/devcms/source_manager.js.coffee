@@ -136,7 +136,7 @@ window.delete_image= (image) ->
       data: request_json
 
 window.rename_image = (image) ->
-  input = $(image).parent().find("input")
+  input = $(image).parent().parent().find("input")
   input.css("display", "block").focus()
   input.val input.parent().find("div[data-image-name]").attr("data-image-name")
 
