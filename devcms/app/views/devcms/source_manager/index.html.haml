@@ -51,7 +51,7 @@
         %form{:id => "load_image", :action => "source_manager/upload", :method => "post", :enctype => "multipart/form-data"}
           %input{:type => 'file', :id => "image_src", :name => "Filedata"}
           %button{:type => "submit"}
-  #gallery{"data-selector" => "img", "data-target" => "#modal-gallery", "data-toggle" => "modal-gallery"}
+  #gallery{"data-selector" => ".gallery-image", "data-target" => "#modal-gallery", "data-toggle" => "modal-gallery"}
     .content
 .panel.panel_settings
   .header
