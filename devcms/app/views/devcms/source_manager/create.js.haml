@@ -14,4 +14,5 @@
 -#    //new_editor.setSourceWithSeparator("#{obj.id}", "#{obj.name}", "#{obj.source}")
 -#    editorManager.addEditor("#{new_editor_name}", new_editor)
 
+$('#global_action_form')[0].reset();
 $('.panel_structure .content').append("#{ escape_javascript(render(:partial => 'layout', :object => @source)) }");
