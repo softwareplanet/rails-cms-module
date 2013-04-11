@@ -59,7 +59,8 @@ module Devcms
           render :js => 'alert("' +  I18n.t('create_layout_form.wrong') + '");'
           return
         end
-        @message = I18n.t('create_layout_form.success')
+        render 'create'
+        return
       end
       render :js => 'alert("' +  @message + '");'
     end

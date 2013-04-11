@@ -1,15 +1,17 @@
-- if false
-  - parent_accordion_id = "#accordion_" + @source.type
-  // Adding new item to page accordion:
-  - accordion_item = render(:partial => "accordion_item", :locals => {:source => @source, :parent => parent_accordion_id})
-  $("#{parent_accordion_id}").prepend(" #{escape_javascript(accordion_item)} ")
-  // New item contains code textarea with id that looks like 'layout_57' or 'content_64''
+-#- if false
+-#  - parent_accordion_id = "#accordion_" + @source.type
+-#  // Adding new item to page accordion:
+-#  - accordion_item = render(:partial => "accordion_item", :locals => {:source => @source, :parent => parent_accordion_id})
+-#  $("#{parent_accordion_id}").prepend(" #{escape_javascript(accordion_item)} ")
+-#  // New item contains code textarea with id that looks like 'layout_57' or 'content_64''
+-#
+-#  - [@source, @css].each do |obj|
+-#    - new_editor_name = "#{obj.get_id}"
+-#    // Initialize editor
+-#    new_editor = new CodeEditorIDE("#{new_editor_name}")
+-#    //new_editor.setRequestSourceType("#{obj.get_plain_class}")
+-#    //new_editor.setRequestPath('/source_manager/')
+-#    //new_editor.setSourceWithSeparator("#{obj.id}", "#{obj.name}", "#{obj.source}")
+-#    editorManager.addEditor("#{new_editor_name}", new_editor)
 
-  - [@source, @css].each do |obj|
-    - new_editor_name = "#{obj.get_id}"
-    // Initialize editor
-    new_editor = new CodeEditorIDE("#{new_editor_name}")
-    //new_editor.setRequestSourceType("#{obj.get_plain_class}")
-    //new_editor.setRequestPath('/source_manager/')
-    //new_editor.setSourceWithSeparator("#{obj.id}", "#{obj.name}", "#{obj.source}")
-    editorManager.addEditor("#{new_editor_name}", new_editor)
+$('.panel_structure .content').append("#{ escape_javascript(render(:partial => 'layout', :object => @source)) }");
