@@ -5,6 +5,7 @@ object = $("div[id='#{@old_id}']");
 object.attr('id', '#{@sourceObject.get_id}');
 object.attr('title','#{@sourceObject.name + '.' + @sourceObject.extension }');
 object.find('.delete_image').attr('data-image-name', '#{@sourceObject.name}');
+object.find('.gallery-image').attr('data-href', '#{@sourceObject.get_image_path}');
 object.find('.gallery-image > img').attr('src', '#{@sourceObject.get_image_path}');
 
 object.find('div[data-info]').attr('data-info', '#{@sourceObject.name}');
