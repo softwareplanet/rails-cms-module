@@ -16,20 +16,20 @@ module ActiveFile # v0.01: <active_support-required version>
     end
   end
 
-  module Relation
-    attr_accessor :dependency_type, :dependency_target
-    def initialize(dependency_type, dependency_target)
-      @dependency_type = dependency_type
-      @dependency_target = dependency_target
-    end
-  end
+  #module Relation
+  #  attr_accessor :dependency_type, :dependency_target
+  #  def initialize(dependency_type, dependency_target)
+  #    @dependency_type = dependency_type
+  #    @dependency_target = dependency_target
+  #  end
+  #end
 
   # This class defines ActiveFile functionality
   class Base < OpenStruct
     require "active_support/inflector"
 
     @@dependency_classes = []
-    @relations = {}
+    #@relations = {}
     @short_name = ''
 
     def initialize(*args)
@@ -40,7 +40,6 @@ module ActiveFile # v0.01: <active_support-required version>
           @short_name = value if key==:name
         end
       end
-
       raise "#{type.camelize} object should be initialized with some name. For example: User.new('Joe') or User.new(:name => 'Joe')" if @short_name.blank?
       raise "#{type.camelize} named '#{@short_name}' already exists. Use dynamic finder." unless new_record?
     end
@@ -92,9 +91,8 @@ module ActiveFile # v0.01: <active_support-required version>
       operator = m[-1] == '=' ? '=' : ''
       i = 0
       dependency = @@dependency_classes.select{ |e|
-        i = i+1
-        puts i
-        e.dependency_target.to_s.camelize == method.to_s.camelize
+        e.dependency_target.to_s.camelize == method.to_s.camelize &&
+        e.dependency_owner.to_s.camelize ==  self.class.to_s.camelize
       }
       raise "Adapter request for #{m}" if dependency.empty?
       #return Adapter.method_missing(m, args, block) if dependency.empty?
@@ -124,15 +122,18 @@ module ActiveFile # v0.01: <active_support-required version>
 
     end
 
+    # Get dependency object
     def method_getter(dependency)
       owner_cname = dependency.dependency_owner
       owner_class = owner_cname.safe_constantize
       target_cname = dependency.dependency_target.to_s
       target_class = target_cname.safe_constantize
       dependency_type = dependency.dependency_type
-      attach =
+      object =
           case dependency_type
             when ActiveFile::Dependency::HAS_ONE
+              self.get_attaches_by_class_name(target_class)
+            when ActiveFile::Dependency::BELONGS_TO
               self.get_attaches_by_class_name(target_class)
             else
               nil
