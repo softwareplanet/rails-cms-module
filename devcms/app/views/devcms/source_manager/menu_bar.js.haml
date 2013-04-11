@@ -12,7 +12,7 @@ $(panel_content).html("");
       - when 'structure'
         $(panel_content).html("#{ escape_javascript(render(:partial => 'layout', :collection => @layouts)) }");
       - when 'new-page'
-        $(panel_content).html("#{ escape_javascript(render(:partial => 'layout', :collection => @layouts)) }");
+        -#$(panel_content).html("#{ escape_javascript(render(:partial => 'layout', :collection => @layouts)) }");
       - when 'gallery'
         $(panel_content).html("#{ escape_javascript(render(:partial => 'images')) }");
       - else

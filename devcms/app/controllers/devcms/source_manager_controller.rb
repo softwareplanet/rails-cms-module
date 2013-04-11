@@ -30,12 +30,30 @@ module Devcms
       keywords = params[:keywords]
       description = params[:description]
 
-      @source = Source.new(:type => type, :name => name)
-      @source.save
-      @css = Source.new(:type => SourceType::CSS, :target => @source)
-      @css.save
-      @seo = Source.new(:type => SourceType::SEO, :target => @source)
-      @seo.save
+      if address.blank?
+        @message = I18n.t('create_layout_form.blank_address')
+
+      elsif !Source.find_by_name(address).blank?
+        @message = I18n.t('create_layout_form.wrong_address')
+
+      else
+        begin
+          @source = Source.new(:type => type, :name => address)
+          @source.save!
+
+          @css = Source.new(:type => SourceType::CSS, :target => @source)
+          @css.save!
+
+          @seo = Source.new(:type => SourceType::SEO, :target => @source)
+          @seo.save!
+
+        rescue Exception => exc
+          render :js => 'alert("' +  I18n.t('create_layout_form.wrong') + '");'
+          return
+        end
+        @message = I18n.t('create_layout_form.success')
+      end
+      render :js => 'alert("' +  @message + '");'
     end
 
     # GET /source_manager/1/edit
