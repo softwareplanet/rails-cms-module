@@ -93,18 +93,20 @@ window.saveSource = (this_ptr) ->
 window.deleteSourceWithConfirmation = (obj) ->
   id_to_delete = $(obj).data("source_id")
   name = $(obj).data("source_name")
-  deleteSource('Layout', id_to_delete, name)
-  $(".icon.icon-structure").click()
+  if confirm('Are you sure to delete Layout \'' + name + "\' ?")
+    deleteSource('Layout', id_to_delete)
+    $(obj).parents('.layout-row').next().fadeOut()
+    $(obj).parents('.layout-row').fadeOut()
+#  $(".icon.icon-structure").click()
 
   #DELETE
-window.deleteSource = (type, id, name) ->
-  if confirm("Are you sure to delete " + type + ' \'' + name + "\' ?")
-    request_json = {}
-    request_json["type"] = type
-    $.ajax
-      url: '/source_manager/' + id + jsformat
-      type: "DELETE",
-      data: request_json
+window.deleteSource = (type, id) ->
+  request_json = {}
+  request_json["type"] = type
+  $.ajax
+    url: '/source_manager/' + id + jsformat
+    type: "DELETE",
+    data: request_json
 window.delete_image = (this_ptr) ->
   if confirm("Are you sure to delete this?")
     $.post("/source_manager/delete_image.js", {name: $(this_ptr).parent().data('name')})

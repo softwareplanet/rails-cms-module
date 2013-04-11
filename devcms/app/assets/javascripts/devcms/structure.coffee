@@ -8,7 +8,7 @@ $(document).ready ->
       url: '/source_manager/tool_bar'
       type: 'GET',
       data: request_json
-  $('.btn-save').click ->
+#  $('.btn-save').click ->
 
 
   #$(".layout-row").removeClass "layout-row-selected"
