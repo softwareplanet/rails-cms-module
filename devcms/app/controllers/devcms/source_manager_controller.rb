@@ -47,6 +47,14 @@ module Devcms
           @seo = Source.new(:type => SourceType::SEO, :target => @source)
           @seo.save!
 
+          path = @seo.get_source_folder + @seo.get_filename
+
+          File.open(path, "w+") do |f|
+            f.puts('<title>' + name + '</title>')
+            f.puts('<meta name="keywords" content="' +keywords  + '"/>')
+            f.puts('<meta name="description" content="' + description + '"/>')
+          end
+
         rescue Exception => exc
           render :js => 'alert("' +  I18n.t('create_layout_form.wrong') + '");'
           return
