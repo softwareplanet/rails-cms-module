@@ -1,7 +1,6 @@
 # Simple Test Suite.
 # How to use: open terminal. Go to test folder, and run `ruby active_file_test.rb`. Alternatively, run from your IDE.
 require '../active_file/base'
-require 'minitest/unit'
 class Material < ActiveFile::Base; end
 class Diamond < ActiveFile::Base; end
 class Photo < ActiveFile::Base; end
@@ -55,10 +54,25 @@ module Tests
     def test_constructor_with_correct_hash_name_should_not_raise
       assert_not_raise{Diamond.new(:name => 'Gem')}
     end
-    def super_test_dependency
+    def test_belongs_to_dependency
       material = Material.new('Carbon')
       diamond = Diamond.new('Gem', :material => material)
       assert_true(diamond.material == material)
+    end
+    def test_has_one_dependency
+      diamond = Diamond.new('Gem')
+      material = Material.new('Carbon', :diamond => diamond)
+      assert_true(material.diamond == diamond)
+    end
+    def test_has_many_dependency
+      photo1 = Photo.new('Photo 1')
+      photo2 = Photo.new('Photo 2')
+      diamond = Diamond.new('Gem', :photos => [photo1, photo2])
+      assert_true(diamond.photos.size == 2)
+    end
+    def super_test_save_method
+      material = Material.new('Carbon')
+      material.save
     end
     def test_second
       assert_true(true)
