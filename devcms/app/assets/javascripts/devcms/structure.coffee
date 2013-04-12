@@ -8,6 +8,15 @@ $(document).ready ->
       url: '/source_manager/tool_bar'
       type: 'GET',
       data: request_json
+
+#window.qwqw = (panel) ->
+#  console.log(panel)
+#$menu = $('.dropdown-menu')
+#$menu.menuAim({
+#  activate: qwqw(1),
+#  deactivate: qwqw(2)
+#});
+
 #  $('.btn-save').click ->
 
 

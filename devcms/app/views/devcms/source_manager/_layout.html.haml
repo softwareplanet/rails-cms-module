@@ -9,14 +9,15 @@
       = layout.name
     .counter
       0 страниц
-    %a.properties{"data-toggle" => "tooltip", :href => "#", :title => "preferences", "data-source_id" => my_id, :onclick => "properties(this)"}
+    %a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences", "data-source_id" => my_id}
+
     %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-source_id" => my_id}
-    .preferences
+    .dropdown-menu.preferences
       .preferences-rect
-      .edit-properties
+      %li.edit-properties
         %div
         Редактировать свойства
-      .delete-page{:onclick => 'deleteSourceWithConfirmation(this)',"data-source_name" => layout.name, "data-source_id" => my_id}
+      %li.delete-page{:onclick => 'deleteSourceWithConfirmation(this)',"data-source_name" => layout.name, "data-source_id" => my_id}
         %div
         Удалить страницу
     .short-counter

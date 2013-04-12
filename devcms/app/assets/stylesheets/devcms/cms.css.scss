@@ -455,21 +455,23 @@ html.cms, body.cms {
       width: 100%;
       .preferences {
         cursor: pointer;
-        z-index: 1;
-        display: none;
-        position: absolute;
+        margin: 0;
+        padding: 0;
+        background-color: none!important;
+        border:  none;
         top: 27px;
         left: 317px;
         width: 229px;
         .preferences-rect {
-          background: url(#{$assets_path}/rect.png) no-repeat;
-          height: 10px;
-          width: 17px;
+          position: absolute;
+          margin:-8px 0 0 9px;
+          background: url(#{$assets_path}/icons/rect_top_shadow.png) no-repeat;
+          height: 8px;
+          width: 14px;
         }
-        div {
+        li {
           height: 49px;
           width: 100%;
-          //padding: 16px 0 0 47px;
         }
         .edit-properties {
           color: black;
