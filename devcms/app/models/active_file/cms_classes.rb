@@ -16,5 +16,14 @@ class LayoutCss < ActiveFile::Base
 end
 
 
-@layout = Layout.new('main')
-@layout.css = Css
+@layout = Layout.new(name: 'mainlayout')
+@seo = Seo.new(name: 'mainseo')
+
+@layout.seo = @seo
+@layout.save
+
+/layouts/main
+/seos/mainlayout/mainseo
+
+
+

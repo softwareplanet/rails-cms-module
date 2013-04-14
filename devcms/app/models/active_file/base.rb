@@ -1,56 +1,208 @@
+#
+# ActiveFile = base.rb: lightweight file system ORM implementation
+#
+# Author:: Vitaly Pestov
+# Department:: InterLink LLC, Ukraine, 2013
+#
+# Build a persistent domain model by mapping file system objects to Ruby classes.
+# It inherits ActiveRecord-similar interface.
+#
 module ActiveFile # v0.01: <active_support-required version>
+  #
+  # Based on Yukihiro Matsumoto's OpenStruct implementation,
+  # to extend ActiveFile objects with arbitrary attributes
   require 'ostruct'
   require 'active_support/core_ext/object/blank'
 
   module Dependency
-    HAS_ONE = "has_one";
-    HAS_MANY = "has_many";
-    BELONGS_TO = "belongs_to";
+    HAS_ONE = :has_one
+    HAS_MANY = :has_many
+    BELONGS_TO = :belongs_to
+
+    # Defines dependency between two classes and type of their association
 
     class DependencyClass
-      attr_accessor :dependency_type,:dependency_owner,:dependency_target
+      attr_accessor :dependency_type, :dependency_owner, :dependency_target
       def initialize(dependency_type, dependency_owner, dependency_target)
-        @dependency_type = dependency_type
-        @dependency_owner = dependency_owner
-        @dependency_target = dependency_target
+        @dependency_type, @dependency_owner, @dependency_target = dependency_type, dependency_owner, dependency_target
       end
     end
+
+    # Defines association, related to single class instance
 
     class RelationObject
       attr_accessor :relation_object, :dependency_class
       def initialize(relation_object, dependency_class)
-        @relation_object = relation_object
-        @dependency_class = dependency_class
+        @relation_object, @dependency_class = relation_object, dependency_class
       end
     end
-  end
+  end # module Dependency
 
-
-
-  # This class defines ActiveFile functionality
   class Base < OpenStruct
-    require "active_support/inflector"
+    require 'active_support/inflector'
 
     @@dependency_classes = []
-    @relation_objects = []
-    @short_name = ''
 
-    def initialize(*args)
-      args.each do |arg|
-        @short_name = arg if arg.is_a?(String)
-        if arg.is_a?(Hash)
-          key, value = arg.to_a.first[0], arg.to_a.first[1]
-          @short_name = value if key==:name
-          const_name = key.to_s.singularize.camelize
-          if Object.const_defined?(const_name)
-            bind_relation_object(value) if has_dependency_target_class?(const_name.constantize)
-          end
+    attr_accessor :relation_objects
 
+    # ActiveFile constructor can take different types of input parameters: name, associations and properties
+    # Name is required for file object if you want save it, because file name should be specified
+    # Life period of Properties is not persistent
+    # Associations is persistent, of course if you don't forget to call 'save' for object
+    # Associations and Properties can be assigned later, not necessarily in the constructor
+    #
+    # Example:
+    #
+   #models/author.rb:
+    #
+    #  class Author < ActiveFile::Base
+    #    has_one :profile
+    #    has_many :articles
+    #  end
+    #
+   #models/profile.rb:
+    #
+    #  class Profile < ActiveFile::Base
+    #    belongs_to :author
+    #  end
+    #
+   #models/article.rb
+    #
+    #  class Article < ActiveFile::Base
+    #    belongs_to :author
+    #  end
+    #
+   ###
+    #  author = Author.new(name: 'Joe')
+    #
+    #  profile = Profile.new(name: 'Joe_profile')
+    #  author = Author.new(name: 'Joe' , profile: profile )
+    #
+    #  article_1 = Article.new(name: 'article_1')
+    #  article_2 = Article.new(name: 'article_2' , :author => author)
+    #  author = Author.new(name: 'Joe' , articles: [article_1, article_2])
+    #
+    #  author.profile = profile
+    #
+    #  etc....
+
+    BASE_FOLDER = './file_base/'
+
+    def get_base_folder
+      self.base_folder || ActiveFile::Base::BASE_FOLDER
+    end
+
+    # Get (relative) file path of ActiveFile instance
+    #
+    def get_file_path
+      raise 'File name not specified' if name.nil?
+
+      # Source folder for non-associated instances is a folder with Classified name
+      file_path=get_base_folder+self.class.to_s.pluralize.downcase+'/'
+
+      belongs_to_association = AssociationManager.get_belongs_to_association(self)
+      if belongs_to_association
+        file_path+=belongs_to_association.dependency_class.dependency_target.to_s.pluralize.downcase+relation_object.name+'/'
+      end
+      FileUtils.mkpath(file_path) unless File.exists?(file_path)
+      file_path+name
+    end
+
+    # Save ActiveFile instance to file system object
+    #
+    def save
+      encoded_data = self.data.nil? ? '' : self.data.force_encoding('utf-8')
+      ::File.open(get_file_path, 'w') { |file| file.write(encoded_data) }
+    end
+
+    # Reload file data
+    #
+    def reload!
+      self.data = ::File.read(get_file_path)
+    end
+
+    # Lazy file data retrieving
+    #
+    def get_data
+      data = ::File.read(get_file_path) if data.nil?
+      data
+    end
+
+    # Write file data
+    #
+    def set_data(file_content=nil)
+      self.data = file_content unless file_content.nil?
+      save
+    end
+
+    # Find ActiveFile object by name:
+    #
+    def self.find(name)
+      object = self.new(name: name)
+      File.exists?(object.get_file_path) ? object.bind_associations : nil
+    end
+
+    # Bind associations
+    #
+    def bind_associations
+      @@dependency_classes.select do |e|
+        if e.dependency_owner.to_s.camelize ==  self.class.to_s.camelize
+          dependency_target, dependency_class = e.dependency_target, e.dependency_class
+          dependency_class.constantize.new()
+          data_point.send("queued?=",false)
+          e.dependency_target.new()#???????????
         end
       end
-      raise "#{type.camelize} object should be initialized with some name. For example: User.new('Joe') or User.new(:name => 'Joe')" if @short_name.blank?
-      raise "#{type.camelize} named '#{@short_name}' already exists. Use dynamic finder." unless new_record?
+
+
+      # object can be type of Array, for :has_many association. Make type cast:
+      object_array = object.is_a?(Array) ? object : [object]
+      object_array.each do |obj|
+        dependency = get_dependency_for_target_class(obj.class)
+        raise "No one dependency rule <has/belongs> were specified between owner #{self} and target #{obj}" if dependency.nil?
+        relation = Dependency::RelationObject.new(obj, dependency)
+        @relation_objects ||= []
+        @relation_objects.push(relation)
+      end
     end
+
+    #def initialize(*args)
+=begin
+      args.each do |arg|
+        case arg
+          when String
+            @short_name = arg if arg.is_a?(String)
+          when Hash
+            key, value = arg.to_a.first[0], arg.to_a.first[1]
+            @short_name = value if key == :name
+            const_name = key.to_s.singularize.camelize
+            if Object.const_defined?(const_name)
+              # for {:associated_object => @instantiated_dependency}
+              #bind_associated_object(value) if has_dependency_target_class?(const_name.constantize)
+            end
+        end
+      end
+      #raise "#{type.camelize} object should be initialized with some name. For example: User.new('Joe') or User.new(:name => 'Joe')" if @short_name.blank?
+      raise "#{type.camelize} named '#{@short_name}' already exists. Use dynamic finder." unless new_record?
+=end
+    #  args = args[0] if args.is_a?(Array)
+    #  super args
+    #end
+=begin
+    # Bind associated dynamic object to this instance
+
+    def bind_associated_object(object)
+      # object can be type of Array, for :has_many association. Make type cast:
+      object_array = object.is_a?(Array) ? object : [object]
+      object_array.each do |obj|
+        dependency = get_dependency_for_target_class(obj.class)
+        raise "No one dependency rule <has/belongs> were specified between owner #{self} and target #{obj}" if dependency.nil?
+        relation = Dependency::RelationObject.new(obj, dependency)
+        @relation_objects ||= []
+        @relation_objects.push(relation)
+      end
+    end
+=end
 
     def get_dependency_for_target_class(target_class)
       dependency = @@dependency_classes.select{ |e|
@@ -67,39 +219,9 @@ module ActiveFile # v0.01: <active_support-required version>
     def has_dependency_target_class?(target_class)
       !get_dependency_for_target_class(target_class).nil?
     end
-    def bind_relation_object(object)
-      object_array = object.is_a?(Array) ? object : [object]
-      object_array.each do |obj|
-        dependency = get_dependency_for_target_class(obj.class)
-        raise "No one dependency rule <has/belongs> were specified between owner #{self} and target #{obj}" if dependency.nil?
-        relation = Dependency::RelationObject.new(obj, dependency)
-        @relation_objects ||= []
-        @relation_objects.push(relation)
-      end
-    end
     def new_record?
       true
     end
-    def get_filepath
-      "/active_files/"+self.class.to_s.pluralize+"/"+@short_name
-    end
-    def save
-      ::File.open(get_filepath, "w") { |file| file.write(self.data.force_encoding('utf-8')) }
-    end
-    def load!
-      self.data
-      self
-    end
-    def data= data_arg
-      @self_data = data_arg
-    end
-    def data
-      if @self_data == nil
-        @self_data = ::File.read(get_filepath)
-      end
-      @self_data || ""
-    end
-
     #def delete_method(raise_exception_on_error)
     #  delete_file_name = get_source_path
     #  ::File.delete(delete_file_name)
@@ -142,7 +264,7 @@ module ActiveFile # v0.01: <active_support-required version>
       @@dependency_classes.push(ActiveFile::Dependency::DependencyClass.new(ActiveFile::Dependency::HAS_MANY, self.to_s, dependency_target))
     end
 
-    def method_missing(m, *args, &block)
+    def __method__missing(m, *args, &block)
       method = m[-1] == '=' ? m[0..-2] : m
       operator = m[-1] == '=' ? '=' : ''
       dependency = @@dependency_classes.select{ |e|
