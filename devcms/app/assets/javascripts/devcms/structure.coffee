@@ -1,13 +1,33 @@
 $(document).ready ->
   $('.add-structure').click ->
-    request_json = {
-    object: 'new-page',
-    activity: 'click'
-    }
-    $.ajax
-      url: '/source_manager/tool_bar'
-      type: 'GET',
-      data: request_json
+    if $('.panel_new-page').css('display') == 'block'
+      $('.panel_new-page').css('display', 'none')
+    else
+      request_json = {
+      object: 'new-page',
+      activity: 'click'
+      }
+      $.ajax
+        url: '/source_manager/tool_bar'
+        type: 'GET',
+        data: request_json
+
+#gear animation
+#window.animate_properties = (obj) ->
+#
+#  if $(obj).hasClass('properties_animate_run')
+#    if $(obj).parent().find('.dropdown-menu').css('display') != 'none'
+#      $(obj).removeClass('properties_animate_run')
+#    else
+#      $(obj).removeClass('properties_animate_config')
+#      $(obj).removeClass('properties_animate_run')
+#
+#      $(obj).addClass('properties_animate_config')
+#      $(obj).addClass('properties_animate_run')
+#
+#  else
+#    $(obj).addClass('properties_animate_config')
+#    $(obj).addClass('properties_animate_run')
 
 #window.qwqw = (panel) ->
 #  console.log(panel)

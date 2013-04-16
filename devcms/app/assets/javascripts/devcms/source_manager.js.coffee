@@ -99,6 +99,17 @@ window.deleteSourceWithConfirmation = (obj) ->
     $(obj).parents('.layout-row').fadeOut()
 #  $(".icon.icon-structure").click()
 
+ #OPEN CODE EDITOR FOR EDIT LAYOUT CODE
+window.show_code_editor = (obj) ->
+  $(".edit").bind "click", ->
+  request_json =
+    object: $(obj).data("source_id")
+    activity: "edit"
+  $.ajax
+    url: "/source_manager/editor.js"
+    type: "GET"
+    data: request_json
+
   #DELETE
 window.deleteSource = (type, id) ->
   request_json = {}
@@ -126,7 +137,6 @@ $(document).ready ->
     $(this).parent().clearForm();
 
   $("#load_new_image").click ->
-    console.log "click image_src"
     $("#image_src").click()
 
 window.delete_image= (image) ->
@@ -158,8 +168,10 @@ window.checkKeyForDelete = (image) ->
 
 window.properties = (obj) ->
   $(".panel_editor").html ""
-  console.log 1
   $(obj).parent().find(".preferences").toggle()
+
+
+
 
 
 

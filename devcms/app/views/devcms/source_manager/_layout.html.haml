@@ -9,9 +9,10 @@
       = layout.name
     .counter
       0 страниц
+    -#%a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences", "data-source_id" => my_id, :onclick => "animate_properties(this)"}
     %a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences", "data-source_id" => my_id}
 
-    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-source_id" => my_id}
+    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-source_id" => my_id, :onclick => 'show_code_editor(this)'}
     .dropdown-menu.preferences
       .preferences-rect
       %li.edit-properties
@@ -24,14 +25,3 @@
       0
 .line
 
-%script{:type => 'text/javascript'}
-  $('.edit').bind('click', function() {
-  request_json = { object: $(this).data("source_id"), activity: "edit" }
-  $.ajax({url: '/source_manager/editor.js', type: 'GET', data: request_json });
-  console.log($(this).data('source_id'));
-  });
-  -#$('.delete-page').bind('click', function() {
-  -#
-  -#console.log($('.delete-page').first().parent().parent().getElementsByClassName('name').value());
-  -#window.deleteSource = (type, id, name) ->
-  -#});
