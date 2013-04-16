@@ -87,7 +87,7 @@ html.cms, body.cms {
 }
 */
 
-
+:focus {outline: none;border:  none;}
 .expander {
   height: 100%;
   min-height: 800px;
@@ -193,7 +193,9 @@ html.cms, body.cms {
   }
 
 }
-
+.panel_editor {
+  height: 100%;
+}
 
 .panel {
   float: left;
@@ -278,7 +280,7 @@ html.cms, body.cms {
     font-size: 13px;
     color: black;
     margin-left: 123px;
-    margin-right: 123px;
+    margin-right: 23px;
     background-color: white;
     display: inline-block;
     .delete_image {
@@ -304,7 +306,7 @@ html.cms, body.cms {
       z-index: 100;
       display: none;
       width: 166px;
-      margin-top:127px;
+      margin-top:132px;
     }
     .image_description {
       line-height: 30px;
@@ -386,7 +388,9 @@ html.cms, body.cms {
   top: 282px;
 }
 .panel_gallery .rect {
-  top: 362px;
+  top: 422px;
+  left:  91px;
+  background: url(#{$assets_path}/icons/rect_white.png);
 }
 .panel_settings .rect {
   top: 442px;
@@ -581,6 +585,7 @@ html.cms, body.cms {
       display: block;
     }
     .properties {
+      border: none;
       display: block;
       cursor: pointer;
     }
@@ -590,7 +595,22 @@ html.cms, body.cms {
     .short-counter {
       display: inline-block;
     }
-    .properties:hover, .edit:hover {-webkit-box-shadow: 0px 0px 10px 4px lightblue; box-shadow: 0px 0px 10px 4px lightblue;}
+    .properties_animate_config {
+      -webkit-transition-duration: 0.3s;
+      -moz-transition-duration: 0.3s;
+      -o-transition-duration: 0.3s;
+      transition-duration: 0.3s;
+      -webkit-transition-property: -webkit-transform;
+      -moz-transition-property: -moz-transform;
+      -o-transition-property: -o-transform;
+      transition-property: transform;
+    }
+    .properties_animate_run {
+      -webkit-transform:rotate(60deg);
+      -moz-transform:rotate(60deg);
+      -o-transform:rotate(60deg);
+    }
+    .edit:hover {-webkit-box-shadow: 0px 0px 10px 4px lightblue; box-shadow: 0px 0px 10px 4px lightblue;}
     color: black;
   }
 }
@@ -605,11 +625,11 @@ html.cms, body.cms {
   display: none;
   float: left;
   width: 100%;
-  margin-left: -401px;
+  margin-left: -469px;
 
   .inner {
-    margin-left: 401px;
-    padding: 30px;
+    margin-left: 469px;
+    //padding: 30px;
     height: 100%;
     -webkit-box-shadow: -10px 0px 15px 2px #aaa;
     box-shadow: -10px 0px 15px 2px #333;
@@ -711,7 +731,7 @@ html.cms, body.cms {
   }
 
   .editor-wrapper {
-
+     padding: 30px;
   }
 }
 

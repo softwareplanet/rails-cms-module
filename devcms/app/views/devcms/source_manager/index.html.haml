@@ -8,7 +8,6 @@
   .icon.icon-gallery{'data-tooltip' => 'Галлерея', 'data-icon' => 'gallery'}
   .icon.icon-settings{'data-tooltip' => 'Настройки', 'data-icon' => 'settings'}
   .icon.icon-exit{'data-tooltip' => 'Выход', 'data-icon' => 'exit'}
-
 .panel.panel_main
   .header
     .rect
@@ -132,7 +131,6 @@
               %label Описание
               %input.url{:placeholder => "Description…", :tabindex => 8, :type => "text", :name => "description"}
       .btn-save{:tabindex => 6}
-        -#%button.btn.btn-primary.add-source{:type => "submit", "data-type" => Devcms::SourceType::LAYOUT, :tabindex => 2}
         = submit_tag ' Save'
 
 / modal-gallery is the modal dialog used for the image gallery
