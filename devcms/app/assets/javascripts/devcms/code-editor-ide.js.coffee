@@ -8,6 +8,11 @@ class window.CodeEditorsManager
       editor_name: editor_name
       editor: editor
     @editors.push editor
+
+  removeEditors: () ->
+      @editors.pop()
+      @editors.pop()
+
   getEditor: (editor_name) ->
     i = 0
     while i < @editors.length

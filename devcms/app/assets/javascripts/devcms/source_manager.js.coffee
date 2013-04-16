@@ -101,14 +101,16 @@ window.deleteSourceWithConfirmation = (obj) ->
 
  #OPEN CODE EDITOR FOR EDIT LAYOUT CODE
 window.show_code_editor = (obj) ->
-  $(".edit").bind "click", ->
-  request_json =
-    object: $(obj).data("source_id")
-    activity: "edit"
-  $.ajax
-    url: "/source_manager/editor.js"
-    type: "GET"
-    data: request_json
+  if($('.panel_editor').html() != '')
+    $('.panel_editor').html ''
+  else
+    request_json =
+      object: $(obj).data("source_id")
+      activity: "edit"
+    $.ajax
+      url: "/source_manager/editor.js"
+      type: "GET"
+      data: request_json
 
   #DELETE
 window.deleteSource = (type, id) ->

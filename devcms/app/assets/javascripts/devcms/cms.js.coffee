@@ -1,4 +1,4 @@
-editorManager = null
+#editorManager = null
 
 window.InitializeCms = () ->
   editorManager = new CodeEditorsManager
@@ -16,7 +16,7 @@ $(document).ready ->
 
 # Handlers
 $(document).ready ->
-# do not remove next 5 lines!
+# do not remove next 5 lines!...or remove...
 #  $('.icon').hover (->
 #    tooltip_text = $(this).data("tooltip")
 #    $(this).append $("<div class='icon-tooltip'><ins></ins>" + tooltip_text + "</div>")
