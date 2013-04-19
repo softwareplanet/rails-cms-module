@@ -71,7 +71,6 @@ module Devcms
       render :nothing => true and return if @sourceObject.nil?
       @sourceObject.get_attach_or_create
       if @sourceObject.type == SourceType::CSS && @sourceObject.data.length > 0
-
         from = @sourceObject.data.index("\n")+1
         to = -@sourceObject.data.reverse.index("\n")-1
         @sourceObject.data = @sourceObject.data[from..to]
@@ -141,6 +140,65 @@ module Devcms
       @source.delete
     end
 
+    def properties
+      @seo_id = '1-tar-' + params[:layout_id].gsub('pre1-id-', '')
+      @seo = Source.quick_attach(SourceType::LAYOUT,  params[:layout_id], SourceType::SEO)
+      path = @seo.get_source_folder + @seo_id
+
+      #File.open(path, "r").each_line  do |line|
+      #  puts '----'+line.gsub("[\<\/|\<][a-zA-Z0-9_-]+\>",'')
+      #  #f.puts('<title>' + name + '</title>')
+      #  #f.puts('<meta name="keywords" content="' +keywords  + '"/>')
+      #  #f.puts('<meta name="description" content="' + description + '"/>')
+      #end
+    end
+
+    def save_properties
+      name = params[:name]
+      address = params[:address]
+      no_show = params[:no_show]
+      no_publish = params[:no_publish]
+      keywords = params[:keywords]
+      description = params[:description]
+
+      @source = Source.find_by_id( params[:layout_id])
+
+      if address.blank?
+        @message = I18n.t('create_layout_form.blank_address')
+
+      elsif !Source.find_by_name(address).blank?
+        @message = I18n.t('create_layout_form.wrong_address')
+
+      else
+        begin
+          @source = Source.new(:type => type, :name => address)
+          @source.save!
+
+          @css = Source.new(:type => SourceType::CSS, :target => @source)
+          @css.save!
+
+          @seo = Source.new(:type => SourceType::SEO, :target => @source)
+          @seo.save!
+
+          path = @seo.get_source_folder + @seo.get_filename
+
+          File.open(path, "w+") do |f|
+            f.puts('<title>' + name + '</title>')
+            f.puts('<meta name="keywords" content="' +keywords  + '"/>')
+            f.puts('<meta name="description" content="' + description + '"/>')
+          end
+
+        rescue Exception => exc
+          render :js => 'alert("' +  I18n.t('create_layout_form.wrong') + '");'
+          return
+        end
+        render 'create'
+        return
+      end
+      render :js => 'alert("' +  @message + '");'
+    end
+
+
     def rename_image
       @sourceObject = Source.find_by_id(params[:id])
       @old_id = @sourceObject.get_id
@@ -164,6 +222,8 @@ module Devcms
         when "load"
           case @object
             when "structure"
+              @layouts = Source.where :type => SourceType::LAYOUT
+            when "content"
               @layouts = Source.where :type => SourceType::LAYOUT
             when "gallery"
               @images = Source.where :type => SourceType::IMAGE

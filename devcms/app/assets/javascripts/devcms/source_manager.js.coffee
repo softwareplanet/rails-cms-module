@@ -103,7 +103,9 @@ window.deleteSourceWithConfirmation = (obj) ->
 window.show_code_editor = (obj) ->
   if($('.panel_editor').html() != '')
     $('.panel_editor').html ''
+    $('.panel_editor').hide()
   else
+    $('[data-level=child]').hide();
     request_json =
       object: $(obj).data("source_id")
       activity: "edit"
@@ -172,10 +174,52 @@ window.properties = (obj) ->
   $(".panel_editor").html ""
   $(obj).parent().find(".preferences").toggle()
 
+#window.loadViewer = (obj) ->
+#  name = $(obj).data('source_name')
+#  request_json = {
+#    object: 'panel_viewer',
+#    activity: 'click',
+#    layout: name
+#  }
+#  $.ajax
+#    url: '/source_manager/tool_bar'
+#    type: 'GET',
+#    data: request_json
 
 
+#SLIDE ELEMENT
+jQuery.fn.slideLeftShow = (callback) ->
+  $width = $(this).outerWidth();
+  $(this).css('display','block')
+  $(this).css('left', '-' + $width+'px').animate({'left': 0}, 250, 'linear', callback);
 
+jQuery.fn.slideRightShow = (callback) ->
+  $width = $(this).outerWidth() + $(window).width()
+  $left = $(this).css('left')
+  if ($left == 'auto')
+    $left = 0
+  else
+    $left = parseInt($left)
+  $(this).css('left', $width + 'px')
+  $(this).css('display','block').animate({'left': 0}, 250, 'linear', callback);
 
+jQuery.fn.slideShow = ->
+  $(this).css('display','block')
 
+jQuery.fn.slideLeftHide = (callback2) ->
+  if($(this).css('display') != 'none')
+    $width = $(this).outerWidth()
+    callback = ->
+      $(this).css('display','none')
+      if callback2!=undefined
+        callback2()
+    $(this).animate({'left': '-' + $width}, 250, 'linear', callback);
 
+jQuery.fn.slideRightHide = (callback) ->
+  $width = $(this).outerWidth() + $(window).width()
+  callback = ->
+    $(this).css('display','none')
+  $(this).animate({'left': $width}, 250, 'linear', callback);
 
+jQuery.fn.slideHide = ->
+    $(this).css('display','none')

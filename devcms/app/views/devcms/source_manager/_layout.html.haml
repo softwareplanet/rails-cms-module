@@ -15,7 +15,7 @@
     %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-source_id" => my_id, :onclick => 'show_code_editor(this)'}
     .dropdown-menu.preferences
       .preferences-rect
-      %li.edit-properties
+      %li.edit-properties{:onclick => 'edit_properties(this)'}
         %div
         Редактировать свойства
       %li.delete-page{:onclick => 'deleteSourceWithConfirmation(this)',"data-source_name" => layout.name, "data-source_id" => my_id}

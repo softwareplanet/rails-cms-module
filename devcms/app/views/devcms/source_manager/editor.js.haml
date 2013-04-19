@@ -1,4 +1,5 @@
 $(".panel_editor").html("#{ escape_javascript(render(:partial =>  "panel_editor", :locals => {:source => @source})) }");
+$(".panel_editor").slideRightShow()
 window.editorManager = new CodeEditorsManager();
 var editorManager = window.editorManager;
 editorManager.removeEditors()

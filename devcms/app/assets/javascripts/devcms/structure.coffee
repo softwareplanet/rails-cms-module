@@ -12,6 +12,20 @@ $(document).ready ->
         type: 'GET',
         data: request_json
 
+window.edit_properties = (obj) ->
+  console.log 'edit properties click'
+  id = $(obj).parent().parent().find('.properties').data('source_id')
+  if $('.panel_properties').css('display') == 'block'
+    $('.panel_properties').css('display', 'none')
+  else
+    request_json = {
+    layout_id: id
+    }
+    $.ajax
+      url: '/source_manager/properties'
+      type: 'GET',
+      data: request_json
+
 #gear animation
 #window.animate_properties = (obj) ->
 #

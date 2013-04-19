@@ -95,6 +95,7 @@ html.cms, body.cms {
 html.cms, body.cms {
   @extend .expander;
   background: url(#{$assets_path}/background.png) repeat;
+  overflow: hidden;
 }
 
 .spinner {
@@ -107,6 +108,7 @@ html.cms, body.cms {
   left:  0;
   width: 100px;
   height: 100%;
+  z-index: 999;
   background: #222;
   //padding-top: 10px;
   text-align: center;
@@ -193,23 +195,28 @@ html.cms, body.cms {
   }
 
 }
-.panel_editor {
-  height: 100%;
-}
 
 .panel {
   float: left;
   display: none;
+  position: relative;
+}
+
+.panel_main,
+.panel_structure,
+.panel_components,
+.panel_settings,
+.panel_properties,
+.panel_new-page,
+.panel_gallery {
   width: 369px;
   height: 100%;
-  position: relative;
   background: #2681dc;
   color: #7fb3ec;
   -webkit-box-shadow: 0px 0px 11px #333;
 /*
   overflow-y: auto;
   overflow-x: hidden;*/
-
   box-shadow: 0px 0px 11px #333;
   .title {
     margin: 63px 15px 20px 20px;
@@ -221,19 +228,24 @@ html.cms, body.cms {
     height: 0px;
     border-bottom: 2px solid #539ce5;
   }
-  .rect {
+  /*.rect {
     position: absolute;
     background: url(#{$assets_path}/icons/arrow.png);
     width: 10px;
     height: 17px;
     left: -9px;
-  }
+  }*/
 }
-
+.panel_editor {
+  height: 100%;
+  display: none;
+  position: relative;
+}
 .panel_gallery {
   float: left;
   width: 100%;
-  position: static;
+  z-index: 100;
+  //position: static;
   margin-left: -100px;
   background-color: white;
   .header {
@@ -364,6 +376,7 @@ html.cms, body.cms {
 }
 
 .panel_structure {
+  z-index: 100;
   .add-structure {
     float: right;
     width:19px;
@@ -375,22 +388,95 @@ html.cms, body.cms {
     cursor: pointer;
   }
 }
+
+.panel_main {
+  z-index: 100;
+}
+
 .panel_main .rect {
   top: 42px;
 }
 .panel_structure .rect {
   top: 122px;
 }
-.panel_content .rect {
-  top: 202px;
+.panel_content {
+  z-index: 100;
+  width: 369px;
+  padding-bottom: 15px;
+  //height: 100%;
+  background: #2681dc;
+  color: #7fb3ec;
+  border-radius: 0 5px 5px 0;
+  -webkit-box-shadow: 0px 0px 11px #333;
+  box-shadow: 0px 0px 11px #333;
+  .title {
+    margin: 15px 20px 10px 20px;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  .line {
+    height: 0px;
+    border-bottom: 2px solid #539ce5;
+  }
+  .content {
+    .layout-row {
+      color: #7fb3ec;
+      font-size: 15px;
+      padding: 10px;
+      background: 2681dc;
+
+      .inner {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+      }
+      .list {
+        margin-top: 4px;
+        width: 16px;
+        height: 16px;
+        background: url(#{$assets_path}/icons/list.png) no-repeat;
+        float: left;
+      }
+      .name {
+        padding-left: 5px;
+        font-weight: bold;
+        float: left;
+      }
+    }
+    .layout-row:hover {
+      background: #539ce5;
+      cursor: pointer;
+      .folder {
+        background: url(#{$assets_path}/icons/folder2.png) no-repeat;
+        display: block;
+      }
+      .list {
+        background: url(#{$assets_path}/icons/list2.png) no-repeat;
+        display: block;
+      }
+      color: black;
+    }
+  }
+
 }
-.panel_components .rect {
-  top: 282px;
+
+.panel_components {
+  z-index: 100;
+  border-radius: 0 5px 5px 0;
+  ;
+  .rect {
+    top: 282px;
+  }
 }
+
 .panel_gallery .rect {
   top: 422px;
   left:  91px;
   background: url(#{$assets_path}/icons/rect_white.png);
+}
+.panel_settings{
+  z-index: 100;
 }
 .panel_settings .rect {
   top: 442px;
@@ -419,7 +505,7 @@ html.cms, body.cms {
   }
 }
 
-.panel_new-page {
+.panel_new-page, .panel_properties {
   background: white;
   color: black;
 
@@ -621,7 +707,7 @@ html.cms, body.cms {
 
 .editor-panel {
   height: 100%;
-  background: #2681dc;
+  //background: #2681dc;
   display: none;
   float: left;
   width: 100%;
@@ -629,10 +715,11 @@ html.cms, body.cms {
 
   .inner {
     margin-left: 469px;
+    background: #2681dc;
     //padding: 30px;
     height: 100%;
-    -webkit-box-shadow: -10px 0px 15px 2px #aaa;
-    box-shadow: -10px 0px 15px 2px #333;
+    //-webkit-box-shadow: -10px 0px 15px 2px #aaa;
+    //box-shadow: -10px 0px 15px 2px #333;
 
     .title {
       font-size: 24px;

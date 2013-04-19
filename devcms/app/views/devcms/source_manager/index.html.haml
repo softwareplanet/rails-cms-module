@@ -1,5 +1,6 @@
 %script{:src => "assets/gallery/a_load-image.min.js"}
 %script{:src => "assets/gallery/b_bootstrap-image-gallery.js"}
+-#%script{:src => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"}
 .toolbar
   .icon.icon-main{'data-tooltip' => 'Главная', 'data-icon' => 'main'}
   .icon.icon-structure{'data-tooltip' => 'Структура', 'data-icon' => 'structure'}
@@ -16,12 +17,12 @@
     .line
   .content
 
-.panel.panel_structure
+.panel.panel_structure{:data_name => 'panel_structure', :data_menu => 'structure'}
   .header
     .rect
     .title
       Структура сайта
-      %a.add-structure{"data-toggle" => "tooltip", :href => "#", :title => "add structure"}
+      %a.add-structure{"data-toggle" => "tooltip", :href => "#", :title => "add structure", :data_name => 'add-structure', :data_menu => 'structure'}
     .line
   .content
 
@@ -39,6 +40,7 @@
       Компоненты
     .line
   .content
+.panel.panel_viewer{'data-level' => 'child'}
 .panel.panel_gallery
   .header
     .rect
@@ -60,14 +62,16 @@
     .line
   .content
 
-.panel.panel_properties
+.panel.panel_properties{'data-level' => 'child', :data_name => 'panel_properties', :data_menu => 'structure'}
   .rect
   .title
     Свойства страницы
   .line
 
-  %form{:style => "padding: 10px;"}
+  %form{:id => 'properties_form', :style => "padding: 10px;"}
     %fieldset
+      %input{:type => "hidden", :name => "id"}
+
       %label Заголовок
       %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1}
 
@@ -133,6 +137,12 @@
       .btn-save{:tabindex => 6}
         = submit_tag ' Save'
 
+-#.panel.panel_edit-page{'data-level' => 'child'}
+-#  .title
+-#    Редактировать свойства
+-#  .line
+-#  .content
+
 / modal-gallery is the modal dialog used for the image gallery
 #modal-gallery.modal.modal-gallery.hide.fade{:tabindex => "-1"}
   .modal-header
@@ -154,7 +164,7 @@
       %span Next
       %i.icon-arrow-right.icon-white
 
-.panel_editor
+.panel_editor{'data-level' => 'child'}
 
 -#
   %script

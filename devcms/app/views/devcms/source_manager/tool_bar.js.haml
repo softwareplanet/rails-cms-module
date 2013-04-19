@@ -6,15 +6,22 @@ var object = '#{@object}';
   - when 'click'
     /When icon clicks, hide all panels
     var panel_to_show = '.panel_' + object;
+    $('[data-level=child]').hide();
     console.log('panel to show:' + panel_to_show);
     if ( $(panel_to_show).data('level') != 'child' ) {
-    $('.panel').hide();
+    var currentPanel = undefined;
+    $.each($('.panel'), function(){if($(this).css('display')!='none'){currentPanel = $(this)}});
+    if(currentPanel != undefined){$(currentPanel).slideLeftHide(function(){$(panel_to_show).slideLeftShow()})}
+    else{$(panel_to_show).slideLeftShow()};
+    } else {
+    $(panel_to_show).slideRightShow();
+    -#$(panel_to_show).slideRightShow();
     }
     $('.panel_editor').html('');
     $('.spinner').remove();
     /And show only related to this icon
-    $(panel_to_show).show();
-    $(panel_to_show + ' .content').html("");
+    -#$(panel_to_show).slideLeftShow();
+    -#$(panel_to_show + ' .content').html("");
     /And starts with ajax data retrieving..
     console.log(panel_to_show + ' .content');
     addSpinner(panel_to_show + ' .content');
