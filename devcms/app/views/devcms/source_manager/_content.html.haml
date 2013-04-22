@@ -1,7 +1,6 @@
 - @layouts.each do |layout|
-  - name = layout.name
 
-  .layout-row{"data-source_name" => name, :onclick => 'loadViewer(this)'}
+  .layout-row{"data-source_name" => layout.name, :onclick => 'loadViewer(this)'}
     .inner
       .list
       .name

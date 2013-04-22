@@ -271,8 +271,13 @@ body.cms {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  iframe {
-    overflow: auto;
+  .view_pane {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 0 0px 7px 7px;
+    iframe {
+      overflow: auto;
+    }
   }
 }
 .panel_editor {

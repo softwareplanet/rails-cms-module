@@ -179,7 +179,7 @@ window.loadViewer = (obj) ->
   request_json = {
     object: 'panel_viewer',
     activity: 'click',
-    layout: name
+    layout_name: name
   }
   $.ajax
     url: '/source_manager/panel_components'

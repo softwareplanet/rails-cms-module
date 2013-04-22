@@ -3,5 +3,5 @@
   - when 'panel_viewer'
     $('.panel').removeClass('show_panel_level_1');
     setTimeout(function(){$('.panel_viewer').show();},250);
-    $('.panel_viewer').html("<iframe style='width:100%; height: 100%;' src='/green'></iframe>");
+    $('.panel_viewer').html("<div class='view_pane'><iframe style='width:100%; height: 100%;' src='#{@layout_name}'></iframe></div>");
 

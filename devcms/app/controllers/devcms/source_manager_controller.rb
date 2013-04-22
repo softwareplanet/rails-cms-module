@@ -282,6 +282,11 @@ module Devcms
       @object = params[:object]
       case @activity
         when "click"
+          case @object
+            when 'panel_viewer'
+              #"pre3-id-1-tar-green3"
+              @layout_name = params[:layout_name]
+          end
         when "load"
       end
     end
