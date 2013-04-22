@@ -95,6 +95,10 @@ html.cms, body.cms {
 html.cms, body.cms {
   @extend .expander;
   background: url(#{$assets_path}/background.png) repeat;
+}
+
+body.cms {
+  padding-left: 100px;
   overflow: hidden;
 }
 
@@ -105,8 +109,10 @@ html.cms, body.cms {
 
 .toolbar {
   position: relative;
+  margin-left: -100px;
   left:  0;
   width: 100px;
+  min-height: 800px;
   height: 100%;
   z-index: 999;
   background: #222;
@@ -196,10 +202,27 @@ html.cms, body.cms {
 
 }
 
+
+
 .panel {
   float: left;
   display: none;
   position: relative;
+}
+.panel_structure,
+.panel_main,
+.panel_components,
+.panel_settings,
+.panel_content {
+  position: absolute;
+  display: block;
+  -webkit-transform: translate3d(-500px, 0, 0)!important;
+  -webkit-transition-duration: 250ms,250ms!important;
+}
+.panel_new-page,
+.panel_editor,
+.panel_properties {
+ left: 369px!important;
 }
 
 .panel_main,
@@ -214,9 +237,6 @@ html.cms, body.cms {
   background: #2681dc;
   color: #7fb3ec;
   -webkit-box-shadow: 0px 0px 11px #333;
-/*
-  overflow-y: auto;
-  overflow-x: hidden;*/
   box-shadow: 0px 0px 11px #333;
   .title {
     margin: 63px 15px 20px 20px;
@@ -236,6 +256,25 @@ html.cms, body.cms {
     left: -9px;
   }*/
 }
+
+
+.show_panel_level_1 {
+  display: block!important;
+  -webkit-transform: translate3d(0, 0, 0)!important;
+}
+
+.panel_properties, .panel_new-page {
+  -webkit-transition-duration: 250ms,250ms;
+}
+
+.panel_viewer {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  iframe {
+    overflow: auto;
+  }
+}
 .panel_editor {
   height: 100%;
   display: none;
@@ -246,11 +285,10 @@ html.cms, body.cms {
   width: 100%;
   z-index: 100;
   //position: static;
-  margin-left: -100px;
   background-color: white;
   .header {
     background-color: white;
-    margin-left: 100px;
+    //margin-left: 100px;
     .title {
       color: #000000;
       margin-left: 46px;
@@ -291,7 +329,7 @@ html.cms, body.cms {
     padding-top: 5px;
     font-size: 13px;
     color: black;
-    margin-left: 123px;
+    margin-left: 23px;
     margin-right: 23px;
     background-color: white;
     display: inline-block;
@@ -376,6 +414,9 @@ html.cms, body.cms {
 }
 
 .panel_structure {
+  -webkit-transform: translate3d(-500px, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-transition-duration: 250ms,250ms;
   z-index: 100;
   .add-structure {
     float: right;

@@ -10,7 +10,10 @@ window.InitializeCms = () ->
   editorManager.getEditor("css_editor").code_editor.clearHistory()
 
 $(document).ready ->
-  #InitializeCms()
+  $(window).bind "resize", ->
+    body_height = $('body').height()
+    if body_height > $('.toolbar').css('min-height')
+      $('.toolbar').css('height', body_height)
 
 #################################################################################
 

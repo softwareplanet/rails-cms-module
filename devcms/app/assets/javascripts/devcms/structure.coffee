@@ -3,14 +3,20 @@ $(document).ready ->
     if $('.panel_new-page').css('display') == 'block'
       $('.panel_new-page').css('display', 'none')
     else
-      request_json = {
-      object: 'new-page',
-      activity: 'click'
-      }
-      $.ajax
-        url: '/source_manager/tool_bar'
-        type: 'GET',
-        data: request_json
+      $("[data-level=child]").hide()
+      $(".panel_new-page").css "-webkit-transform", "translate3d(" + $(window).width() + "px, 0, 0)"
+      $(".panel_new-page").show()
+      setTimeout (->
+        $(".panel_new-page").css "-webkit-transform", "translate3d(0, 0, 0)"),
+        250
+#      request_json = {
+#      object: 'new-page',
+#      activity: 'click'
+#      }
+#      $.ajax
+#        url: '/source_manager/panel_structure'
+#        type: 'POST',
+#        data: request_json
 
 window.edit_properties = (obj) ->
   console.log 'edit properties click'
@@ -19,11 +25,13 @@ window.edit_properties = (obj) ->
     $('.panel_properties').css('display', 'none')
   else
     request_json = {
-    layout_id: id
+    layout_id: id,
+    object: 'edit_properties',
+    activity: 'load'
     }
     $.ajax
-      url: '/source_manager/properties'
-      type: 'GET',
+      url: '/source_manager/panel_structure'
+      type: 'POST',
       data: request_json
 
 #gear animation

@@ -141,16 +141,7 @@ module Devcms
     end
 
     def properties
-      @seo_id = '1-tar-' + params[:layout_id].gsub('pre1-id-', '')
-      @seo = Source.quick_attach(SourceType::LAYOUT,  params[:layout_id], SourceType::SEO)
-      path = @seo.get_source_folder + @seo_id
 
-      #File.open(path, "r").each_line  do |line|
-      #  puts '----'+line.gsub("[\<\/|\<][a-zA-Z0-9_-]+\>",'')
-      #  #f.puts('<title>' + name + '</title>')
-      #  #f.puts('<meta name="keywords" content="' +keywords  + '"/>')
-      #  #f.puts('<meta name="description" content="' + description + '"/>')
-      #end
     end
 
     def save_properties
@@ -237,6 +228,83 @@ module Devcms
       case @activity
         when "edit"
           @source = Source.find_by_id @object
+      end
+    end
+
+    def panel_main
+      @activity = params[:activity]
+      @object = params[:object]
+      @data = params[:data]
+      case @activity
+        when "click"
+        when "load"
+      end
+    end
+
+    def panel_structure
+      @activity = params[:activity]
+      @object = params[:object]
+      @data = params[:data]
+      case @activity
+        when "click"
+        when "load"
+          case @object
+            when 'edit_properties'
+              @layout_id = params[:layout_id]
+              @seo_id = '1-tar-' + @layout_id.gsub('pre1-id-', '')
+              @seo = Source.quick_attach(SourceType::LAYOUT,  @layout_id, SourceType::SEO)
+              @path = @seo.get_source_folder + @seo_id
+              #render :js => 'alert("' +  path + '");'
+              #return
+              #File.open(path, "r").each_line  do |line|
+              #  puts '----'+line.gsub("[\<\/|\<][a-zA-Z0-9_-]+\>",'')
+              #  #f.puts('<title>' + name + '</title>')
+              #  #f.puts('<meta name="keywords" content="' +keywords  + '"/>')
+              #  #f.puts('<meta name="description" content="' + description + '"/>')
+              #end
+              #render :js => 'alert("' +  I18n.t('create_layout_form.wrong') + '");'
+              #return
+          end
+      end
+    end
+
+    def panel_content
+      @activity = params[:activity]
+      @object = params[:object]
+      @data = params[:data]
+      case @activity
+        when "click"
+        when "load"
+      end
+    end
+
+    def panel_components
+      @activity = params[:activity]
+      @object = params[:object]
+      @data = params[:data]
+      case @activity
+        when "click"
+        when "load"
+      end
+    end
+
+    def panel_gallery
+      @activity = params[:activity]
+      @object = params[:object]
+      @data = params[:data]
+      case @activity
+        when "click"
+        when "load"
+      end
+    end
+
+    def panel_settings
+      @activity = params[:activity]
+      @object = params[:object]
+      @data = params[:data]
+      case @activity
+        when "click"
+        when "load"
       end
     end
 

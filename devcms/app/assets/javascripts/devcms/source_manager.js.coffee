@@ -174,17 +174,17 @@ window.properties = (obj) ->
   $(".panel_editor").html ""
   $(obj).parent().find(".preferences").toggle()
 
-#window.loadViewer = (obj) ->
-#  name = $(obj).data('source_name')
-#  request_json = {
-#    object: 'panel_viewer',
-#    activity: 'click',
-#    layout: name
-#  }
-#  $.ajax
-#    url: '/source_manager/tool_bar'
-#    type: 'GET',
-#    data: request_json
+window.loadViewer = (obj) ->
+  name = $(obj).data('source_name')
+  request_json = {
+    object: 'panel_viewer',
+    activity: 'click',
+    layout: name
+  }
+  $.ajax
+    url: '/source_manager/tool_bar'
+    type: 'GET',
+    data: request_json
 
 
 #SLIDE ELEMENT
