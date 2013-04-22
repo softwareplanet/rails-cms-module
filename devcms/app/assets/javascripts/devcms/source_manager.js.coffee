@@ -182,8 +182,8 @@ window.loadViewer = (obj) ->
     layout: name
   }
   $.ajax
-    url: '/source_manager/tool_bar'
-    type: 'GET',
+    url: '/source_manager/panel_components'
+    type: 'POST',
     data: request_json
 
 

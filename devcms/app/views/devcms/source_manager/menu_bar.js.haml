@@ -15,9 +15,6 @@ $(panel_content).html("");
         $(panel_content).html("#{ escape_javascript(render(:partial => 'content')) }");
       - when 'gallery'
         $(panel_content).html("#{ escape_javascript(render(:partial => 'images')) }");
-      - when 'panel_viewer'
-        $('.panel_viewer').show();
-        $('.panel_viewer').html("<iframe style='width:100%; height: 100%;' src='/green'></iframe>");
       - else
         $(panel_content).html("<br>&nbsp;&nbsp;..nothing to show yet");
 

@@ -39,7 +39,7 @@ Devcms::Engine.routes.draw do
       post "panel_main"
       post "panel_structure"
       post "panel_content"
-      post "panel_component"
+      post "panel_components"
       post "spanel_gallery"
       post "panel_settings"
 

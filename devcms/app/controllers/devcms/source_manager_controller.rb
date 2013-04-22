@@ -271,7 +271,6 @@ module Devcms
     def panel_content
       @activity = params[:activity]
       @object = params[:object]
-      @data = params[:data]
       case @activity
         when "click"
         when "load"
@@ -281,7 +280,6 @@ module Devcms
     def panel_components
       @activity = params[:activity]
       @object = params[:object]
-      @data = params[:data]
       case @activity
         when "click"
         when "load"
@@ -291,7 +289,6 @@ module Devcms
     def panel_gallery
       @activity = params[:activity]
       @object = params[:object]
-      @data = params[:data]
       case @activity
         when "click"
         when "load"
@@ -301,7 +298,6 @@ module Devcms
     def panel_settings
       @activity = params[:activity]
       @object = params[:object]
-      @data = params[:data]
       case @activity
         when "click"
         when "load"

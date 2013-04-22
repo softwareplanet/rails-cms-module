@@ -5,16 +5,11 @@ var object = '#{@object}';
 - case @activity
   - when 'click'
     var panel_to_show = '.panel_' + object;
-    $('[data-level=child]').hide();
-    if($(panel_to_show).data('level') == 'child') {
     $('.panel' + '[data-level="child"]').hide();
-    $(panel_to_show).show()
-    } else if (panel_to_show == '.panel_gallery') {
-    $('.panel' + '[data-level="child"]').hide();
+    if (panel_to_show == '.panel_gallery') {
     $('.panel').removeClass('show_panel_level_1');
     setTimeout(function(){$('.panel_gallery').show()},250);
     } else {
-    $('.panel' + '[data-level="child"]').hide();
     $('.panel_gallery').hide();
     $('.panel').removeClass('show_panel_level_1');
     $(panel_to_show).show();
@@ -24,7 +19,6 @@ var object = '#{@object}';
     $('.spinner').remove();
     $(panel_to_show + ' .content').html("");
     //And starts with ajax data retrieving..
-    console.log(panel_to_show + ' .content');
     addSpinner(panel_to_show + ' .content');
     request_json = {object: object, activity: 'load'}
     $.ajax({url: '/source_manager/menu_bar', type: 'GET', data: request_json });
