@@ -48,10 +48,16 @@
       Галерея
       .navigation_panel
         #help_icon
-        #load_new_image
+        #load_to_gallery{'data-toggle'=> 'dropdown'}
         %form{:id => "load_image", :action => "source_manager/upload", :method => "post", :enctype => "multipart/form-data"}
           %input{:type => 'file', :id => "image_src", :name => "Filedata"}
           %button{:type => "submit"}
+        .dropdown-menu.preferences
+          .preferences-rect
+          %li.add_folder
+            Добавить папку
+          %li.add_image
+            Добавить картинку
   #gallery{"data-selector" => ".gallery-image", "data-target" => "#modal-gallery", "data-toggle" => "modal-gallery"}
     .content
 .panel.panel_settings

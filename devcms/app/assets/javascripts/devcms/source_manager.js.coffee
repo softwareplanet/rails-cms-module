@@ -140,7 +140,7 @@ $(document).ready ->
     $(this).parent().ajaxSubmit();
     $(this).parent().clearForm();
 
-  $("#load_new_image").click ->
+  $(".add_image").click ->
     $("#image_src").click()
 
 window.delete_image= (image) ->

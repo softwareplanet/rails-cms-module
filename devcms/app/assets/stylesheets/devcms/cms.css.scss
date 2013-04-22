@@ -301,7 +301,8 @@ body.cms {
       .navigation_panel {
         float: right;
         height: 19px;
-        #load_new_image {
+        position: relative;
+        #load_to_gallery {
           float: right;
           margin-right: 23px;
           cursor: pointer;
@@ -321,6 +322,57 @@ body.cms {
         form {
           opacity: 0;
           margin: 40px 0 0 0;
+        }
+        .preferences {
+          cursor: pointer;
+          margin: 0;
+          padding: 0;
+          background-color: none!important;
+          border:  none;
+          top: 27px;
+          left: 35px;
+          width: 229px;
+          .preferences-rect {
+            position: absolute;
+            margin:-8px 0 0 208px;
+            background: url(#{$assets_path}/icons/rect_top_shadow.png) no-repeat;
+            height: 8px;
+            width: 14px;
+          }
+          li {
+            height: 49px;
+            width: 100%;
+            line-height: 50px;
+            color: black;
+            cursor: pointer;
+            font-size: 15px;
+            text-align: center;
+            font-weight: 100;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          }
+          .add_folder {
+            color: black;
+            background-color: white;
+
+          }
+          .add_image {
+            color: black;
+            background-color: white;
+          }
+          .add_folder:hover {
+            color: white;
+            background-color: #539ce5;
+            div {
+              background: url(#{$assets_path}/icons/pen.png) no-repeat;
+            }
+          }
+          .add_image:hover {
+            color: white;
+            background-color: #539ce5;
+            div {
+              background: url(#{$assets_path}/icons/delete2.png) no-repeat;
+            }
+          }
         }
       }
     }
