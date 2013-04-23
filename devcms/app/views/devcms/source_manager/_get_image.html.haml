@@ -4,7 +4,7 @@
 %div{:id => image.get_id, :title => image.name + '.' + image.extension}
   .delete_image{:onclick => "delete_image(this)", :data => {'image-name' => "#{image.name}"}}
     x
-  %input{:onfocusout => "rename_finish(this)", :onkeypress => "checkKeyForDelete(this)"}
+  %input{:onfocusout => "rename_finish(this)", :onkeypress => "renameOnEnterKey(this)"}
   .gallery-image{"data-href" => image.get_image_path}
     %img{:src => image.get_image_path}
   .image_description{ :data => {'info' => "#{image_info}"}}
