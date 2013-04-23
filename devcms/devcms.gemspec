@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.summary       = %q{A Ruby on Rails CMS that supports Rails 3.2}
   s.email         = %q{no-reply@interlink-ua.com}
   s.homepage      = %q{http://www2.interlink-ua.com}
-  s.authors       = ['Inna Skorik', 'Yaroslava Velichko', 'Vitaly Pestov']
+  s.authors       = ['Inna Skorik', 'Yaroslava Velichko', 'Vitaly Pestov', 'Shevchuk Alexander']
   s.license       = %q{Open Core}
   s.require_paths = %w(lib)
 

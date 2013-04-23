@@ -20,3 +20,11 @@ en:
     wrong_address: Already exists
     wrong: Failed to create a page
     success: Successfully added
+
+
+  save_layout_form:
+    blank_address: Cannot be blank
+    address_exist: Already exists
+    wrong_address: Wrong address
+    wrong: Failed to create a page
+    success: Successfully added

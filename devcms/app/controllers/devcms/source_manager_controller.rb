@@ -145,45 +145,46 @@ module Devcms
     end
 
     def save_properties
-      name = params[:name]
-      address = params[:address]
+
+      @layout_name = params[:id]
+      title = params[:title]
+      @address = params[:url]
       no_show = params[:no_show]
       no_publish = params[:no_publish]
       keywords = params[:keywords]
       description = params[:description]
 
-      @source = Source.find_by_id( params[:layout_id])
+      if @address.blank?
+        @message = I18n.t('save_layout_form.blank_address')
 
-      if address.blank?
-        @message = I18n.t('create_layout_form.blank_address')
+      elsif  /\W/.match(@address)
+          @message = I18n.t('save_layout_form.wrong_address')
 
-      elsif !Source.find_by_name(address).blank?
-        @message = I18n.t('create_layout_form.wrong_address')
+      elsif (@layout_name != @address) && (Source.find_by_name(@address).length > 0 )
+          @message = I18n.t('save_layout_form.address_exist')
 
       else
         begin
-          @source = Source.new(:type => type, :name => address)
-          @source.save!
-
-          @css = Source.new(:type => SourceType::CSS, :target => @source)
-          @css.save!
-
-          @seo = Source.new(:type => SourceType::SEO, :target => @source)
+          @seo = Source.quick_attach(SourceType::LAYOUT,  @layout_name, SourceType::SEO)
+          @seo.data = "<title>#{title}</title>\n<meta name=\"keywords\" content=\"#{keywords}\"/>\n<meta name=\"description\" content=\"#{description}\"/>\n"
           @seo.save!
+          if @layout_name != @address
 
-          path = @seo.get_source_folder + @seo.get_filename
+            seo_path = @seo.get_source_folder + @seo.get_filename
+            File.rename(seo_path, @seo.get_source_folder + '1-tar-' + @address)
 
-          File.open(path, "w+") do |f|
-            f.puts('<title>' + name + '</title>')
-            f.puts('<meta name="keywords" content="' +keywords  + '"/>')
-            f.puts('<meta name="description" content="' + description + '"/>')
+            @layout = Source.find_by_name(@layout_name).first
+            layout_path = @layout.get_source_folder + @layout.get_filename
+            File.rename(layout_path, @layout.get_source_folder + @address)
+            @source = Source.find_by_name(@address).first
+
           end
 
         rescue Exception => exc
-          render :js => 'alert("' +  I18n.t('create_layout_form.wrong') + '");'
+          render :js => 'alert("' +  I18n.t('save_layout_form.wrong') + '");'
           return
         end
-        render 'create'
+        render 'save_properties'
         return
       end
       render :js => 'alert("' +  @message + '");'
@@ -251,19 +252,27 @@ module Devcms
           case @object
             when 'edit_properties'
               @layout_id = params[:layout_id]
-              @seo_id = '1-tar-' + @layout_id.gsub('pre1-id-', '')
-              @seo = Source.quick_attach(SourceType::LAYOUT,  @layout_id, SourceType::SEO)
-              @path = @seo.get_source_folder + @seo_id
-              #render :js => 'alert("' +  path + '");'
-              #return
-              #File.open(path, "r").each_line  do |line|
-              #  puts '----'+line.gsub("[\<\/|\<][a-zA-Z0-9_-]+\>",'')
-              #  #f.puts('<title>' + name + '</title>')
-              #  #f.puts('<meta name="keywords" content="' +keywords  + '"/>')
-              #  #f.puts('<meta name="description" content="' + description + '"/>')
-              #end
-              #render :js => 'alert("' +  I18n.t('create_layout_form.wrong') + '");'
-              #return
+              @page_name = @layout_id.gsub('pre1-id-', '')
+              @seo_id = @layout_id.gsub('pre1-id-', '1-tar-')
+              @seo = Source.quick_attach(SourceType::LAYOUT,  @page_name, SourceType::SEO)
+              @path = @seo.get_source_folder + @seo.name
+
+              File.open(@path, "r").each_line  do |line|
+                line = line.downcase()
+                if line.slice('title')
+                  str1 = "<title>"
+                  str2 = "</title>"
+                  @title = line[line.index(str1) + str1.size .. line.index(str2)-1]
+                end
+                if line.slice('keywords')
+                  str = "content=\""
+                  @keywords = line[line.index(str) + str.size .. -5]
+                end
+                if line.slice('description')
+                  str = "content=\""
+                  @description = line[line.index(str) + str.size .. -5]
+                end
+              end
           end
       end
     end
