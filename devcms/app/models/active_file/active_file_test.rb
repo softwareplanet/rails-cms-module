@@ -1,6 +1,8 @@
 # Simple Test Suite.
+# Simple Test Suite.
 # How to use: open terminal. Go to test folder, and run `ruby active_file_test.rb`. Alternatively, run from your IDE.
 require '../active_file/base'
+
 class Material < ActiveFile::Base; end
 class Diamond < ActiveFile::Base; end
 class Photo < ActiveFile::Base; end
@@ -10,6 +12,20 @@ Material.has_one :diamond
 Diamond.belongs_to :material
 Diamond.has_many :photos
 Photo.belongs_to :diamond
+
+class A  < ActiveFile::Base
+  has_one :b
+  has_many :c
+end
+class B  < ActiveFile::Base
+  belongs_to :a
+  has_many :c
+end
+class C  < ActiveFile::Base
+  belongs_to :a
+  belongs_to :b
+end
+
 
 module TestSuite
   require 'fileutils'
@@ -34,7 +50,9 @@ module TestSuite
     raised = assert_raise_base{yield}
     assert_true(raised == nil)
   end
-  def prepare; FileUtils.rm_rf('data_source') end
+  def prepare
+    FileUtils.rm_rf(ActiveFile::Dependency::BASE_FOLDER)
+  end
   def runner
     puts "-------------\n Starting at #{@start = Time.now}...\n\n"
     super_test_methods = self.class.instance_methods.select{|m| m.to_s.start_with?('super_test_') }
@@ -49,7 +67,7 @@ module Tests
     include TestSuite
 
     def base_folder
-      ActiveFile::Base::BASE_FOLDER
+      ActiveFile::Dependency::BASE_FOLDER
     end
 
     def test_empty_constructor
@@ -69,15 +87,30 @@ module Tests
       material = Material.new(name: 'Carbon')
       assert_equal(material.get_file_path, base_folder+'materials/Carbon')
     end
-    def super_test_get_belongs_path
+    def test_get_file_path_extension
+      material = Material.new(name: 'Carbon.txt')
+      assert_equal(material.get_file_path, base_folder+'materials/Carbon.txt')
+    end
+    def test_get_belongs_path
       material = Material.new(:name => 'Carbon')
       diamond = Diamond.new(:name => 'Gem', material: material)
-      assert_equal(diamond.get_file_path, base_folder+'diamonds/materials/Carbon')
+      assert_equal(diamond.get_file_path, base_folder+'diamonds/Gem-tar-material-Carbon')
+    end
+    def test_get_belongs_path_extension
+      material = Material.new(:name => 'Carbon.txt')
+      diamond = Diamond.new(:name => 'Gem', material: material)
+      assert_equal(diamond.get_file_path, base_folder+'diamonds/Gem-tar-material-Carbon-ext-txt')
     end
     def test_save_method
-      material = Material.new(:name => 'Carbon')
+      material = Material.new(:name => 'Leonid.txt', :data => 'This is Spartaaaaa!')
       material.save
       assert_true(File.exists?(material.get_file_path))
+    end
+    def test_finder
+      material = Material.new(:name => 'Leonid.txt')
+      material.save
+      search_result = Material.find('Leonid.txt')
+      assert_equal(material, search_result)
     end
     def test_find_method
       Material.new(name: 'Carbon', data: 'File text data').save
@@ -94,11 +127,11 @@ module Tests
       assert_true(material != nil)
       assert_equal(material.get_data, 'File text data')
     end
-    def test_belongs_to
-      material = Material.new
-      diamond = Diamond.new(:material => material, :name => 'Carbon')
+    def super_test_belongs_to
+      material = Material.new(:name => 'Carbon')
+      diamond = Diamond.new(:material => material, :name => 'Gem')
       diamond.save
-      new_diamond = Diamond.find('Carbon')
+      new_diamond = Diamond.find('Gem')
       assert_equal(new_diamond.material, material)
     end
 
