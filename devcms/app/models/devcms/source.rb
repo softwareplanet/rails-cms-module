@@ -35,8 +35,13 @@ module Devcms
     end
 
     def get_image_size
+      if self.path.nil?
+        @source_path = get_source_path
+      else
+        @source_path = self.path
+      end
       @size = "not detected"
-      open(get_source_path, "rb") do |fh|
+      open(@source_path, "rb") do |fh|
         @size = ImageSize.new(fh.read).get_size
       end
       @size
