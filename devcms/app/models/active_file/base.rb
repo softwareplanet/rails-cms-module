@@ -14,6 +14,13 @@ module ActiveFile # v0.01: <active_support-required version>
   require 'ostruct'
   require 'active_support/core_ext/object/blank'
 
+  # Decoration constants:
+  ASSOC_DELIMITER = '-tar-'
+  TARGET_DIVIDER = ASSOC_DELIMITER
+  SIMPLE_DELIMITER = '-'
+  EXTENSION_DELIMITER = '-ext-'
+  BASE_FOLDER = './file_base/'
+
   # Basic ActiveFile syntax validator. To prevent errors, that can potentially appears, set STRONG_VALIDATOR constant to true
   #
   module Syntax
@@ -110,8 +117,8 @@ module ActiveFile # v0.01: <active_support-required version>
 
       def self.get_relation_object(owner, relation_name)
         association = get_associations(owner, relation_name.singularize.camelize, nil)
-        if association[0].dependency_type == BELONGS_TO
-          PathBuilder.get_assoc_objects(owner)
+        if association[0].dependency_type == DependencyDefinition::BELONGS_TO
+          PathParser.get_assoc_objects(owner)
 
           # get relation object simple, from file path:
           #filepath = Finder.find_by_name(owner.class, owner.name)
@@ -128,10 +135,10 @@ module ActiveFile # v0.01: <active_support-required version>
       def self.build_association(dependency_owner, dependency_target, dependency_type, relation_object)
         dependency_owner.relation_objects ||= []
 
-        Syntax::SyntaxValidator.syntax_warning(dependency_target, Syntax::WARNING_LAZY_PARENT_NAME) if dependency_type == Dependency::BELONGS_TO && relation_object.name.nil?
+        Syntax::SyntaxValidator.syntax_warning(dependency_target, Syntax::WARNING_LAZY_PARENT_NAME) if dependency_type == DependencyDefinition::BELONGS_TO && relation_object.name.nil?
 
-        dependency_association = Dependency::DependencyClass.new(dependency_type, dependency_owner.class.to_s, dependency_target)
-        relation = Dependency::RelationObject.new(relation_object, dependency_association)
+        dependency_association = DependencyDefinition::DependencyClass.new(dependency_type, dependency_owner.class.to_s, dependency_target)
+        relation = DependencyDefinition::RelationObject.new(relation_object, dependency_association)
         dependency_owner.relation_objects.push(relation)
       end
 
@@ -156,10 +163,10 @@ module ActiveFile # v0.01: <active_support-required version>
         self.get_association(object, HAS_MANY)
       end
       def self.get_parents(object)
-        self.get_association(object, BELONGS_TO)
+        self.get_association(object, DependencyDefinition::BELONGS_TO)
       end
       def self.get_childrens(object)
-        self.get_association(object, [HAS_MANY, HAS_ONE])
+        self.get_association(object, [DependencyDefinition::HAS_MANY, DependencyDefinition::HAS_ONE])
       end
       def self.get_association(object, dependency_type)
         return [] if object.relation_objects.blank?
@@ -171,12 +178,7 @@ module ActiveFile # v0.01: <active_support-required version>
     end
 
     # File path and file name manipulation logic composing is here:
-
-    ASSOC_DELIMITER = '-tar-'
-    SIMPLE_DELIMITER = '-'
-    EXTENSION_DELIMITER = '-ext-'
-    BASE_FOLDER = './file_base/'
-
+    #
     class PathBuilder
       def self.get_raw_single_class(object)
         object.is_a?(Class) ? object.to_s.downcase : object.class.to_s.singularize.downcase
@@ -218,9 +220,9 @@ module ActiveFile # v0.01: <active_support-required version>
         file_path
         assoc_objects=[]
         file_path.split(TARGET_DIVIDER)[1..-1].each do |class_name_pair|
-          obj_class
-          obj_name
-          assoc_objects.push(Dependency::ObjectDefinition.new(obj_class, obj_name))
+          obj_class = ''
+          obj_name = ''
+          assoc_objects.push(DependencyDefinition::ObjectDefinition.new(obj_class, obj_name))
         end
 
 
@@ -234,7 +236,7 @@ module ActiveFile # v0.01: <active_support-required version>
     class Finder
       def self.find_by_name(class_class, search_term)
         overriden_base_folder = class_class.get_overriden_locations.select{|col| col.location_directory if col.class_name == class_class.to_s}.compact.first
-        file_path = Dependency::PathBuilder.build_class_path(class_class, overriden_base_folder)
+        file_path = DependencyAction::PathBuilder.build_class_path(class_class, overriden_base_folder)
 
         search_name, search_extension = search_term.split('.')
         search_extension.prepend('.') if search_extension
@@ -307,7 +309,7 @@ module ActiveFile # v0.01: <active_support-required version>
       # Let Open Struct to populate it's internal state:
       super(hash)
       # And bind relative objects, if was specified
-      Dependency::AssociationManager.initialize(self, hash)
+      DependencyAction::AssociationManager.initialize(self, hash)
     end
 
     def self.get_dependency_classes;
@@ -322,7 +324,7 @@ module ActiveFile # v0.01: <active_support-required version>
     #
     def get_file_path
       raise 'File name not specified' if name.nil?
-      Dependency::PathBuilder.build_file_path(self)
+      DependencyAction::PathBuilder.build_file_path(self)
     end
 
     # Save ActiveFile instance to file system object
@@ -355,7 +357,7 @@ module ActiveFile # v0.01: <active_support-required version>
     # Find ActiveFile object by name:
     #
     def self.find(name)
-      Dependency::Finder.find_by_name(self, name)
+      DependencyAction::Finder.find_by_name(self, name)
     end
 
     # Bind associations
@@ -374,7 +376,7 @@ module ActiveFile # v0.01: <active_support-required version>
       object_array.each do |obj|
         dependency = get_dependency_for_target_class(obj.class)
         raise "No one dependency rule <has/belongs> were specified between owner #{self} and target #{obj}" if dependency.nil?
-        relation = Dependency::RelationObject.new(obj, dependency)
+        relation = DependencyDefinition::RelationObject.new(obj, dependency)
         @relation_objects ||= []
         @relation_objects.push(relation)
       end
@@ -454,19 +456,19 @@ module ActiveFile # v0.01: <active_support-required version>
     end
 
     def self.belongs_to(parent_name)
-      @@dependency_classes.push(ActiveFile::Dependency::DependencyClass.new(ActiveFile::Dependency::BELONGS_TO, self.to_s, parent_name.to_s.camelize))
+      @@dependency_classes.push(ActiveFile::DependencyDefinition::DependencyClass.new(ActiveFile::DependencyDefinition::BELONGS_TO, self.to_s, parent_name.to_s.camelize))
     end
 
     def self.has_one(child_name)
-      @@dependency_classes.push(ActiveFile::Dependency::DependencyClass.new(ActiveFile::Dependency::HAS_ONE, self.to_s, child_name.to_s.camelize))
+      @@dependency_classes.push(ActiveFile::DependencyDefinition::DependencyClass.new(ActiveFile::DependencyDefinition::HAS_ONE, self.to_s, child_name.to_s.camelize))
     end
 
     def self.has_many(child_name)
-      @@dependency_classes.push(ActiveFile::Dependency::DependencyClass.new(ActiveFile::Dependency::HAS_MANY, self.to_s, child_name.to_s.singularize.camelize))
+      @@dependency_classes.push(ActiveFile::DependencyDefinition::DependencyClass.new(ActiveFile::DependencyDefinition::HAS_MANY, self.to_s, child_name.to_s.singularize.camelize))
     end
 
     def self.file_path(overriden_file_path)
-      @@overriden_locations.push(ActiveFile::Dependency::ClassObjectsLocation.new(self.to_s, overriden_file_path))
+      @@overriden_locations.push(ActiveFile::DependencyDefinition::ClassObjectsLocation.new(self.to_s, overriden_file_path))
     end
 
     # Extend model with dependency-relation methods
@@ -475,9 +477,9 @@ module ActiveFile # v0.01: <active_support-required version>
       if (super_result = super(method, *args, &block)) == nil
         method_name, method_chomps = method.id2name, method.id2name.chomp('=')
         len = args.length
-        association = Dependency::AssociationManager.get_associations(self, method_chomps, nil)
+        association = DependencyAction::AssociationManager.get_associations(self, method_chomps, nil)
         if association.any?
-          super_result = Dependency::AssociationManager.get_relation_object(self, method_chomps)
+          super_result = DependencyAction::AssociationManager.get_relation_object(self, method_chomps)
           if method_name.include?('=') && method != :[]=
             raise ArgumentError, "wrong number of arguments (#{len} for 1)", caller(1) if len != 1
             modifiable[new_ostruct_member(method_chomps)] = args[0]
@@ -538,13 +540,13 @@ module ActiveFile # v0.01: <active_support-required version>
       dependency_type = dependency.dependency_type
       object =
           case dependency_type
-            when ActiveFile::Dependency::HAS_ONE
+            when ActiveFile::DependencyDefinition::HAS_ONE
               object_in_array = self.get_dependency_objects(dependency)
               object_in_array.any? ? object_in_array[0] : nil
-            when ActiveFile::Dependency::HAS_MANY
+            when ActiveFile::DependencyDefinition::HAS_MANY
               object_in_array = self.get_dependency_objects(dependency)
               object_in_array
-            when ActiveFile::Dependency::BELONGS_TO
+            when ActiveFile::DependencyDefinition::BELONGS_TO
               object_in_array = self.get_dependency_objects(dependency)
               object_in_array.any? ? object_in_array[0] : nil
             else

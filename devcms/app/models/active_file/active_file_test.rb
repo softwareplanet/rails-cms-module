@@ -1,31 +1,22 @@
 # Simple Test Suite.
-# Simple Test Suite.
 # How to use: open terminal. Go to test folder, and run `ruby active_file_test.rb`. Alternatively, run from your IDE.
 require '../active_file/base'
 
-class Material < ActiveFile::Base; end
-class Diamond < ActiveFile::Base; end
-class Photo < ActiveFile::Base; end
-class ForeverAlone < ActiveFile::Base; end
-
-Material.has_one :diamond
-Diamond.belongs_to :material
-Diamond.has_many :photos
-Photo.belongs_to :diamond
-
-class A  < ActiveFile::Base
-  has_one :b
-  has_many :c
-end
-class B  < ActiveFile::Base
-  belongs_to :a
-  has_many :c
-end
-class C  < ActiveFile::Base
-  belongs_to :a
-  belongs_to :b
+class Material < ActiveFile::Base
+  has_one :diamond
 end
 
+class Diamond < ActiveFile::Base
+  belongs_to :material
+  has_many :photos
+end
+
+class Photo < ActiveFile::Base
+  belongs_to :diamond
+end
+
+class ForeverAlone < ActiveFile::Base
+end
 
 module TestSuite
   require 'fileutils'
@@ -51,7 +42,7 @@ module TestSuite
     assert_true(raised == nil)
   end
   def prepare
-    FileUtils.rm_rf(ActiveFile::Dependency::BASE_FOLDER)
+    FileUtils.rm_rf(ActiveFile::BASE_FOLDER)
   end
   def runner
     puts "-------------\n Starting at #{@start = Time.now}...\n\n"
@@ -67,7 +58,7 @@ module Tests
     include TestSuite
 
     def base_folder
-      ActiveFile::Dependency::BASE_FOLDER
+      ActiveFile::DependencyDefinition::BASE_FOLDER
     end
 
     def test_empty_constructor
