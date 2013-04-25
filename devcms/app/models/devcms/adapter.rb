@@ -212,7 +212,7 @@ module Devcms
         dir = Adapter.get_source_folder(source_type)
         source_extension = SOURCE_TYPE_EXTENSIONS[source_type.to_i]
 
-        Dir.glob(dir+"*").each do |f|
+        Dir.glob(dir+"**/*").each do |f|
           name_with_extension = f.split('/').last
           extension = name_with_extension.split('.').size > 1 ? name_with_extension.split('.').last : ""
           name_without_extension = nil
@@ -225,7 +225,7 @@ module Devcms
             name_without_extension = source_extension == "*" ? name_with_extension.split('.').first : name_with_extension[0..-source_extension.length-2]
           end
 
-          s = Source.new({ :type => source_type, :name => name_without_extension, :extension => extension, :data => nil })
+          s = Source.new({ :type => source_type, :name => name_without_extension, :extension => extension, :data => nil, :path => f })
           target_object = s.get_target
           s.target = target_object unless target_object.nil?
           files.push(s)

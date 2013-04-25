@@ -16,6 +16,16 @@
       Главная
     .line
   .content
+-#.cms-folder
+  %div{:title => 'folder name'}
+    .delete_image{:onclick => "delete_image(this)"}
+      x
+    %input{:onfocusout => "rename_finish(this)", :onkeypress => "checkKeyForDelete(this)"}
+    .gallery-image
+      1111
+    .image_description
+      foo bar
+      .edit_name{:onclick => "rename_image(this)"}
 
 .panel.panel_structure{:data_name => 'panel_structure', :data_menu => 'structure'}
   .header
@@ -27,7 +37,7 @@
   .content
 
 .panel.panel_content
-  .header
+  -#.header
     .rect
     .title
       Содержание
@@ -73,22 +83,21 @@
   .title
     Свойства страницы
   .line
-
-  %form{:id => 'properties_form', :style => "padding: 10px;"}
+  = form_tag url_for( :controller => "source_manager", :action => "save_properties", :method => "post" ), :id => "properties_form", :style => 'padding: 10px;', :remote => true do
     %fieldset
       %input{:type => "hidden", :name => "id"}
 
       %label Заголовок
-      %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1}
+      %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "title"}
 
       %label Адрес
-      %input.url{:placeholder => "Input layout url…", :type => "text"}
+      %input.url{:placeholder => "Input layout url…", :type => "text", :name => "url"}
       %br
       %label.checkbox
-        %input{:type => "checkbox"}
+        %input{:type => "checkbox", :name => "no_show",}
         Не показывать в меню
       %label.checkbox
-        %input{:type => "checkbox"}
+        %input{:type => "checkbox", :name => "no_publish"}
         Не публиковать на сайте
       #accordion.seoblock
         .accordion-group
@@ -99,12 +108,12 @@
           #collapseOne.accordion-body.collapse.in
             .accordion-inner
               %label Ключевые слова
-              %input.name{:placeholder => "Keywords…", :type => "text", :tabindex => 1}
+              %input.name.keywords{:placeholder => "Keywords…", :type => "text", :tabindex => 1, :name => "keywords"}
 
               %label Описание
-              %input.url{:placeholder => "Description…", :type => "text"}
+              %input.url.description{:placeholder => "Description…", :type => "text", :name => "description"}
       .btn-save
-        %button.btn.btn-primary.add-source{:type => "submit", "data-type" => Devcms::SourceType::LAYOUT, :tabindex => 2} СОХРАНИТЬ
+        %button.btn.btn-primary.save-source{:type => "submit", "data-type" => Devcms::SourceType::LAYOUT, :tabindex => 2} СОХРАНИТЬ
 
 .panel.panel_new-page{'data-level' => 'child'}
   .title

@@ -469,7 +469,11 @@ body.cms {
     display: inline-block;
   }
 }
-
+.cms-folder {
+  background: url(#{$assets_path}/cms-folder.png) no-repeat;
+  width: 170px;
+  height: 130px;
+}
 .panel_structure {
   -webkit-transform: translate3d(-500px, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
@@ -500,11 +504,14 @@ body.cms {
 .panel_content {
   z-index: 100;
   width: 369px;
-  padding-bottom: 15px;
+  //padding-bottom: 15px;
+  top: 220px;
+  left: 126px;
   //height: 100%;
-  background: #2681dc;
+  background: rgba(38, 129, 220, 0.6);
+
   color: #7fb3ec;
-  border-radius: 0 5px 5px 0;
+  border-radius: 5px;
   -webkit-box-shadow: 0px 0px 11px #333;
   box-shadow: 0px 0px 11px #333;
   .title {

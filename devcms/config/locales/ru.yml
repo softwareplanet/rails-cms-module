@@ -20,3 +20,11 @@ ru:
     wrong_address: Уже существует
     wrong: Не удалось создать страницу
     success: Успешно добавлено
+
+
+  save_layout_form:
+    blank_address: Не может быть пустым
+    address_exist: Уже существует
+    wrong_address: Не правильный адрес
+    wrong: Не удалось создать страницу
+    success: Успешно добавлено
