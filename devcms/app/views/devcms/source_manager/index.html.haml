@@ -60,6 +60,7 @@
         #help_icon
         #load_to_gallery{'data-toggle'=> 'dropdown'}
         %form{:id => "load_image", :action => "source_manager/upload", :method => "post", :enctype => "multipart/form-data"}
+          %input{:id => "to_dir", :type => "hidden", :name => "to_dir"}
           %input{:type => 'file', :id => "image_src", :name => "Filedata"}
           %button{:type => "submit"}
         .dropdown-menu.preferences

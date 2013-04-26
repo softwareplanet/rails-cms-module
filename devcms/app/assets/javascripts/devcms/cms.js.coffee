@@ -31,7 +31,12 @@ $(document).ready ->
     object: $(this).data('icon'),
     activity: 'click'
     }
-    console.log(request_json)
+
+    if request_json.object == 'gallery'
+      data_path = $('.panel_gallery .content').attr('data-path')
+#      request_json.path = 'public/img/storage/test_folder/'
+      request_json.path = data_path
+
     $.ajax
       url: '/source_manager/tool_bar'
       type: 'GET',

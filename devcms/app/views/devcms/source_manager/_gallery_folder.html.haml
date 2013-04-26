@@ -1,0 +1,11 @@
+.gallery-folder{ 'data-path' => "#{@dir.path}" }
+  .delete_image{:onclick => "deleteFolder(this)"}
+    x
+  .count-image
+    = @dir.size
+  %input{:onfocusout => "rename_folder_finish(this)", :onkeypress => "checkKeyForDelete(this)"}
+  .dir{:onclick => 'open_folder(this)'}
+  .image_description{ :data => {'info' => "#{@dir.name}"}}
+    #{truncate(@dir.name, :length => 22, :omission => '...')}
+    .edit_name{:onclick => "rename_folder(this)"}
+    -#.edit_name

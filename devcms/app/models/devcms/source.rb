@@ -198,5 +198,38 @@ module Devcms
 
       return plain_src
     end
+
+    def self.mkdir(path, fname = 'folder')
+      #path = 'public/img/'
+
+      raise('wrong name') unless !/\W/.match(fname)
+
+      if !File.directory?(path+fname)
+        Dir.mkdir(path+fname)
+        return path+fname
+      else
+        i = 2
+        while true
+          if !File.directory?(path+fname + i.to_s)
+            Dir.mkdir(path+fname + i.to_s)
+            return path+fname + i.to_s
+          end
+          i+=1
+        end
+      end
+    end
+
+    def self.rename_dir(old_path, fname)
+      raise('wrong name') unless !/\W/.match(fname)
+      new_path = Pathname.new(old_path).dirname.to_s + '/' + fname
+      FileUtils.mv(old_path, new_path) unless new_path == old_path
+      new_path
+    end
+
+    def self.delete_dir(path)
+      if path.match('public/')
+        FileUtils.rm_rf(path)
+      end
+    end
   end
 end
