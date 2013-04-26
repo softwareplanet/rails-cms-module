@@ -833,6 +833,28 @@ body.cms {
   background: #539ce5;
 }
 
+.inactive-panel_structure {
+  background: #ebebeb;
+  .title {
+    color: #555555;
+  }
+  .line {
+    border-bottom: 2px solid #969da3;
+  }
+  .layout-row {
+    color: #555555;
+    .list {
+      background: url(#{$assets_path}/icons/list2.png) no-repeat;
+    }
+  }
+  .layout-row:hover {
+    background-color: #969da3;
+  }
+  .add-structure {
+    background: url(/assets/ui/icons/plus2.png);
+  }
+}
+
 .editor-panel {
   height: 100%;
   //background: #2681dc;
