@@ -3,7 +3,7 @@
     before_filter :set_locale, :setup_application_data
     protect_from_forgery
 
-    USE_COOKIES = true
+    USE_COOKIES = false
 
     # If request locale not specified, redirect to session locale:
     def all_locales_redirect

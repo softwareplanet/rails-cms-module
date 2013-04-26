@@ -4,20 +4,24 @@ var object = '#{@object}';
 /Tool bar actions
 - case @activity
   - when 'click'
-    /When icon clicks, hide all panels
     var panel_to_show = '.panel_' + object;
-    console.log('panel to show:' + panel_to_show);
-    if ( $(panel_to_show).data('level') != 'child' ) {
-    $('.panel').hide();
-    }
-
-    $('.spinner').remove();
-    /And show only related to this icon
+    $('.panel' + '[data-level="child"]').hide();
+    if (panel_to_show == '.panel_gallery') {
+    $('.panel').removeClass('show_panel_level_1');
+    setTimeout(function(){$('.panel_gallery').show()},250);
+    } else {
+    $('.panel_gallery').hide();
+    $('.panel').removeClass('show_panel_level_1');
     $(panel_to_show).show();
+    setTimeout(function(){$(panel_to_show).addClass('show_panel_level_1');},250);
+    }
+    $('.panel_editor').html('');
+    $('.spinner').remove();
     $(panel_to_show + ' .content').html("");
-    /And starts with ajax data retrieving..
-    console.log(panel_to_show + ' .content');
+    //And starts with ajax data retrieving..
     addSpinner(panel_to_show + ' .content');
-
     request_json = {object: object, activity: 'load'}
+    if ((object == 'gallery') && (#{!@path.nil?})) {
+    request_json.path = '#{@path}';
+    }
     $.ajax({url: '/source_manager/menu_bar', type: 'GET', data: request_json });

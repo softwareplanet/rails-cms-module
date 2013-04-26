@@ -1,6 +1,8 @@
 $(".panel_editor").html("#{ escape_javascript(render(:partial =>  "panel_editor", :locals => {:source => @source})) }");
-var editorManager = null;
-editorManager = new CodeEditorsManager;
+$(".panel_editor").slideRightShow()
+window.editorManager = new CodeEditorsManager();
+var editorManager = window.editorManager;
+editorManager.removeEditors()
 editorManager.setRequestPath
 editorManager.addEditor("haml_editor", new CodeEditorIDE("haml_editor"));
 editorManager.addEditor("css_editor", new CodeEditorIDE("css_editor"));

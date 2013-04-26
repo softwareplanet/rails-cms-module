@@ -11,9 +11,10 @@ $(panel_content).html("");
     - case @object
       - when 'structure'
         $(panel_content).html("#{ escape_javascript(render(:partial => 'layout', :collection => @layouts)) }");
-      - when 'new-page'
-        $(panel_content).html("#{ escape_javascript(render(:partial => 'layout', :collection => @layouts)) }");
+      - when 'content'
+        $(panel_content).html("#{ escape_javascript(render(:partial => 'content')) }");
+      - when 'gallery'
+        $(panel_content).html("#{ escape_javascript(render(:partial => 'images')) }");
       - else
         $(panel_content).html("<br>&nbsp;&nbsp;..nothing to show yet");
-
 

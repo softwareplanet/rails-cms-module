@@ -1,0 +1,14 @@
+- case @object
+  - when 'edit_properties'
+    $('#properties_form').find('[name="id"]').val('#{@page_name}');
+    $('#properties_form').find('.name').val('#{@title}');
+    $('#properties_form').find('.url').val('#{@page_name}');
+    $('#properties_form').find('.keywords').val('#{@keywords}');
+    $('#properties_form').find('.description').val('#{@description}');
+    $('[data-level=child]').hide();
+    $('.panel_properties').css('-webkit-transform','translate3d(' + $(window).width() + 'px, 0, 0)');
+    $('.panel_properties').show();
+    setTimeout(function(){$('.panel_properties').css('-webkit-transform','translate3d(0, 0, 0)');;},250);
+
+
+

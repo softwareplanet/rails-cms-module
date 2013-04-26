@@ -1,0 +1,31 @@
+- @dirs.each do |dir|
+  .gallery-folder{ 'data-path' => "#{dir.path}" }
+    .delete_image{:onclick => "deleteFolder(this)"}
+      x
+    .count-image
+      = dir.size
+    %input{:onfocusout => "rename_folder_finish(this)", :onkeypress => "checkKeyForDelete(this)"}
+    .dir{:onclick => 'open_folder(this)'}
+    .image_description{ :data => {'info' => "#{dir.name}"}}
+      #{truncate(dir.name, :length => 22, :omission => '...')}
+      .edit_name{:onclick => "rename_folder(this)"}
+      -#.edit_name
+
+- @result.each do |image|
+  - image_full_name = image.name + '.' + image.extension
+  -image_size = image.get_image_size[0].to_s + 'x' + image.get_image_size[1].to_s
+  -image_info = image_full_name + ' ' + image_size
+  %div{:id => image.get_id, :title => image_full_name}
+    .delete_image{:onclick => "delete_image(this)", :data => {'image-name' => "#{image_full_name}"}}
+      x
+    %input{:onfocusout => "rename_finish(this)", :onkeypress => "checkKeyForDelete(this)"}
+    .gallery-image{"data-href" => image.image_path}
+      %img{:src => image.image_path}
+    .image_description{ :data => {'info' => "#{image_info}"}}
+      #{truncate(image_info, :length => 22, :omission => '...')}
+      .edit_name{:onclick => "rename_image(this)"}
+%script
+  var container = '.panel_gallery .content';
+  $(container).attr('data-path','#{@current_path}');
+
+

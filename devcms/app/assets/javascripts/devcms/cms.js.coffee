@@ -1,4 +1,4 @@
-editorManager = null
+#editorManager = null
 
 window.InitializeCms = () ->
   editorManager = new CodeEditorsManager
@@ -10,53 +10,38 @@ window.InitializeCms = () ->
   editorManager.getEditor("css_editor").code_editor.clearHistory()
 
 $(document).ready ->
-  #InitializeCms()
+  $(window).bind "resize", ->
+    body_height = $('body').height()
+    if body_height > $('.toolbar').css('min-height')
+      $('.toolbar').css('height', body_height)
 
 #################################################################################
 
 # Handlers
 $(document).ready ->
-  $('.icon').hover (->
-    tooltip_text = $(this).data("tooltip")
-    $(this).append $("<div class='icon-tooltip'><ins></ins>" + tooltip_text + "</div>")
-  ), ->
-    $(this).find('.icon-tooltip').remove()
+# do not remove next 5 lines!...or remove...
+#  $('.icon').hover (->
+#    tooltip_text = $(this).data("tooltip")
+#    $(this).append $("<div class='icon-tooltip'><ins></ins>" + tooltip_text + "</div>")
+#  ), ->
+#    $(this).find('.icon-tooltip').remove()
 
   $('.icon').click ->
     request_json = {
     object: $(this).data('icon'),
     activity: 'click'
     }
-    console.log(request_json)
+
+    if request_json.object == 'gallery'
+      data_path = $('.panel_gallery .content').attr('data-path')
+#      request_json.path = 'public/img/storage/test_folder/'
+      request_json.path = data_path
+
     $.ajax
       url: '/source_manager/tool_bar'
       type: 'GET',
       data: request_json
 
-  $('.add-structure').click ->
-    request_json = {
-    object: 'new-page',
-    activity: 'click'
-    }
-    $.ajax
-      url: '/source_manager/tool_bar'
-      type: 'GET',
-      data: request_json
-
-    #$(".layout-row").removeClass "layout-row-selected"
-    #$(".menu-bar").removeClass "menu-bar-inactive"
-    #$(".icon").removeClass "highlighted"
-    #$(this).addClass "highlighted"
-    #$(".menu-bar").hide()
-    #menu_class = $(this).attr("class").split(" ")[1]
-    #$(".menu-bar").hide()
-    #$(".editor-panel").hide()
-    #$(".menu-bar." + menu_class).show()
-    #$(".menu-bar." + menu_class).animate
-    #  opacity: 1
-    #  left: "+=0"
-    #  height: "100%"
-    #, 0
 
   $(".css-navtab a").click ->
     # ugly hack to update hidden codemirror window ;(

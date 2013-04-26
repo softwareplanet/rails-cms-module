@@ -14,3 +14,17 @@ en:
     denied: Access denied, please authorize
 
   credentials: Since 2000, the company Interlink provides full cycle of software projects, including analysis, design, programming, testing and development of graphic design.
+
+  create_layout_form:
+    blank_address: Cannot be blank
+    wrong_address: Already exists
+    wrong: Failed to create a page
+    success: Successfully added
+
+
+  save_layout_form:
+    blank_address: Cannot be blank
+    address_exist: Already exists
+    wrong_address: Wrong address
+    wrong: Failed to create a page
+    success: Successfully added

@@ -1,0 +1,9 @@
+- @layouts.each do |layout|
+
+  .layout-row{"data-source_name" => layout.name, :onclick => 'loadViewer(this)'}
+    .inner
+      .list
+      .name
+        = layout.name
+  .line
+

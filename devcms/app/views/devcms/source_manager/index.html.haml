@@ -1,4 +1,6 @@
-
+%script{:src => "assets/gallery/a_load-image.min.js"}
+%script{:src => "assets/gallery/b_bootstrap-image-gallery.js"}
+-#%script{:src => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"}
 .toolbar
   .icon.icon-main{'data-tooltip' => 'Главная', 'data-icon' => 'main'}
   .icon.icon-structure{'data-tooltip' => 'Структура', 'data-icon' => 'structure'}
@@ -7,7 +9,6 @@
   .icon.icon-gallery{'data-tooltip' => 'Галлерея', 'data-icon' => 'gallery'}
   .icon.icon-settings{'data-tooltip' => 'Настройки', 'data-icon' => 'settings'}
   .icon.icon-exit{'data-tooltip' => 'Выход', 'data-icon' => 'exit'}
-
 .panel.panel_main
   .header
     .rect
@@ -15,18 +16,28 @@
       Главная
     .line
   .content
+-#.cms-folder
+  %div{:title => 'folder name'}
+    .delete_image{:onclick => "delete_image(this)"}
+      x
+    %input{:onfocusout => "rename_finish(this)", :onkeypress => "checkKeyForDelete(this)"}
+    .gallery-image
+      1111
+    .image_description
+      foo bar
+      .edit_name{:onclick => "rename_image(this)"}
 
-.panel.panel_structure
+.panel.panel_structure{:data_name => 'panel_structure', :data_menu => 'structure'}
   .header
     .rect
     .title
       Структура сайта
-      %a.add-structure{"data-toggle" => "tooltip", :href => "#", :title => "add structure"}
+      %a.add-structure{"data-toggle" => "tooltip", :href => "#", :title => "add structure", :data_name => 'add-structure', :data_menu => 'structure'}
     .line
   .content
 
 .panel.panel_content
-  .header
+  -#.header
     .rect
     .title
       Содержание
@@ -39,13 +50,27 @@
       Компоненты
     .line
   .content
+.panel.panel_viewer{'data-level' => 'child'}
 .panel.panel_gallery
   .header
     .rect
     .title
-      Галлерея
-    .line
-  .content
+      Галерея
+      .navigation_panel
+        #help_icon
+        #load_to_gallery{'data-toggle'=> 'dropdown'}
+        %form{:id => "load_image", :action => "source_manager/upload", :method => "post", :enctype => "multipart/form-data"}
+          %input{:id => "to_dir", :type => "hidden", :name => "to_dir"}
+          %input{:type => 'file', :id => "image_src", :name => "Filedata"}
+          %button{:type => "submit"}
+        .dropdown-menu.preferences
+          .preferences-rect
+          %li.add_folder
+            Добавить папку
+          %li.add_image
+            Добавить картинку
+  #gallery{"data-selector" => ".gallery-image", "data-target" => "#modal-gallery", "data-toggle" => "modal-gallery"}
+    .content
 .panel.panel_settings
   .header
     .rect
@@ -54,25 +79,26 @@
     .line
   .content
 
-.panel.panel_properties
+.panel.panel_properties{'data-level' => 'child', :data_name => 'panel_properties', :data_menu => 'structure'}
   .rect
   .title
     Свойства страницы
   .line
-
-  %form{:style => "padding: 10px;"}
+  = form_tag url_for( :controller => "source_manager", :action => "save_properties", :method => "post" ), :id => "properties_form", :style => 'padding: 10px;', :remote => true do
     %fieldset
+      %input{:type => "hidden", :name => "id"}
+
       %label Заголовок
-      %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1}
+      %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "title"}
 
       %label Адрес
-      %input.url{:placeholder => "Input layout url…", :type => "text"}
+      %input.url{:placeholder => "Input layout url…", :type => "text", :name => "url"}
       %br
       %label.checkbox
-        %input{:type => "checkbox"}
+        %input{:type => "checkbox", :name => "no_show",}
         Не показывать в меню
       %label.checkbox
-        %input{:type => "checkbox"}
+        %input{:type => "checkbox", :name => "no_publish"}
         Не публиковать на сайте
       #accordion.seoblock
         .accordion-group
@@ -83,15 +109,14 @@
           #collapseOne.accordion-body.collapse.in
             .accordion-inner
               %label Ключевые слова
-              %input.name{:placeholder => "Keywords…", :type => "text", :tabindex => 1}
+              %input.name.keywords{:placeholder => "Keywords…", :type => "text", :tabindex => 1, :name => "keywords"}
 
               %label Описание
-              %input.url{:placeholder => "Description…", :type => "text"}
+              %input.url.description{:placeholder => "Description…", :type => "text", :name => "description"}
       .btn-save
-        %button.btn.btn-primary.add-source{:type => "submit", "data-type" => Devcms::SourceType::LAYOUT, :tabindex => 2} СОХРАНИТЬ
+        %button.btn.btn-primary.save-source{:type => "submit", "data-type" => Devcms::SourceType::LAYOUT, :tabindex => 2} СОХРАНИТЬ
 
 .panel.panel_new-page{'data-level' => 'child'}
-  .rect
   .title
     Создать страницу
   .line
@@ -126,10 +151,36 @@
               %label Описание
               %input.url{:placeholder => "Description…", :tabindex => 8, :type => "text", :name => "description"}
       .btn-save{:tabindex => 6}
-        -#%button.btn.btn-primary.add-source{:type => "submit", "data-type" => Devcms::SourceType::LAYOUT, :tabindex => 2}
         = submit_tag ' Save'
 
-.panel_editor
+-#.panel.panel_edit-page{'data-level' => 'child'}
+-#  .title
+-#    Редактировать свойства
+-#  .line
+-#  .content
+
+/ modal-gallery is the modal dialog used for the image gallery
+#modal-gallery.modal.modal-gallery.hide.fade{:tabindex => "-1"}
+  .modal-header
+    %a.close{"data-dismiss" => "modal"} ×
+    %h3.modal-title
+  .modal-body
+    .modal-image
+  .modal-footer
+    %a.btn.modal-download{:target => "_blank"}
+      %i.icon-download
+      %span Download
+    %a.btn.btn-success.modal-play.modal-slideshow{"data-slideshow" => "5000"}
+      %i.icon-play.icon-white
+      %span Slideshow
+    %a.btn.btn-info.modal-prev
+      %i.icon-arrow-left.icon-white
+      %span Previous
+    %a.btn.btn-primary.modal-next
+      %span Next
+      %i.icon-arrow-right.icon-white
+
+.panel_editor{'data-level' => 'child'}
 
 -#
   %script

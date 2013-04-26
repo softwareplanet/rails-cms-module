@@ -1,5 +1,4 @@
 require_dependency "devcms/application_controller"
-
 module Devcms
   class SourceManagerController < ApplicationController
 
@@ -31,12 +30,39 @@ module Devcms
       keywords = params[:keywords]
       description = params[:description]
 
-      @source = Source.new(:type => type, :name => name)
-      @source.save
-      @css = Source.new(:type => SourceType::CSS, :target => @source)
-      @css.save
-      @seo = Source.new(:type => SourceType::SEO, :target => @source)
-      @seo.save
+      if address.blank?
+        @message = I18n.t('create_layout_form.blank_address')
+
+      elsif !Source.find_by_name(address).blank?
+        @message = I18n.t('create_layout_form.wrong_address')
+
+      else
+        begin
+          @source = Source.new(:type => type, :name => address)
+          @source.save!
+
+          @css = Source.new(:type => SourceType::CSS, :target => @source)
+          @css.save!
+
+          @seo = Source.new(:type => SourceType::SEO, :target => @source)
+          @seo.save!
+
+          path = @seo.get_source_folder + @seo.get_filename
+
+          File.open(path, "w+") do |f|
+            f.puts('<title>' + name + '</title>')
+            f.puts('<meta name="keywords" content="' +keywords  + '"/>')
+            f.puts('<meta name="description" content="' + description + '"/>')
+          end
+
+        rescue Exception => exc
+          render :js => 'alert("' +  I18n.t('create_layout_form.wrong') + '");'
+          return
+        end
+        render 'create'
+        return
+      end
+      render :js => 'alert("' +  @message + '");'
     end
 
     # GET /source_manager/1/edit
@@ -45,7 +71,6 @@ module Devcms
       render :nothing => true and return if @sourceObject.nil?
       @sourceObject.get_attach_or_create
       if @sourceObject.type == SourceType::CSS && @sourceObject.data.length > 0
-
         from = @sourceObject.data.index("\n")+1
         to = -@sourceObject.data.reverse.index("\n")-1
         @sourceObject.data = @sourceObject.data[from..to]
@@ -82,7 +107,9 @@ module Devcms
 
     def upload
       uploaded_io = params[:Filedata]
-      uploaded_filename = uploaded_io.original_filename
+      render :nothing => true and return unless uploaded_io
+      to_dir = params[:to_dir]
+      uploaded_filename = uploaded_io.original_filename.downcase
 
       basename = File.basename(uploaded_filename, '.*')
       extension = File.extname(uploaded_filename)[1..-1]
@@ -97,38 +124,96 @@ module Devcms
         basename = basename + appendix.to_s
       end
 
-      @img_src = Source.new(:type => SourceType::IMAGE, :name => basename, :extension => extension)
+      @img_src = Source.new(:type => SourceType::IMAGE, :name => basename, :extension => extension, :path => to_dir)
       @img_src.data = uploaded_io.read
       @img_src.save!
       session[:last_image_name] = @img_src.name
-      render :nothing => true
+      @image = Source.find_by_id(@img_src.get_id)
+      str = 'public/'
+      line = @image.path
+      @image.image_path = line[line.index(str) + str.size .. -1]
     end
 
     def upload_success
       @last_image_name = session[:last_image_name]
       session[:last_image_name] = nil
-      @img = Source.find_by_name(@last_image_name).first
+      @img = Source.find_by_name(@last_image_name).fir@imagest
     end
 
     def delete_image
-      @source = Source.find_by_name(params[:name]).first
+      name, extension = params[:name].split('.')
+      @source = Source.find_by_name_and_extension(name, extension).first
       @source.delete
     end
+
+    def properties
+
+    end
+
+    def save_properties
+
+      @layout_name = params[:id]
+      title = params[:title]
+      @address = params[:url]
+      no_show = params[:no_show]
+      no_publish = params[:no_publish]
+      keywords = params[:keywords]
+      description = params[:description]
+
+      if @address.blank?
+        @message = I18n.t('save_layout_form.blank_address')
+
+      elsif  /\W/.match(@address)
+          @message = I18n.t('save_layout_form.wrong_address')
+
+      elsif (@layout_name != @address) && (Source.find_by_name(@address).length > 0 )
+          @message = I18n.t('save_layout_form.address_exist')
+
+      else
+        begin
+          @seo = Source.quick_attach(SourceType::LAYOUT,  @layout_name, SourceType::SEO)
+          @seo.data = "<title>#{title}</title>\n<meta name=\"keywords\" content=\"#{keywords}\"/>\n<meta name=\"description\" content=\"#{description}\"/>\n"
+          @seo.save!
+          if @layout_name != @address
+
+            seo_path = @seo.get_source_folder + @seo.get_filename
+            File.rename(seo_path, @seo.get_source_folder + '1-tar-' + @address)
+
+            @layout = Source.find_by_name(@layout_name).first
+            layout_path = @layout.get_source_folder + @layout.get_filename
+            File.rename(layout_path, @layout.get_source_folder + @address)
+            @source = Source.find_by_name(@address).first
+
+          end
+
+        rescue Exception => exc
+          render :js => 'alert("' +  I18n.t('save_layout_form.wrong') + '");'
+          return
+        end
+        render 'save_properties'
+        return
+      end
+      render :js => 'alert("' +  @message + '");'
+    end
+
 
     def rename_image
       @sourceObject = Source.find_by_id(params[:id])
       @old_id = @sourceObject.get_id
-      @sourceObject.rename(params[:name])
-      render :nothing => true
+      @sourceObject.rename(params[:name].downcase)
     end
 
-
+    def get_images
+      @images = Source.where :type => SourceType::IMAGE
+    end
 
     # Actions related to ToolBar
     def tool_bar
       @object = params[:object]
       @activity = params[:activity]
+      @path = params[:path]
     end
+
     def menu_bar
       @object = params[:object]
       @activity = params[:activity]
@@ -137,9 +222,46 @@ module Devcms
           case @object
             when "structure"
               @layouts = Source.where :type => SourceType::LAYOUT
+            when "content"
+              @layouts = Source.where :type => SourceType::LAYOUT
+            when "gallery"
+              if params[:path]
+                @current_path = params[:path]
+              else
+                @current_path = SOURCE_FOLDERS[SourceType::IMAGE]
+              end
+              @images = Dir.glob(@current_path + "*.*")
+              @images.map!{|image_path| File.basename(image_path)}
+              #File.basename('/qwe/img.png')         =>  img.png
+              #File.basename('/qwe/img.png','.*')    =>  img
+              @result = []
+              str = 'public/'
+              @sources = Source.where :type => SourceType::IMAGE
+              @sources.each { |source|
+                @images.map { |image|
+                  if source.get_filename == image
+                    line = source.path
+                    source.image_path = line[line.index(str) + str.size .. -1]
+                    @result.push(source)
+                  end
+                }
+              }
+
+              @dirs = []
+              Dir.glob(@current_path + '*').each { |file|
+                if File.directory?(file)
+                  dir = OpenStruct.new
+                  dir.name = File.basename(file)
+                  dir.path = file
+                  dir.size = Dir.glob(file + '/*').size
+                  @dirs.push(dir)
+                end
+              }
+              #render :nothing => true
           end
       end
     end
+
     def editor
       @object = params[:object]
       @activity = params[:activity]
@@ -149,5 +271,106 @@ module Devcms
       end
     end
 
+    def panel_main
+      @activity = params[:activity]
+      @object = params[:object]
+      @data = params[:data]
+      case @activity
+        when "click"
+        when "load"
+      end
+    end
+
+    def panel_structure
+      @activity = params[:activity]
+      @object = params[:object]
+      @data = params[:data]
+      case @activity
+        when "click"
+        when "load"
+          case @object
+            when 'edit_properties'
+              @layout_id = params[:layout_id]
+              @page_name = @layout_id.gsub('pre1-id-', '')
+              @seo_id = @layout_id.gsub('pre1-id-', '1-tar-')
+              @seo = Source.quick_attach(SourceType::LAYOUT,  @page_name, SourceType::SEO)
+              @path = @seo.get_source_folder + @seo.name
+
+              File.open(@path, "r").each_line  do |line|
+                line = line.downcase()
+                if line.slice('title')
+                  str1 = "<title>"
+                  str2 = "</title>"
+                  @title = line[line.index(str1) + str1.size .. line.index(str2)-1]
+                end
+                if line.slice('keywords')
+                  str = "content=\""
+                  @keywords = line[line.index(str) + str.size .. -5]
+                end
+                if line.slice('description')
+                  str = "content=\""
+                  @description = line[line.index(str) + str.size .. -5]
+                end
+              end
+          end
+      end
+    end
+
+    def panel_content
+      @activity = params[:activity]
+      @object = params[:object]
+      case @activity
+        when "click"
+        when "load"
+      end
+    end
+
+    def panel_components
+      @activity = params[:activity]
+      @object = params[:object]
+      case @activity
+        when "click"
+          case @object
+            when 'panel_viewer'
+              #"pre3-id-1-tar-green3"
+              @layout_name = params[:layout_name]
+          end
+        when "load"
+      end
+    end
+
+    def panel_gallery
+      @activity = params[:activity]
+      @object = params[:object]
+      case @activity
+        when "click"
+          case @object
+            when 'delete_folder'
+              @path = params[:path]
+              Source.delete_dir(@path)
+            when 'add_folder'
+              path =  params[:path]
+              folder_path = Source.mkdir(path)
+              @dir = OpenStruct.new
+              @dir.name = File.basename(folder_path)
+              @dir.path = folder_path
+              @dir.size = Dir.glob(folder_path + '/*').size
+            when 'rename_folder'
+              @new_name = params[:name]
+              @path = params[:path]
+              @new_path = Source.rename_dir(@path, @new_name)
+          end
+        when "load"
+      end
+    end
+
+    def panel_settings
+      @activity = params[:activity]
+      @object = params[:object]
+      case @activity
+        when "click"
+        when "load"
+      end
+    end
   end
 end

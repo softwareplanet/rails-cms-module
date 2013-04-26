@@ -36,10 +36,20 @@ Devcms::Engine.routes.draw do
       get "upload_success"
       post "delete_image"
       put "rename_image"
+      post "panel_main"
+      post "panel_structure"
+      post "panel_content"
+      post "panel_components"
+      post "panel_gallery"
+      post "panel_settings"
+      post "save_properties"
+      post "create_folder"
+
 
       get 'tool_bar'
       get 'menu_bar'
       get 'editor'
+      get 'properties'
     end
   end
 

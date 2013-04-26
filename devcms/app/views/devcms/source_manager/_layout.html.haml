@@ -2,22 +2,26 @@
 
 - my_id = layout.get_id
 
-.layout-row
+.layout-row{"data-source_id" => my_id}
   .inner
     .list
     .name
       = layout.name
     .counter
       0 страниц
-    %a.properties{"data-toggle" => "tooltip", :href => "#", :title => "preferences", "data-source_id" => my_id}
-    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-source_id" => my_id}
+    -#%a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences", "data-source_id" => my_id, :onclick => "animate_properties(this)"}
+    %a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences", "data-source_id" => my_id}
+
+    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-source_id" => my_id, :onclick => 'show_code_editor(this)'}
+    .dropdown-menu.preferences
+      .preferences-rect
+      %li.edit-properties{:onclick => 'edit_properties(this)'}
+        %div
+        Редактировать свойства
+      %li.delete-page{:onclick => 'deleteSourceWithConfirmation(this)',"data-source_name" => layout.name, "data-source_id" => my_id}
+        %div
+        Удалить страницу
     .short-counter
       0
 .line
 
-%script{:type => 'text/javascript'}
-  $('.edit').bind('click', function() {
-  request_json = { object: $(this).data("source_id"), activity: "edit" }
-  $.ajax({url: '/source_manager/editor.js', type: 'GET', data: request_json });
-  console.log($(this).data('source_id'));
-  });

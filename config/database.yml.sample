@@ -1,0 +1,6 @@
+development:
+  adapter: mysql2
+  database: railscms
+  user: root
+  pool: 5
+  timeout: 5000

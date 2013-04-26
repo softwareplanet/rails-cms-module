@@ -1,0 +1,15 @@
+-image = @image
+- image_full_name = image.name + '.' + image.extension
+-image_size = image.get_image_size[0].to_s + 'x' + image.get_image_size[1].to_s
+-image_info = image.name + '.' + image.extension + ' ' + image_size
+%div{:id => image.get_id, :title => image_full_name}
+  .delete_image{:onclick => "delete_image(this)", :data => {'image-name' => "#{image_full_name}"}}
+    x
+  %input{:onfocusout => "rename_finish(this)", :onkeypress => "checkKeyForDelete(this)"}
+  .gallery-image{"data-href" => image.image_path}
+    %img{:src => image.image_path}
+  .image_description{ :data => {'info' => "#{image_info}"}}
+    #{truncate(image_info, :length => 22, :omission => '...')}
+    .edit_name{:onclick => "rename_image(this)"}
+
+  .edit_name{:onclick => "rename_image(this)"}
