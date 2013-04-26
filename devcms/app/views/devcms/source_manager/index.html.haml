@@ -113,8 +113,9 @@
 
               %label Описание
               %input.url.description{:placeholder => "Description…", :type => "text", :name => "description"}
-      .btn-save
+      %div
         %button.btn.btn-primary.save-source{:type => "submit", "data-type" => Devcms::SourceType::LAYOUT, :tabindex => 2} СОХРАНИТЬ
+        .close-btn.btn.btn-primary Close
 
 .panel.panel_new-page{'data-level' => 'child'}
   .title
@@ -150,9 +151,9 @@
 
               %label Описание
               %input.url{:placeholder => "Description…", :tabindex => 8, :type => "text", :name => "description"}
-      .btn-save{:tabindex => 6}
-        = submit_tag ' Save'
-
+      %div
+        = submit_tag ' Save', :class => 'btn btn-primary'
+        .close-btn.btn.btn-primary Close
 -#.panel.panel_edit-page{'data-level' => 'child'}
 -#  .title
 -#    Редактировать свойства
