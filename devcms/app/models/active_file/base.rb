@@ -331,7 +331,8 @@ module ActiveFile # v0.01: <active_support-required version>
     #
     def save
       encoded_data = self.data.nil? ? '' : self.data.force_encoding('utf-8')
-      ::File.open(get_file_path, 'w') { |file| file.write(encoded_data) }
+      self.filepath = get_file_path
+      ::File.open(filepath, 'w') { |file| file.write(encoded_data) }
     end
 
     # Reload file data
