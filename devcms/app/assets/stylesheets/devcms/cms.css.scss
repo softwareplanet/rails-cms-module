@@ -1,5 +1,5 @@
 /*
-  Copyright: Interlink Software. All rights reserved © 2000 – 2013
+  Copyright: Interlink Software. All rights reserved © 2000 ? 2013
 */
 
 $assets_path: "/assets/ui";
@@ -332,13 +332,7 @@ body.cms {
           top: 27px;
           left: 35px;
           width: 229px;
-          .preferences-rect {
-            position: absolute;
-            margin:-8px 0 0 208px;
-            background: url(#{$assets_path}/icons/rect_top_shadow.png) no-repeat;
-            height: 8px;
-            width: 14px;
-          }
+
           li {
             height: 49px;
             width: 100%;
@@ -353,7 +347,13 @@ body.cms {
           .add_folder {
             color: black;
             background-color: white;
-
+            .preferences-rect {
+              position: absolute;
+              margin:-6px 0 0 208px;
+              background: url(#{$assets_path}/icons/rect_top_while.png) no-repeat;
+              height: 8px;
+              width: 14px;
+            }
           }
           .add_image {
             color: black;
@@ -362,16 +362,13 @@ body.cms {
           .add_folder:hover {
             color: white;
             background-color: #539ce5;
-            div {
-              background: url(#{$assets_path}/icons/pen.png) no-repeat;
+            .preferences-rect {
+              background: url(#{$assets_path}/icons/rect_top_blue.png) no-repeat;
             }
           }
           .add_image:hover {
             color: white;
             background-color: #539ce5;
-            div {
-              background: url(#{$assets_path}/icons/delete2.png) no-repeat;
-            }
           }
         }
       }
@@ -680,13 +677,6 @@ body.cms {
         top: 27px;
         left: 317px;
         width: 229px;
-        .preferences-rect {
-          position: absolute;
-          margin:-8px 0 0 9px;
-          background: url(#{$assets_path}/icons/rect_top_shadow.png) no-repeat;
-          height: 8px;
-          width: 14px;
-        }
         li {
           height: 49px;
           width: 100%;
@@ -694,7 +684,14 @@ body.cms {
         .edit-properties {
           color: black;
           background-color: white;
-          div {
+          .preferences-rect {
+            position: absolute;
+            margin:-6px 0 0 9px;
+            background: url(#{$assets_path}/icons/rect_top_white.png) no-repeat;
+            height: 8px;
+            width: 14px;
+          }
+          .pencil {
             font-size: 14px;
             margin: 19px 10px 0 22px;
             width: 11px;
@@ -718,7 +715,10 @@ body.cms {
         .edit-properties:hover {
           color: white;
           background-color: #539ce5;
-          div {
+          .preferences-rect {
+            background: url(#{$assets_path}/icons/rect_top_blue.png) no-repeat;
+          }
+          .pencil {
             background: url(#{$assets_path}/icons/pen.png) no-repeat;
           }
         }
