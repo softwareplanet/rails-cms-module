@@ -177,13 +177,14 @@ module Devcms
           if @layout_name != @address
 
             seo_path = @seo.get_source_folder + @seo.get_filename
+            raise unless File.exist? seo_path
             File.rename(seo_path, @seo.get_source_folder + '1-tar-' + @address)
 
             @layout = Source.find_by_name(@layout_name).first
-            layout_path = @layout.get_source_folder + @layout.get_filename
-            File.rename(layout_path, @layout.get_source_folder + @address)
+            old_path = @layout.get_source_folder
+            new_path = File.dirname(@layout.get_source_folder) + '/' + @address
+            File.rename(old_path, new_path)
             @source = Source.find_by_name(@address).first
-
           end
 
         rescue Exception => exc

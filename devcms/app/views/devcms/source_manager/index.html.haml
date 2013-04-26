@@ -87,11 +87,7 @@
   = form_tag url_for( :controller => "source_manager", :action => "save_properties", :method => "post" ), :id => "properties_form", :style => 'padding: 10px;', :remote => true do
     %fieldset
       %input{:type => "hidden", :name => "id"}
-
-      %label Заголовок
-      %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "title"}
-
-      %label Адрес
+      %label Адрес / Имя
       %input.url{:placeholder => "Input layout url…", :type => "text", :name => "url"}
       %br
       %label.checkbox
@@ -108,6 +104,10 @@
               Настройки SEO
           #collapseOne.accordion-body.collapse.in
             .accordion-inner
+
+              %label Заголовок
+              %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "title"}
+
               %label Ключевые слова
               %input.name.keywords{:placeholder => "Keywords…", :type => "text", :tabindex => 1, :name => "keywords"}
 
@@ -126,10 +126,9 @@
     %fieldset
       %input{:type => "hidden", :name => "type", :value => Devcms::SourceType::LAYOUT}
 
-      %label Заголовок
-      %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "name"}
 
-      %label Адрес
+
+      %label Адрес / Имя
       %input.url{:placeholder => "Input layout url…", :type => "text", :tabindex => 2, :name => "address"}
       %br
       %label.checkbox
@@ -146,6 +145,9 @@
               Настройки SEO
           #collapseOne2.accordion-body.collapse.in
             .accordion-inner
+              %label Заголовок
+              %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "name"}
+
               %label Ключевые слова
               %input.name{:placeholder => "Keywords…", :type => "text", :tabindex => 7, :name => "keywords"}
 

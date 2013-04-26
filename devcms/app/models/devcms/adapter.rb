@@ -203,14 +203,6 @@ module Devcms
       # Get source folder for any source type. Create, if not exists.
       def get_source_folder(type)
         source_folder = Rails.env == 'test' ? TEST_SOURCE_FOLDERS[type.to_i || SourceType::UNDEFINED] : SOURCE_FOLDERS[type.to_i || SourceType::UNDEFINED]
-        puts '-----'
-        puts  source_folder
-        #source_folder += path if path
-        #puts  source_folder
-        #puts '-----'
-        #puts '------'
-        #puts source_folder
-        #puts '------'
         FileUtils.mkpath(source_folder) unless File.exists?(source_folder)
         return source_folder
       end
