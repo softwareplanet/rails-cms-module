@@ -390,6 +390,29 @@ body.cms {
     margin-right: 23px;
     background-color: white;
     display: inline-block;
+    .gallery-folder {
+      background: none;
+      float: left;
+      .dir {
+        width: 170px;
+        height: 130px;
+        background: url(#{$assets_path}/cms-folder.png) no-repeat;
+        overflow: hidden;
+        float: left;
+      }
+      .dir:hover {
+        cursor: pointer;
+      }
+      .count-image {
+          position: absolute;
+          //width: 20px;
+          //height: 20px;
+          z-index: 50;
+          margin-left: 150px;
+          font-size: 13px;
+          float: right;
+      }
+    }
     .delete_image {
       position: absolute;
       width: 20px;
@@ -419,7 +442,7 @@ body.cms {
       line-height: 30px;
       text-align: left;
       max-height: 30px;
-      overflow: hidden;
+      //overflow: hidden;
       .edit_name {
         font-size: 14px;
         margin: 0 0 0 2px;

@@ -40,9 +40,10 @@ Devcms::Engine.routes.draw do
       post "panel_structure"
       post "panel_content"
       post "panel_components"
-      post "spanel_gallery"
+      post "panel_gallery"
       post "panel_settings"
       post "save_properties"
+      post "create_folder"
 
 
       get 'tool_bar'

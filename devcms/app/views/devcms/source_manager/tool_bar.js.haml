@@ -21,4 +21,7 @@ var object = '#{@object}';
     //And starts with ajax data retrieving..
     addSpinner(panel_to_show + ' .content');
     request_json = {object: object, activity: 'load'}
+    if ((object == 'gallery') && (#{!@path.nil?})) {
+    request_json.path = '#{@path}';
+    }
     $.ajax({url: '/source_manager/menu_bar', type: 'GET', data: request_json });

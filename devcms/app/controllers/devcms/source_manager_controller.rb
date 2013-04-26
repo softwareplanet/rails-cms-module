@@ -107,6 +107,8 @@ module Devcms
 
     def upload
       uploaded_io = params[:Filedata]
+      render :nothing => true and return unless uploaded_io
+      to_dir = params[:to_dir]
       uploaded_filename = uploaded_io.original_filename.downcase
 
       basename = File.basename(uploaded_filename, '.*')
@@ -122,21 +124,25 @@ module Devcms
         basename = basename + appendix.to_s
       end
 
-      @img_src = Source.new(:type => SourceType::IMAGE, :name => basename, :extension => extension)
+      @img_src = Source.new(:type => SourceType::IMAGE, :name => basename, :extension => extension, :path => to_dir)
       @img_src.data = uploaded_io.read
       @img_src.save!
       session[:last_image_name] = @img_src.name
       @image = Source.find_by_id(@img_src.get_id)
+      str = 'public/'
+      line = @image.path
+      @image.image_path = line[line.index(str) + str.size .. -1]
     end
 
     def upload_success
       @last_image_name = session[:last_image_name]
       session[:last_image_name] = nil
-      @img = Source.find_by_name(@last_image_name).first
+      @img = Source.find_by_name(@last_image_name).fir@imagest
     end
 
     def delete_image
-      @source = Source.find_by_name(params[:name]).first
+      name, extension = params[:name].split('.')
+      @source = Source.find_by_name_and_extension(name, extension).first
       @source.delete
     end
 
@@ -205,6 +211,7 @@ module Devcms
     def tool_bar
       @object = params[:object]
       @activity = params[:activity]
+      @path = params[:path]
     end
 
     def menu_bar
@@ -218,7 +225,39 @@ module Devcms
             when "content"
               @layouts = Source.where :type => SourceType::LAYOUT
             when "gallery"
-              @images = Source.where :type => SourceType::IMAGE
+              if params[:path]
+                @current_path = params[:path]
+              else
+                @current_path = SOURCE_FOLDERS[SourceType::IMAGE]
+              end
+              @images = Dir.glob(@current_path + "*.*")
+              @images.map!{|image_path| File.basename(image_path)}
+              #File.basename('/qwe/img.png')         =>  img.png
+              #File.basename('/qwe/img.png','.*')    =>  img
+              @result = []
+              str = 'public/'
+              @sources = Source.where :type => SourceType::IMAGE
+              @sources.each { |source|
+                @images.map { |image|
+                  if source.get_filename == image
+                    line = source.path
+                    source.image_path = line[line.index(str) + str.size .. -1]
+                    @result.push(source)
+                  end
+                }
+              }
+
+              @dirs = []
+              Dir.glob(@current_path + '*').each { |file|
+                if File.directory?(file)
+                  dir = OpenStruct.new
+                  dir.name = File.basename(file)
+                  dir.path = file
+                  dir.size = Dir.glob(file + '/*').size
+                  @dirs.push(dir)
+                end
+              }
+              #render :nothing => true
           end
       end
     end
@@ -305,6 +344,22 @@ module Devcms
       @object = params[:object]
       case @activity
         when "click"
+          case @object
+            when 'delete_folder'
+              @path = params[:path]
+              Source.delete_dir(@path)
+            when 'add_folder'
+              path =  params[:path]
+              folder_path = Source.mkdir(path)
+              @dir = OpenStruct.new
+              @dir.name = File.basename(folder_path)
+              @dir.path = folder_path
+              @dir.size = Dir.glob(folder_path + '/*').size
+            when 'rename_folder'
+              @new_name = params[:name]
+              @path = params[:path]
+              @new_path = Source.rename_dir(@path, @new_name)
+          end
         when "load"
       end
     end
@@ -317,6 +372,5 @@ module Devcms
         when "load"
       end
     end
-
   end
 end

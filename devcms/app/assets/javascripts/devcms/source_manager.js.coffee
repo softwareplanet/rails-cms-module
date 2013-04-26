@@ -123,6 +123,94 @@ window.deleteSource = (type, id) ->
     type: "DELETE",
     data: request_json
 
+window.delete_image = (this_ptr) ->
+  if confirm("Are you sure to delete this?")
+    $.post("/source_manager/delete_image.js", {name: $(this_ptr).parent().data('name')})
+window.on_gallery_name_keyup = (event, this_ptr) ->
+  if event.keyCode==13
+    img_id = $(this_ptr).parent().data('id')
+    img_name = $(this_ptr).val()
+    $.ajax
+      url: "/source_manager/rename_image"
+      type: "PUT"
+      data: {id: img_id, name: img_name}
+    $(this_ptr).blur()
+
+$(document).ready ->
+  $(".add_folder").click ->
+    request_json =
+      activity: 'click',
+      object: 'add_folder',
+      path:  $('.panel_gallery .content').attr('data-path')
+    $.ajax
+      url: "/source_manager/panel_gallery"
+      type: "POST"
+      data: request_json
+
+window.open_folder= (folder) ->
+    folder_path = $(folder).parent().attr('data-path')
+    $('.panel_gallery .content').attr('data-path', folder_path + '/')
+    $('.icon-gallery').click()
+
+window.delete_image= (image) ->
+  if(confirm("Are you sure to delete?"))
+    request_json = name: $(image).data("image-name")
+    $.ajax
+      url: "/source_manager/delete_image"
+      type: "POST"
+      data: request_json
+
+window.rename_image = (image) ->
+  input = $(image).parent().parent().find("input")
+  input.css("display", "block").focus()
+  input.val input.parent().find("div[data-image-name]").attr("data-image-name")
+
+window.rename_folder = (folder) ->
+  input = $(folder).parent().parent().find("input")
+  input.css("display", "block").focus()
+  input.val input.parent().find("div[data-image-name]").attr("data-image-name")
+
+window.rename_finish = (image) ->
+  request_json =
+    id: $(image).parent().attr("id")
+    name: $(image).val()
+  $.ajax
+    url: "/source_manager/rename_image"
+    type: "PUT"
+    data: request_json
+  $(image).css "display", "none"
+
+window.rename_folder_finish = (folder) ->
+  path = $(folder).parent().attr('data-path')
+  name = $(folder).val()
+  request_json =
+    activity: 'click'
+    object: 'rename_folder'
+    path: path
+    name: name
+  $.ajax
+    url: "/source_manager/panel_gallery"
+    type: "POST"
+    data: request_json
+  $(folder).css "display", "none"
+
+window.checkKeyForDelete = (image) ->
+  if window.event.keyCode == 13
+    rename_finish image
+
+window.deleteFolder = (folder) ->
+  if confirm('Вы уверены что хотите удалить папку и все её содержимое?')
+    path = $(folder).parent().attr('data-path')
+    request_json = {
+    object: 'delete_folder',
+    activity: 'click',
+    path: path
+    }
+    $.ajax
+      url: '/source_manager/panel_gallery'
+      type: 'POST',
+      data: request_json
+
 window.properties = (obj) ->
   $(".panel_editor").html ""
   $(obj).parent().find(".preferences").toggle()
