@@ -122,6 +122,7 @@ window.deleteSource = (type, id) ->
     url: '/source_manager/' + id + jsformat
     type: "DELETE",
     data: request_json
+
 window.delete_image = (this_ptr) ->
   if confirm("Are you sure to delete this?")
     $.post("/source_manager/delete_image.js", {name: $(this_ptr).parent().data('name')})
