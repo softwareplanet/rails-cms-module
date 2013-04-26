@@ -4,8 +4,12 @@ $(document).ready ->
 
   # <input file> on change handler
   $("#image_src").change ->
-    $(this).parent().ajaxSubmit();
-    $(this).parent().clearForm();
+    to_path = $('.panel_gallery .content').attr('data-path')
+    console.log to_path
+    $('#to_dir').val(to_path)
+    console.log $('#to_dir').val()
+    $(this).parent().ajaxSubmit()
+    $(this).parent().clearForm()
 
   # add image link call <input file> window
   $(".add_image").click ->

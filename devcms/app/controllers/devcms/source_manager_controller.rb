@@ -107,6 +107,7 @@ module Devcms
 
     def upload
       uploaded_io = params[:Filedata]
+      render :nothing => true and return unless uploaded_io
       to_dir = params[:to_dir]
       uploaded_filename = uploaded_io.original_filename.downcase
 

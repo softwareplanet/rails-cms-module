@@ -137,17 +137,6 @@ window.on_gallery_name_keyup = (event, this_ptr) ->
     $(this_ptr).blur()
 
 $(document).ready ->
-  $("#image_src").change ->
-    to_path = $('.panel_gallery .content').attr('data-path')
-    console.log to_path
-    $('#to_dir').val(to_path)
-    console.log $('#to_dir').val()
-    $(this).parent().ajaxSubmit()
-    $(this).parent().clearForm()
-
-  $(".add_image").click ->
-    $("#image_src").click()
-
   $(".add_folder").click ->
     request_json =
       activity: 'click',
