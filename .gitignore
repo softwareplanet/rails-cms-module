@@ -3,6 +3,7 @@
 .idea/*
 nbproject
 
+Gemfile.lock
 .gitkeep
 
 /.bundle
@@ -11,12 +12,15 @@ config/*.yml
 /log/*.log
 /tmp
 
+# Compiled assets
 /public/assets
 /public/img/storage
 
+# Local layouts and contents
 /data_source
 /data_source/compiled
 
+# Documentation compiled sources
 /devcms/guide/compiled
 
 
