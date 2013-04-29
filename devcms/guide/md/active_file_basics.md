@@ -3,7 +3,7 @@ What is ActiveFile?
 
 [![Gem Version](https://badge.fury.io/rb/activefile.png)](http://badge.fury.io/rb/activefile)
 
-ActiveFile is a lightweight file system ORM, specially designed and developed for RailsCms. It will be free and opensource soon.
+ActiveFile is a lightweight file system ORM, specially designed and developed for softwareplanet-cms. It will be free and opensource soon.
 
 ActiveFile build a persistent domain model by mapping file system objects to Ruby classes. It inherits ActiveRecord-similar interface.
 

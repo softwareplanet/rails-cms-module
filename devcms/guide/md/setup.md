@@ -1,41 +1,41 @@
-RailsCms setup guide
+softwareplanet-cms setup guide
 ==========================
 
-This guide covers the setup process of RailsCMS engine
+This guide covers the setup process of softwareplanet-cms engine
 
 After reading this guide, you will know:
 
-* How to create basic rails project with RailsCms support
-* How to extend existed project with RailsCms capabilities
+* How to create basic rails project with softwareplanet-cms support
+* How to extend existed project with softwareplanet-cms capabilities
 
 --------------------------------------------------------------------------------
 
-How to setup RailsCms?
+How to setup softwareplanet-cms?
 ----------------------
 
-This is a simple steps, to set up RailsCms project from scratch on Linux systems.
+This is a simple steps, to set up softwareplanet-cms project from scratch on Linux systems.
 
 ### Brief Instructions:
 
-TIP: If you already have existed project, and you want to extend it with RailsCms, you can skip steps 1 and 2.
+TIP: If you already have existed project, and you want to extend it with softwareplanet-cms, you can skip steps 1 and 2.
 
-* 1. Create new RVM (rails 3.2.*)  -- strongly recommend to use RVM anywhere, anywhen.
+* Create new RVM (rails 3.2.*)  -- strongly recommend to use RVM anywhere, anywhen.
 
-* 2. Create new Rails-project, setup and configure mysql or sqlite database.
+* Create new Rails-project, setup and configure mysql or sqlite database.
 
-* 3. [Download](#.html) and install RailsCms as a local gem. To do it, just place the railscms folder in your rails root application folder, and add to Gemfile:
+* [Download](#.html) and install softwareplanet-cms as a local gem. To do it, just place the softwareplanet-cms folder in your rails root application folder, and add to Gemfile:
 
 ```ruby
 gem 'railscms', :path => 'railscms'
 ```
 
-* 4. Run `bundle` rake command.
+* Run `bundle` rake command.
 
-* 5. Run `rake cms:wizard` rake command to setup devcms. See output to understand what modifications it applied.
+* Run `rake cms:wizard` rake command to setup devcms. See output to understand what modifications it applied.
 
-* 6. Start the rails server, using `rails s`
+* Start the rails server, using `rails s`
 
-* 7. Open in your browser `http://localhost:3000`. You should see the admin panel. Use username `admin` and password `admin` to log in.
+* Open in your browser `http://localhost:3000`. You should see the admin panel. Use username `admin` and password `admin` to log in.
 
 ###Detailed instruction:
 

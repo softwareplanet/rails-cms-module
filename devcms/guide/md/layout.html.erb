@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title><%= yield(:page_title) || 'RailsCms Guides' %></title>
+<title><%= yield(:page_title) || 'softwareplanet-cms Guides' %></title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 
 <!--<link rel="stylesheet" type="text/css" href="stylesheets/print!.css" media="print" />-->
@@ -28,9 +28,9 @@
   <% end %>
   <div id="topNav">
     <div class="wrapper">
-      <strong class="more-info-label">Source code at: <a href='https://github.com/softwareplanet/railscms'>github.com:</a> </strong>
+      <strong class="more-info-label">Source code at: <a href='https://github.com/softwareplanet/cms'>github.com:</a> </strong>
       <span class="red-button more-info-button">
-        More RailsCms
+        More softwareplanet-cms
       </span>
       <ul class="more-info-links s-hidden">
         <li class="more-info"><a href="index.html">Index</a></li>
@@ -46,7 +46,7 @@
     <div class="wrapper clearfix">
       <ul class="nav">
         <li class='cms-logo'>
-            <img src="./images/railscms.png" alt="RailsCms">
+            <img src="./images/cms.png" alt="softwareplanet-cms">
         </li>
         <li class='logo-nav'>
           <a href="http://interlink-ua.com" class="logo">
@@ -80,40 +80,6 @@
       <%= yield :header_section %>
 
       <%= yield :index_section %>
-    </div>
-  </div>
-
-  <div id="container">
-    <div class="wrapper">
-      <div id="mainCol">
-        <%= yield.html_safe %>
-
-        <h3>Feedback</h3>
-        <p>
-          You're encouraged to help improve the quality of this guide.
-        </p>
-        <p>
-          If you see any typos or factual errors you are confident to
-          patch, please clone <%= link_to 'docrails', 'https://github.com/lifo/docrails' %>
-          and push the change yourself. That branch of Rails has public write access.
-          Commits are still reviewed, but that happens after you've submitted your
-          contribution. <%= link_to 'docrails', 'https://github.com/lifo/docrails' %> is
-          cross-merged with master periodically.
-        </p>
-        <p>
-          You may also find incomplete content, or stuff that is not up to date.
-          Please do add any missing documentation for master. Check the
-          <%= link_to 'Ruby on Rails Guides Guidelines', 'ruby_on_rails_guides_guidelines.html' %>
-          for style and conventions.
-        </p>
-        <p>
-          If for whatever reason you spot something to fix but cannot patch it yourself, please
-          <%= link_to 'open an issue', 'https://github.com/rails/rails/issues' %>.
-        </p>
-        <p>And last but not least, any kind of discussion regarding Ruby on Rails
-          documentation is very welcome in the <%= link_to 'rubyonrails-docs mailing list', 'http://groups.google.com/group/rubyonrails-docs' %>.
-        </p>
-      </div>
     </div>
   </div>
 

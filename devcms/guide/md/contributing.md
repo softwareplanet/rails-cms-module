@@ -1,17 +1,17 @@
-Contributing to  Rails Cms
+Contributing to  softwareplanet-cms
 ==========================
 
-This guide covers ways in which _you_ can become a part of the ongoing development of Rails Cms.
+This guide covers ways in which _you_ can become a part of the ongoing development of softwareplanet-cms.
 
 After reading this guide, you will know:
 
-* How to contribute to the RailsCms code.
-* How to contribute to the RailsCms documentation.
+* How to contribute to the softwareplanet-cms code.
+* How to contribute to the softwareplanet-cms documentation.
 
-Contribute to the RailsCms code
+Contribute to the softwareplanet-cms code
 -------------------------------
 
-Contributing to the RailsCms code based on the common principles, described at: [GitHub support center](https://help.github.com/articles/fork-a-repo).
+Contributing to the softwareplanet-cms code based on the common principles, described at: [GitHub support center](https://help.github.com/articles/fork-a-repo).
 Also, it is useful to get acquainted with the approaches, described at [Ruby on Rails contribute documentation ](http://guides.rubyonrails.org/contributing_to_ruby_on_rails.html).
 
 ### Follow the Coding Conventions
@@ -40,13 +40,16 @@ v[major].[minor].[release]
 
 We can use [Git Tag numbers](http://learn.github.com/p/tagging.html) to specify commit versions at GitHub. It should be best.
 
-RailsCms version example:
+softwareplanet-cms version example:
+
+```bash
 v0.1.1
+```
 
 ### Updating the CHANGELOG
 
-The CHANGELOG is an important part of every release. It keeps the list of changes for every Rails Cms version.
+The CHANGELOG is an important part of every release. It keeps the list of changes for every Softwareplanet-cms version.
 
 TODO: We need think more about CHANGELOG using.
 
--= RailsCms =-
+-= softwareplanet-cms =-
