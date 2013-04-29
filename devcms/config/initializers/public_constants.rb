@@ -1,4 +1,3 @@
-=begin
 module Devcms
   #
   # Common constants
@@ -52,5 +51,3 @@ module Devcms
   CUSTOM_SCSS_FOLDER = "custom/"
 
 end
-
-=end
