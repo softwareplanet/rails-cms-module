@@ -1,9 +1,8 @@
 # Encoding: UTF-8
 $:.push File.expand_path("../lib", __FILE__)
 
-# Maintain your gem's version:
-require "devcms/version"
-version = Devcms::VERSION.to_s
+# Version number: [major].[minor].[release].[build]
+version = File.read(File.expand_path('../CMS_VERSION', __FILE__)).strip
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
@@ -13,7 +12,7 @@ Gem::Specification.new do |s|
   s.description   = %q{A Ruby on Rails CMS that supports Rails 3.2. It's easy to extend and use.}
   s.summary       = %q{A Ruby on Rails CMS that supports Rails 3.2}
   s.email         = %q{no-reply@interlink-ua.com}
-  s.homepage      = %q{http://www2.interlink-ua.com}
+  s.homepage      = %q{http://www.interlink-ua.com}
   s.authors       = ['Inna Skorik', 'Yaroslava Velichko', 'Vitaly Pestov', 'Shevchuk Alexander']
   s.license       = %q{Open Core}
   s.require_paths = %w(lib)
@@ -30,6 +29,8 @@ Gem::Specification.new do |s|
   s.add_dependency "bootstrap-sass"
   s.add_dependency "codemirror-rails"
   s.add_dependency "imagesize"
+  s.add_dependency "redcarpet"
+  s.add_dependency "nokogiri"
   # assets dependencies:
   s.add_dependency 'sass-rails'
   s.add_dependency 'coffee-rails'
