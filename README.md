@@ -1,7 +1,7 @@
-Softwareplanet CMS
-==================
-
 ![Cms Window](http://softwareplanetpro.com/static/img/sp_logo.png?v=2e51f "SoftwarePlanet")
+
+SoftwarePlanet CMS
+==================
 
 Softwareplanet CMS specially developed and designed to effective site content management and distributed maintenance.
 Administrative mode provides configurable site source control, structure configuration, image gallery and components gallery, internationalization.
@@ -40,5 +40,3 @@ gem 'softwareplanet-cms', :path => 'softwareplanet-cms'
 
 [This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/cms/master/devcms/guide/compiled/contributing.html)
 describes the contributing to the softwareplanet-cms.
-
--= softwareplanet-cms =-
