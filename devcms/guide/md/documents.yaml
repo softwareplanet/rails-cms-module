@@ -1,0 +1,112 @@
+-
+  name: Start Here
+  documents:
+    -
+      name: Overview
+      url: overview.html
+      description: Everything you need to know about RailsCms
+    -
+      name: Setup process
+      url: setup.html
+      description: This guide explain RailsCms setup process
+-
+  name: ActiveFile
+  documents:
+    -
+      name: Active File Basics
+      work_in_progress: true
+      url: active_file_basics.html
+      description: ...This guide will get you started with models, persistence to database and the Active Record pattern and library.
+    -
+      name: Active File Testing
+      work_in_progress: true
+      url: active_file_testing.html
+      description: This guide covers how you can use Active Record validations
+    -
+      name: Active File Associations
+      work_in_progress: true
+      url: active_file_association.html
+      description: This guide covers all the associations provided by Active Record.
+-
+  name: RailsCms engine
+  documents:
+    -
+      name: RailsCms Engine Overview
+      work_in_progress: true
+      url: engine.html
+      description: This guide provides an introduction to Action View and introduces a few of the more common view helpers.
+      work_in_progress: true
+    -
+      name: Layouts and Contents Rendering
+      work_in_progress: true
+      url: layouts_and_contents_rendering.html
+      description: This guide covers the basic layout features of Action Controller and Action View, including rendering and redirecting, using content_for blocks, and working with partials.
+-
+  name: Admin
+  documents:
+    -
+      name: Admin Mode Overview
+      work_in_progress: true
+      url: admin_mode_overview.html
+      description: This guide covers how controllers work and how they fit into the request cycle in your application. It includes sessions, filters, and cookies, data streaming, and dealing with exceptions raised by a request, among other topics.
+    -
+      name: Alohe Editor Basics
+      work_in_progress: true
+      url: aloha_editor.html
+      description: This guide covers the user-facing features of Rails routing. If you want to understand how to use routing in your own Rails applications, start here.
+-
+  name: Digging Deeper
+  documents:
+    -
+      name: RailsCms Variables
+      work_in_progress: true
+      url: variables.html
+      description: This guide documents the Ruby core extensions defined in Active Support.
+    -
+      name: RailsCms Internationalization
+      work_in_progress: true
+      url: i18n.html
+      description: This guide covers how to add internationalization to your applications. Your application will be able to translate content to different languages, change pluralization rules, use correct date formats for each country and so on.
+    -
+      name: RailsCms Routings
+      work_in_progress: true
+      url: routings.html
+      description: This guide describes how to use Action Mailer to send and receive emails.
+    -
+      name: Testing RailsCms
+      work_in_progress: true
+      url: testing.html
+      description: This is a rather comprehensive guide to doing both unit and functional tests in Rails. It covers everything from 'What is a test?' to the testing APIs. Enjoy.
+    -
+      name: Configuring RailsCms
+      work_in_progress: true
+      url: configuring.html
+      description: This guide covers the basic configuration settings for a Rails application.
+    -
+      name: Layouts Compiling
+      work_in_progress: true
+      url: compiling.html
+      description: This guide covers the command line tools and rake tasks provided by Rails.
+    -
+      name: Assets
+      work_in_progress: true
+      url: asset_pipeline.html
+      description: This guide documents the asset pipeline.
+    -
+      name: The RailsCms Initialization Process
+      work_in_progress: true
+      url: initialization.html
+      description: This guide explains the internals of the Rails initialization process as of Rails 3.1
+-
+  name: Contributing to RailsCms
+  documents:
+    -
+      name: Contributing to RailsCms
+      work_in_progress: true
+      url: contributing.html
+      description: This guide covers a variety of ways that you can get involved in the ongoing development of RailsCms.
+    -
+      name: RailsCms Guides Guidelines
+      work_in_progress: true
+      url: ruby_on_rails_guides_guidelines.html
+      description: This guide documents the Ruby on Rails guides guidelines.

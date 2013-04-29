@@ -1,8 +1,5 @@
-/* Guides.rubyonrails.org */
 /* Main.css */
-/* Created January 30, 2009 */
-/* Modified February 8, 2009
---------------------------------------- */
+/*--------------------------------------- */
 
 /* General
 --------------------------------------- */
@@ -143,7 +140,7 @@ body {
 #topNav {
   padding: 1em 0;
   color: #565656;
-  background: #222;
+  background: #262626;;
 }
 
 .s-hidden {
@@ -219,13 +216,17 @@ body {
 }
 
 #header {
-  background: #c52f24 url(../images/header_tile.gif) repeat-x;
+  background: url(http://interlink-ua.com/img/storage/content-font-grey.png);
   color: #FFF;
   padding: 1.5em 0;
   z-index: 99;
 }
 
+.logo {
+}
+
 #feature {
+  border-top: 1px solid lightgray;
   background: #d5e9f6 url(../images/feature_tile.gif) repeat-x;
   color: #333;
   padding: 0.5em 0 1.5em;
@@ -234,6 +235,7 @@ body {
 #container {
   color: #333;
   padding: 0.5em 0 1.5em 0;
+  background: url(/images/logo.png);
 }
 
 #mainCol {
@@ -287,7 +289,7 @@ body {
 --------------------------------------- */
 
 a, a:link, a:visited {
-  color: #ee3f3f;
+  color: #bbb;
   text-decoration: underline;
 }
 
@@ -310,17 +312,28 @@ a, a:link, a:visited {
 .nav .nav-item:hover {text-decoration: underline;}
 
 .guides-index-large, .guides-index-small .guides-index-item {
+  display: inline-block!important;
+  float: right;
+  margin-right: 65px;
+  float: right;
+  margin-top: 27px;
+
   padding: 0.5em 1.5em;
   border-radius: 1em;
   -webkit-border-radius: 1em;
   -moz-border-radius: 1em;
-  background: #980905;
+  background: #42668D;
   position: relative;
   color: white;
 }
 
+.logo-nav {
+    float: right;
+    margin-right: 50px;
+}
+
 .guides-index .guides-index-item {
-  background: #980905 url(../images/nav_arrow.gif) no-repeat right top;
+  background: #42668D url(../images/nav_arrow.png) no-repeat right top;
   padding-right: 1em;
   position: relative;
   z-index: 15;
@@ -334,7 +347,8 @@ a, a:link, a:visited {
 
 @media screen and (min-width: 481px) {
   .nav {
-    float: right;
+    width: 100%;
+    display: inline-block;
     margin-top: 1.5em;
     font-size: 1.2857em;
   }
@@ -388,7 +402,8 @@ a, a:link, a:visited {
 #guides {
   width: 27em;
   display: block;
-  background: #980905;
+  /*background: #980905;*/
+    background: url(../images/hat.png) repeat-x;
   border-radius: 1em;
   -webkit-border-radius: 1em;
   -moz-border-radius: 1em;

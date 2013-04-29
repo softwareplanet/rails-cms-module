@@ -1,16 +1,14 @@
-#
-# ActiveFile = base.rb: lightweight file system ORM implementation
-#
-# Author:: Vitaly Pestov
-# Department:: InterLink LLC, Ukraine, 2013
-#
-# Build a persistent domain model by mapping file system objects to Ruby classes.
-# It inherits ActiveRecord-similar interface.
-#
 module ActiveFile # v0.01: <active_support-required version>
+  # ActiveFile = base.rb: lightweight file system ORM implementation
+  #
+  # Author:: Vitaly Pestov
+  # Department:: InterLink LLC, Ukraine, 2013
+  #
+  # Build a persistent domain model by mapping file system objects to Ruby classes.
+  # It inherits ActiveRecord-similar interface.#
   #
   # Based on Yukihiro Matsumoto's OpenStruct implementation,
-  # to extend ActiveFile objects with arbitrary attributes
+  # to extend ActiveFile objects with arbitrary attributes:
   require 'ostruct'
   require 'active_support/core_ext/object/blank'
 
