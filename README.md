@@ -1,11 +1,12 @@
 ![Cms Window](http://softwareplanetpro.com/static/img/sp_logo.png?v=2e51f "SoftwarePlanet")
 
-SoftwarePlanet CMS
+Software Planet CMS
 ==================
 
-SoftwarePlanet CMS specially developed and designed to effective site content management and distributed maintenance.
-Administrative mode provides configurable site source control, structure configuration, image gallery and components gallery, internationalization.
-Editable frontend allows another person to contribute to your site content. They may be language translators, technical authors or designers.
+Software Planet CMS is designed as plugin which can be added to existing Rails application.
+We are not building CMS for content managers we are building flexible content management solution
+for web developers. Software Planet CMS provides easy to use in place content editing and HAML based layouts/components.
+Administrative UI provides content versioning, structure configuration, image gallery, component management, localization & internationalization.
 
 ![Code editor](https://github.com/softwareplanet/cms/blob/master/doc/code.png?raw=true "Code editor")
 
