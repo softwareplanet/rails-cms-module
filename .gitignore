@@ -21,7 +21,7 @@ config/*.yml
 /data_source/compiled
 
 # Documentation compiled sources
-/devcms/guide/compiled
+#/devcms/guide/compiled
 
 
 
