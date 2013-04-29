@@ -38,7 +38,7 @@ module Devcms
       if self.path.nil?
         @source_path = get_source_path
       else
-        @source_path = self.path
+        @source_path = self.path + self.name + self.get_extension
       end
       @size = "not detected"
       open(@source_path, "rb") do |fh|

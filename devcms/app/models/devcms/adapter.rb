@@ -203,14 +203,6 @@ module Devcms
       # Get source folder for any source type. Create, if not exists.
       def get_source_folder(type)
         source_folder = Rails.env == 'test' ? TEST_SOURCE_FOLDERS[type.to_i || SourceType::UNDEFINED] : SOURCE_FOLDERS[type.to_i || SourceType::UNDEFINED]
-        puts '-----'
-        puts  source_folder
-        #source_folder += path if path
-        #puts  source_folder
-        #puts '-----'
-        #puts '------'
-        #puts source_folder
-        #puts '------'
         FileUtils.mkpath(source_folder) unless File.exists?(source_folder)
         return source_folder
       end
@@ -233,7 +225,8 @@ module Devcms
             name_without_extension = source_extension == "*" ? name_with_extension.split('.').first : name_with_extension[0..-source_extension.length-2]
           end
 
-          s = Source.new({ :type => source_type, :name => name_without_extension, :extension => extension, :data => nil, :path => f })
+          file_to_path = File.dirname(f) + '/'
+          s = Source.new({ :type => source_type, :name => name_without_extension, :extension => extension, :data => nil, :path => file_to_path })
           target_object = s.get_target
           s.target = target_object unless target_object.nil?
           files.push(s)

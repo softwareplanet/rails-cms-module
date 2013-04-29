@@ -9,6 +9,16 @@ $(document).ready ->
       setTimeout (->
         $(".panel_new-page").css "-webkit-transform", "translate3d(0, 0, 0)"),
         250
+
+  $('.panel_new-page .close-btn').click ->
+    $('.panel.panel_new-page').css('display', 'none')
+
+  $('.panel_properties .close-btn').click ->
+    $('.panel_properties').css('display', 'none')
+
+
+
+
 #      request_json = {
 #      object: 'new-page',
 #      activity: 'click'
@@ -21,18 +31,18 @@ $(document).ready ->
 window.edit_properties = (obj) ->
   console.log 'edit properties click'
   id = $(obj).parent().parent().find('.properties').data('source_id')
-  if $('.panel_properties').css('display') == 'block'
-    $('.panel_properties').css('display', 'none')
-  else
-    request_json = {
-    layout_id: id,
-    object: 'edit_properties',
-    activity: 'load'
-    }
-    $.ajax
-      url: '/source_manager/panel_structure'
-      type: 'POST',
-      data: request_json
+#  if $('.panel_properties').css('display') == 'block'
+#    $('.panel_properties').css('display', 'none')
+#  else
+  request_json = {
+  layout_id: id,
+  object: 'edit_properties',
+  activity: 'load'
+  }
+  $.ajax
+    url: '/source_manager/panel_structure'
+    type: 'POST',
+    data: request_json
 
 #gear animation
 #window.animate_properties = (obj) ->

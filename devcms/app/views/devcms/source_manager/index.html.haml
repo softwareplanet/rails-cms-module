@@ -1,6 +1,6 @@
 %script{:src => "assets/gallery/a_load-image.min.js"}
 %script{:src => "assets/gallery/b_bootstrap-image-gallery.js"}
--#%script{:src => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"}
+%script{:src => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"}
 .toolbar
   .icon.icon-main{'data-tooltip' => 'Главная', 'data-icon' => 'main'}
   .icon.icon-structure{'data-tooltip' => 'Структура', 'data-icon' => 'structure'}
@@ -27,6 +27,7 @@
       foo bar
       .edit_name{:onclick => "rename_image(this)"}
 
+-#.panel.panel_structure.inactive{:data_name => 'panel_structure', :data_menu => 'structure'}
 .panel.panel_structure{:data_name => 'panel_structure', :data_menu => 'structure'}
   .header
     .rect
@@ -64,8 +65,8 @@
           %input{:type => 'file', :id => "image_src", :name => "Filedata"}
           %button{:type => "submit"}
         .dropdown-menu.preferences
-          .preferences-rect
           %li.add_folder
+            .preferences-rect
             Добавить папку
           %li.add_image
             Добавить картинку
@@ -87,11 +88,7 @@
   = form_tag url_for( :controller => "source_manager", :action => "save_properties", :method => "post" ), :id => "properties_form", :style => 'padding: 10px;', :remote => true do
     %fieldset
       %input{:type => "hidden", :name => "id"}
-
-      %label Заголовок
-      %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "title"}
-
-      %label Адрес
+      %label Адрес / Имя
       %input.url{:placeholder => "Input layout url…", :type => "text", :name => "url"}
       %br
       %label.checkbox
@@ -108,13 +105,18 @@
               Настройки SEO
           #collapseOne.accordion-body.collapse.in
             .accordion-inner
+
+              %label Заголовок
+              %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "title"}
+
               %label Ключевые слова
               %input.name.keywords{:placeholder => "Keywords…", :type => "text", :tabindex => 1, :name => "keywords"}
 
               %label Описание
               %input.url.description{:placeholder => "Description…", :type => "text", :name => "description"}
-      .btn-save
+      %div
         %button.btn.btn-primary.save-source{:type => "submit", "data-type" => Devcms::SourceType::LAYOUT, :tabindex => 2} СОХРАНИТЬ
+        .close-btn.btn.btn-primary Close
 
 .panel.panel_new-page{'data-level' => 'child'}
   .title
@@ -125,10 +127,9 @@
     %fieldset
       %input{:type => "hidden", :name => "type", :value => Devcms::SourceType::LAYOUT}
 
-      %label Заголовок
-      %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "name"}
 
-      %label Адрес
+
+      %label Адрес / Имя
       %input.url{:placeholder => "Input layout url…", :type => "text", :tabindex => 2, :name => "address"}
       %br
       %label.checkbox
@@ -145,14 +146,17 @@
               Настройки SEO
           #collapseOne2.accordion-body.collapse.in
             .accordion-inner
+              %label Заголовок
+              %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "name"}
+
               %label Ключевые слова
               %input.name{:placeholder => "Keywords…", :type => "text", :tabindex => 7, :name => "keywords"}
 
               %label Описание
               %input.url{:placeholder => "Description…", :tabindex => 8, :type => "text", :name => "description"}
-      .btn-save{:tabindex => 6}
-        = submit_tag ' Save'
-
+      %div
+        = submit_tag ' Save', :class => 'btn btn-primary'
+        .close-btn.btn.btn-primary Close
 -#.panel.panel_edit-page{'data-level' => 'child'}
 -#  .title
 -#    Редактировать свойства

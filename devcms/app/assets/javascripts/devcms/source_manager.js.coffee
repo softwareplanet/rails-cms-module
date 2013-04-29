@@ -123,9 +123,13 @@ window.deleteSource = (type, id) ->
     type: "DELETE",
     data: request_json
 
-window.delete_image = (this_ptr) ->
-  if confirm("Are you sure to delete this?")
-    $.post("/source_manager/delete_image.js", {name: $(this_ptr).parent().data('name')})
+#window.delete_image = (this_ptr) ->
+#  console.log 1
+#  if confirm("Are you sure to delete this?")
+#    full_name = $(this_ptr).parent().attr('data-full-name')
+#    console.log full_name
+#    $.post("/source_manager/delete_image.js", {full_name: $(this_ptr).parent().attr('data-full-name')})
+
 window.on_gallery_name_keyup = (event, this_ptr) ->
   if event.keyCode==13
     img_id = $(this_ptr).parent().data('id')
@@ -147,64 +151,70 @@ $(document).ready ->
       type: "POST"
       data: request_json
 
-window.open_folder= (folder) ->
-    folder_path = $(folder).parent().attr('data-path')
-    $('.panel_gallery .content').attr('data-path', folder_path + '/')
-    $('.icon-gallery').click()
+window.open_folder= (obj) ->
+  folder = $(obj).parent()
+  name = $(folder).attr('data-name')
+  path = $(folder).attr('data-path')
+  $('.panel_gallery .content').attr('data-path', path + name + '/')
+  $('.icon-gallery').click()
 
-window.delete_image= (image) ->
-  if(confirm("Are you sure to delete?"))
-    request_json = name: $(image).data("image-name")
-    $.ajax
-      url: "/source_manager/delete_image"
-      type: "POST"
-      data: request_json
+#window.delete_image= (image) ->
+#  if(confirm("Are you sure to delete?"))
+#    request_json = name: $(image).data("image-name")
+#    $.ajax
+#      url: "/source_manager/delete_image"
+#      type: "POST"
+#      data: request_json
 
-window.rename_image = (image) ->
-  input = $(image).parent().parent().find("input")
+#window.rename_image = (image) ->
+#  input = $(image).parent().parent().find("input")
+#  input.css("display", "block").focus()
+#  input.val input.parent().find("div[data-image-name]").attr("data-image-name")
+
+window.rename_folder = (edit_icon) ->
+  folder = $(edit_icon).parent().parent()
+  input = $(folder).find("input")
   input.css("display", "block").focus()
-  input.val input.parent().find("div[data-image-name]").attr("data-image-name")
+  input.val $(folder).attr("data-name")
 
-window.rename_folder = (folder) ->
-  input = $(folder).parent().parent().find("input")
-  input.css("display", "block").focus()
-  input.val input.parent().find("div[data-image-name]").attr("data-image-name")
+#window.rename_finish = (image) ->
+#  request_json =
+#    id: $(image).parent().attr("id")
+#    name: $(image).val()
+#  $.ajax
+#    url: "/source_manager/rename_image"
+#    type: "PUT"
+#    data: request_json
+#  $(image).css "display", "none"
 
-window.rename_finish = (image) ->
-  request_json =
-    id: $(image).parent().attr("id")
-    name: $(image).val()
-  $.ajax
-    url: "/source_manager/rename_image"
-    type: "PUT"
-    data: request_json
-  $(image).css "display", "none"
-
-window.rename_folder_finish = (folder) ->
-  path = $(folder).parent().attr('data-path')
-  name = $(folder).val()
+window.rename_folder_finish = (input) ->
+  folder = $(input).parent()
+  path = $(folder).attr('data-path')
+  old_name = $(folder).attr('data-name')
+  new_name = $(input).val()
   request_json =
     activity: 'click'
     object: 'rename_folder'
     path: path
-    name: name
+    new_name: new_name
+    old_name: old_name
+  console.log request_json
   $.ajax
     url: "/source_manager/panel_gallery"
     type: "POST"
     data: request_json
-  $(folder).css "display", "none"
+  $(input).css "display", "none"
 
-window.checkKeyForDelete = (image) ->
-  if window.event.keyCode == 13
-    rename_finish image
-
-window.deleteFolder = (folder) ->
+window.deleteFolder = (detele_item) ->
   if confirm('Вы уверены что хотите удалить папку и все её содержимое?')
-    path = $(folder).parent().attr('data-path')
+    folder = $(detele_item).parent()
+    path = $(folder).attr('data-path')
+    name = $(folder).attr('data-name')
     request_json = {
     object: 'delete_folder',
     activity: 'click',
-    path: path
+    path: path,
+    name: name
     }
     $.ajax
       url: '/source_manager/panel_gallery'
@@ -264,3 +274,16 @@ jQuery.fn.slideRightHide = (callback) ->
 
 jQuery.fn.slideHide = ->
     $(this).css('display','none')
+
+
+
+
+$(document).ready ->
+#  $('.layout-row').draggable({revert: "invalid",helper:'clone',cursor: "move"});
+#  $('.content').sortable({connectWith: "div"});
+#  $(".panel_structure").droppable
+#    activeClass: "ui-state-hover"
+#    hoverClass: "ui-state-active"
+#    drop: (event, ui) ->
+##      alert 'finish him!'
+#      false

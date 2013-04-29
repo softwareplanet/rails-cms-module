@@ -113,17 +113,18 @@ module Devcms
 
       basename = File.basename(uploaded_filename, '.*')
       extension = File.extname(uploaded_filename)[1..-1]
-
       appendix = 0
-      unless Source.where(:name => basename).empty?
-        while appendix < 100
-          appendix+=1
-          break if Source.where(:name => basename + appendix.to_s).empty?
-        end
-        raise "File with such name already exists!" if appendix == 100
-        basename = basename + appendix.to_s
-      end
+      get_source = Source.where(:name => basename, :path => to_dir)
 
+      unless get_source.empty?
+          while appendix < 1000
+            appendix+=1
+            get_source = Source.where(:name => basename + appendix.to_s, :path => to_dir)
+            break unless !get_source.empty?
+          end
+          raise "File with such name already exists!" if appendix == 1000
+          basename = basename + appendix.to_s
+      end
       @img_src = Source.new(:type => SourceType::IMAGE, :name => basename, :extension => extension, :path => to_dir)
       @img_src.data = uploaded_io.read
       @img_src.save!
@@ -137,12 +138,19 @@ module Devcms
     def upload_success
       @last_image_name = session[:last_image_name]
       session[:last_image_name] = nil
-      @img = Source.find_by_name(@last_image_name).fir@imagest
+      @img = Source.find_by_name(@last_image_name).first
     end
 
     def delete_image
-      name, extension = params[:name].split('.')
-      @source = Source.find_by_name_and_extension(name, extension).first
+      name, extension = params[:full_name].split('.')
+      image_dir = 'public/'
+      path = image_dir + params[:path]
+      @source = nil
+      @sources = Source.find_by_name_and_extension(name, extension).select do |source|
+        if source.path == path
+          @source = source
+        end
+      end
       @source.delete
     end
 
@@ -161,7 +169,7 @@ module Devcms
       description = params[:description]
 
       if @address.blank?
-        @message = I18n.t('save_layout_form.blank_address')
+        @message = I18n.t('save_layout_form.blank_addressparh')
 
       elsif  /\W/.match(@address)
           @message = I18n.t('save_layout_form.wrong_address')
@@ -177,13 +185,14 @@ module Devcms
           if @layout_name != @address
 
             seo_path = @seo.get_source_folder + @seo.get_filename
+            raise unless File.exist? seo_path
             File.rename(seo_path, @seo.get_source_folder + '1-tar-' + @address)
 
             @layout = Source.find_by_name(@layout_name).first
-            layout_path = @layout.get_source_folder + @layout.get_filename
-            File.rename(layout_path, @layout.get_source_folder + @address)
+            old_path = @layout.get_source_folder
+            new_path = File.dirname(@layout.get_source_folder) + '/' + @address
+            File.rename(old_path, new_path)
             @source = Source.find_by_name(@address).first
-
           end
 
         rescue Exception => exc
@@ -198,9 +207,12 @@ module Devcms
 
 
     def rename_image
-      @sourceObject = Source.find_by_id(params[:id])
-      @old_id = @sourceObject.get_id
-      @sourceObject.rename(params[:name].downcase)
+      @path =  'public/' + params[:path]
+      @new_name = params[:new_name]
+      @old_name = params[:old_name]
+      @sourceObject = Source.where(:type => SourceType::IMAGE, :path => @path, :name => @old_name).first
+      @sourceObject.image_path = params[:path]
+      @sourceObject.rename(@new_name.downcase)
     end
 
     def get_images
@@ -236,7 +248,7 @@ module Devcms
               #File.basename('/qwe/img.png','.*')    =>  img
               @result = []
               str = 'public/'
-              @sources = Source.where :type => SourceType::IMAGE
+              @sources = Source.where :type => SourceType::IMAGE, :path => @current_path
               @sources.each { |source|
                 @images.map { |image|
                   if source.get_filename == image
@@ -252,7 +264,7 @@ module Devcms
                 if File.directory?(file)
                   dir = OpenStruct.new
                   dir.name = File.basename(file)
-                  dir.path = file
+                  dir.path = @current_path
                   dir.size = Dir.glob(file + '/*').size
                   @dirs.push(dir)
                 end
@@ -347,18 +359,22 @@ module Devcms
           case @object
             when 'delete_folder'
               @path = params[:path]
-              Source.delete_dir(@path)
+              @name = params[:name]
+              Source.delete_dir(@path + @name)
             when 'add_folder'
               path =  params[:path]
-              folder_path = Source.mkdir(path)
+              folder_full_path = Source.mkdir(path)
               @dir = OpenStruct.new
-              @dir.name = File.basename(folder_path)
-              @dir.path = folder_path
-              @dir.size = Dir.glob(folder_path + '/*').size
+              @dir.name = File.basename(folder_full_path)
+              @dir.path = File.dirname(folder_full_path)
+              @dir.size = Dir.glob(folder_full_path + '/*').size
+              puts 1
             when 'rename_folder'
-              @new_name = params[:name]
+              @new_name = params[:new_name]
+              @old_name = params[:old_name]
               @path = params[:path]
-              @new_path = Source.rename_dir(@path, @new_name)
+              @new_full_path = Source.rename_dir(@path + @old_name, @new_name)
+              @new_path = File.dirname(@new_full_path) + '/'
           end
         when "load"
       end

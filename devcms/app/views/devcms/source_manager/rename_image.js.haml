@@ -1,10 +1,14 @@
-object = $("div[id='#{@old_id}']");
+
+object = $("div[data-name='#{@old_name}'][data-path='#{@sourceObject.image_path}']");
+-#console.log('div[data-name="#{@old_name}"][data-path="#{@sourceObject.image_path}"]');
 -image_size = @sourceObject.get_image_size[0].to_s + 'x' + @sourceObject.get_image_size[1].to_s
 -image_info = @sourceObject.name + '.' + @sourceObject.extension + ' ' + image_size
 
 object.attr('id', '#{@sourceObject.get_id}');
+object.attr('data-full-name', '#{@sourceObject.name + '.' + @sourceObject.extension}');
+object.attr('data-name', '#{@sourceObject.name}');
 object.attr('title','#{@sourceObject.name + '.' + @sourceObject.extension }');
-object.find('.delete_image').attr('data-image-name', '#{@sourceObject.name}');
+-#object.find('.delete_image').attr('data-image-name', '#{@sourceObject.name}');
 object.find('.gallery-image').attr('data-href', '#{@sourceObject.get_image_path}');
 object.find('.gallery-image > img').attr('src', '#{@sourceObject.get_image_path}');
 
