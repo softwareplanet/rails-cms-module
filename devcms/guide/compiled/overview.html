@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>RailsCms — Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Source code at: <a href='https://github.com/softwareplanet/railscms'>github.com:</a> </strong>
+      <span class="red-button more-info-button">
+        More RailsCms
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="index.html">Index</a></li>
+        <li class="more-info"><a href="overview.html">Overview</a></li>
+        <li class="more-info"><a href="contributing.html">Contributing</a></li>
+        <li class="more-info"><a href="#">Screencast</a></li>
+        <li class="more-info"><a href="#">Technical Documentation</a></li>
+        <li class="more-info"><a href="http://interlink-ua.com">About us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <ul class="nav">
+        <li class='cms-logo'>
+            <img src="./images/railscms.png" alt="RailsCms">
+        </li>
+        <li class='logo-nav'>
+          <a href="http://interlink-ua.com" class="logo">
+            <img src="./images/logo.png" alt="InterLink">
+          </a>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" onclick="guideMenu(); return false;" id="guidesMenu" class="guides-index-item nav-item">Guides Index</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+                <dl class="L">
+                      <dt>Start Here</dt>
+                          <dd><a href="overview.html">Overview</a></dd>
+                          <dd><a href="setup.html">Setup process</a></dd>
+                      <dt>ActiveFile</dt>
+                      <dt>RailsCms engine</dt>
+                      <dt>Admin</dt>
+                </dl>
+                <dl class="R">
+                      <dt>Digging Deeper</dt>
+                      <dt>Contributing to RailsCms</dt>
+                </dl>
+          </div>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      <h2>RailsCms</h2><p>This guide covers the setup process and using of RailsCMS engine, the OpenSource Rails project.</p><p>After reading this guide, you will know:</p>
+<ul>
+<li>How to setup RailsCms</li>
+<li>How to use admin mode to create web sites and populate it</li>
+<li>How to use programmed experience to improve the site strength</li>
+<li>How to use the ActiveFile methods and their associations</li>
+</ul>
+
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><ol class="chapters">
+<li><a href="#why-railscms-questionmark">Why RailsCms?</a></li>
+<li><a href="#what-do-i-need-for-railscms-questionmark">What do I need for RailsCms?</a></li>
+<li><a href="#how-to-setup-railscms-questionmark">How to setup RailsCms?</a></li>
+<li><a href="#how-to-use-admin-mode-to-create-web-sites-and-populate-it">How to use admin mode to create web sites and populate it</a></li>
+<li><a href="#how-to-use-programmed-experience-to-improve-the-site-strength">How to use programmed experience to improve the site strength</a></li>
+</ol></body></html>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<h3 id="why-railscms-questionmark">1 Why RailsCms?</h3>
+<p>Rails CMS, specially developed and designed to effective site content management, and distributed service. Admin back-end allows to make changes to different types of participators:
+language translators, front-end designers, ruby and javascript developers. RailsCms can be included at any stage of your project, like any other local gem. 
+It will share own routes with your application, and add an admin mode, internatialization and many other features. It is OpenSource, and you can modify it.</p>
+<h3 id="what-do-i-need-for-railscms-questionmark">2 What do I need for RailsCms?</h3>
+<p>It requires any type of ActiveRecord connection established in your project. It can be be mysql, sqlite.. Anything else. It needed to include 2 tables into your database. That's all you need for work. 
+The RailsCms wizard script will setup and configure it automatically.</p>
+<h3 id="how-to-setup-railscms-questionmark">3 How to setup RailsCms?</h3>
+<p><a href="setup.html">This guide</a> explain RailsCms setup process.</p>
+<p>In brief, you should:</p>
+<ul>
+<li>add RailsCms gem folder to your project root path</li>
+<li>add to your Gemfile:</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+gem 'railscms', :path =&gt; 'railscms'
+
+</pre>
+</div>
+
+<ul>
+<li>run <code>bundle</code> command</li>
+<li>run <code>rake cms:wizard</code> rake command to finish setup.</li>
+</ul>
+<h3 id="how-to-use-admin-mode-to-create-web-sites-and-populate-it">4 How to use admin mode to create web sites and populate it</h3>
+<h6 id="documentation-for-railscms-ui-coming-soon">4.1 <code>Documentation for RailsCms UI coming soon</code>
+</h6>
+<h3 id="how-to-use-programmed-experience-to-improve-the-site-strength">5 How to use programmed experience to improve the site strength</h3>
+<p>RailsCms uses HAML and SCSS technologies.</p>
+<p>-= RailsCms =-</p>
+</body></html>
+
+
+        <h3>Feedback</h3>
+        <p>
+          You're encouraged to help improve the quality of this guide.
+        </p>
+        <p>
+          If you see any typos or factual errors you are confident to
+          patch, please clone <a href="https://github.com/lifo/docrails">docrails</a>
+          and push the change yourself. That branch of Rails has public write access.
+          Commits are still reviewed, but that happens after you've submitted your
+          contribution. <a href="https://github.com/lifo/docrails">docrails</a> is
+          cross-merged with master periodically.
+        </p>
+        <p>
+          You may also find incomplete content, or stuff that is not up to date.
+          Please do add any missing documentation for master. Check the
+          <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a>
+          for style and conventions.
+        </p>
+        <p>
+          If for whatever reason you spot something to fix but cannot patch it yourself, please
+          <a href="https://github.com/rails/rails/issues">open an issue</a>.
+        </p>
+        <p>And last but not least, any kind of discussion regarding Ruby on Rails
+          documentation is very welcome in the <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs mailing list</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shCore.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushRuby.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushXml.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushSql.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushPlain.js"></script>
+  <script type="text/javascript">
+    SyntaxHighlighter.all()
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>
+

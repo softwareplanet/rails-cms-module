@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Source code at: <a href='https://github.com/softwareplanet/railscms'>github.com:</a> </strong>
+      <span class="red-button more-info-button">
+        More RailsCms
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="index.html">Index</a></li>
+        <li class="more-info"><a href="overview.html">Overview</a></li>
+        <li class="more-info"><a href="contributing.html">Contributing</a></li>
+        <li class="more-info"><a href="#">Screencast</a></li>
+        <li class="more-info"><a href="#">Technical Documentation</a></li>
+        <li class="more-info"><a href="http://interlink-ua.com">About us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <ul class="nav">
+        <li class='cms-logo'>
+            <img src="./images/railscms.png" alt="RailsCms">
+        </li>
+        <li class='logo-nav'>
+          <a href="http://interlink-ua.com" class="logo">
+            <img src="./images/logo.png" alt="InterLink">
+          </a>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" onclick="guideMenu(); return false;" id="guidesMenu" class="guides-index-item nav-item">Guides Index</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+                <dl class="L">
+                      <dt>Start Here</dt>
+                          <dd><a href="overview.html">Overview</a></dd>
+                          <dd><a href="setup.html">Setup process</a></dd>
+                      <dt>ActiveFile</dt>
+                      <dt>RailsCms engine</dt>
+                      <dt>Admin</dt>
+                </dl>
+                <dl class="R">
+                      <dt>Digging Deeper</dt>
+                      <dt>Contributing to RailsCms</dt>
+                </dl>
+          </div>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><ol class="chapters">
+<li>
+<a href="#contribute-to-the-railscms-code">Contribute to the RailsCms code</a>
+
+<ul>
+<li><a href="#follow-the-coding-conventions">Follow the Coding Conventions</a></li>
+<li><a href="#how-to-do-version-numbers">How to do version numbers</a></li>
+<li><a href="#updating-the-changelog">Updating the CHANGELOG</a></li>
+</ul>
+</li>
+</ol></body></html>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<h2>Contributing to  Rails Cms</h2>
+<p>This guide covers ways in which <em>you</em> can become a part of the ongoing development of Rails Cms.</p>
+<p>After reading this guide, you will know:</p>
+<ul>
+<li>How to contribute to the RailsCms code.</li>
+<li>How to contribute to the RailsCms documentation.</li>
+</ul>
+<h3 id="contribute-to-the-railscms-code">1 Contribute to the RailsCms code</h3>
+<p>Contributing to the RailsCms code based on the common principles, described at: <a href="https://help.github.com/articles/fork-a-repo">GitHub support center</a>.
+Also, it is useful to get acquainted with the approaches, described at <a href="http://guides.rubyonrails.org/contributing_to_ruby_on_rails.html">Ruby on Rails contribute documentation </a>.</p>
+<h4 id="follow-the-coding-conventions">1.1 Follow the Coding Conventions</h4>
+<p>We are follows a simple set of coding style conventions:</p>
+<ul>
+<li>Two spaces, no tabs (for indentation).</li>
+<li>No trailing whitespace. Blank lines should not have any spaces.</li>
+<li>Follow the conventions in the source you see used already.</li>
+</ul>
+<h4 id="how-to-do-version-numbers">1.2 How to do version numbers</h4>
+<div class="info"><p>Versioning is the process of assigning unique version numbers to unique states of software. A variety of version numbering schemes have been created, and we use Sequence-based identifiers.</p></div>
+<p>We uses such version definition:</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+v[major].[minor].[release]
+
+</pre>
+</div>
+<p><code>major</code>: Major version is a really decision. Are we ready to call the version 1.0? Does we consider this a major version for absolutely exceptional product, or is it an update of the current major version?</p>
+<p><code>minor</code>: Starts from 0 whenever major is incremented. +1 for every version that goes public.</p>
+<p><code>release</code>: Every time you hit a development milestone and release the product, even internally (e.g. to QA), increment this. This is especially important for communication between teams in the organization. Needless to say, never release the same 'release' twice (even internally). Reset to 0 upon minor++ or major++.</p>
+<p>We can use <a href="http://learn.github.com/p/tagging.html">Git Tag numbers</a> to specify commit versions at GitHub. It should be best.</p>
+<p>RailsCms version example:
+v0.1.1</p>
+<h4 id="updating-the-changelog">1.3 Updating the CHANGELOG</h4>
+<p>The CHANGELOG is an important part of every release. It keeps the list of changes for every Rails Cms version.</p>
+<div class="todo"><p>We need think more about CHANGELOG using.</p></div>
+<p>-= RailsCms =-</p>
+</body></html>
+
+
+        <h3>Feedback</h3>
+        <p>
+          You're encouraged to help improve the quality of this guide.
+        </p>
+        <p>
+          If you see any typos or factual errors you are confident to
+          patch, please clone <a href="https://github.com/lifo/docrails">docrails</a>
+          and push the change yourself. That branch of Rails has public write access.
+          Commits are still reviewed, but that happens after you've submitted your
+          contribution. <a href="https://github.com/lifo/docrails">docrails</a> is
+          cross-merged with master periodically.
+        </p>
+        <p>
+          You may also find incomplete content, or stuff that is not up to date.
+          Please do add any missing documentation for master. Check the
+          <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a>
+          for style and conventions.
+        </p>
+        <p>
+          If for whatever reason you spot something to fix but cannot patch it yourself, please
+          <a href="https://github.com/rails/rails/issues">open an issue</a>.
+        </p>
+        <p>And last but not least, any kind of discussion regarding Ruby on Rails
+          documentation is very welcome in the <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs mailing list</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shCore.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushRuby.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushXml.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushSql.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushPlain.js"></script>
+  <script type="text/javascript">
+    SyntaxHighlighter.all()
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>
+

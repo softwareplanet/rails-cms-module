@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Ruby on Rails Guides</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shCore.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/syntaxhighlighter/shThemeRailsGuides.css" />
+
+<link rel="stylesheet" type="text/css" href="stylesheets/fixes.css" />
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body class="guide">
+  <div id="topNav">
+    <div class="wrapper">
+      <strong class="more-info-label">Source code at: <a href='https://github.com/softwareplanet/railscms'>github.com:</a> </strong>
+      <span class="red-button more-info-button">
+        More RailsCms
+      </span>
+      <ul class="more-info-links s-hidden">
+        <li class="more-info"><a href="index.html">Index</a></li>
+        <li class="more-info"><a href="overview.html">Overview</a></li>
+        <li class="more-info"><a href="contributing.html">Contributing</a></li>
+        <li class="more-info"><a href="#">Screencast</a></li>
+        <li class="more-info"><a href="#">Technical Documentation</a></li>
+        <li class="more-info"><a href="http://interlink-ua.com">About us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="header">
+    <div class="wrapper clearfix">
+      <ul class="nav">
+        <li class='cms-logo'>
+            <img src="./images/railscms.png" alt="RailsCms">
+        </li>
+        <li class='logo-nav'>
+          <a href="http://interlink-ua.com" class="logo">
+            <img src="./images/logo.png" alt="InterLink">
+          </a>
+        </li>
+        <li class="guides-index guides-index-large">
+          <a href="index.html" onclick="guideMenu(); return false;" id="guidesMenu" class="guides-index-item nav-item">Guides Index</a>
+          <div id="guides" class="clearfix" style="display: none;">
+            <hr />
+                <dl class="L">
+                      <dt>Start Here</dt>
+                          <dd><a href="overview.html">Overview</a></dd>
+                          <dd><a href="setup.html">Setup process</a></dd>
+                      <dt>ActiveFile</dt>
+                      <dt>RailsCms engine</dt>
+                      <dt>Admin</dt>
+                </dl>
+                <dl class="R">
+                      <dt>Digging Deeper</dt>
+                      <dt>Contributing to RailsCms</dt>
+                </dl>
+          </div>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+  <hr class="hide" />
+
+  <div id="feature">
+    <div class="wrapper">
+      
+
+                <div id="subCol">
+            <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+            <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><ol class="chapters">
+<li><a href="#what-is-activefile-questionmark">What is ActiveFile?</a></li>
+<li><a href="#definition">Definition</a></li>
+<li><a href="#how-to-use-the-activefile-methods-and-their-associations-questionmark">How to use the ActiveFile methods and their associations?</a></li>
+<li><a href="#installation">Installation</a></li>
+</ol></body></html>
+
+          </div>
+
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<h3 id="what-is-activefile-questionmark">1 What is ActiveFile?</h3>
+<p><a href="http://badge.fury.io/rb/activefile"><img src="https://badge.fury.io/rb/activefile.png" alt="Gem Version"></a></p>
+<p>ActiveFile is a lightweight file system ORM, specially designed and developed for RailsCms. It will be free and opensource soon.</p>
+<p>ActiveFile build a persistent domain model by mapping file system objects to Ruby classes. It inherits ActiveRecord-similar interface.</p>
+<h3 id="definition">2 Definition</h3>
+<p>This is a neat example of ActiveFile power. You can define any file system objects in a ActiveRecord-way. All of them are file objects. No database needed:</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Layout &lt; ActiveFile::Base
+  has_one :css
+  has_one :seo_tag
+end
+
+class Content &lt; ActiveFile::Base
+  has_one :css
+end
+
+class Css &lt; ActiveFile::Base
+  belongs_to :layout
+  belongs_to :content
+  file_path "app/assets/stylesheets"
+end
+
+class SeoTag &lt; ActiveFile::Base
+  belongs_to :layout
+end
+
+</pre>
+</div>
+<h3 id="how-to-use-the-activefile-methods-and-their-associations-questionmark">3 How to use the ActiveFile methods and their associations?</h3>
+<p>This is another example, with methods describing. Look RDoc for ActiveFile fore more details.</p>
+<p>Define a <code>Shop</code> model. Inherit from <code>ActiveFile::Base</code>.
+<code>parent_to</code> is an alias to ActiveRecord <code>has_many</code> association.</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+class Shop &lt; ActiveFile::Base
+  has_many :products
+end
+
+</pre>
+</div>
+<p>Okay, we have a shop which is a <strong>parent</strong> to products. Let's define a <code>Product</code>:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+class Product &lt; ActiveFile::Base
+  belong_to :shop
+end
+
+</pre>
+</div>
+<p>From now, add some logic in your controller.
+At first, create a shop. <code>name</code> is a <strong>important</strong> attribute for every file object:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+shop = Shop.new(:name =&gt; "Apple Store")
+shop.save!
+
+</pre>
+</div>
+<p>Check the sum of shops:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+Shop.all.size  #&gt; 1
+
+</pre>
+</div>
+<p>Next, create some <code>product</code>, and define it as a child of our <code>shop</code></p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+iPad = Product.new(:name =&gt; "iPad", :shop =&gt; shop, :data =&gt; "The iPad is a line of tablet computers designed and marketed by Apple Inc., which runs Apple's iOS operating system.")
+iPad.save!
+
+</pre>
+</div>
+<p>Oh, iPad is a great product, ok. Note, that we defined the product file content with <code>data</code> attribute.
+Let's see what we can do now:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+product = Product.where(:name =&gt; "iPad")[0]
+product.data  #&gt;  "The iPad "...
+product.shop  #&gt;  &lt;Shop instance&gt;
+product.shop.name  #&gt; "Apple Store"
+
+</pre>
+</div>
+<p>In result, two persistent files were created, accessible via ORM mechanism.</p>
+<h3 id="installation">4 Installation</h3>
+<p>Add this line to your application's Gemfile:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+gem 'activefile'
+
+</pre>
+</div>
+<p>And then execute:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bundle
+
+</pre>
+</div>
+</body></html>
+
+
+        <h3>Feedback</h3>
+        <p>
+          You're encouraged to help improve the quality of this guide.
+        </p>
+        <p>
+          If you see any typos or factual errors you are confident to
+          patch, please clone <a href="https://github.com/lifo/docrails">docrails</a>
+          and push the change yourself. That branch of Rails has public write access.
+          Commits are still reviewed, but that happens after you've submitted your
+          contribution. <a href="https://github.com/lifo/docrails">docrails</a> is
+          cross-merged with master periodically.
+        </p>
+        <p>
+          You may also find incomplete content, or stuff that is not up to date.
+          Please do add any missing documentation for master. Check the
+          <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails Guides Guidelines</a>
+          for style and conventions.
+        </p>
+        <p>
+          If for whatever reason you spot something to fix but cannot patch it yourself, please
+          <a href="https://github.com/rails/rails/issues">open an issue</a>.
+        </p>
+        <p>And last but not least, any kind of discussion regarding Ruby on Rails
+          documentation is very welcome in the <a href="http://groups.google.com/group/rubyonrails-docs">rubyonrails-docs mailing list</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hide" />
+  <div id="footer">
+    <div class="wrapper">
+    </div>
+  </div>
+
+  <script type="text/javascript" src="javascripts/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/responsive-tables.js"></script>
+  <script type="text/javascript" src="javascripts/guides.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shCore.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushRuby.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushXml.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushSql.js"></script>
+  <script type="text/javascript" src="javascripts/syntaxhighlighter/shBrushPlain.js"></script>
+  <script type="text/javascript">
+    SyntaxHighlighter.all()
+    $(guidesIndex.bind);
+  </script>
+</body>
+</html>
+
