@@ -1,13 +1,14 @@
 
 - case @object
   - when 'delete_folder'
-    obj = $('.gallery-folder[data-path="#{@path}"]');
+    obj = $('.gallery-folder[data-path="#{@path}"][data-name="#{@name}"]');
     obj.fadeOut();
   - when 'add_folder'
     $('.panel_gallery .content').prepend("#{ escape_javascript(render(:partial => 'gallery_folder', :dir => @dir)) }");
   - when 'rename_folder'
-    obj = $('.gallery-folder[data-path="#{@path}"]');
+    obj = $('.gallery-folder[data-path="#{@path}"][data-name="#{@old_name}"]');
     $(obj).attr('data-path', '#{@new_path}');
+    $(obj).attr('data-name', '#{@new_name}');
     $(obj).find('.image_description').data('info', '#{@new_name}');
     desc = '#{truncate(@new_name, :length => 22, :omission => '...')}' + '<div class="edit_name" onclick="rename_folder(this)"></div>'
     $(obj).find('.image_description').html(desc);
