@@ -4,11 +4,11 @@
     -
       name: Overview
       url: overview.html
-      description: Everything you need to know about softwareplanet-cms
+      description: Everything you need to know about SoftwarePlanet CMS
     -
       name: Setup process
       url: setup.html
-      description: This guide explain softwareplanet-cms setup process
+      description: This guide explain SoftwarePlanet CMS setup process
 -
   name: ActiveFile
   documents:
@@ -28,10 +28,10 @@
       url: active_file_association.html
       description: This guide covers all the associations provided by Active Record.
 -
-  name: softwareplanet-cms engine
+  name: SoftwarePlanet CMS engine
   documents:
     -
-      name: softwareplanet-cms Engine Overview
+      name: SoftwarePlanet CMS Engine Overview
       work_in_progress: true
       url: engine.html
       description: This guide provides an introduction to Action View and introduces a few of the more common view helpers.
@@ -58,27 +58,27 @@
   name: Digging Deeper
   documents:
     -
-      name: softwareplanet-cms Variables
+      name: SoftwarePlanet CMS Variables
       work_in_progress: true
       url: variables.html
       description: This guide documents the Ruby core extensions defined in Active Support.
     -
-      name: softwareplanet-cms Internationalization
+      name: SoftwarePlanet CMS Internationalization
       work_in_progress: true
       url: i18n.html
       description: This guide covers how to add internationalization to your applications. Your application will be able to translate content to different languages, change pluralization rules, use correct date formats for each country and so on.
     -
-      name: softwareplanet-cms Routings
+      name: SoftwarePlanet CMS Routings
       work_in_progress: true
       url: routings.html
       description: This guide describes how to use Action Mailer to send and receive emails.
     -
-      name: Testing softwareplanet-cms
+      name: Testing SoftwarePlanet CMS
       work_in_progress: true
       url: testing.html
       description: This is a rather comprehensive guide to doing both unit and functional tests in Rails. It covers everything from 'What is a test?' to the testing APIs. Enjoy.
     -
-      name: Configuring softwareplanet-cms
+      name: Configuring SoftwarePlanet CMS
       work_in_progress: true
       url: configuring.html
       description: This guide covers the basic configuration settings for a Rails application.
@@ -93,20 +93,20 @@
       url: asset_pipeline.html
       description: This guide documents the asset pipeline.
     -
-      name: The softwareplanet-cms Initialization Process
+      name: The SoftwarePlanet CMS Initialization Process
       work_in_progress: true
       url: initialization.html
       description: This guide explains the internals of the Rails initialization process as of Rails 3.1
 -
-  name: Contributing to softwareplanet-cms
+  name: Contributing to SoftwarePlanet CMS
   documents:
     -
-      name: Contributing to softwareplanet-cms
+      name: Contributing to SoftwarePlanet CMS
       work_in_progress: true
       url: contributing.html
-      description: This guide covers a variety of ways that you can get involved in the ongoing development of softwareplanet-cms.
+      description: This guide covers a variety of ways that you can get involved in the ongoing development of SoftwarePlanet CMS.
     -
-      name: softwareplanet-cms Guides Guidelines
+      name: SoftwarePlanet CMS Guides Guidelines
       work_in_progress: true
       url: ruby_on_rails_guides_guidelines.html
       description: This guide documents the Ruby on Rails guides guidelines.

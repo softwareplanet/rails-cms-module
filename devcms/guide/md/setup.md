@@ -1,32 +1,32 @@
-softwareplanet-cms setup guide
+SoftwarePlanet CMS setup guide
 ==========================
 
-This guide covers the setup process of softwareplanet-cms engine
+This guide covers the setup process of SoftwarePlanet CMS engine
 
 After reading this guide, you will know:
 
-* How to create basic rails project with softwareplanet-cms support
-* How to extend existed project with softwareplanet-cms capabilities
+* How to create basic rails project with SoftwarePlanet CMS support
+* How to extend existed project with SoftwarePlanet CMS capabilities
 
 --------------------------------------------------------------------------------
 
-How to setup softwareplanet-cms?
+How to setup SoftwarePlanet CMS?
 ----------------------
 
-This is a simple steps, to set up softwareplanet-cms project from scratch on Linux systems.
+This is a simple steps, to set up SoftwarePlanet CMS project from scratch on Linux systems.
 
 ### Brief Instructions:
 
-TIP: If you already have existed project, and you want to extend it with softwareplanet-cms, you can skip steps 1 and 2.
+TIP: If you already have existed project, and you want to extend it with SoftwarePlanet CMS, you can skip steps 1 and 2.
 
 * Create new RVM (rails 3.2.*)  -- strongly recommend to use RVM anywhere, anywhen.
 
 * Create new Rails-project, setup and configure mysql or sqlite database.
 
-* [Download](#.html) and install softwareplanet-cms as a local gem. To do it, just place the softwareplanet-cms folder in your rails root application folder, and add to Gemfile:
+* [Download](#.html) and install SoftwarePlanet CMS as a local gem. To do it, just place the SoftwarePlanet CMS folder in your rails root application folder, and add to Gemfile:
 
 ```ruby
-gem 'railscms', :path => 'railscms'
+gem 'softwareplanet-cms', :path => 'softwareplanet-cms'
 ```
 
 * Run `bundle` rake command.
@@ -39,7 +39,7 @@ gem 'railscms', :path => 'railscms'
 
 ###Detailed instruction:
 
-TIP: If you already have existed project, and you want extend it with RailsCms capabilities, you can skip steps 1 and 2.
+TIP: If you already have existed project, and you want extend it with SoftwarePlanet CMS capabilities, you can skip steps 1 and 2.
 
 TIP: Assuming that you already have installed RVM. If not, visit [(https://rvm.io/)]. It is not necessary, but strongly recommend. If you don't want use it, skip step 1.
 
@@ -100,10 +100,10 @@ with
 `gem 'mysql2'`
 and configure `config/database.yml` database configuration.
 
-* 3. [Download](#.html) and install RailsCms as a local gem. To do it, just place the railscms folder in your rails root application folder, and add to Gemfile:
+* 3. [Download](#.html) and install SoftwarePlanet CMS as a local gem. To do it, just place the railscms folder in your rails root application folder, and add to Gemfile:
 
 ```ruby
-gem 'railscms', :path => 'railscms'
+gem 'softwareplanet-cms', :path => 'softwareplanet-cms'
 ```
 
 4. Run in terminal
@@ -124,4 +124,4 @@ $ rails s
 ```
 6. Open in your browser `http://localhost:3000`. You should see the admin panel. Use username `admin` and password `admin` to log in.
 
--= RailsCms =-
+-= SoftwarePlanet CMS =-
