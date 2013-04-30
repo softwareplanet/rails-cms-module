@@ -16,6 +16,7 @@ module Devcms
       SourceType::IMAGE     => "public/img/storage/",
       SourceType::LAYOUT    => "#{SOURCE_FOLDER}/layouts/",
       SourceType::CONTENT   => "#{SOURCE_FOLDER}/contents/",
+      SourceType::HIDDEN_LAYOUT   => "#{SOURCE_FOLDER}/hidden_layouts/",
       SourceType::SEO       => "#{SOURCE_FOLDER}/seotags/",
       SourceType::UNDEFINED => "#{SOURCE_FOLDER}/others/",
       SourceType::COMPILED => "#{SOURCE_FOLDER}/compiled/",
@@ -27,6 +28,7 @@ module Devcms
       SourceType::IMAGE     => "public/img/storage_test/",
       SourceType::LAYOUT    => "#{TEST_SOURCE_FOLDER}/layouts/",
       SourceType::CONTENT   => "#{TEST_SOURCE_FOLDER}/contents/",
+      SourceType::HIDDEN_LAYOUT   => "#{TEST_SOURCE_FOLDER}/hidden_layouts/",
       SourceType::SEO       => "#{TEST_SOURCE_FOLDER}/seotags/",
       SourceType::UNDEFINED => "#{TEST_SOURCE_FOLDER}/others/",
       SourceType::COMPILED =>  "#{TEST_SOURCE_FOLDER}/compiled/"
@@ -36,6 +38,7 @@ module Devcms
       SourceType::CSS       => "scss",
       SourceType::IMAGE     => "*",       # * - file extension gets from the source file extension
       SourceType::LAYOUT    => "",
+      SourceType::HIDDEN_LAYOUT => "",
       SourceType::CONTENT   => "",
       SourceType::SEO       => "",
       SourceType::UNDEFINED => "",

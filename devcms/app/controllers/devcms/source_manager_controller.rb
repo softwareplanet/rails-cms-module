@@ -179,21 +179,30 @@ module Devcms
 
       else
         begin
+
           @seo = Source.quick_attach(SourceType::LAYOUT,  @layout_name, SourceType::SEO)
           @seo.data = "<title>#{title}</title>\n<meta name=\"keywords\" content=\"#{keywords}\"/>\n<meta name=\"description\" content=\"#{description}\"/>\n"
           @seo.save!
-          if @layout_name != @address
 
+          if @layout_name != @address
             seo_path = @seo.get_source_folder + @seo.get_filename
             raise unless File.exist? seo_path
             File.rename(seo_path, @seo.get_source_folder + '1-tar-' + @address)
-
-            @layout = Source.find_by_name(@layout_name).first
-            old_path = @layout.get_source_folder
-            new_path = File.dirname(@layout.get_source_folder) + '/' + @address
-            File.rename(old_path, new_path)
-            @source = Source.find_by_name(@address).first
           end
+          @layout = Source.find_by_name(@layout_name).first
+          @old_layout_id = @layout.get_id
+          open_layouts = '/layouts/'
+          hidden_layouts = '/hidden_layouts/'
+          old_path = @layout.path + @layout_name
+
+          if no_publish.nil?
+            new_path = File.dirname(@layout.path) + open_layouts + @address
+          else
+            new_path = File.dirname(@layout.path) + hidden_layouts + @address
+          end
+
+          File.rename(old_path, new_path)
+          @source = Source.find_by_name(@address).first
 
         rescue Exception => exc
           render :js => 'alert("' +  I18n.t('save_layout_form.wrong') + '");'
@@ -233,9 +242,13 @@ module Devcms
         when "load"
           case @object
             when "structure"
-              @layouts = Source.where :type => SourceType::LAYOUT
+              @layouts = Source.where(:type => SourceType::LAYOUT)
+              @hiddens = Source.where(:type => SourceType::HIDDEN_LAYOUT).collect{ |source| source.hidden = true; source }
+              @layouts |= @hiddens
             when "content"
               @layouts = Source.where :type => SourceType::LAYOUT
+            when "components"
+              []
             when "gallery"
               if params[:path]
                 @current_path = params[:path]
@@ -244,7 +257,7 @@ module Devcms
               end
               @images = Dir.glob(@current_path + "*.*")
               @images.map!{|image_path| File.basename(image_path)}
-              #File.basename('/qwe/img.png')         =>  img.png
+              #File@layouts.basename('/qwe/img.png')         =>  img.png
               #File.basename('/qwe/img.png','.*')    =>  img
               @result = []
               str = 'public/'
@@ -303,8 +316,11 @@ module Devcms
           case @object
             when 'edit_properties'
               @layout_id = params[:layout_id]
-              @page_name = @layout_id.gsub('pre1-id-', '')
-              @seo_id = @layout_id.gsub('pre1-id-', '1-tar-')
+              @seo, @path = Source.quick_build_seo_with_path(@layout_id)
+              @page_name = Source.quick_get_layout_name_by_id(@layout_id)
+              #no_show = params[:no_show]
+              @no_publish = @layout_id.match('pre1-id-').blank?
+              @seo_id = @layout_id.gsub(/pre(1|8)-id-/, '1-tar-')
               @seo = Source.quick_attach(SourceType::LAYOUT,  @page_name, SourceType::SEO)
               @path = @seo.get_source_folder + @seo.name
 

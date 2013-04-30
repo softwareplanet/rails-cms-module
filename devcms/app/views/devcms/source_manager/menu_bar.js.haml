@@ -13,6 +13,8 @@ $(panel_content).html("");
         $(panel_content).html("#{ escape_javascript(render(:partial => 'layout', :collection => @layouts)) }");
       - when 'content'
         $(panel_content).html("#{ escape_javascript(render(:partial => 'content')) }");
+      - when 'components'
+        -#$(panel_content).html("#{ escape_javascript(render(:partial => 'components')) }");
       - when 'gallery'
         $(panel_content).html("#{ escape_javascript(render(:partial => 'images')) }");
       - else
