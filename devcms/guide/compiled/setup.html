@@ -100,6 +100,148 @@
     </div>
   </div>
 
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<h3 id="how-to-setup-softwareplanet-cms-questionmark">1 How to setup SoftwarePlanet CMS?</h3>
+<p>This is a simple steps, to set up SoftwarePlanet CMS project from scratch on Linux systems.</p>
+<h4 id="brief-instructions">1.1 Brief Instructions:</h4>
+<div class="info"><p>If you already have existed project, and you want to extend it with SoftwarePlanet CMS, you can skip steps 1 and 2.</p></div>
+<ul>
+<li><p>Create new RVM (rails 3.2.*)  -- strongly recommend to use RVM anywhere, anywhen.</p></li>
+<li><p>Create new Rails-project, setup and configure mysql or sqlite database.</p></li>
+<li><p><a href="#.html">Download</a> and install SoftwarePlanet CMS as a local gem. To do it, just place the SoftwarePlanet CMS folder in your rails root application folder, and add to Gemfile:</p></li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+gem 'softwareplanet-cms', :path =&gt; 'softwareplanet-cms'
+
+</pre>
+</div>
+
+<ul>
+<li><p>Run <code>bundle</code> rake command.</p></li>
+<li><p>Run <code>rake cms:wizard</code> rake command to setup devcms. See output to understand what modifications it applied.</p></li>
+<li><p>Start the rails server, using <code>rails s</code></p></li>
+<li><p>Open in your browser <code>http://localhost:3000</code>. You should see the admin panel. Use username <code>admin</code> and password <code>admin</code> to log in.</p></li>
+</ul>
+<h4 id="detailed-instruction">1.2 Detailed instruction:</h4>
+<div class="info"><p>If you already have existed project, and you want extend it with SoftwarePlanet CMS capabilities, you can skip steps 1 and 2.</p></div>
+<div class="info"><p>Assuming that you already have installed RVM. If not, visit [(<a href="https://rvm.io/)">https://rvm.io/)</a>]. It is not necessary, but strongly recommend. If you don't want use it, skip step 1.</p></div>
+<ul>
+<li>1. To begin from scratch, you need to create a simple rails project. We recommended to starts with new rvm instance.
+Open a terminal, navigate to a folder where you have rights to create files, and type something like:</li>
+</ul>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ mkdir blog
+$ cd blog
+touch .rvmrc
+
+</pre>
+</div>
+<p>This will create a your future project folder, and .rvmrc file. This file will be used to setup your project's ruby environment when you switch to the project root directory.
+Open this file with any text editor, and paste a single line (the ruby versions will be differ on your machine!):</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+rvm use ruby-1.9.3-p392@blog --create
+
+</pre>
+</div>
+<div class="info"><p>The installed ruby versions can be differ on your machine. You can check your version by using <code>rvm list</code> terminal command.</p></div>
+<p>After that, you can activate your rvm, by directory switching:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ cd ..
+$ cd blog
+
+</pre>
+</div>
+<p>Choose Yes on rvm prompt. Now, you can download rails gem for your rvm version.</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ gem install rails
+$ cd ..
+
+</pre>
+</div>
+
+<ul>
+<li>2. Now, you can create a Rails application</li>
+</ul>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rails new blog
+
+</pre>
+</div>
+<p>This will create a Rails application called Blog in a directory called blog (where we had placed .rvmrc file already).
+Run the bundle command, to download all required gems:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bundle
+
+</pre>
+</div>
+<p>Setup your database</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake db:prepare
+
+</pre>
+</div>
+<p>This will instantiate a sqlite database. If you want mysql database instead,  open the Gemfile file, and replace
+<code>gem 'sqlite3'</code>
+with
+<code>gem 'mysql2'</code>
+and configure <code>config/database.yml</code> database configuration.</p>
+<ul>
+<li>3. <a href="#.html">Download</a> and install SoftwarePlanet CMS as a local gem. To do it, just place the railscms folder in your rails root application folder, and add to Gemfile:</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+gem 'softwareplanet-cms', :path =&gt; 'softwareplanet-cms'
+
+</pre>
+</div>
+
+<ol>
+<li>Run in terminal</li>
+</ol>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bundle
+
+</pre>
+</div>
+
+<ol>
+<li>Run rake command to setup devcms. See output to understand what modifications it applied:</li>
+</ol>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ rake cms:wizard
+
+</pre>
+</div>
+
+<ol>
+<li>Start the rails server:
+<code>bash
+$ rails s
+</code>
+</li>
+<li>Open in your browser <code>http://localhost:3000</code>. You should see the admin panel. Use username <code>admin</code> and password <code>admin</code> to log in.</li>
+</ol>
+<p>-= SoftwarePlanet CMS =-</p>
+</body></html>
+
+      </div>>
+    </div>
+  </div>
+
   <hr class="hide" />
   <div id="footer">
     <div class="wrapper">

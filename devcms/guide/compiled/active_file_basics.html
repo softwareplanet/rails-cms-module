@@ -74,20 +74,122 @@
 
   <div id="feature">
     <div class="wrapper">
-      
+      <h3>What is ActiveFile?</h3><p><a href="http://badge.fury.io/rb/activefile"><img src="https://badge.fury.io/rb/activefile.png" alt="Gem Version"></a></p><p>ActiveFile is a lightweight file system ORM, specially designed and developed for SoftwarePlanet CMS. It will be free and opensource soon.</p><p>ActiveFile build a persistent domain model by mapping file system objects to Ruby classes. It inherits ActiveRecord-similar interface.</p><h3>Definition</h3><p>This is a neat example of ActiveFile power. You can define any file system objects in a ActiveRecord-way. All of them are file objects. No database needed:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Layout &lt; ActiveFile::Base
+  has_one :css
+  has_one :seo_tag
+end
+
+class Content &lt; ActiveFile::Base
+  has_one :css
+end
+
+class Css &lt; ActiveFile::Base
+  belongs_to :layout
+  belongs_to :content
+  file_path &quot;app/assets/stylesheets&quot;
+end
+
+class SeoTag &lt; ActiveFile::Base
+  belongs_to :layout
+end
+
+</pre>
+</div>
+<p>How to use the ActiveFile methods and their associations?</p>
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html><body><ol class="chapters">
-<li><a href="#what-is-activefile-questionmark">What is ActiveFile?</a></li>
-<li><a href="#definition">Definition</a></li>
-<li><a href="#how-to-use-the-activefile-methods-and-their-associations-questionmark">How to use the ActiveFile methods and their associations?</a></li>
 <li><a href="#installation">Installation</a></li>
 </ol></body></html>
 
           </div>
 
+    </div>
+  </div>
+
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<p>This is another example, with methods describing. Look RDoc for ActiveFile fore more details.</p>
+<p>Define a <code>Shop</code> model. Inherit from <code>ActiveFile::Base</code>.
+<code>parent_to</code> is an alias to ActiveRecord <code>has_many</code> association.</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+class Shop &lt; ActiveFile::Base
+  has_many :products
+end
+
+</pre>
+</div>
+<p>Okay, we have a shop which is a <strong>parent</strong> to products. Let's define a <code>Product</code>:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+class Product &lt; ActiveFile::Base
+  belong_to :shop
+end
+
+</pre>
+</div>
+<p>From now, add some logic in your controller.
+At first, create a shop. <code>name</code> is a <strong>important</strong> attribute for every file object:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+shop = Shop.new(:name =&gt; "Apple Store")
+shop.save!
+
+</pre>
+</div>
+<p>Check the sum of shops:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+Shop.all.size  #&gt; 1
+
+</pre>
+</div>
+<p>Next, create some <code>product</code>, and define it as a child of our <code>shop</code></p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+iPad = Product.new(:name =&gt; "iPad", :shop =&gt; shop, :data =&gt; "The iPad is a line of tablet computers designed and marketed by Apple Inc., which runs Apple's iOS operating system.")
+iPad.save!
+
+</pre>
+</div>
+<p>Oh, iPad is a great product, ok. Note, that we defined the product file content with <code>data</code> attribute.
+Let's see what we can do now:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+product = Product.where(:name =&gt; "iPad")[0]
+product.data  #&gt;  "The iPad "...
+product.shop  #&gt;  &lt;Shop instance&gt;
+product.shop.name  #&gt; "Apple Store"
+
+</pre>
+</div>
+<p>In result, two persistent files were created, accessible via ORM mechanism.</p>
+<h3 id="installation">1 Installation</h3>
+<p>Add this line to your application's Gemfile:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+gem 'activefile'
+
+</pre>
+</div>
+<p>And then execute:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+$ bundle
+
+</pre>
+</div>
+</body></html>
+
+      </div>>
     </div>
   </div>
 

@@ -96,6 +96,58 @@
     </div>
   </div>
 
+  <div id="container">
+    <div class="wrapper">
+      <div id="mainCol">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<h2>Contributing to  SoftwarePlanet CMS</h2>
+<p>This guide covers ways in which <em>you</em> can become a part of the ongoing development of SoftwarePlanet CMS.</p>
+<p>After reading this guide, you will know:</p>
+<ul>
+<li>How to contribute to the SoftwarePlanet CMS code.</li>
+<li>How to contribute to the SoftwarePlanet CMS documentation.</li>
+</ul>
+<h3 id="contribute-to-the-softwareplanet-cms-code">1 Contribute to the SoftwarePlanet CMS code</h3>
+<p>Contributing to the SoftwarePlanet CMS code based on the common principles, described at: <a href="https://help.github.com/articles/fork-a-repo">GitHub support center</a>.
+Also, it is useful to get acquainted with the approaches, described at <a href="http://guides.rubyonrails.org/contributing_to_ruby_on_rails.html">Ruby on Rails contribute documentation </a>.</p>
+<h4 id="follow-the-coding-conventions">1.1 Follow the Coding Conventions</h4>
+<p>We are follows a simple set of coding style conventions:</p>
+<ul>
+<li>Two spaces, no tabs (for indentation).</li>
+<li>No trailing whitespace. Blank lines should not have any spaces.</li>
+<li>Follow the conventions in the source you see used already.</li>
+</ul>
+<h4 id="how-to-do-version-numbers">1.2 How to do version numbers</h4>
+<div class="info"><p>Versioning is the process of assigning unique version numbers to unique states of software. A variety of version numbering schemes have been created, and we use Sequence-based identifiers.</p></div>
+<p>We uses such version definition:</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+v[major].[minor].[release]
+
+</pre>
+</div>
+<p><code>major</code>: Major version is a really decision. Are we ready to call the version 1.0? Does we consider this a major version for absolutely exceptional product, or is it an update of the current major version?</p>
+<p><code>minor</code>: Starts from 0 whenever major is incremented. +1 for every version that goes public.</p>
+<p><code>release</code>: Every time you hit a development milestone and release the product, even internally (e.g. to QA), increment this. This is especially important for communication between teams in the organization. Needless to say, never release the same 'release' twice (even internally). Reset to 0 upon minor++ or major++.</p>
+<p>We can use <a href="http://learn.github.com/p/tagging.html">Git Tag numbers</a> to specify commit versions at GitHub. It should be best.</p>
+<p>SoftwarePlanet CMS version example:</p>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+v0.1.1
+
+</pre>
+</div>
+<h4 id="updating-the-changelog">1.3 Updating the CHANGELOG</h4>
+<p>The CHANGELOG is an important part of every release. It keeps the list of changes for every SoftwarePlanet CMS version.</p>
+<div class="todo"><p>We need think more about CHANGELOG using.</p></div>
+<p>-= SoftwarePlanet CMS =-</p>
+</body></html>
+
+      </div>>
+    </div>
+  </div>
+
   <hr class="hide" />
   <div id="footer">
     <div class="wrapper">
