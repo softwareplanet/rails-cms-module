@@ -6,9 +6,9 @@
     $('#properties_form').find('.keywords').val('#{@keywords}');
     $('#properties_form').find('.description').val('#{@description}');
     - if @no_publish
-      $('#no_publish').attr('checked',true);
+      document.getElementById("no_publish").checked = true;
     - else
-      $('#no_publish').attr('checked',false);
+      document.getElementById("no_publish").checked = false;
     $('[data-level=child]').hide();
     $('.panel_properties').css('-webkit-transform','translate3d(' + $(window).width() + 'px, 0, 0)');
     $('.panel_properties').show();

@@ -1,9 +1,8 @@
 $('#properties_form')[0].reset();
 $('.panel_properties').css('display', 'none');
 
-- if @layout_name != @address
-  $('.panel_structure').find('.layout-row[data-source_id=pre1-id-#{@layout_name}]').next().remove();
-  $('.panel_structure').find('.layout-row[data-source_id=pre1-id-#{@layout_name}]').remove();
-  $('.panel_structure .content').append("#{ escape_javascript(render(:partial => 'layout', :object => @source)) }");
+$('.panel_structure').find('.layout-row[data-source_id=#{@old_layout_id}]').next().remove();
+$('.panel_structure').find('.layout-row[data-source_id=#{@old_layout_id}]').remove();
+$('.panel_structure .content').append("#{ escape_javascript(render(:partial => 'layout', :locals => {:layout => @source })) }");
 
 alert('Данные успешно сохранены');

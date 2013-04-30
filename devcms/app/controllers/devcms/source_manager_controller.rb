@@ -55,6 +55,15 @@ module Devcms
             f.puts('<meta name="description" content="' + description + '"/>')
           end
 
+          if no_publish
+            layout = Source.find_by_name(@source.name).first
+            hidden_layouts = '/hidden_layouts/'
+            old_path = layout.path + layout.name
+            new_path = File.dirname(layout.path) + hidden_layouts + address
+            File.rename(old_path, new_path)
+            @source = Source.find_by_name(address).first
+          end
+
         rescue Exception => exc
           render :js => 'alert("' +  I18n.t('create_layout_form.wrong') + '");'
           return
