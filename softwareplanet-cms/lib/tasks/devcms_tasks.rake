@@ -82,17 +82,17 @@ desc "Setup script"
       
       unless text_exists?(OWNER_SEED_FILE_PATH, "Devcms::Engine.load_seed")
         sleep 1
-        puts "Copy DevCms migration scripts.."
-        Rake::Task["devcms:install:migrations"].reenable
-        Rake::Task["devcms:install:migrations"].invoke
+        puts "Copy Cms migration scripts.."
+        Rake::Task["softwareplanet-cms:install:migrations"].reenable
+        Rake::Task["softwareplanet-cms:install:migrations"].invoke
         sleep 1
-        puts "Initialize DevCms seed data.."
-        inject_text(OWNER_SEED_FILE_PATH, -1, "Devcms::Engine.load_seed")
+        puts "Initialize Cms seed data.."
+        inject_text(OWNER_SEED_FILE_PATH, -1, "Cms::Engine.load_seed")
         puts "Run all migrations.."
         Rake::Task["db:migrate"].reenable
         Rake::Task["db:migrate"].invoke
         sleep 1
-        puts "Load DevCms seed data..."
+        puts "Load Cms seed data..."
         Rake::Task["db:seed"].reenable
         Rake::Task["db:seed"].invoke
         puts "Done!"
@@ -113,7 +113,7 @@ desc "Setup script"
       minor_gemfile_selections = [
         false
       ]
-      gemfile_comment = "#=   DEVCMS REQUIREMENTS END   =#"
+      gemfile_comment = "#=   CMS REQUIREMENTS END   =#"
       major_gemfile_dependencies.each do |gem_file|
         sleep 1;
         if text_exists?(OWNER_GEMFILE_PATH, gem_file)
@@ -216,8 +216,8 @@ desc "Setup script"
       #  Add Cms routes
       #
       
-      route_line = "\n\n  # This is a DevCms route line. Add your custom routes above this line.\n    mount Devcms::Engine, :at => '/'\n"
-      route_finder = "Devcms::Engine"
+      route_line = "\n\n  # This is a Cms route line. Add your custom routes above this line.\n    mount Сms::Engine, :at => '/'\n"
+      route_finder = "Сms::Engine"
       unless text_exists?(OWNER_ROUTE_FILE_PATH, route_finder)
         sleep 1; puts("Add CMS routes to routes.rb..")
         inject_text(OWNER_ROUTE_FILE_PATH, 2, route_line)

@@ -1,8 +1,8 @@
-.project
+it .project
 .settings
 .idea/*
 nbproject
-
+softwareplanet-cms/.idea/*
 Gemfile.lock
 .gitkeep
 

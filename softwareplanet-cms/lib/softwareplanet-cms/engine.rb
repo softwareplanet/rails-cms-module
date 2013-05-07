@@ -1,5 +1,8 @@
-module Devcms
+module Cms
   class Engine < ::Rails::Engine
     isolate_namespace Devcms
   end
 end
+
+
+

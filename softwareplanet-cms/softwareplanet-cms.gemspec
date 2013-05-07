@@ -7,7 +7,7 @@ version = File.read(File.expand_path('../CMS_VERSION', __FILE__)).strip
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.platform      = Gem::Platform::RUBY
-  s.name          = %q{devcms}
+  s.name          = %q{softwareplanet-cms}
   s.version       = version
   s.description   = %q{A Ruby on Rails CMS that supports Rails 3.2. It's easy to extend and use.}
   s.summary       = %q{A Ruby on Rails CMS that supports Rails 3.2}

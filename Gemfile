@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gem 'rails', '3.2.12'
 gem 'mysql2'
-gem 'devcms', :path => 'devcms'
+gem 'softwareplanet-cms', :path => 'softwareplanet-cms'
 #gem 'activefile', :path => 'activefile'
 
 # Gems used only for assets and not required

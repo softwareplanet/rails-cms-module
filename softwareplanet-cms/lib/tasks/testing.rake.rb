@@ -3,9 +3,9 @@ namespace :devcms do
     desc "Generates a dummy app for testing"
     task :dummy_app do
       unless dummy_app_path.exist?
-        Rake::Task["devcms:testing:setup_dummy_app"].invoke
-        Rake::Task["devcms:testing:setup_extension"].invoke
-        Rake::Task["devcms:testing:init_test_database"].invoke
+        Rake::Task["softwareplanet-cms:testing:setup_dummy_app"].invoke
+        Rake::Task["softwareplanet-cms:testing:setup_extension"].invoke
+        Rake::Task["softwareplanet-cms:testing:init_test_database"].invoke
       end
     end
 
@@ -16,7 +16,7 @@ namespace :devcms do
       #params << "--database=#{ENV['DB']}" if ENV['DB']
 
       # Ensure the database is not there from a previous run.
-      #Rake::Task['devcms:testing:drop_dummy_app_database'].invoke
+      #Rake::Task['softwareplanet-cms:testing:drop_dummy_app_database'].invoke
 
       #Refinery::CmsGenerator.start %w[--quiet --fresh-installation]
 
@@ -55,7 +55,7 @@ namespace :devcms do
     end
 
     def dummy_app_path
-      #Devcms::Testing::Railtie.target_extension_path.join('spec', 'dummy')
+      #Cms::Testing::Railtie.target_extension_path.join('spec', 'dummy')
     end
   end
 end
