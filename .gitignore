@@ -15,6 +15,7 @@ config/*.yml
 # Compiled assets
 /public/assets
 /public/img/storage
+/app/assets/stylesheets/custom
 
 # Local layouts and contents
 /data_source
