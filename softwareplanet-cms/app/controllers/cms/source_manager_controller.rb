@@ -41,15 +41,6 @@ module Cms
           @source = Source.new(:type => type, :name => address)
           @source.save!
 
-          if no_publish
-            layout = Source.find_by_name(@source.name).first
-            hidden_layouts = '/hidden_layouts/'
-            old_path = layout.path + layout.name
-            new_path = File.dirname(layout.path) + hidden_layouts + address
-            File.rename(old_path, new_path)
-            @source = Source.find_by_name(address).first
-          end
-
           @css = Source.new(:type => SourceType::CSS, :target => @source)
           @css.save!
 
@@ -205,7 +196,7 @@ module Cms
 
       else
         begin
-
+          @css = Source.quick_attach(SourceType::LAYOUT,  @layout_name, SourceType::CSS)
           @seo = Source.quick_attach(SourceType::LAYOUT,  @layout_name, SourceType::SEO)
           @seo.data = "<title>#{title}</title>\n<meta name=\"keywords\" content=\"#{keywords}\"/>\n<meta name=\"description\" content=\"#{description}\"/>\n"
           @seo.save!
@@ -214,8 +205,18 @@ module Cms
             seo_path = @seo.get_source_folder + @seo.get_filename
             raise unless File.exist? seo_path
             File.rename(seo_path, @seo.get_source_folder + '1-tar-' + @address)
+
+            css_path = @css.get_source_folder + @css.get_filename
+            raise unless File.exist? css_path
+            css_type = SOURCE_TYPE_EXTENSIONS[SourceType::CSS]
+            File.rename(css_path, @css.get_source_folder + '1-tar-' + @address + '.' + css_type)
           end
+
           @layout = Source.find_by_name_and_type(@layout_name, SourceType::LAYOUT).first
+          if !@layout
+            @layout = Source.find_by_name_and_type(@layout_name, SourceType::HIDDEN_LAYOUT).first
+          end
+
           @old_layout_id = @layout.get_id
           open_layouts = '/layouts/'
           hidden_layouts = '/hidden_layouts/'
