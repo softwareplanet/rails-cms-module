@@ -94,25 +94,21 @@ window.deleteSourceWithConfirmation = (obj) ->
   id_to_delete = $(obj).data("source_id")
   name = $(obj).data("source_name")
   if confirm('Are you sure to delete Layout \'' + name + "\' ?")
-    deleteSource('Layout', id_to_delete)
+    deleteSource('layout', id_to_delete)
     $(obj).parents('.layout-row').next().fadeOut()
     $(obj).parents('.layout-row').fadeOut()
 #  $(".icon.icon-structure").click()
 
  #OPEN CODE EDITOR FOR EDIT LAYOUT CODE
 window.show_code_editor = (obj) ->
-  if($('.panel_editor').html() != '')
-    $('.panel_editor').html ''
-    $('.panel_editor').hide()
-  else
-    $('[data-level=child]').hide();
-    request_json =
-      object: $(obj).data("source_id")
-      activity: "edit"
-    $.ajax
-      url: "/source_manager/editor.js"
-      type: "GET"
-      data: request_json
+  $('[data-level=child]').hide();
+  request_json =
+    object: $(obj).data("source_id")
+    activity: "edit"
+  $.ajax
+    url: "/source_manager/editor.js"
+    type: "GET"
+    data: request_json
 
   #DELETE
 window.deleteSource = (type, id) ->

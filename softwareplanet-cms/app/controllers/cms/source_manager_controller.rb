@@ -118,7 +118,15 @@ module Cms
     def destroy
       @sourceObject = Source.find_by_id(params[:id])
       begin
+        @layout_name = @sourceObject.name
         @sourceObject.delete!
+        if params[:type]  == 'layout'
+          css = Source.quick_attach(SourceType::LAYOUT,  @layout_name, SourceType::CSS)
+          css.delete!
+
+          seo = Source.quick_attach(SourceType::LAYOUT,  @layout_name, SourceType::SEO)
+          seo.delete!
+        end
       rescue ActiveRecord::RecordInvalid
       end
     end
