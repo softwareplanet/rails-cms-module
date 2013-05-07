@@ -873,9 +873,10 @@ body.cms {
     //box-shadow: -10px 0px 15px 2px #333;
 
     .title {
-      font-size: 24px;
-      padding: 20px 0;
+      padding: 63px 15px 0px 20px;
       color: white;
+      font-size: 22px;
+      font-weight: bold;
     }
   }
   .nav {
@@ -969,7 +970,7 @@ body.cms {
   }
 
   .editor-wrapper {
-     padding: 30px;
+     padding: 20px;
   }
 }
 
