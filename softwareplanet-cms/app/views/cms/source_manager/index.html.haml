@@ -1,0 +1,266 @@
+%script{:src => "assets/gallery/a_load-image.min.js"}
+%script{:src => "assets/gallery/b_bootstrap-image-gallery.js"}
+%script{:src => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"}
+.toolbar
+  .icon.icon-main{'data-tooltip' => 'Главная', 'data-icon' => 'main'}
+  .icon.icon-structure{'data-tooltip' => 'Структура', 'data-icon' => 'structure'}
+  .icon.icon-content{'data-tooltip' => 'Содержание', 'data-icon' => 'content'}
+  .icon.icon-components{'data-tooltip' => 'Компоненты', 'data-icon' => 'components'}
+  .icon.icon-gallery{'data-tooltip' => 'Галлерея', 'data-icon' => 'gallery'}
+  .icon.icon-settings{'data-tooltip' => 'Настройки', 'data-icon' => 'settings'}
+  .icon.icon-exit{'data-tooltip' => 'Выход', 'data-icon' => 'exit'}
+.panel.panel_main
+  .header
+    .rect
+    .title
+      Главная
+    .line
+  .content
+-#.cms-folder
+  %div{:title => 'folder name'}
+    .delete_image{:onclick => "delete_image(this)"}
+      x
+    %input{:onfocusout => "rename_finish(this)", :onkeypress => "checkKeyForDelete(this)"}
+    .gallery-image
+      1111
+    .image_description
+      foo bar
+      .edit_name{:onclick => "rename_image(this)"}
+
+-#.panel.panel_structure.inactive{:data_name => 'panel_structure', :data_menu => 'structure'}
+.panel.panel_structure{:data_name => 'panel_structure', :data_menu => 'structure'}
+  .header
+    .rect
+    .title
+      Структура сайта
+      %a.add-structure{"data-toggle" => "tooltip", :href => "#", :title => "add structure", :data_name => 'add-structure', :data_menu => 'structure'}
+    .line
+  .content
+
+.panel.panel_content
+  -#.header
+    .rect
+    .title
+      Содержание
+    .line
+  .content
+.panel.panel_components
+  .header
+    .rect
+    .title
+      Компоненты
+    .line
+  .content
+.panel.panel_viewer{'data-level' => 'child'}
+.panel.panel_gallery
+  .header
+    .rect
+    .title
+      Галерея
+      .navigation_panel
+        #help_icon
+        #load_to_gallery{'data-toggle'=> 'dropdown'}
+        %form{:id => "load_image", :action => "source_manager/upload", :method => "post", :enctype => "multipart/form-data"}
+          %input{:id => "to_dir", :type => "hidden", :name => "to_dir"}
+          %input{:type => 'file', :id => "image_src", :name => "Filedata"}
+          %button{:type => "submit"}
+        .dropdown-menu.preferences
+          %li.add_folder
+            .preferences-rect
+            Добавить папку
+          %li.add_image
+            Добавить картинку
+  #gallery{"data-selector" => ".gallery-image", "data-target" => "#modal-gallery", "data-toggle" => "modal-gallery"}
+    .content
+.panel.panel_settings
+  .header
+    .rect
+    .title
+      Настройки
+    .line
+  .content
+
+.panel.panel_properties{'data-level' => 'child', :data_name => 'panel_properties', :data_menu => 'structure'}
+  .rect
+  .title
+    Свойства страницы
+  .line
+  = form_tag url_for( :controller => "source_manager", :action => "save_properties", :method => "post" ), :id => "properties_form", :style => 'padding: 10px;', :remote => true do
+    %fieldset
+      %input{:type => "hidden", :name => "id"}
+      %label Адрес / Имя
+      %input.url{:placeholder => "Input layout url…", :type => "text", :name => "url"}
+      %br
+      %label.checkbox
+        %input{:id => "no_show", :type => "checkbox", :name => "no_show",}
+        Не показывать в меню
+      %label.checkbox
+        %input{:id => "no_publish", :type => "checkbox", :name => "no_publish"}
+        Не публиковать на сайте
+      #accordion.seoblock
+        .accordion-group
+          .accordion-heading
+            %a.accordion-toggle{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseOne"}
+              %i.rotable-icon.icon-info-sign
+              Настройки SEO
+          #collapseOne.accordion-body.collapse.in
+            .accordion-inner
+
+              %label Заголовок
+              %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "title"}
+
+              %label Ключевые слова
+              %input.name.keywords{:placeholder => "Keywords…", :type => "text", :tabindex => 1, :name => "keywords"}
+
+              %label Описание
+              %input.url.description{:placeholder => "Description…", :type => "text", :name => "description"}
+      %div
+        %button.btn.btn-primary.save-source{:type => "submit", "data-type" => Cms::SourceType::LAYOUT, :tabindex => 2} СОХРАНИТЬ
+        .close-btn.btn.btn-primary Close
+
+.panel.panel_new-page{'data-level' => 'child'}
+  .title
+    Создать страницу
+  .line
+
+  = form_tag url_for( :controller => "source_manager", :action => "create" ), :id => "global_action_form", :remote => true do
+    %fieldset
+      %input{:type => "hidden", :name => "type", :value => Cms::SourceType::LAYOUT}
+
+
+
+      %label Адрес / Имя
+      %input.url{:placeholder => "Input layout url…", :type => "text", :tabindex => 2, :name => "address"}
+      %br
+      %label.checkbox
+        %input{:type => "checkbox", :name => "no_show", :tabindex => 3}
+        Не показывать в меню
+      %label.checkbox
+        %input{:type => "checkbox", :name => "no_publish", :tabindex => 4}
+        Не публиковать на сайте
+      #accordion2.seoblock{:tabindex => 5}
+        .accordion-group
+          .accordion-heading
+            %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", :href => "#collapseOne2"}
+              %i.rotable-icon.icon-info-sign
+              Настройки SEO
+          #collapseOne2.accordion-body.collapse.in
+            .accordion-inner
+              %label Заголовок
+              %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "name"}
+
+              %label Ключевые слова
+              %input.name{:placeholder => "Keywords…", :type => "text", :tabindex => 7, :name => "keywords"}
+
+              %label Описание
+              %input.url{:placeholder => "Description…", :tabindex => 8, :type => "text", :name => "description"}
+      %div
+        = submit_tag ' Save', :class => 'btn btn-primary'
+        .close-btn.btn.btn-primary Close
+-#.panel.panel_edit-page{'data-level' => 'child'}
+-#  .title
+-#    Редактировать свойства
+-#  .line
+-#  .content
+
+/ modal-gallery is the modal dialog used for the image gallery
+#modal-gallery.modal.modal-gallery.hide.fade{:tabindex => "-1"}
+  .modal-header
+    %a.close{"data-dismiss" => "modal"} ×
+    %h3.modal-title
+  .modal-body
+    .modal-image
+  .modal-footer
+    %a.btn.modal-download{:target => "_blank"}
+      %i.icon-download
+      %span Download
+    %a.btn.btn-success.modal-play.modal-slideshow{"data-slideshow" => "5000"}
+      %i.icon-play.icon-white
+      %span Slideshow
+    %a.btn.btn-info.modal-prev
+      %i.icon-arrow-left.icon-white
+      %span Previous
+    %a.btn.btn-primary.modal-next
+      %span Next
+      %i.icon-arrow-right.icon-white
+
+.panel_editor{'data-level' => 'child'}
+
+-#
+  %script
+  var editorManager = new CodeEditorsManager;
+
+  $(document).ready(function() {
+  editorManager.addEditor("haml_editor", new CodeEditorIDE("haml_editor"));
+  editorManager.addEditor("css_editor", new CodeEditorIDE("css_editor"));
+
+  editorManager.getEditor('haml_editor').code_editor.setOption('mode', 'stex');
+  editorManager.getEditor('css_editor').code_editor.setOption('mode', 'css');
+
+  editorManager.getEditor('haml_editor').code_editor.clearHistory()
+  editorManager.getEditor('css_editor').code_editor.clearHistory()
+
+  $('.css-navtab a').click(function(){
+  // ugly hack to update hidden codemirror window ;(
+  setTimeout("editorManager.getEditor('css_editor').code_editor.refresh();", 100);
+  });
+
+  $('.preview-navtab a').click(function(){
+  if ($('.preview-content').children().size() == 0) {
+  var layout_name =  $('.preview-navtab a').data('preview');
+  $('.preview-content').append("<iframe src=" +  layout_name + " width='100%' height='100%'/> ")
+  }
+  });
+
+  $('.haml-tab .languages-dropdown .dropdown-menu a').click(function(){
+  $('.haml-tab .languages-dropdown .dropdown-menu a').removeClass('dropdown-selected');
+  $(this).addClass('dropdown-selected');
+  var language = $(this).data('language');
+  editorManager.editors[0].editor.code_editor.setOption('mode', language);
+  });
+  $('.haml-tab .themes-dropdown .dropdown-menu a').click(function(){
+  $('.haml-tab .themes-dropdown .dropdown-menu a').removeClass('dropdown-selected');
+  $(this).addClass('dropdown-selected');
+  var theme = $(this).data('theme');
+  editorManager.editors[0].editor.code_editor.setOption('theme', theme);
+  });
+
+  $('body').click(function(){
+  });
+  $('.edit').click(function(){
+  $('.layout-row').removeClass('layout-row-selected');
+  $(this).parents('.layout-row').addClass('layout-row-selected');
+  $('.menu-bar').addClass('menu-bar-inactive');
+  source_id = $(this).data("source_id");
+  source_name = $(this).data("source_name");
+  $('.editor-panel .title').html(source_name);
+  editorManager.getEditor("haml_editor").setRequestPath('/source_manager/')
+  editorManager.getEditor("haml_editor").getRequestSource(source_id)
+  editorManager.getEditor("haml_editor").setSourceId(source_id)
+
+  $('.preview-navtab a').attr('data-preview', source_name);
+
+  css_id = $(this).data("css_id");
+  editorManager.getEditor("css_editor").setRequestPath('/source_manager/')
+  editorManager.getEditor("css_editor").getRequestSource(css_id)
+  editorManager.getEditor("css_editor").setSourceId(css_id)
+
+  $('.editor-panel').show();
+  });
+
+  $('.icon').click(function(){
+  $('.layout-row').removeClass('layout-row-selected');
+  $('.menu-bar').removeClass('menu-bar-inactive');
+  $('.icon').removeClass('highlighted');
+  $(this).addClass('highlighted');
+  $('.menu-bar').hide();
+  var menu_class = $(this).attr('class').split(' ')[1]
+  $('.menu-bar').hide();
+  $('.editor-panel').hide();
+  $('.menu-bar.'+menu_class).show();
+  $('.menu-bar.'+menu_class).animate({ opacity: 1, left: '+=0', height: '100%'}, 0);
+  });
+
+
+  });
+

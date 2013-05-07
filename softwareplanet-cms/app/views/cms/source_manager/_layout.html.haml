@@ -1,0 +1,27 @@
+-# css_id = Cms::ID_PREFIX + Cms::SourceType::CSS.to_s + Cms::ID_DIVIDER + layout.type.to_s + Cms::TARGET_DIVIDER + layout.get_name
+
+- my_id = layout.get_id
+
+.layout-row{"data-source_id" => my_id}
+  .inner
+    .list
+    .name
+      = layout.name
+    .counter
+      0 страниц
+    -#%a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences", "data-source_id" => my_id, :onclick => "animate_properties(this)"}
+    %a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences", "data-source_id" => my_id}
+
+    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-source_id" => my_id, :onclick => 'show_code_editor(this)'}
+    .dropdown-menu.preferences
+      %li.edit-properties{:onclick => 'edit_properties(this)'}
+        .preferences-rect
+        .pencil
+        Редактировать свойства
+      %li.delete-page{:onclick => 'deleteSourceWithConfirmation(this)',"data-source_name" => layout.name, "data-source_id" => my_id}
+        %div
+        Удалить страницу
+    .short-counter
+      0
+.line
+

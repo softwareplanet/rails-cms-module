@@ -1,4 +1,4 @@
-Devcms::Engine.routes.draw do
+Cms::Engine.routes.draw do
 
   # Aloha Resources Redirect:
 

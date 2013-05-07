@@ -1,8 +1,8 @@
 Railscms::Application.routes.draw do
 
 
-  # This is a DevCms route line. Add your custom routes above this line.
-    mount Devcms::Engine, :at => '/'
+  # This is a Cms route line. Add your custom routes above this line.
+    mount Cms::Engine, :at => '/'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

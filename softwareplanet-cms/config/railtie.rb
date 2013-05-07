@@ -1,7 +1,7 @@
-module Devcms
+module Cms
   module Testing
     class Railtie < Rails::Railtie
-      railtie_name :devcms_testing
+      railtie_name :cms_testing
 
       class << self
         attr_reader :target_extension_path # :nodoc:
@@ -18,7 +18,7 @@ module Devcms
         #   Refinery::Testing::Railtie.load_dummy_tasks('/users/reset/code/mynew_app')
         def load_dummy_tasks(app_root)
           @target_extension_path = Pathname.new(app_root.to_s)
-          load 'devcms/tasks/testing.rake'
+          load 'cms/tasks/testing.rake'
         end
       end
 

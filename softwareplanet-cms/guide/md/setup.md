@@ -31,7 +31,7 @@ gem 'softwareplanet-cms', :path => 'softwareplanet-cms'
 
 * Run `bundle` rake command.
 
-* Run `rake cms:wizard` rake command to setup devcms. See output to understand what modifications it applied.
+* Run `rake cms:wizard` rake command to setup SoftwarePlanet CMS. See output to understand what modifications it applied.
 
 * Start the rails server, using `rails s`
 
@@ -112,7 +112,7 @@ gem 'softwareplanet-cms', :path => 'softwareplanet-cms'
 $ bundle
 ```
 
-5. Run rake command to setup devcms. See output to understand what modifications it applied:
+5. Run rake command to setup SoftwarePlanet CMS. See output to understand what modifications it applied:
 
 ```bash
 $ rake cms:wizard

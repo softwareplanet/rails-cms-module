@@ -15,6 +15,6 @@ gem 'jquery-rails'
 
 gem 'codemirror-rails' 
 gem 'aloha-rails' 
-#=   DEVCMS REQUIREMENTS END   =#
+#=   CMS REQUIREMENTS END   =#
 gem 'bootstrap-sass' 
 gem 'haml' 

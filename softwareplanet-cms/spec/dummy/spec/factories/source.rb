@@ -1,4 +1,4 @@
-module Devcms
+module Cms
   FactoryGirl.define do
     factory :source do |source|
     end

@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
 
-  mount Devcms::Engine => "/devcms"
+  mount Cms::Engine => "/cms"
 end

@@ -1,4 +1,4 @@
-require_dependency "devcms/application_controller"
+require_dependency "cms/application_controller"
 
 class TestsController < ApplicationController
 

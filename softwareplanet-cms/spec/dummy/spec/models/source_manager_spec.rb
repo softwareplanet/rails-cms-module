@@ -1,5 +1,5 @@
 require 'spec_helper'
-module Devcms
+module Cms
   describe SourceManager do
 
     describe "compiler"  do

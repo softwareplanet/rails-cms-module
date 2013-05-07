@@ -1,8 +1,8 @@
 require 'fileutils'
 require 'spec_helper'
 
-module Devcms
-  describe Devcms::Source do
+module Cms
+  describe Cms::Source do
 
     # Remove source test directory before each test case:
     before(:each) do
@@ -13,7 +13,7 @@ module Devcms
 
     describe "*new_record?* method" do
       it "should returns true if object hasn't been saved yet" do
-        @layout = Factory.build(Devcms:layout) # <-  FactoryGirl#build method did not triggers the save! of the object
+        @layout = Factory.build(Cms:layout) # <-  FactoryGirl#build method did not triggers the save! of the object
         @layout.new_record?.should be_true
       end
       it "should returns false if object is saved" do

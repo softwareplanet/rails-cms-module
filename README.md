@@ -23,7 +23,7 @@ Installer checks your existing configuration automatically, and it is quite verb
 
 ### Installation
 
-[This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/cms/master/devcms/guide/compiled/setup.html)
+[This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/cms/master/softwareplanet-cms/guide/compiled/setup.html)
 describes the setup process.
 
 In brief, you should:
@@ -39,5 +39,5 @@ gem 'softwareplanet-cms', :path => 'softwareplanet-cms'
 
 ### Contributing
 
-[This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/cms/master/devcms/guide/compiled/contributing.html)
+[This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/cms/master/softwareplanet-cms/guide/compiled/contributing.html)
 describes the contributing to the softwareplanet-cms.

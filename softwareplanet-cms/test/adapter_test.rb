@@ -4,7 +4,7 @@ module ActiveFile
 
   require 'minitest/autorun'
   #include ActiveFile
-  #require 'devcms/app/models/active_file/base.rb'
+  #require 'cms/app/models/active_file/base.rb'
 
   puts Dir.pwd
 

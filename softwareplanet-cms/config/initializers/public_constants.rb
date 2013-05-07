@@ -1,4 +1,4 @@
-module Devcms
+module Cms
   #
   # Common constants
   #

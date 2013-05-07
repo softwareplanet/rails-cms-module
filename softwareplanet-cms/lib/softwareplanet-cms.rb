@@ -1,7 +1,7 @@
-require "softwareplanet-cms/engine"
-require "softwareplanet-cms/modules"
+require "cms/engine"
+require "cms/modules"
 
-module Devcms
+module Cms
   class Engine < Rails::Engine
     engine_name :cms
 

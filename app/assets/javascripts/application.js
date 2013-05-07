@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
-//= require devcms/application
+//= require cms/application
 //= require codemirror
 //= require codemirror/modes/css
 //= require bootstrap

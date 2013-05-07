@@ -1,1 +1,1 @@
-Devcms::Engine.load_seed
+Cms::Engine.load_seed

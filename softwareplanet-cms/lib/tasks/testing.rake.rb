@@ -1,4 +1,4 @@
-namespace :devcms do
+namespace :cms do
   namespace :testing do
     desc "Generates a dummy app for testing"
     task :dummy_app do
