@@ -24,8 +24,8 @@ module Cms
 
   TEST_SOURCE_FOLDER = "data_source_test"
   TEST_SOURCE_FOLDERS = {
-      SourceType::CSS       => "app/assets/stylesheets/custom_test/",
-      SourceType::IMAGE     => "public/img/storage_test/",
+      SourceType::CSS       => "#{TEST_SOURCE_FOLDER}/css",
+      SourceType::IMAGE     => "#{TEST_SOURCE_FOLDER}/images",
       SourceType::LAYOUT    => "#{TEST_SOURCE_FOLDER}/layouts/",
       SourceType::CONTENT   => "#{TEST_SOURCE_FOLDER}/contents/",
       SourceType::HIDDEN_LAYOUT   => "#{TEST_SOURCE_FOLDER}/hidden_layouts/",

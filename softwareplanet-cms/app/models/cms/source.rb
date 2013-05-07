@@ -2,6 +2,7 @@ require "image_size"
 
 module Cms
   require 'ostruct'
+  require_relative 'adapter'
   class Source < OpenStruct
     include Adapter
     extend Adapter::ClassMethods
