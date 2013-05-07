@@ -3,7 +3,7 @@
     x
   .count-image
     = @dir.size
-  %input{:onfocusout => "rename_folder_finish(this)", :onkeypress => "checkKeyForDelete(this)"}
+  %input{:onfocusout => "rename_folder_finish(this)", :onkeypress => "renameFolderOnEnterKey(this)"}
   .dir{:onclick => 'open_folder(this)'}
   .image_description{ :data => {'info' => "#{@dir.name}"}}
     #{truncate(@dir.name, :length => 22, :omission => '...')}

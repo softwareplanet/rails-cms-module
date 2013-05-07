@@ -20,6 +20,10 @@ window.renameOnEnterKey = (image) ->
   if window.event.keyCode == 13
     rename_finish image
 
+window.renameFolderOnEnterKey = (input) ->
+  if window.event.keyCode == 13
+    rename_folder_finish input
+
 window.rename_finish = (obj) ->
   image = $(obj).parent()
   old_image_name = $(image).attr('data-name')
@@ -63,3 +67,61 @@ window.rename_image = (edit_item) ->
   name = $(image).attr('data-name')
   input.val name
   input.css("display", "block").focus()
+
+$(document).ready ->
+  $(".add_folder").click ->
+    request_json =
+      activity: 'click',
+      object: 'add_folder',
+      path:  $('.panel_gallery .content').attr('data-path')
+    $.ajax
+      url: "/source_manager/panel_gallery"
+      type: "POST"
+      data: request_json
+
+window.open_folder= (obj) ->
+  folder = $(obj).parent()
+  name = $(folder).attr('data-name')
+  path = $(folder).attr('data-path')
+  $('.panel_gallery .content').attr('data-path', path + name + '/')
+  $('.icon-gallery').click()
+
+window.rename_folder = (edit_icon) ->
+  folder = $(edit_icon).parent().parent()
+  input = $(folder).find("input")
+  input.css("display", "block").focus()
+  input.val $(folder).attr("data-name")
+
+window.rename_folder_finish = (input) ->
+  folder = $(input).parent()
+  path = $(folder).attr('data-path')
+  old_name = $(folder).attr('data-name')
+  new_name = $(input).val()
+  request_json =
+    activity: 'click'
+    object: 'rename_folder'
+    path: path
+    new_name: new_name
+    old_name: old_name
+  console.log request_json
+  $.ajax
+    url: "/source_manager/panel_gallery"
+    type: "POST"
+    data: request_json
+  $(input).css "display", "none"
+
+window.deleteFolder = (detele_item) ->
+  if confirm('Вы уверены что хотите удалить папку и все её содержимое?')
+    folder = $(detele_item).parent()
+    path = $(folder).attr('data-path')
+    name = $(folder).attr('data-name')
+    request_json = {
+    object: 'delete_folder',
+    activity: 'click',
+    path: path,
+    name: name
+    }
+    $.ajax
+      url: '/source_manager/panel_gallery'
+      type: 'POST',
+      data: request_json

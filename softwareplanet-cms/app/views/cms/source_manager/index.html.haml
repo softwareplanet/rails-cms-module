@@ -20,7 +20,7 @@
   %div{:title => 'folder name'}
     .delete_image{:onclick => "delete_image(this)"}
       x
-    %input{:onfocusout => "rename_finish(this)", :onkeypress => "checkKeyForDelete(this)"}
+    %input{:onfocusout => "rename_finish(this)", :onkeypress => "renameFolderOnEnterKey(this)"}
     .gallery-image
       1111
     .image_description
