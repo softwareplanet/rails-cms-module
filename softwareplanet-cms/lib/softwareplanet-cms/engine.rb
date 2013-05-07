@@ -1,6 +1,6 @@
 module Cms
   class Engine < ::Rails::Engine
-    isolate_namespace Devcms
+    isolate_namespace Cms
   end
 end
 
