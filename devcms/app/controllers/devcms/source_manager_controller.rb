@@ -33,7 +33,7 @@ module Devcms
       if address.blank?
         @message = I18n.t('create_layout_form.blank_address')
 
-      elsif !Source.find_by_name(address).blank?
+      elsif !Source.find_by_name_and_type(address, SourceType::LAYOUT).blank?
         @message = I18n.t('create_layout_form.wrong_address')
 
       else
@@ -192,7 +192,7 @@ module Devcms
       elsif  /\W/.match(@address)
           @message = I18n.t('save_layout_form.wrong_address')
 
-      elsif (@layout_name != @address) && (Source.find_by_name(@address).length > 0 )
+      elsif (@layout_name != @address) && (Source.find_by_name_and_type(@address, SourceType::LAYOUT).length > 0 )
           @message = I18n.t('save_layout_form.address_exist')
 
       else
@@ -207,7 +207,7 @@ module Devcms
             raise unless File.exist? seo_path
             File.rename(seo_path, @seo.get_source_folder + '1-tar-' + @address)
           end
-          @layout = Source.find_by_name(@layout_name).first
+          @layout = Source.find_by_name_and_type(@layout_name, SourceType::LAYOUT).first
           @old_layout_id = @layout.get_id
           open_layouts = '/layouts/'
           hidden_layouts = '/hidden_layouts/'
