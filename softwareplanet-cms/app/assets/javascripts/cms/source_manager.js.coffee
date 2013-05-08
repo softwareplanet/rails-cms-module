@@ -93,11 +93,19 @@ window.saveSource = (this_ptr) ->
 window.deleteSourceWithConfirmation = (obj) ->
   id_to_delete = $(obj).data("source_id")
   name = $(obj).data("source_name")
-  if confirm('Are you sure to delete Layout \'' + name + "\' ?")
+  if confirm('Are you sure to delete layout \'' + name + "\' ?")
     deleteSource('layout', id_to_delete)
     $(obj).parents('.layout-row').next().fadeOut()
     $(obj).parents('.layout-row').fadeOut()
-#  $(".icon.icon-structure").click()
+
+window.deleteComponent = (obj) ->
+  component = $(obj).parents('.component-row')
+  id_to_delete = $(component).data("component_id")
+  name = $(component).data("name")
+  if confirm('Are you sure to delete component \'' + name + "\' ?")
+    deleteSource('component', id_to_delete)
+    $(component).next().fadeOut()
+    $(component).fadeOut()
 
  #OPEN CODE EDITOR FOR EDIT LAYOUT CODE
 window.show_code_editor = (obj) ->

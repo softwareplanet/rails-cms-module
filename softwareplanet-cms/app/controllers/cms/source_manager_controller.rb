@@ -107,15 +107,15 @@ module Cms
 
     # DELETE /page_layouts/1
     def destroy
-      @sourceObject = Source.find_by_id(params[:id])
+      sourceObject = Source.find_by_id(params[:id])
       begin
-        @layout_name = @sourceObject.name
-        @sourceObject.delete!
+        name = sourceObject.name
+        sourceObject.delete!
         if params[:type]  == 'layout'
-          css = Source.quick_attach(SourceType::LAYOUT,  @layout_name, SourceType::CSS)
+          css = Source.quick_attach(SourceType::LAYOUT,  name, SourceType::CSS)
           css.delete!
 
-          seo = Source.quick_attach(SourceType::LAYOUT,  @layout_name, SourceType::SEO)
+          seo = Source.quick_attach(SourceType::LAYOUT,  name, SourceType::SEO)
           seo.delete!
         end
       rescue ActiveRecord::RecordInvalid
