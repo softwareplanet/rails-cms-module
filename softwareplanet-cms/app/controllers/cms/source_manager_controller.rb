@@ -38,21 +38,15 @@ module Cms
 
       else
         begin
-          @source = Source.new(:type => type, :name => address)
-          @source.save!
+          @source = Source.build(:type => type, :name => address)
+          @css = Source.build(:type => SourceType::CSS, :target => @source, :name => address)
+          @seo = Source.build(:type => SourceType::SEO, :target => @source, :name => address)
+          path = @seo.get_source_filepath
 
-          @css = Source.new(:type => SourceType::CSS, :target => @source)
-          @css.save!
-
-          @seo = Source.new(:type => SourceType::SEO, :target => @source)
-          @seo.save!
-
-          path = @seo.get_source_folder + @seo.get_filename
-
-          File.open(path, "w+") do |f|
-            f.puts('<title>' + name + '</title>')
-            f.puts('<meta name="keywords" content="' +keywords  + '"/>')
-            f.puts('<meta name="description" content="' + description + '"/>')
+          File.open(path, 'w+') do |f|
+            f.puts("<title>#{name}</title>")
+            f.puts("<meta name='keywords' content='#{keywords}'/>")
+            f.puts("<meta name='description' content='#{description}'/>")
           end
 
           if no_publish
@@ -71,7 +65,7 @@ module Cms
         render 'create'
         return
       end
-      render :js => 'alert("' +  @message + '");'
+      render :js => "alert('#{@message}');"
     end
 
     # GET /source_manager/1/edit
@@ -112,19 +106,8 @@ module Cms
 
     # DELETE /page_layouts/1
     def destroy
-      sourceObject = Source.find_by_id(params[:id])
-      begin
-        name = sourceObject.name
-        sourceObject.delete!
-        if params[:type]  == 'layout'
-          css = Source.quick_attach(SourceType::LAYOUT,  name, SourceType::CSS)
-          css.delete!
-
-          seo = Source.quick_attach(SourceType::LAYOUT,  name, SourceType::SEO)
-          seo.delete!
-        end
-      rescue ActiveRecord::RecordInvalid
-      end
+      source = Source.get_source_by_id(params[:id])
+      source.eliminate! unless source.blank?
     end
 
     def upload

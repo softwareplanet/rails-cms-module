@@ -16,8 +16,8 @@ module Cms
 
     PREPARE = ->() {
       FileUtils.rm_rf(Test.source_folder)
+      FileUtils.rm_rf(TEST_SOURCE_FOLDERS[SourceType::CSS])
     }
-
     ############################################
     #TESTS:
 
@@ -86,6 +86,14 @@ module Cms
       @layout1.attach_to(@layout2)
       @layout2.attach_to(@layout3)
       assert_equal(@layout3.get_source_attaches(SourceType::LAYOUT)[0].get_source_attaches(SourceType::LAYOUT)[0].get_source_name, 'layout1')
+    end
+
+    def test_get_source_attaches
+      layout = Source.build(:type =>Cms::SourceType::LAYOUT, :name => 'test')
+      css = Source.build(:type => Cms::SourceType::CSS, :target => layout, :name => 'test')
+      source_attaches = layout.get_source_attaches
+      assert_equal(source_attaches.size, 1)
+
     end
 
     ############################################

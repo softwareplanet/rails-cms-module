@@ -22,6 +22,9 @@
 #   get_source_attaches         # <= [Array]
 #   get_source_target           # <= Target Source
 
+#   Source.find_source_by_attr_and_attr2(val1, val2)  # <= search for sources
+#   Source.where(attr: attr)                          # <= search for resources
+
 ##rename( new_source_name )     # <= set new name, and update all dependent attaches
 ##get_attaches                  # <= retrieve array of all instance attaches
 #
@@ -124,11 +127,11 @@ module Cms
 
     module ClassMethods
       def get_rails_env
-        env = defined?(Rails).nil? ? 'test' : Rails.env
+        defined?(Rails).nil? ? 'test' : Rails.env
       end
       # Get source folder for any source type. Create, if not exists.
       def get_source_folder(type=nil)
-        source_folder = ""
+        source_folder = ''
         if type==nil
           source_folder = get_rails_env == 'test' ? TEST_SOURCE_FOLDER : SOURCE_FOLDER
         else
@@ -155,9 +158,14 @@ module Cms
 
     def get_source_attaches(filter_type=nil)
       source_attaches = []
-      dir = AdapterStable::get_source_folder(filter_type)
-      search_result = Dir.glob(dir+"**/*#{TARGET_DIVIDER}#{get_source_name}#{TARGET_DIVIDER}*")
-      search_result.each do |path|
+      search_results = []
+
+
+      (AdapterStable.get_rails_env == 'test' ? TEST_SOURCE_FOLDERS : SOURCE_FOLDERS).map { |key, value|
+        search_results << Dir.glob(value + "*#{type.to_i}#{TARGET_DIVIDER}#{get_source_name}#{TARGET_DIVIDER}*")
+      }
+
+      search_results.flatten.each do |path|
         source_attaches.push(AdapterStable.build_source(path))
       end
       source_attaches
@@ -229,7 +237,7 @@ module Cms
         dir = AdapterStable.get_source_folder(source_type)
         Dir.glob(dir+"**/*").each do |f|
           s = build_source(f, source_type)
-          files.push(s)
+          files.push(s) unless s.nil?
         end
         files
       end
@@ -244,10 +252,14 @@ module Cms
           source_type = parse_path(filepath)[:source_type]
         end
         s = Source.new({ type: source_type, name: filepath.split('/').last, data: nil, path: File.dirname(filepath)+'/' })
-        s.filename = s.get_source_filename
-        s.path = s.get_source_folder
-        target_object = s.get_source_target
-        s.target = target_object unless target_object.nil?
+        begin
+          s.filename = s.get_source_filename
+          s.path = s.get_source_folder
+          target_object = s.get_source_target
+          s.target = target_object unless target_object.nil?
+        rescue
+          return nil
+        end
         s
       end
       def get_source_by_id(id)
