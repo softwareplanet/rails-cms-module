@@ -273,9 +273,9 @@ module Cms
               @hiddens = Source.where(:type => SourceType::HIDDEN_LAYOUT).collect{ |source| source.hidden = true; source }
               @layouts |= @hiddens
             when "content"
-              @layouts = Source.where :type => SourceType::LAYOUT
+              @layouts = Source.where(:type => SourceType::LAYOUT)
             when "components"
-              []
+              @components = Source.where(:type => SourceType::CONTENT)
             when "gallery"
               if params[:path]
                 @current_path = params[:path]

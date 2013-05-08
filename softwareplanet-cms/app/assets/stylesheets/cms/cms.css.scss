@@ -590,7 +590,6 @@ body.cms {
 .panel_components {
   z-index: 100;
   border-radius: 0 5px 5px 0;
-  ;
   .rect {
     top: 282px;
   }
@@ -658,8 +657,8 @@ body.cms {
   }
 }
 
-.panel_structure {
-  .layout-row {
+.panel_structure, .panel_components {
+  .layout-row, .component-row {
     color: #7fb3ec;
     font-size: 15px;
     padding: 10px;
@@ -786,7 +785,7 @@ body.cms {
       float: left;
     }
   }
-  .layout-row:hover {
+  .layout-row:hover, .component-row:hover  {
      background: #539ce5;
     .folder {
       background: url(#{$assets_path}/icons/folder2.png) no-repeat;
@@ -830,7 +829,7 @@ body.cms {
   }
 }
 
-.layout-row-selected {
+.layout-row-selected, .component-row-selected  {
   background: #539ce5;
 }
 

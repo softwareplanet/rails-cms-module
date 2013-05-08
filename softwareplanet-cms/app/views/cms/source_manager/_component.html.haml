@@ -1,0 +1,16 @@
+.component-row{"data-component_id" => component.get_id, "data-name" => component.name}
+  .inner
+    .list
+    .name
+      = component.name
+    %a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences"}
+    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit"}
+    .dropdown-menu.preferences
+      %li.edit-properties
+        .preferences-rect
+        .pencil
+        Редактировать свойства
+      %li.delete-page
+        %div
+        Удалить страницу
+.line
