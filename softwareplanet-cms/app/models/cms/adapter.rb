@@ -22,7 +22,7 @@ module Cms
 
     def data
       if @self_data == nil
-        @self_data = File.read(self.get_source_path)
+        @self_data = File.exists?(self.get_source_path) ? File.read(self.get_source_path) : ""
       end
       @self_data || ""
     end
@@ -30,7 +30,7 @@ module Cms
     # Main rule to link attaches (css) with their targets (layouts, contents). Special filename format used for this purpose;
     def attach_my_name!
       # Is we an attached instance?
-      unless self.target.nil?
+      unless self.target.nil? || self.name.include?(TARGET_DIVIDER)
         #@ext = CSS_EXT  if self.type == SourceType::CSS
         self.name = target.type.to_s + TARGET_DIVIDER + target.name #+ @ext.to_s
       end
@@ -46,7 +46,7 @@ module Cms
     end
     # Get source filename
     def get_filename
-      get_name + get_extension
+      get_name# + get_extension
     end
     # Alias for get_source_path
     def get_filepath
@@ -54,8 +54,8 @@ module Cms
     end
     # Get source path. For targeted objects, target name + '--' + target type appends
     def get_source_path
-      raise ArgumentError, 'Name can not be blank!' if name.blank? && target.nil?
-      raise ArgumentError, 'Target name can not be blank!' if target && target.name.blank?
+      raise ArgumentError, 'Name can not be blank!' if name.to_s.length==0 && target.nil?
+      raise ArgumentError, 'Target name can not be blank!' if target && target.name.to_s.length==0
       get_source_folder + get_filename
     end
     def get_extension
@@ -190,7 +190,7 @@ module Cms
     end
     #
     # STATIC METHODS MODULE
-    module ClassMethods
+      module ClassMethods
       # Creates a new source instance and saves it to disk. Returns the newly created source. If a failure has occurred or source already exists -
       # an exception will be raised.
       def create(attributes={})
@@ -200,9 +200,12 @@ module Cms
         source_instance.save!
         return source_instance
       end
+      def get_rails_env
+        env = defined?(Rails).nil? ? 'test' : Rails.env
+      end
       # Get source folder for any source type. Create, if not exists.
       def get_source_folder(type)
-        source_folder = Rails.env == 'test' ? TEST_SOURCE_FOLDERS[type.to_i || SourceType::UNDEFINED] : SOURCE_FOLDERS[type.to_i || SourceType::UNDEFINED]
+        source_folder = get_rails_env == 'test' ? TEST_SOURCE_FOLDERS[type.to_i || SourceType::UNDEFINED] : SOURCE_FOLDERS[type.to_i || SourceType::UNDEFINED]
         FileUtils.mkpath(source_folder) unless File.exists?(source_folder)
         return source_folder
       end
@@ -234,7 +237,7 @@ module Cms
         return files
       end
       def all
-        (Rails.env == 'test' ? TEST_SOURCE_FOLDERS : SOURCE_FOLDERS).map {|key_type, val| Adapter.all_by_type(key_type) }.reject { |ar| ar.empty? }.flatten
+        (get_rails_env == 'test' ? TEST_SOURCE_FOLDERS : SOURCE_FOLDERS).map {|key_type, val| Adapter.all_by_type(key_type) }.reject { |ar| ar.empty? }.flatten
       end
       # Find the source
       def where(attributes)

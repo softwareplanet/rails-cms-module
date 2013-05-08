@@ -18,7 +18,7 @@
         .preferences-rect
         .pencil
         Редактировать свойства
-      %li.delete-page{:onclick => 'deleteSourceWithConfirmation(this)',"data-source_name" => layout.name, "data-source_id" => my_id}
+      %li.delete-page{:onclick => 'deleteSourceWithConfirmation(this)',"data-source_name" => layout.get_source_name, "data-source_id" => my_id}
         %div
         Удалить страницу
     .short-counter
