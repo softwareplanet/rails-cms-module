@@ -28,3 +28,10 @@ en:
     wrong_address: Wrong address
     wrong: Failed to create a page
     success: Successfully added
+
+  create_component_form:
+    blank_name: Name can not be empty
+    wrong_name: The name has invalid characters
+    component_exist: A component with the same name already exists
+    error: Impossible to create a component
+    success: The component has successfully created

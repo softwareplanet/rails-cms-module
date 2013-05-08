@@ -431,5 +431,26 @@ module Cms
         when "load"
       end
     end
+
+    def create_component
+      component_name = params[:name]
+      type = SourceType::CONTENT
+      if component_name.blank?
+        @message = I18n.t('create_component_form.blank_name')
+      elsif !Source.find_by_name_and_type(component_name, type).blank?
+        @message = I18n.t('create_component_form.component_exist')
+      else
+        begin
+          @component = Source.new(:type => type, :name => component_name)
+          @component.save!
+        rescue Exception => exc
+          render :js => 'alert("' +  I18n.t('create_component_form.error') + '");'
+          return
+        end
+        render 'create_component'
+        return
+      end
+      render :js => 'alert("' +  @message + '");'
+    end
   end
 end

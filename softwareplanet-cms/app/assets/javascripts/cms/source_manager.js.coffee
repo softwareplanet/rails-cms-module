@@ -192,7 +192,19 @@ jQuery.fn.slideRightHide = (callback) ->
 jQuery.fn.slideHide = ->
     $(this).css('display','none')
 
+$(document).ready ->
+  $('.add-component').click ->
+    if $('.panel_new-component').css('display') == 'block'
+      $('.panel_new-component').css('display', 'none')
+    else
+      $("[data-level=child]").hide()
+      $(".panel_new-component").css "-webkit-transform", "translate3d(" + $(window).width() + "px, 0, 0)"
+      $(".panel_new-component").show()
+      setTimeout (->
+        $(".panel_new-component").css "-webkit-transform", "translate3d(0, 0, 0)"), 250
 
+  $('.panel_new-component .close-btn').click ->
+    $('.panel.panel_new-component').css('display', 'none')
 
 
 $(document).ready ->

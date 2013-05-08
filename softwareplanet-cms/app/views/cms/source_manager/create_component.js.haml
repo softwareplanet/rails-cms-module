@@ -1,0 +1,3 @@
+$('#component_form')[0].reset();
+$('.panel_components .content').append("#{ escape_javascript(render(:partial => 'component', :object => @component)) }");
+$('.panel_new-component').css('display', 'none')

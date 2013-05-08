@@ -16,18 +16,6 @@ $(document).ready ->
   $('.panel_properties .close-btn').click ->
     $('.panel_properties').css('display', 'none')
 
-
-
-
-#      request_json = {
-#      object: 'new-page',
-#      activity: 'click'
-#      }
-#      $.ajax
-#        url: '/source_manager/panel_structure'
-#        type: 'POST',
-#        data: request_json
-
 window.edit_properties = (obj) ->
   console.log 'edit properties click'
   id = $(obj).parent().parent().find('.properties').data('source_id')

@@ -44,7 +44,7 @@ Cms::Engine.routes.draw do
       post "panel_settings"
       post "save_properties"
       post "create_folder"
-
+      post "create_component"
 
       get 'tool_bar'
       get 'menu_bar'
