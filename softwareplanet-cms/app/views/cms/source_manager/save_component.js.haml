@@ -1,0 +1,8 @@
+$('#component_properties_form')[0].reset();
+$('.panel_component_properties').css('display', 'none');
+
+$('.panel_components').find('.component-row[data-component_id=#{@old_id}]').next().remove();
+$('.panel_components').find('.component-row[data-component_id=#{@old_id}]').remove();
+$('.panel_components .content').append("#{ escape_javascript(render(:partial => 'component', :object => @component)) }");
+
+alert('Данные успешно сохранены');

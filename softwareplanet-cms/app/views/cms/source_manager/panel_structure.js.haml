@@ -13,6 +13,13 @@
     $('.panel_properties').css('-webkit-transform','translate3d(' + $(window).width() + 'px, 0, 0)');
     $('.panel_properties').show();
     setTimeout(function(){$('.panel_properties').css('-webkit-transform','translate3d(0, 0, 0)');;},250);
+  - when 'edit_component'
+    $('#component_properties_form').find('[name="id"]').val('#{@component.get_id}');
+    $('#component_properties_form').find('[name="name"]').val('#{@component.name}');
+    $('[data-level=child]').hide();
+    $('.panel_component_properties').css('-webkit-transform','translate3d(' + $(window).width() + 'px, 0, 0)');
+    $('.panel_component_properties').show();
+    setTimeout(function(){$('.panel_component_properties').css('-webkit-transform','translate3d(0, 0, 0)');;},250);
 
 
 

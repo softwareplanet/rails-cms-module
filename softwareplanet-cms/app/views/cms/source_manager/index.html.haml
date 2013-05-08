@@ -51,6 +51,7 @@
     .rect
     .title
       Компоненты
+      %a.add-component{'data-toggle' => 'tooltip', :href => '#', :title => 'add component', :data_name => 'add-component', :data_menu => 'component'}
     .line
   .content
 .panel.panel_viewer{'data-level' => 'child'}
@@ -128,9 +129,6 @@
   = form_tag url_for( :controller => "source_manager", :action => "create" ), :id => "global_action_form", :remote => true do
     %fieldset
       %input{:type => "hidden", :name => "type", :value => Cms::SourceType::LAYOUT}
-
-
-
       %label Адрес / Имя
       %input.url{:placeholder => "Input layout url…", :type => "text", :tabindex => 2, :name => "address"}
       %br
@@ -159,11 +157,32 @@
       %div
         = submit_tag ' Save', :class => 'btn btn-primary'
         .close-btn.btn.btn-primary Close
--#.panel.panel_edit-page{'data-level' => 'child'}
--#  .title
--#    Редактировать свойства
--#  .line
--#  .content
+
+.panel.panel_new-component{'data-level' => 'child'}
+  .title
+    Создать компонент
+  .line
+  = form_tag url_for( :controller => 'source_manager', :action => 'create_component', :method => 'POST'), :id => "component_form", :remote => true do
+    %label Имя сомпонента
+    %input.url{:placeholder => "Input component name…", :type => "text", :name => "name"}
+    %br
+    %div
+      = submit_tag ' Save', :class => 'btn btn-primary'
+      .close-btn.btn.btn-primary Close
+
+.panel.panel_component_properties{'data-level' => 'child'}
+  .rect
+  .title
+    Свойства компонента
+  .line
+  = form_tag url_for( :controller => "source_manager", :action => "save_component", :method => "post" ), :id => "component_properties_form", :style => 'padding: 10px;', :remote => true do
+    %input{:type => "hidden", :name => "id"}
+    %label Имя компонента
+    %input{:type => "text", :name => "name"}
+    %br
+    %div
+      %button.btn.btn-primary.save-source{:type => "submit"} СОХРАНИТЬ
+      .close-btn.btn.btn-primary Close
 
 / modal-gallery is the modal dialog used for the image gallery
 #modal-gallery.modal.modal-gallery.hide.fade{:tabindex => "-1"}

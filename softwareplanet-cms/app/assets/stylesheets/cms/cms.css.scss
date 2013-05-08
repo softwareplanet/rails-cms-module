@@ -150,7 +150,9 @@ body.cms {
 }
 .panel_new-page,
 .panel_editor,
-.panel_properties {
+.panel_properties,
+.panel_component_properties,
+.panel_new-component {
  left: 369px!important;
 }
 
@@ -159,8 +161,10 @@ body.cms {
 .panel_components,
 .panel_settings,
 .panel_properties,
+.panel_component_properties,
 .panel_new-page,
-.panel_gallery {
+.panel_gallery,
+.panel_new-component {
   width: 369px;
   height: 100%;
   background: #2681dc;
@@ -192,7 +196,10 @@ body.cms {
   -webkit-transform: translate3d(0, 0, 0)!important;
 }
 
-.panel_properties, .panel_new-page {
+.panel_properties,
+.panel_new-page,
+.panel_component_properties,
+.panel_new-component {
   -webkit-transition-duration: 250ms,250ms;
 }
 
@@ -424,18 +431,14 @@ body.cms {
   width: 170px;
   height: 130px;
 }
-.panel_structure {
-  -webkit-transform: translate3d(-500px, 0, 0);
-  -webkit-transform: translate3d(0, 0, 0);
-  -webkit-transition-duration: 250ms,250ms;
-  z-index: 100;
-  .add-structure {
+.panel_structure, .panel_components {
+  .add-structure, .add-component {
     float: right;
     width:19px;
     height: 19px;
     background: url(#{$assets_path}/icons/plus.png);
   }
-  .add-structure:hover {
+  .add-structure:hover, .add-component:hover {
     background: url(#{$assets_path}/icons/plus2.png);
     cursor: pointer;
   }
@@ -519,7 +522,6 @@ body.cms {
 .panel_components {
   z-index: 100;
   border-radius: 0 5px 5px 0;
-  ;
   .rect {
     top: 282px;
   }
@@ -560,7 +562,10 @@ body.cms {
   }
 }
 
-.panel_new-page, .panel_properties {
+.panel_new-page,
+.panel_properties,
+.panel_component_properties,
+.panel_new-component {
   background: white;
   color: black;
 
@@ -587,8 +592,9 @@ body.cms {
   }
 }
 
-.panel_structure {
-  .layout-row {
+.panel_structure, .panel_components {
+  z-index: 100;
+  .layout-row, .component-row {
     color: #7fb3ec;
     font-size: 15px;
     padding: 10px;
@@ -715,7 +721,7 @@ body.cms {
       float: left;
     }
   }
-  .layout-row:hover {
+  .layout-row:hover, .component-row:hover  {
      background: #539ce5;
     .folder {
       background: url(#{$assets_path}/icons/folder2.png) no-repeat;
@@ -759,31 +765,31 @@ body.cms {
   }
 }
 
-.layout-row-selected {
+.layout-row-selected, .component-row-selected  {
   background: #539ce5;
 }
 
-.panel_structure.inactive {
-  background: #ebebeb;
-  .title {
-    color: #555555;
-  }
-  .line {
-    border-bottom: 2px solid #969da3;
-  }
-  .layout-row {
-    color: #555555;
-    .list {
-      background: url(#{$assets_path}/icons/list2.png) no-repeat;
-    }
-  }
-  .layout-row:hover {
-    background-color: #969da3;
-  }
-  .add-structure {
-    background: url(/assets/ui/icons/plus2.png);
-  }
-}
+//.panel_structure.inactive {
+//  background: #ebebeb;
+//  .title {
+//    color: #555555;
+//  }
+//  .line {
+//    border-bottom: 2px solid #969da3;
+//  }
+//  .layout-row {
+//    color: #555555;
+//    .list {
+//      background: url(#{$assets_path}/icons/list2.png) no-repeat;
+//    }
+//  }
+//  .layout-row:hover {
+//    background-color: #969da3;
+//  }
+//  .add-structure {
+//    background: url(/assets/ui/icons/plus2.png);
+//  }
+//}
 
 .editor-panel {
   height: 100%;
@@ -802,9 +808,10 @@ body.cms {
     //box-shadow: -10px 0px 15px 2px #333;
 
     .title {
-      font-size: 24px;
-      padding: 20px 0;
+      padding: 63px 15px 0px 20px;
       color: white;
+      font-size: 22px;
+      font-weight: bold;
     }
   }
   .nav {
@@ -898,7 +905,7 @@ body.cms {
   }
 
   .editor-wrapper {
-     padding: 30px;
+     padding: 20px;
   }
 }
 

@@ -14,7 +14,7 @@ $(panel_content).html("");
       - when 'content'
         $(panel_content).html("#{ escape_javascript(render(:partial => 'content')) }");
       - when 'components'
-        -#$(panel_content).html("#{ escape_javascript(render(:partial => 'components')) }");
+        $(panel_content).html("#{ escape_javascript(render(:partial => 'component', :collection => @components)) }");
       - when 'gallery'
         $(panel_content).html("#{ escape_javascript(render(:partial => 'images')) }");
       - else

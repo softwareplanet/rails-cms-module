@@ -93,26 +93,30 @@ window.saveSource = (this_ptr) ->
 window.deleteSourceWithConfirmation = (obj) ->
   id_to_delete = $(obj).data("source_id")
   name = $(obj).data("source_name")
-  if confirm('Are you sure to delete Layout \'' + name + "\' ?")
-    deleteSource('Layout', id_to_delete)
+  if confirm('Are you sure to delete layout \'' + name + "\' ?")
+    deleteSource('layout', id_to_delete)
     $(obj).parents('.layout-row').next().fadeOut()
     $(obj).parents('.layout-row').fadeOut()
-#  $(".icon.icon-structure").click()
+
+window.deleteComponent = (obj) ->
+  component = $(obj).parents('.component-row')
+  id_to_delete = $(component).data("component_id")
+  name = $(component).data("name")
+  if confirm('Are you sure to delete component \'' + name + "\' ?")
+    deleteSource('component', id_to_delete)
+    $(component).next().fadeOut()
+    $(component).fadeOut()
 
  #OPEN CODE EDITOR FOR EDIT LAYOUT CODE
 window.show_code_editor = (obj) ->
-  if($('.panel_editor').html() != '')
-    $('.panel_editor').html ''
-    $('.panel_editor').hide()
-  else
-    $('[data-level=child]').hide();
-    request_json =
-      object: $(obj).data("source_id")
-      activity: "edit"
-    $.ajax
-      url: "/source_manager/editor.js"
-      type: "GET"
-      data: request_json
+  $('[data-level=child]').hide();
+  request_json =
+    object: $(obj).data("source_id")
+    activity: "edit"
+  $.ajax
+    url: "/source_manager/editor.js"
+    type: "GET"
+    data: request_json
 
   #DELETE
 window.deleteSource = (type, id) ->
@@ -196,7 +200,35 @@ jQuery.fn.slideRightHide = (callback) ->
 jQuery.fn.slideHide = ->
     $(this).css('display','none')
 
+$(document).ready ->
+  $('.add-component').click ->
+    if $('.panel_new-component').css('display') == 'block'
+      $('.panel_new-component').css('display', 'none')
+    else
+      $("[data-level=child]").hide()
+      $(".panel_new-component").css "-webkit-transform", "translate3d(" + $(window).width() + "px, 0, 0)"
+      $(".panel_new-component").show()
+      setTimeout (->
+        $(".panel_new-component").css "-webkit-transform", "translate3d(0, 0, 0)"), 250
 
+  $('.panel_new-component .close-btn').click ->
+    $('.panel.panel_new-component').css('display', 'none')
+
+  $('.panel_component_properties .close-btn').click ->
+    $('.panel_component_properties').css('display', 'none')
+
+window.component_properties = (obj) ->
+  parent = $(obj).parents('.component-row')
+  id = $(parent).data('component_id')
+  request_json = {
+  component_id: id,
+  object: 'edit_component',
+  activity: 'load'
+  }
+  $.ajax
+    url: '/source_manager/panel_structure'
+    type: 'POST',
+    data: request_json
 
 
 $(document).ready ->

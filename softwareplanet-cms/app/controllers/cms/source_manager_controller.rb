@@ -41,15 +41,6 @@ module Cms
           @source = Source.new(:type => type, :name => address)
           @source.save!
 
-          if no_publish
-            layout = Source.find_by_name(@source.name).first
-            hidden_layouts = '/hidden_layouts/'
-            old_path = layout.path + layout.name
-            new_path = File.dirname(layout.path) + hidden_layouts + address
-            File.rename(old_path, new_path)
-            @source = Source.find_by_name(address).first
-          end
-
           @css = Source.new(:type => SourceType::CSS, :target => @source)
           @css.save!
 
@@ -116,9 +107,17 @@ module Cms
 
     # DELETE /page_layouts/1
     def destroy
-      @sourceObject = Source.find_by_id(params[:id])
+      sourceObject = Source.find_by_id(params[:id])
       begin
-        @sourceObject.delete!
+        name = sourceObject.name
+        sourceObject.delete!
+        if params[:type]  == 'layout'
+          css = Source.quick_attach(SourceType::LAYOUT,  name, SourceType::CSS)
+          css.delete!
+
+          seo = Source.quick_attach(SourceType::LAYOUT,  name, SourceType::SEO)
+          seo.delete!
+        end
       rescue ActiveRecord::RecordInvalid
       end
     end
@@ -197,7 +196,7 @@ module Cms
 
       else
         begin
-
+          @css = Source.quick_attach(SourceType::LAYOUT,  @layout_name, SourceType::CSS)
           @seo = Source.quick_attach(SourceType::LAYOUT,  @layout_name, SourceType::SEO)
           @seo.data = "<title>#{title}</title>\n<meta name=\"keywords\" content=\"#{keywords}\"/>\n<meta name=\"description\" content=\"#{description}\"/>\n"
           @seo.save!
@@ -206,8 +205,18 @@ module Cms
             seo_path = @seo.get_source_folder + @seo.get_filename
             raise unless File.exist? seo_path
             File.rename(seo_path, @seo.get_source_folder + '1-tar-' + @address)
+
+            css_path = @css.get_source_folder + @css.get_filename
+            raise unless File.exist? css_path
+            css_type = SOURCE_TYPE_EXTENSIONS[SourceType::CSS]
+            File.rename(css_path, @css.get_source_folder + '1-tar-' + @address + '.' + css_type)
           end
+
           @layout = Source.find_by_name_and_type(@layout_name, SourceType::LAYOUT).first
+          if !@layout
+            @layout = Source.find_by_name_and_type(@layout_name, SourceType::HIDDEN_LAYOUT).first
+          end
+
           @old_layout_id = @layout.get_id
           open_layouts = '/layouts/'
           hidden_layouts = '/hidden_layouts/'
@@ -264,9 +273,9 @@ module Cms
               @hiddens = Source.where(:type => SourceType::HIDDEN_LAYOUT).collect{ |source| source.hidden = true; source }
               @layouts |= @hiddens
             when "content"
-              @layouts = Source.where :type => SourceType::LAYOUT
+              @layouts = Source.where(:type => SourceType::LAYOUT)
             when "components"
-              []
+              @components = Source.where(:type => SourceType::CONTENT)
             when "gallery"
               if params[:path]
                 @current_path = params[:path]
@@ -360,6 +369,9 @@ module Cms
                   @description = line[line.index(str) + str.size .. -5]
                 end
               end
+            when 'edit_component'
+              component_id = params[:component_id]
+              @component = Source.find_by_id(component_id)
           end
       end
     end
@@ -423,6 +435,51 @@ module Cms
         when "click"
         when "load"
       end
+    end
+
+    def create_component
+      component_name = params[:name]
+      type = SourceType::CONTENT
+      if component_name.blank?
+        @message = I18n.t('create_component_form.blank_name')
+      elsif !Source.find_by_name_and_type(component_name, type).blank?
+        @message = I18n.t('create_component_form.component_exist')
+      else
+        begin
+          @component = Source.new(:type => type, :name => component_name)
+          @component.save!
+        rescue Exception => exc
+          render :js => 'alert("' +  I18n.t('create_component_form.error') + '");'
+          return
+        end
+        render 'create_component'
+        return
+      end
+      render :js => 'alert("' +  @message + '");'
+    end
+
+    def save_component
+      component_name = params[:name]
+      if component_name.blank?
+        @message = I18n.t('save_component_form.blank_name')
+      elsif !Source.find_by_name_and_type(component_name, SourceType::CONTENT).blank?
+        @message = I18n.t('save_component_form.component_exist')
+      else
+        begin
+          @component = Source.find_by_id(params[:id])
+          path = @component.path
+          old_name = @component.name
+          File.rename(path + old_name,path + component_name)
+          @component = Source.find_by_name_and_type(component_name, SourceType::CONTENT).first
+          @old_id = params[:id]
+        rescue Exception => exc
+          render :js => 'alert("' +  I18n.t('save_component_form.error') + '");'
+          return
+        end
+        render 'save_component'
+        return
+      end
+      render :js => 'alert("' +  @message + '");'
     end
   end
 end

@@ -1,4 +1,6 @@
 $(".panel_editor").html("#{ escape_javascript(render(:partial =>  "panel_editor", :locals => {:source => @source})) }");
+$(".panel_editor .title").html("#{@source.name}");
+
 $(".panel_editor").slideRightShow()
 window.editorManager = new CodeEditorsManager();
 var editorManager = window.editorManager;
@@ -17,11 +19,13 @@ editorManager.getEditor("haml_editor").setRequestPath("/source_manager/");
 editorManager.getEditor("haml_editor").getRequestSource("#{@source.get_id}");
 editorManager.getEditor("haml_editor").setSourceId("#{@source.get_id}");
 $(".preview-navtab a").attr("data-preview", "#{@source.get_name}");
-- @css = @source.get_attach_or_create
-css_id = $(this).data("#{@css.get_id}");
+- visible_layout = Cms::Source.new(:type => Cms::SourceType::LAYOUT, :name => @source.get_name)
+- @css = visible_layout.get_attach_or_create
+
+css_id = $(this).data("#{@css.name}");
 editorManager.getEditor("css_editor").setRequestPath("/source_manager/");
-editorManager.getEditor("css_editor").getRequestSource("#{@css.get_id}");
-editorManager.getEditor("css_editor").setSourceId("#{@css.get_id}");
+editorManager.getEditor("css_editor").getRequestSource("#{@css.name}");
+editorManager.getEditor("css_editor").setSourceId("#{@css.name}");
 $(".editor-panel").show();
 setTimeout("editorManager.getEditor('css_editor').code_editor.refresh();", 100);
 
