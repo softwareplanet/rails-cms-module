@@ -12,8 +12,8 @@
     -#%a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences", "data-source_id" => my_id, :onclick => "animate_properties(this)"}
     %a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences", "data-source_id" => my_id}
 
-    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-source_id" => my_id, :onclick => 'show_code_editor(this)'}
-    %ul.dropdown-menu.preferences
+    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-source_id" => my_id, :onclick => 'editLayoutData(this)'}
+    .dropdown-menu.preferences
       %li.edit-properties{:onclick => 'edit_properties(this)'}
         .preferences-rect
         .pencil

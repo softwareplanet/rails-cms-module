@@ -4,7 +4,7 @@
     .name
       = component.name
     %a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences"}
-    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit"}
+    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", :onclick => 'editComponentData(this)'}
     .dropdown-menu.preferences
       %li.edit-properties{:onclick => 'component_properties(this)'}
         .preferences-rect
