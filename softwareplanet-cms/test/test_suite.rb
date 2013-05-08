@@ -54,7 +54,7 @@ module TestSuite
   require 'fileutils'
 
   def assert_true(assertion)
-    raise "\n Assertion failed at: \n " if assertion == false
+    raise "\n Assert true failed with: #{assertion} is not true. \n " if assertion == false
   end
 
   def assert_equal(got_value, expected)

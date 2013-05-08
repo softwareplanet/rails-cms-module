@@ -156,7 +156,7 @@ module Cms
     def get_source_attaches(filter_type=nil)
       source_attaches = []
       dir = AdapterStable::get_source_folder(filter_type)
-      search_result = Dir.glob(dir+"**/*#{TARGET_DIVIDER}#{get_source_name}#{TARGET_DIVIDER}*")
+      search_result = Dir.glob(dir+"/**/*#{TARGET_DIVIDER}#{get_source_name}#{TARGET_DIVIDER}*")
       search_result.each do |path|
         source_attaches.push(AdapterStable.build_source(path))
       end

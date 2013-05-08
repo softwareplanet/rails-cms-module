@@ -2,26 +2,25 @@ require "image_size"
 
 module Cms
   require 'ostruct'
-  #require_relative 'adapter'
+  require_relative 'source_helper'
   require_relative 'adapter_stable'
   require_relative 'adapter_stable_aliases'
+
+  # deprecated:
+  #require_relative 'adapter'
+
   class Source < OpenStruct
+
+    # deprecated:
     #include Adapter
     #extend Adapter::ClassMethods
+
     include AdapterStable
     extend AdapterStable::ClassMethods
-
     include AdapterStableAliases
     extend AdapterStableAliases::ClassMethods
-
-    # For nested layouts structure. If parent is empty, layout became a top-level.
-    def reorganize_by_id(source_id, parent_id)
-      source = Source.get_source_by_id(source_id)
-      source.detach
-      parent = Source.find_by_id(parent_id) unless parent_id.to_s.length == 0
-      source.attach_to(parent) if parent
-    end
-
+    include SourceHelper
+    extend SourceHelper::ClassMethods
 
     def self.quick_get_layout_name_by_id(layout_id)
       layout_id.gsub(/pre(1|8)-id-/, '')

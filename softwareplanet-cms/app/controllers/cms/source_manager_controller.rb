@@ -344,7 +344,7 @@ module Cms
       @data = params[:data]
       case @activity
         when 'drag_and_drop'
-          Source.reorganize_by_id(@object, @data)
+          Source.reorganize_by_ids(@object, @data)
         when 'click'
         when 'load'
           case @object
