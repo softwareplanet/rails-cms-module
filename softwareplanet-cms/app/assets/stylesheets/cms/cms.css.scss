@@ -590,11 +590,180 @@ body.cms {
 .panel_components {
   z-index: 100;
   border-radius: 0 5px 5px 0;
-  ;
   .rect {
     top: 282px;
   }
+  .layout-row {
+    color: #7fb3ec;
+    font-size: 15px;
+    padding: 10px;
+    background: 2681dc;
+
+    .inner {
+      display: inline-block;
+      position: relative;
+      width: 100%;
+      .preferences {
+        cursor: pointer;
+        margin: 0;
+        padding: 0;
+        background-color: none!important;
+        border:  none;
+        top: 27px;
+        left: 317px;
+        width: 229px;
+        li {
+          height: 49px;
+          width: 100%;
+        }
+        .edit-properties {
+          color: black;
+          background-color: white;
+          .preferences-rect {
+            position: absolute;
+            margin:-6px 0 0 9px;
+            background: url(#{$assets_path}/icons/rect_top_white.png) no-repeat;
+            height: 8px;
+            width: 14px;
+          }
+          .pencil {
+            font-size: 14px;
+            margin: 19px 10px 0 22px;
+            width: 11px;
+            height: 12px;
+            display: inline-block;
+            background: url(#{$assets_path}/icons/pen2.png) no-repeat;
+          }
+        }
+        .delete-page {
+          color: black;
+          background-color: white;
+          div {
+            font-size: 14px;
+            margin: 16px 10px 0 22px;
+            width: 11px;
+            height: 13px;
+            display: inline-block;
+            background: url(#{$assets_path}/icons/delete.png) no-repeat;
+          }
+        }
+        .edit-properties:hover {
+          color: white;
+          background-color: #539ce5;
+          .preferences-rect {
+            background: url(#{$assets_path}/icons/rect_top_blue.png) no-repeat;
+          }
+          .pencil {
+            background: url(#{$assets_path}/icons/pen.png) no-repeat;
+          }
+        }
+        .delete-page:hover {
+          color: white;
+          background-color: #539ce5;
+          div {
+            background: url(#{$assets_path}/icons/delete2.png) no-repeat;
+          }
+        }
+      }
+      .counter {
+        float: right;
+        font-size: 12px;
+      }
+      .short-counter {
+        float: right;
+        font-size: 12px;
+        margin-right: 15px;
+        display: none;
+      }
+    }
+
+    .folder {
+      margin-top: 4px;
+      width: 16px;
+      height: 16px;
+      background: url(#{$assets_path}/icons/folder.png) no-repeat;
+      float: left;
+    }
+    .list {
+      margin-top: 4px;
+      width: 16px;
+      height: 16px;
+      background: url(#{$assets_path}/icons/list.png) no-repeat;
+      float: left;
+    }
+    .edit {
+      margin: 4px 10px 0 0;
+      width: 11px;
+      height: 11px;
+      background: url(#{$assets_path}/icons/editor.png) no-repeat;
+      float: right;
+      display: none;
+    }
+    .properties {
+      margin: 4px 10px 0 0;
+      width: 12px;
+      height: 13px;
+      background: url(#{$assets_path}/icons/properties.png) no-repeat;
+      float: right;
+      display: none;
+    }
+    .edit:hover {
+      background: url(#{$assets_path}/icons/editor2.png) no-repeat;
+    }
+    .properties:hover {
+      background: url(#{$assets_path}/icons/properties2.png) no-repeat;
+    }
+
+    .name {
+      padding-left: 5px;
+      font-weight: bold;
+      float: left;
+    }
+  }
+  .layout-row:hover {
+    background: #539ce5;
+    .folder {
+      background: url(#{$assets_path}/icons/folder2.png) no-repeat;
+      display: block;
+    }
+    .list {
+      background: url(#{$assets_path}/icons/list2.png) no-repeat;
+      display: block;
+    }
+    .edit {
+      display: block;
+    }
+    .properties {
+      border: none;
+      display: block;
+      cursor: pointer;
+    }
+    .counter {
+      display: none;
+    }
+    .short-counter {
+      display: inline-block;
+    }
+    .properties_animate_config {
+      -webkit-transition-duration: 0.3s;
+      -moz-transition-duration: 0.3s;
+      -o-transition-duration: 0.3s;
+      transition-duration: 0.3s;
+      -webkit-transition-property: -webkit-transform;
+      -moz-transition-property: -moz-transform;
+      -o-transition-property: -o-transform;
+      transition-property: transform;
+    }
+    .properties_animate_run {
+      -webkit-transform:rotate(60deg);
+      -moz-transform:rotate(60deg);
+      -o-transform:rotate(60deg);
+    }
+    .edit:hover {-webkit-box-shadow: 0px 0px 10px 4px lightblue; box-shadow: 0px 0px 10px 4px lightblue;}
+    color: black;
+  }
 }
+
 
 .panel_gallery .rect {
   top: 422px;

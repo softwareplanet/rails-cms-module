@@ -1,0 +1,35 @@
+.layout-row{"data-component_id" => component.get_id}
+  .inner
+    .list
+    .name
+      = component.name
+    %a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences"}
+    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit"}
+    .dropdown-menu.preferences
+      %li.edit-properties
+        .preferences-rect
+        .pencil
+        Редактировать свойства
+      %li.delete-page{"data-name" => component.name}
+        %div
+        Удалить страницу
+.line
+
+-#- my_id = component.get_id
+-#.layout-row{"data-source_id" => my_id}
+-#  .inner
+-#    .list
+-#    .name
+-#      = component.name
+-#    %a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences", "data-source_id" => my_id}
+-#
+-#    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", "data-source_id" => my_id, :onclick => 'show_code_editor(this)'}
+-#    .dropdown-menu.preferences
+-#      %li.edit-properties{:onclick => 'edit_properties(this)'}
+-#        .preferences-rect
+-#        .pencil
+-#        Редактировать свойства
+-#      %li.delete-page{:onclick => 'deleteSourceWithConfirmation(this)',"data-source_name" => component.name, "data-source_id" => my_id}
+-#        %div
+-#        Удалить страницу
+-#.line
