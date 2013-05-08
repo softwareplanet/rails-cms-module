@@ -222,6 +222,7 @@ body.cms {
 .panel_new-page,
 .panel_editor,
 .panel_properties,
+.panel_component_properties,
 .panel_new-component {
  left: 369px!important;
 }
@@ -231,6 +232,7 @@ body.cms {
 .panel_components,
 .panel_settings,
 .panel_properties,
+.panel_component_properties,
 .panel_new-page,
 .panel_gallery,
 .panel_new-component {
@@ -267,6 +269,7 @@ body.cms {
 
 .panel_properties,
 .panel_new-page,
+.panel_component_properties,
 .panel_new-component {
   -webkit-transition-duration: 250ms,250ms;
 }
@@ -632,6 +635,7 @@ body.cms {
 
 .panel_new-page,
 .panel_properties,
+.panel_component_properties,
 .panel_new-component {
   background: white;
   color: black;

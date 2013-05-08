@@ -206,6 +206,22 @@ $(document).ready ->
   $('.panel_new-component .close-btn').click ->
     $('.panel.panel_new-component').css('display', 'none')
 
+  $('.panel_component_properties .close-btn').click ->
+    $('.panel_component_properties').css('display', 'none')
+
+window.component_properties = (obj) ->
+  parent = $(obj).parents('.component-row')
+  id = $(parent).data('component_id')
+  request_json = {
+  component_id: id,
+  object: 'edit_component',
+  activity: 'load'
+  }
+  $.ajax
+    url: '/source_manager/panel_structure'
+    type: 'POST',
+    data: request_json
+
 
 $(document).ready ->
 #  $('.layout-row').draggable({revert: "invalid",helper:'clone',cursor: "move"});

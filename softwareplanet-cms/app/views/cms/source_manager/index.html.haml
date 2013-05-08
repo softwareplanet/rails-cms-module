@@ -161,11 +161,25 @@
     Создать компонент
   .line
   = form_tag url_for( :controller => 'source_manager', :action => 'create_component', :method => 'POST'), :id => "component_form", :remote => true do
-    %label Адрес / Имя
+    %label Имя сомпонента
     %input.url{:placeholder => "Input component name…", :type => "text", :name => "name"}
     %br
     %div
       = submit_tag ' Save', :class => 'btn btn-primary'
+      .close-btn.btn.btn-primary Close
+
+.panel.panel_component_properties{'data-level' => 'child'}
+  .rect
+  .title
+    Свойства компонента
+  .line
+  = form_tag url_for( :controller => "source_manager", :action => "save_component", :method => "post" ), :id => "component_properties_form", :style => 'padding: 10px;', :remote => true do
+    %input{:type => "hidden", :name => "id"}
+    %label Имя компонента
+    %input{:type => "text", :name => "name"}
+    %br
+    %div
+      %button.btn.btn-primary.save-source{:type => "submit"} СОХРАНИТЬ
       .close-btn.btn.btn-primary Close
 
 / modal-gallery is the modal dialog used for the image gallery

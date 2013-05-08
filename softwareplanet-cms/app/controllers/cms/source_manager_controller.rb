@@ -367,6 +367,9 @@ module Cms
                   @description = line[line.index(str) + str.size .. -5]
                 end
               end
+            when 'edit_component'
+              component_id = params[:component_id]
+              @component = Source.find_by_id(component_id)
           end
       end
     end
@@ -448,6 +451,30 @@ module Cms
           return
         end
         render 'create_component'
+        return
+      end
+      render :js => 'alert("' +  @message + '");'
+    end
+
+    def save_component
+      component_name = params[:name]
+      if component_name.blank?
+        @message = I18n.t('save_component_form.blank_name')
+      elsif !Source.find_by_name_and_type(component_name, SourceType::CONTENT).blank?
+        @message = I18n.t('save_component_form.component_exist')
+      else
+        begin
+          @component = Source.find_by_id(params[:id])
+          path = @component.path
+          old_name = @component.name
+          File.rename(path + old_name,path + component_name)
+          @component = Source.find_by_name_and_type(component_name, SourceType::CONTENT).first
+          @old_id = params[:id]
+        rescue Exception => exc
+          render :js => 'alert("' +  I18n.t('save_component_form.error') + '");'
+          return
+        end
+        render 'save_component'
         return
       end
       render :js => 'alert("' +  @message + '");'
