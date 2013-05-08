@@ -20,6 +20,7 @@ config/*.yml
 # Local layouts and contents
 /data_source
 /data_source/compiled
+/softwareplanet-cms/test/data_source_test/
 
 # Documentation compiled sources
 #/softwareplanet-cms/guide/compiled

@@ -16,77 +16,6 @@ $assets_path: "/assets/ui";
 .menu-bar  { /*@extend .blue-gradient;*/ }
 .toolbar { /*@extend .black-gradient;*/  }
 
-/*
-.expander {
-  height: 100%;
-  min-height: 800px;
-}
-html.cms, body.cms {
-  @extend .expander;
-  background: url(#{$assets_path}/background.png) repeat;
-}
-
-#wrapper {
-  width: 100%;
-  min-width: 1000px;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-  height: auto!important;
-  z-index: 1;
-}
-
-.toolbar {
-  position: relative;
-  width: 100px;
-  height: 100%;
-  min-height: 600px;
-  left: 0;
-  z-index: 999;
-  background: #2b2d33;
-
-  .grade.top {
-    padding: 20px 0 0;
-    height: auto;
-  }
-  .grade.bottom {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    padding: 0 0 20px;
-    height: auto;
-    width: 100%;
-  }
-  .icon {
-    margin: 0 auto 25px;
-    width: 90px;
-    height: 70px;
-    cursor: pointer;
-  }
-  .icon-main { background: url(#{$assets_path}/main.png) no-repeat 22px ;}
-  .icon-main:hover, .icon-main.highlighted  { background: url(#{$assets_path}/mainH.png) no-repeat 22px; }
-
-  .icon-structure { background: url(#{$assets_path}/structure.png) no-repeat 16px;}
-  .icon-structure:hover, .icon-structure.highlighted { background: url(#{$assets_path}/structureH.png) no-repeat 16px; }
-
-  .icon-content { background: url(#{$assets_path}/content.png) no-repeat 11px;}
-  .icon-content:hover, .icon-content.highlighted { background: url(#{$assets_path}/contentH.png) no-repeat 11px; }
-
-  .icon-components { background: url(#{$assets_path}/components.png) no-repeat 11px;}
-  .icon-components:hover, .icon-components.highlighted { background: url(#{$assets_path}/componentsH.png) no-repeat 11px; }
-
-  .icon-gallery { background: url(#{$assets_path}/gallery.png) no-repeat 24px;}
-  .icon-gallery:hover, .icon-gallery.highlighted { background: url(#{$assets_path}/galleryH.png) no-repeat 24px; }
-
-  .icon-settings{ background: url(#{$assets_path}/settings.png) no-repeat 15px;}
-  .icon-settings:hover, .icon-settings.highlighted { background: url(#{$assets_path}/settingsH.png) no-repeat 15px; }
-
-  .icon-exit { background: url(#{$assets_path}/exit.png) no-repeat 26px;}
-  .icon-exit:hover, .icon-exit.highlighted { background: url(#{$assets_path}/exitH.png) no-repeat 26px; }
-
-}
-*/
-
 :focus {outline: none;border:  none;}
 .expander {
   height: 100%;
@@ -553,7 +482,7 @@ body.cms {
       color: #7fb3ec;
       font-size: 15px;
       padding: 10px;
-      background: 2681dc;
+      background: #2681dc;
 
       .inner {
         display: inline-block;
@@ -987,3 +916,32 @@ body.cms {
 .CodeMirror-lines {
 }
 
+/* Layout List, dragging */
+ul.layouts-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.layout-drag {
+  color: black!important;
+  background: #4b82c3 !important;
+  opacity: 0.7;
+  z-index: 1000;
+}
+.layout-drop-placeholder {
+  height: 45px;
+  background: #76ff5f;
+}
+.layout-child-placeholder {
+  height: 25px;
+  background: rgba(212, 212, 212, 0.79);
+  color: black;
+  text-align: center;;
+
+}
+.ui-state-hover {
+}
+.ui-state-active {
+  background: green;
+}

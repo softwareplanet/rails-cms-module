@@ -3,9 +3,13 @@ require "image_size"
 module Cms
   require 'ostruct'
   require_relative 'adapter'
+  require_relative 'adapter_stable'
   class Source < OpenStruct
     include Adapter
     extend Adapter::ClassMethods
+
+
+
 
     def self.quick_get_layout_name_by_id(layout_id)
       layout_id.gsub(/pre(1|8)-id-/, '')
