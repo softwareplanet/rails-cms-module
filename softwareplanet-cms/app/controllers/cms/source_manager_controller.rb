@@ -329,8 +329,10 @@ module Cms
       @object = params[:object]
       @data = params[:data]
       case @activity
-        when "click"
-        when "load"
+        when 'drag_and_drop'
+          Source.reorganize(@object, @data)
+        when 'click'
+        when 'load'
           case @object
             when 'edit_properties'
               @layout_id = params[:layout_id]
