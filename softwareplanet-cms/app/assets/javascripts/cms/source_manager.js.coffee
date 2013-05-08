@@ -107,11 +107,23 @@ window.deleteComponent = (obj) ->
     $(component).next().fadeOut()
     $(component).fadeOut()
 
- #OPEN CODE EDITOR FOR EDIT LAYOUT CODE
-window.show_code_editor = (obj) ->
-  $('[data-level=child]').hide();
+ #OPEN CODE EDITOR FOR LAYOUT
+window.editLayoutData = (obj) ->
+  $('[data-level=child]').hide()
+  layout_id = $(obj).data("source_id")
+  showCodeEditor(layout_id)
+
+#OPEN CODE EDITOR FOR LAYOUT
+window.editComponentData = (obj) ->
+  $('[data-level=child]').hide()
+  parent = $(obj).parents('.component-row')
+  component_id = $(parent).data("component_id")
+  showCodeEditor(component_id)
+
+#SHOW CODE EDITOR FOR SOURCE
+window.showCodeEditor = (source_id) ->
   request_json =
-    object: $(obj).data("source_id")
+    object: source_id
     activity: "edit"
   $.ajax
     url: "/source_manager/editor.js"

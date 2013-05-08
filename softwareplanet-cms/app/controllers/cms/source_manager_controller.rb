@@ -77,13 +77,18 @@ module Cms
     # GET /source_manager/1/edit
     def edit
       @sourceObject = Source.find_by_id(params[:id])
-      render :nothing => true and return if @sourceObject.nil?
-      @sourceObject.get_attach_or_create
-      if @sourceObject.type == SourceType::CSS && @sourceObject.data.length > 0
-        from = @sourceObject.data.index("\n")+1
-        to = -@sourceObject.data.reverse.index("\n")-1
-        @sourceObject.data = @sourceObject.data[from..to]
+      if @sourceObject.type == SourceType::HIDDEN_LAYOUT
+        visible_layout = Cms::Source.new(:type => Cms::SourceType::LAYOUT, :name => @sourceObject.get_name)
+        visible_layout.get_attach_or_create
+      else
+        @sourceObject.get_attach_or_create
       end
+      #if @sourceObject.type == SourceType::CSS && @sourceObject.data.length > 0
+      #  from = @sourceObject.data.index("\n")+1
+      #  to = -@sourceObject.data.reverse.index("\n")-1
+      #  @sourceObject.data = @sourceObject.data[from..to]
+      #end
+      render :nothong > true
     end
 
     # PUT /source_manager/1
