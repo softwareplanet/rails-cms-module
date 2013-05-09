@@ -77,7 +77,7 @@ module Cms
       assert_equal(@layout1.name, '1-tar-layout2-tar-layout1')
       @layout1.attach_to(@layout3)
       assert_equal(@layout1.name, '1-tar-layout3-tar-layout1')
-      assert_equal(@layout3.get_source_attaches(SourceType::LAYOUT)[0].get_source_path, @layout1.get_source_path)
+      assert_equal(@layout3.get_source_attach(SourceType::LAYOUT).get_source_path, @layout1.get_source_path)
     end
 
 
@@ -85,7 +85,7 @@ module Cms
       create_sample_sources
       @layout1.attach_to(@layout2)
       @layout2.attach_to(@layout3)
-      assert_equal(@layout3.get_source_attaches(SourceType::LAYOUT)[0].get_source_attaches(SourceType::LAYOUT)[0].get_source_name, 'layout1')
+      assert_equal(@layout3.get_source_attach(SourceType::LAYOUT).get_source_attach(SourceType::LAYOUT).get_source_name, 'layout1')
     end
 
     def test_get_source_attaches

@@ -8,6 +8,12 @@ module Cms
     IMAGE = 6
     COMPILED = 7
     HIDDEN_LAYOUT = 8
+    SETTINGS = 9
+
+    def self.all
+      SourceType.constants.collect{|name| {name => self.class_eval(name.to_s) }}.inject(&:merge)
+    end
+
 
   end
 end

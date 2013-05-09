@@ -332,8 +332,13 @@ module Cms
         when 'load'
           case @object
             when 'edit_properties'
+              @settings = Source.get_source_settings(params[:layout_id])
+              @no_publish = !@settings.PUBLISH
+
+
+=begin
               @layout_id = params[:layout_id]
-              @seo, @path = Source.quick_build_seo_with_path(@layout_id)
+              #@seo, @path = Source.quick_build_seo_with_path(@layout_id)
               @page_name = Source.quick_get_layout_name_by_id(@layout_id)
               #no_show = params[:no_show]
               @no_publish = @layout_id.match('pre1-id-').blank?
@@ -357,6 +362,7 @@ module Cms
                   @description = line[line.index(str) + str.size .. -5]
                 end
               end
+=end
             when 'edit_component'
               component_id = params[:component_id]
               @component = Source.find_by_id(component_id)

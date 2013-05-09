@@ -12,6 +12,9 @@ desc "Setup script"
     # Installation script wizard should be able to roll back if the last run was not successful.
     task :wizard do
       
+      UI_DELAY = 0
+
+      DATABASE_CHECKING = true
 
       OWNER_RAILS_ROOT=Rails.root.to_s
       OWNER_GEMFILE_PATH = OWNER_RAILS_ROOT + '/Gemfile'
@@ -26,78 +29,75 @@ desc "Setup script"
       
       puts "***Welcome to Cms setup Wizard. What is your wish?"
       puts "1 - Setup Cms for current project."
-      ##puts "2 - Review current status of Cms"
-      ##puts "3 - Repair Cms if it is not worked properly"
-      ##puts "4 - Uninstall Cms (gem folder will not be deleted automatically)"
-      ##puts "5 - Help with Cms"
       puts "0 - Exit Wizard"
-      user_choice = STDIN.getch
+      user_choice = STDIN.getc
       exit if user_choice != '1'
       
       #
       # Touch the database:
       #
-      
-      @database_status_OK = nil
-      puts "..";sleep 1;puts("Check your database status...");sleep 1;
-      begin
-        Rake::Task['db:migrate'].reenable
-        Rake::Task['db:migrate'].invoke
-        @database_status_OK = true
-      rescue => e
-        puts "****** Database migrate error: " + e.to_s
-        exit if e.to_s.index("Unknown database") == nil
-        puts "rake db:create first!"
-        @database_status_OK = false
-      end
-      
-      if @database_status_OK == false
+      if DATABASE_CHECKING
+        @database_status_OK = nil
+        puts "..";sleep UI_DELAY;puts("Check your database status...");sleep UI_DELAY;
         begin
-          puts "Dont worry. It seems that your database was not prepeared yet. May I create it manually with rake db:create?"
-          puts "1 - yes, please"
-          puts "2 - no, thanks"
-          begin puts("Do it manually, if you wish."); exit; end if STDIN.getch != '1'
-          puts ".."
-          Rake::Task['db:create'].reenable
-          Rake::Task['db:create'].invoke
-          #system "rake #{name}"
-          sleep 1;puts ">> Database was created!";sleep 1;
+          Rake::Task['db:migrate'].reenable
+          Rake::Task['db:migrate'].invoke
+          @database_status_OK = true
         rescue => e
-          puts "Unable to invoke db:create. Check your database configuration."
-          puts "Finished. Unable to setup Cms."
-          exit
+          puts "****** Database migrate error: " + e.to_s
+          exit if e.to_s.index("Unknown database") == nil
+          puts "rake db:create first!"
+          @database_status_OK = false
         end
+
+        if @database_status_OK == false
+          begin
+            puts "Dont worry. It seems that your database was not prepeared yet. May I create it manually with rake db:create?"
+            puts "1 - yes, please"
+            puts "2 - no, thanks"
+            begin puts("Do it manually, if you wish."); exit; end if STDIN.getch != '1'
+            puts ".."
+            Rake::Task['db:create'].reenable
+            Rake::Task['db:create'].invoke
+            #system "rake #{name}"
+            sleep UI_DELAY;puts ">> Database was created!";sleep UI_DELAY;
+          rescue => e
+            puts "Unable to invoke db:create. Check your database configuration."
+            puts "Finished. Unable to setup Cms."
+            exit
+          end
+        end
+        sleep UI_DELAY;puts "OK";
       end
-      sleep 1;puts "OK";
-      
+
       #
       #  Invoke seed data
       #      
       
       unless text_exists?(OWNER_SEED_FILE_PATH, "Cms::Engine.load_seed")
-        sleep 1
+        sleep UI_DELAY
         puts "Copy Cms migration scripts.."
         Rake::Task["cms:install:migrations"].reenable
         Rake::Task["cms:install:migrations"].invoke
-        sleep 1
+        sleep UI_DELAY
         puts "Initialize Cms seed data.."
         inject_text(OWNER_SEED_FILE_PATH, -1, "Cms::Engine.load_seed")
         puts "Run all migrations.."
         Rake::Task["db:migrate"].reenable
         Rake::Task["db:migrate"].invoke
-        sleep 1
+        sleep UI_DELAY
         puts "Load Cms seed data..."
         Rake::Task["db:seed"].reenable
         Rake::Task["db:seed"].invoke
         puts "Done!"
-        sleep 1
+        sleep UI_DELAY
       end
       
       #
       # Add gem dependencies
       #
       
-      puts "Add dependencies to Gemfile..";sleep 1;
+      puts "Add dependencies to Gemfile..";sleep UI_DELAY;
       major_gemfile_dependencies = [
         "gem 'haml' ",
         "gem 'codemirror-rails' ",
@@ -109,7 +109,7 @@ desc "Setup script"
       ]
       gemfile_comment = "#=   CMS REQUIREMENTS END   =#"
       major_gemfile_dependencies.each do |gem_file|
-        sleep 1;
+        sleep UI_DELAY;
         if text_exists?(OWNER_GEMFILE_PATH, gem_file)
           puts(gem_file + " already installed."); next;
         end
@@ -119,7 +119,7 @@ desc "Setup script"
       puts "Including of minor dependencies (if you wish):"
       minor_gemfile_dependencies.each_with_index do |gem_file, index|
         next if text_exists?(OWNER_GEMFILE_PATH, gem_file)
-        sleep 1
+        sleep UI_DELAY
         puts "Optional #{gem_file} wants to be included in Gemfile. Allow it?"
         puts "1 - yes, please"
         puts "2 - no, thanks"
@@ -134,7 +134,7 @@ desc "Setup script"
       # Add javascript assets
       #
       
-      puts "Add javascript assets to application.js..";sleep 1;
+      puts "Add javascript assets to application.js..";sleep UI_DELAY;
       major_js_assets = [
         "//= require cms/application",
         "//= require codemirror",
@@ -142,7 +142,7 @@ desc "Setup script"
       minor_js_assets = [
         "//= require bootstrap" ]      
       major_js_assets.each do |js_asset|
-        sleep 1;
+        sleep UI_DELAY;
         if text_exists?(OWNER_APP_JS_PATH, js_asset)
           puts(js_asset + " already included."); next;
         end
@@ -164,7 +164,7 @@ desc "Setup script"
       # Add css assets
       #
       
-      puts "Add css assets to application.css..";sleep 1;
+      puts "Add css assets to application.css..";sleep UI_DELAY;
       major_css_assets = [
         "require codemirror",
         "require aloha",
@@ -198,7 +198,7 @@ desc "Setup script"
         end
       end
       major_css_assets.each do |css_asset|
-        sleep 1;
+        sleep UI_DELAY;
         if text_exists?(OWNER_APP_CSS_PATH, css_asset)
           puts(css_asset + " already included."); next;
         end
@@ -213,7 +213,7 @@ desc "Setup script"
       route_line = "\n\n  # This is a Cms route line. Add your custom routes above this line.\n    mount Cms::Engine, :at => '/'\n"
       route_finder = "Cms::Engine"
       unless text_exists?(OWNER_ROUTE_FILE_PATH, route_finder)
-        sleep 1; puts("Add CMS routes to routes.rb..")
+        sleep UI_DELAY; puts("Add CMS routes to routes.rb..")
         inject_text(OWNER_ROUTE_FILE_PATH, 2, route_line)
       end
       

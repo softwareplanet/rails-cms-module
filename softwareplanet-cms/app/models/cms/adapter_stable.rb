@@ -54,6 +54,11 @@ module Cms
             a.attach_to(source_instance)
           end
         end
+        begin
+          set_data(source_instance.data)
+        rescue
+        end
+
         source_instance.flash!
         source_instance
       end
@@ -83,20 +88,22 @@ module Cms
 
     # touch file to read!
     def load!
-      self.data
+      get_data
       self
     end
     # write data to file
-    def data= data_arg
+    def set_data(data_arg)
       @self_data = data_arg
+      data = data_arg
       flash!
     end
     # lazy file reading
-    def data
+    def get_data
       if @self_data == nil
-        @self_data = File.exists?(self.get_source_filepath) ? File.read(self.get_source_filepath) : ""
+        @self_data = File.exists?(self.get_source_filepath) ? File.read(self.get_source_filepath) : data
+        self.data = @self_data
       end
-      @self_data || ""
+      self.data = @self_data || ""
     end
 
     #
@@ -156,18 +163,16 @@ module Cms
       end
     end
 
-    def get_source_attaches(filter_type=nil)
+    def get_source_attach(source_type)
+      source_folder = (AdapterStable.get_rails_env == 'test' ? TEST_SOURCE_FOLDERS[source_type] : SOURCE_FOLDERS[source_type])
+      source_path = Dir.glob(source_folder+ "/**/*#{type.to_i}#{TARGET_DIVIDER}#{get_source_name}#{TARGET_DIVIDER}*").flatten.compact
+      source_path.length == 0  ? nil : AdapterStable.build_source(source_path[0])
+    end
+
+    def get_source_attaches
       source_attaches = []
-      search_results = []
-
-      (AdapterStable.get_rails_env == 'test' ? TEST_SOURCE_FOLDERS : SOURCE_FOLDERS).map { |key, value|
-        search_results << Dir.glob(value + "/**/*#{type.to_i}#{TARGET_DIVIDER}#{get_source_name}#{TARGET_DIVIDER}*")
-      }
-
-      search_results.flatten.each do |path|
-        source_attaches.push(AdapterStable.build_source(path))
-      end
-      source_attaches
+      source_attaches << SourceType.all.collect{ |source_type| get_source_attach(source_type[1]) }
+      source_attaches.flatten.compact
     end
 
     def attach_to(target_instance)

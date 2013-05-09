@@ -2,6 +2,7 @@ require "image_size"
 
 module Cms
   require 'ostruct'
+  require_relative 'source_settings'
   require_relative 'source_helper'
   require_relative 'adapter_stable'
   require_relative 'adapter_stable_aliases'
@@ -40,7 +41,7 @@ module Cms
     end
 
     def self.quick_attach(type, name, attach_type)
-      ext =  SOURCE_TYPE_EXTENSIONS[attach_type.to_i]
+        ext =  SOURCE_TYPE_EXTENSIONS[attach_type.to_i]
       attach_name = type.to_s + Cms::TARGET_DIVIDER + name
       Source.new({ :type => attach_type, :name => attach_name, :extension => ext, :data => nil })
     end
