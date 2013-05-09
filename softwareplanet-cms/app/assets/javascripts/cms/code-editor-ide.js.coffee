@@ -88,31 +88,24 @@ class window.CodeEditorIDE
     @request_spath = request_path.slice(0, -1)
   getRequestSource: (id) ->
     request_json = {}
-    $.get( @request_path + id + '/edit' + jsformat, request_json )
+    request_json['id'] =  id
+    $.post('/source_manager/edit_source/', request_json )
+
   saveSourceSimple: () ->
     request_json = {}
     request_json["type"] = @source_type
     request_json["url"] = @url
     request_json["public"] = 1
     request_json["model"] = {source: this.getSourceWithSeparator(), name: "test"}
-    $.ajax
-      url: @request_path + @source_id + jsformat
-      type: "PUT"
-      data: request_json
-
+    $.post '/source_manager/update_source/', request_json
 
   saveSource: (name) ->
     this.setSourceName(name) unless name is undefined
     request_json = {}
     request_json["id"] = @source_id
     request_json["data"] = this.getSourceWithSeparator()
-    if @source_id == 'new'
-      $.post @request_spath + jsformat, request_json
-    else
-      $.ajax
-        url: @request_path + @source_id + jsformat
-        type: "PUT"
-        data: request_json
+    $.post '/source_manager/update_source/', request_json
+
   deleteSourceHelper: (id) ->
     request_json = {}
     request_json["type"] = @source_type

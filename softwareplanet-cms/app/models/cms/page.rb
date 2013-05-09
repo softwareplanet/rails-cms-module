@@ -10,20 +10,20 @@ module Cms
       #slow:
       #layout = Source.find_by_type_and_name(SourceType::LAYOUT,  layout_name).first
       #quick:
-      layout = Source.quick_search(SourceType::LAYOUT,  layout_name)
+      layout = Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).first
 
       if layout.nil?
         raise ArgumentError, "Attempt to generate layout<b> #{layout_name}"
       end
 
-      str = layout.data
+      str = layout.get_data
 
       page_styles = []
 
       #slow:
       #slow_style_path = CUSTOM_SCSS_FOLDER + layout.get_attach.get_filename
       #quick:
-      page_styles << Source.quick_attach_short_path(SourceType::LAYOUT,  layout_name, SourceType::CSS)
+      page_styles << "custom/" + layout.get_source_attach(SourceType::CSS).get_source_filename
 
       plain_src = str.gsub(/[" "]*%content:([\w_\-]+)/) { |r|
         offset_length = r.gsub(/[\s\/]*/).first.length
@@ -58,7 +58,7 @@ module Cms
       }
       puts page_styles.inspect
 
-      seo_string = Source.quick_attach(Cms::SourceType::LAYOUT, layout_name, Cms::SourceType::SEO).data
+      seo_string = layout.get_source_attach(SourceType::SEO).get_data
 
       # parse data. locales separated by '%ru' or '%en' titles:
 

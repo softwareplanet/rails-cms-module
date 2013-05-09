@@ -37,9 +37,9 @@ module Cms
         @message = I18n.t('create_layout_form.wrong_address')
 
       else
-        begin
+        #begin
           @source = Source.build(:type => type, :name => address)
-          @css = Source.build(:type => SourceType::CSS, :target => @source, :name => address)
+          @css = Source.build(:type => SourceType::CSS, :target => @source, :name => address + '.scss')
           @seo = Source.build(:type => SourceType::SEO, :target => @source, :name => address)
           path = @seo.get_source_filepath
 
@@ -58,49 +58,30 @@ module Cms
             @source = Source.find_by_name(address).first
           end
 
-        rescue Exception => exc
-          render :js => 'alert("' +  I18n.t('create_layout_form.wrong') + '");'
-          return
-        end
+        #rescue Exception => exc
+        #  render :js => 'alert("' +  I18n.t('create_layout_form.wrong') + '");'
+        #  return
+        #end
         render 'create'
         return
       end
       render :js => "alert('#{@message}');"
     end
 
-    # GET /source_manager/1/edit
-    def edit
+    def edit_source
       @sourceObject = Source.find_by_id(params[:id])
-      if @sourceObject.type == SourceType::HIDDEN_LAYOUT
-        visible_layout = Cms::Source.new(:type => Cms::SourceType::LAYOUT, :name => @sourceObject.get_name)
-        visible_layout.get_attach_or_create
-      else
-        @sourceObject.get_attach_or_create
-      end
-      #if @sourceObject.type == SourceType::CSS && @sourceObject.data.length > 0
-      #  from = @sourceObject.data.index("\n")+1
-      #  to = -@sourceObject.data.reverse.index("\n")-1
-      #  @sourceObject.data = @sourceObject.data[from..to]
-      #end
-      render :nothong > true
     end
 
     # PUT /source_manager/1
-    def update
+    def update_source
+      #fix me!
       @sourceObject = Source.find_by_id(params[:id])
-      #@cloned = @sourceObject.dup
-      @sourceObject.load!
       unless @sourceObject.nil?
         # rename
         @sourceObject.name = params[:name] unless params[:name].nil?
         # data change
         @sourceObject.data = params[:data] unless params[:data].nil?
-        # add scss parent
-        if @sourceObject.type == SourceType::CSS
-          @sourceObject.data = ('#' + @sourceObject.get_target.get_id + '{/*do not remove first and last line manually!*/' + "\n" + @sourceObject.data + "\n" + '}/*do not remove first and last line manually!*/')
-        end
-        #@cloned.delete!
-        @sourceObject.save!
+        @sourceObject.flash!
       end
     end
 
@@ -196,8 +177,12 @@ module Cms
 
             css_path = @css.get_source_folder + @css.get_filename
             raise unless File.exist? css_path
-            css_type = SOURCE_TYPE_EXTENSIONS[SourceType::CSS]
-            File.rename(css_path, @css.get_source_folder + '1-tar-' + @address + '.' + css_type)
+            #before
+            #css_type = SOURCE_TYPE_EXTENSIONS[SourceType::CSS]
+            #File.rename(css_path, @css.get_source_folder + '1-tar-' + @address + '.' + css_type)
+            #after
+            File.rename(css_path, @css.get_source_folder + '1-tar-' + @address)
+            #end
           end
 
           @layout = Source.find_by_name_and_type(@layout_name, SourceType::LAYOUT).first
@@ -333,8 +318,6 @@ module Cms
           case @object
             when 'edit_properties'
               @settings = Source.get_source_settings(params[:layout_id])
-              @no_publish = !@settings.PUBLISH
-
 
 =begin
               @layout_id = params[:layout_id]

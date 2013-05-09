@@ -10,7 +10,7 @@ module Cms
       editor_name = "haml_editor" if (sourceObj.type == Cms::SourceType::CONTENT)
       editor_name = "css_editor" if (sourceObj.type == Cms::SourceType::CSS)
       "
-      editorManager.getEditor('#{ editor_name }').setSourceWithSeparator('#{ sourceObj.get_id }', '#{ sourceObj.name }', '#{escape_javascript(sourceObj.data) }');
+      editorManager.getEditor('#{ editor_name }').setSourceWithSeparator('#{ sourceObj.get_id }', '#{ sourceObj.get_source_name }', '#{escape_javascript(sourceObj.get_data) }');
       ".html_safe
     end
   end

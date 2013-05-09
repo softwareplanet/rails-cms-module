@@ -19,7 +19,7 @@
 #   get_source_id
 #   get_source_by_id
 
-#   get_source_attaches         # <= [Array]
+#   get_source_target         # <= [Array]
 #   get_source_target           # <= Target Source
 
 #   Source.find_source_by_attr_and_attr2(val1, val2)  # <= search for sources
@@ -65,7 +65,7 @@ module Cms
     end
 
     def flash!
-      File.open(get_source_filepath, "w") { |file| file.write(data.force_encoding('utf-8')) }
+      File.open(get_source_filepath, "w") { |file| file.write(data.to_s.force_encoding('utf-8'))  unless data.nil?}
     end
 
     def drop!
@@ -94,7 +94,7 @@ module Cms
     # write data to file
     def set_data(data_arg)
       @self_data = data_arg
-      data = data_arg
+      self.data = data_arg
       flash!
     end
     # lazy file reading
@@ -163,9 +163,13 @@ module Cms
       end
     end
 
+    def rename
+
+    end
+
     def get_source_attach(source_type)
       source_folder = (AdapterStable.get_rails_env == 'test' ? TEST_SOURCE_FOLDERS[source_type] : SOURCE_FOLDERS[source_type])
-      source_path = Dir.glob(source_folder+ "/**/*#{type.to_i}#{TARGET_DIVIDER}#{get_source_name}#{TARGET_DIVIDER}*").flatten.compact
+      source_path = Dir.glob(source_folder + "/**/*#{type.to_i}#{TARGET_DIVIDER}#{get_source_name}#{TARGET_DIVIDER}*").flatten.compact
       source_path.length == 0  ? nil : AdapterStable.build_source(source_path[0])
     end
 

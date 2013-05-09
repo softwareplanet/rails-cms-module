@@ -49,6 +49,8 @@ Cms::Engine.routes.draw do
       get 'menu_bar'
       get 'editor'
       get 'properties'
+      post 'edit_source'
+      post 'update_source'
     end
   end
 

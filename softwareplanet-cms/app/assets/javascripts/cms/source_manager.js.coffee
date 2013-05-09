@@ -94,6 +94,7 @@ window.deleteSourceWithConfirmation = (obj) ->
   id_to_delete = $(obj).data("source_id")
   name = $(obj).data("source_name")
   if confirm('Are you sure to delete layout \'' + name + "\' ?")
+    $('[data-level=child]').hide()
     deleteSource('layout', id_to_delete)
     $(obj).parents('.layout-row').next().fadeOut()
     $(obj).parents('.layout-row').fadeOut()

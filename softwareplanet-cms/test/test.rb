@@ -32,6 +32,17 @@ module Cms
       @css3 = Source.build(:name => 'css3.css', :type => SourceType::CSS)
       @css4 = Source.build(:name => 'css4.css', :type => SourceType::CSS)
       @css5 = Source.build(:name => 'css5.css', :type => SourceType::CSS)
+      @seo1 = Source.build(:name => 'seo1', :type => SourceType::SEO)
+      @seo2 = Source.build(:name => 'seo2', :type => SourceType::SEO)
+      @seo3 = Source.build(:name => 'seo3', :type => SourceType::SEO)
+      @seo4 = Source.build(:name => 'seo4', :type => SourceType::SEO)
+      @seo5 = Source.build(:name => 'seo5', :type => SourceType::SEO)
+      @setting1 = Source.build(:type => SourceType::SETTINGS, :name => 'setting1', :data => SourceSettings.default_settings.to_s)
+      @setting2 = Source.build(:type => SourceType::SETTINGS, :name => 'setting2', :data => SourceSettings.default_settings.to_s)
+      @setting3 = Source.build(:type => SourceType::SETTINGS, :name => 'setting3', :data => SourceSettings.default_settings.to_s)
+      @setting4 = Source.build(:type => SourceType::SETTINGS, :name => 'setting4', :data => SourceSettings.default_settings.to_s)
+      @setting5 = Source.build(:type => SourceType::SETTINGS, :name => 'setting5', :data => SourceSettings.default_settings.to_s)
+
     end
 
     def create_nested_sources
@@ -89,12 +100,45 @@ module Cms
     end
 
     def test_get_source_attaches
-      layout = Source.build(:type =>Cms::SourceType::LAYOUT, :name => 'test')
-      css = Source.build(:type => Cms::SourceType::CSS, :target => layout, :name => 'test')
-      source_attaches = layout.get_source_attaches
-      assert_equal(source_attaches.size, 1)
-
+      create_sample_sources
+      @css1.attach_to(@layout1)
+      @seo1.attach_to(@layout1)
+      source_attaches = @layout1.get_source_attaches
+      assert_equal(source_attaches.size, 2)
     end
+
+    def test_parse_settings_source
+      create_sample_sources
+      settings = SourceSettings.new.parse(@setting1)
+      settings_in_array = settings.instance_variables
+      assert_equal(settings_in_array.size, SETTINGS_DEFINITION[0].size)
+      assert_equal(settings.publish, SETTINGS_DEFINITION[0][:publish])
+      assert_equal(settings.display, SETTINGS_DEFINITION[0][:display])
+    end
+
+    #def test_get_data_from_settings
+    #  create_sample_sources
+    #  test_value = '0'
+    #  settings = SourceSettings.new.parse(@setting1)
+    #  settings.publish= test_value
+    #  settings.display= test_value
+    #  @setting1.set_data(settings.get_data)
+    #  settings = SourceSettings.new.parse(@setting1)
+    #  assert_equal(settings.publish, test_value)
+    #  assert_equal(settings.display, test_value)
+    #end
+    #def test_get_source_settings
+    #  create_sample_sources
+    #  @seo1.attach_to(@layout1)
+    #  @settings_count = Source.get_source_settings(@layout1.get_id).size
+    #  assert_equal(@settings_count, SETTINGS_DEFINITION.size)
+    #end
+
+    #def test_rename_source_with_attaches
+    #  layout = Source.build(:type =>Cms::SourceType::LAYOUT, :name => 'test')
+    #  css = Source.build(:type => Cms::SourceType::CSS, :target => layout, :name => 'test')
+    #  rename
+    #end
 
     ############################################
     Test.new.runner(PREPARE)
