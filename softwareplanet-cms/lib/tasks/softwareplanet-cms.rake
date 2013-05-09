@@ -1,3 +1,5 @@
+#encoding: utf-8 
+
 ##  Main setup script wizard. Run it once, with "rake cms:setup" command
 ##  All rights reserved, InterLink © 2000-2013
 
@@ -5,26 +7,18 @@ require 'io/console'
 
 desc "Setup script"
 
-  namespace :cms do
-
-    task :testme do
-      puts 'hello'
-      ruby = File.join(*RbConfig::CONFIG.values_at('bindir', 'RUBY_INSTALL_NAME'))
-      Dir.glob("softwareplanet-cms/test/*_test.rb").all? do |file|
-        puts "test #{file}"
-        sh(ruby, '-Ilib:test', file)
-      end or raise "Failures"
-    end
+  namespace :cms do    
 
     # Installation script wizard should be able to roll back if the last run was not successful.
     task :wizard do
       
-      OWNER_RAILS_ROOT=File.join(File.dirname(__FILE__), '../../../')
-      OWNER_GEMFILE_PATH = OWNER_RAILS_ROOT + 'Gemfile'
-      OWNER_SEED_FILE_PATH = OWNER_RAILS_ROOT + 'db/seeds.rb'    
-      OWNER_ROUTE_FILE_PATH = OWNER_RAILS_ROOT + 'config/routes.rb'
-      OWNER_APP_JS_PATH = OWNER_RAILS_ROOT + 'app/assets/javascripts/application.js'
-      OWNER_APP_CSS_PATH = OWNER_RAILS_ROOT + 'app/assets/stylesheets/application.css'
+
+      OWNER_RAILS_ROOT=Rails.root.to_s
+      OWNER_GEMFILE_PATH = OWNER_RAILS_ROOT + '/Gemfile'
+      OWNER_SEED_FILE_PATH = OWNER_RAILS_ROOT + '/db/seeds.rb'    
+      OWNER_ROUTE_FILE_PATH = OWNER_RAILS_ROOT + '/config/routes.rb'
+      OWNER_APP_JS_PATH = OWNER_RAILS_ROOT + '/app/assets/javascripts/application.js'
+      OWNER_APP_CSS_PATH = OWNER_RAILS_ROOT + '/app/assets/stylesheets/application.css'
       
       #
       # Wizard menu (todo):
@@ -83,8 +77,8 @@ desc "Setup script"
       unless text_exists?(OWNER_SEED_FILE_PATH, "Cms::Engine.load_seed")
         sleep 1
         puts "Copy Cms migration scripts.."
-        Rake::Task["softwareplanet-cms:install:migrations"].reenable
-        Rake::Task["softwareplanet-cms:install:migrations"].invoke
+        Rake::Task["cms:install:migrations"].reenable
+        Rake::Task["cms:install:migrations"].invoke
         sleep 1
         puts "Initialize Cms seed data.."
         inject_text(OWNER_SEED_FILE_PATH, -1, "Cms::Engine.load_seed")
@@ -216,8 +210,8 @@ desc "Setup script"
       #  Add Cms routes
       #
       
-      route_line = "\n\n  # This is a Cms route line. Add your custom routes above this line.\n    mount Сms::Engine, :at => '/'\n"
-      route_finder = "Сms::Engine"
+      route_line = "\n\n  # This is a Cms route line. Add your custom routes above this line.\n    mount Cms::Engine, :at => '/'\n"
+      route_finder = "Cms::Engine"
       unless text_exists?(OWNER_ROUTE_FILE_PATH, route_finder)
         sleep 1; puts("Add CMS routes to routes.rb..")
         inject_text(OWNER_ROUTE_FILE_PATH, 2, route_line)
