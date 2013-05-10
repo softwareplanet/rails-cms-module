@@ -56,6 +56,23 @@ module Cms
         end
         hash
       end
+
+      def create_page(params)
+        hash ={}
+        name = params[:name]
+        parsed_settings = SourceSettings.new
+        parsed_settings.publish = params[:publish] == 'on' ? 0 : 1
+        parsed_settings.display = params[:display] =='on' ? 0 : 1
+        parsed_seo_tags = SourceSEO.new
+        parsed_seo_tags.title = params[:title] ? params[:title] : ''
+        parsed_seo_tags.keywords = params[:keywords] ? params[:keywords] : ''
+        parsed_seo_tags.description = params[:description] ? params[:description] : ''
+        hash['layout'] = Source.build(:type => SourceType::LAYOUT, :name => name)
+        hash['css'] =  Source.build(:type => SourceType::CSS, :target => @source, :name => name + '.scss')
+        hash['seo'] = Source.build(:type => SourceType::SEO, :target => @source, :name => name, :data => parsed_seo_tags.get_data)
+        hash['settings'] = Source.build(:type => SourceType::SETTINGS, :target => @source, :name => name, :data => parsed_settings.get_data)
+        hash
+      end
     end
 
     def create_default_settings

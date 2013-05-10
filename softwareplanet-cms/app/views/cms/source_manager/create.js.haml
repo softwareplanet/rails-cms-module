@@ -15,5 +15,5 @@
 -#    editorManager.addEditor("#{new_editor_name}", new_editor)
 
 $('#global_action_form')[0].reset();
-$('.panel_structure .content').append("#{ escape_javascript(render(:partial => 'layout', :object => @source)) }");
+$('.panel_structure .content').append("#{ escape_javascript(render(:partial => 'layout', :object => @layout)) }");
 $('.panel_new-page').css('display', 'none')

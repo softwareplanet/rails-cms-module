@@ -22,46 +22,14 @@ module Cms
 
     # POST /source_manager
     def create
-      type = params[:type]
       name = params[:name]
-      address = params[:address]
-      no_show = params[:no_show]
-      no_publish = params[:no_publish]
-      keywords = params[:keywords]
-      description = params[:description]
-
-      if address.blank?
+      if name.blank?
         @message = I18n.t('create_layout_form.blank_address')
-
-      elsif !Source.find_by_name_and_type(address, SourceType::LAYOUT).blank?
+      elsif !Source.find_source_by_name_and_type(name, SourceType::LAYOUT).blank?
         @message = I18n.t('create_layout_form.wrong_address')
-
       else
-        #begin
-          @source = Source.build(:type => type, :name => address)
-          @css = Source.build(:type => SourceType::CSS, :target => @source, :name => address + '.scss')
-          @seo = Source.build(:type => SourceType::SEO, :target => @source, :name => address)
-          path = @seo.get_source_filepath
-
-          File.open(path, 'w+') do |f|
-            f.puts("<title>#{name}</title>")
-            f.puts("<meta name='keywords' content='#{keywords}'/>")
-            f.puts("<meta name='description' content='#{description}'/>")
-          end
-
-          if no_publish
-            layout = Source.find_by_name(@source.name).first
-            hidden_layouts = '/hidden_layouts/'
-            old_path = layout.path + layout.name
-            new_path = File.dirname(layout.path) + hidden_layouts + address
-            File.rename(old_path, new_path)
-            @source = Source.find_by_name(address).first
-          end
-
-        #rescue Exception => exc
-        #  render :js => 'alert("' +  I18n.t('create_layout_form.wrong') + '");'
-        #  return
-        #end
+        @source = Source.create_page(params)
+        @layout = @source['layout']
         render 'create'
         return
       end
@@ -72,7 +40,7 @@ module Cms
       @sourceObject = Source.find_by_id(params[:id])
     end
 
-    # PUT /source_manager/1
+    # PUT /souSource.find_source_by_name_and_type("green", SourceType::LAYOUT).blank?rce_manager/1
     def update_source
       #fix me!
       @sourceObject = Source.find_by_id(params[:id])
@@ -317,7 +285,10 @@ module Cms
         when 'load'
           case @object
             when 'edit_properties'
+              @layout = Source.find_by_id(params['layout_id'])
               @settings = Source.get_source_settings(params[:layout_id])
+              @seo = @layout.get_source_attach(SourceType::SEO)
+              @seo_tags = Source.parse_seo_tags(@seo)
 
 =begin
               @layout_id = params[:layout_id]

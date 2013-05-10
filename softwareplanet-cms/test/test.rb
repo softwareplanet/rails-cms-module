@@ -190,6 +190,20 @@ module Cms
       end
     end
 
+    def test_create_page
+      params ={
+          :name => 'test_name',
+          :publish => 'on',
+          :display => nil,
+          :title => 'test title',
+          :keywords => 'test keywords',
+          :description => 'test description'
+      }
+      assert_not_raise do
+        Source.create_page(params)
+      end
+    end
+
     def load_check_when_creating_resources
       #in console last result is time=15.893040497 seconds! for all source * 10 000
       time = Time.now

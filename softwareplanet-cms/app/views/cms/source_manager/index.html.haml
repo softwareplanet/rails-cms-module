@@ -128,15 +128,14 @@
 
   = form_tag url_for( :controller => "source_manager", :action => "create" ), :id => "global_action_form", :remote => true do
     %fieldset
-      %input{:type => "hidden", :name => "type", :value => Cms::SourceType::LAYOUT}
       %label Адрес / Имя
-      %input.url{:placeholder => "Input layout url…", :type => "text", :tabindex => 2, :name => "address"}
+      %input.url{:placeholder => "Input layout url…", :type => "text", :tabindex => 2, :name => "name"}
       %br
       %label.checkbox
-        %input{:type => "checkbox", :name => "no_show", :tabindex => 3}
+        %input{:type => "checkbox", :name => "display", :tabindex => 3}
         Не показывать в меню
       %label.checkbox
-        %input{:type => "checkbox", :name => "no_publish", :tabindex => 4}
+        %input{:type => "checkbox", :name => "publish", :tabindex => 4}
         Не публиковать на сайте
       #accordion2.seoblock{:tabindex => 5}
         .accordion-group
@@ -147,7 +146,7 @@
           #collapseOne2.accordion-body.collapse.in
             .accordion-inner
               %label Заголовок
-              %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "name"}
+              %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "title"}
 
               %label Ключевые слова
               %input.name{:placeholder => "Keywords…", :type => "text", :tabindex => 7, :name => "keywords"}

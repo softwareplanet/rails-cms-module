@@ -1,14 +1,18 @@
 - case @object
   - when 'edit_properties'
-    $('#properties_form').find('[name="id"]').val('#{@page_name}');
-    $('#properties_form').find('.name').val('#{@title}');
-    $('#properties_form').find('.url').val('#{@page_name}');
+    $('#properties_form').find('[name="id"]').val('#{@layout.get_id}');
+    $('#properties_form').find('.name').val('#{}');
+    $('#properties_form').find('.url').val('#{@layout.get_source_name}');
     $('#properties_form').find('.keywords').val('#{@keywords}');
     $('#properties_form').find('.description').val('#{@description}');
-    - if @no_publish
+    - if @settings.publish == '1'
       document.getElementById("no_publish").checked = true;
     - else
       document.getElementById("no_publish").checked = false;
+    - if @settings.display == '1'
+      document.getElementById("no_show").checked = true;
+    - else
+      document.getElementById("no_show").checked = false;
     $('[data-level=child]').hide();
     $('.panel_properties').css('-webkit-transform','translate3d(' + $(window).width() + 'px, 0, 0)');
     $('.panel_properties').show();
@@ -23,3 +27,4 @@
 
 
 
+    @layout.get_source_name
