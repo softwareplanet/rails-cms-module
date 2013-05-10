@@ -3,6 +3,7 @@ require "image_size"
 module Cms
   require 'ostruct'
   require_relative 'source_settings'
+  require_relative 'source_seo'
   require_relative 'source_helper'
   require_relative 'adapter_stable'
   require_relative 'adapter_stable_aliases'

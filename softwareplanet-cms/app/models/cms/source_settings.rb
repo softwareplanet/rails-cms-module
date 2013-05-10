@@ -1,10 +1,15 @@
+# Methods:
+
+#   parse                 # <= parse source settings
+#   default_settings      # <= default settings to yaml format
+#   get_data              # <= source settings to yaml format
+
 require 'yaml'
 
 module Cms
     SETTINGS_DEFINITION = [
-      :publish => '1',
-      :display => '1'
-
+      'publish' => '1',
+      'display' => '1'
     ]
     class SourceSettings
       attr_accessor *SETTINGS_DEFINITION[0].keys
@@ -21,9 +26,10 @@ module Cms
       def self.default_settings
         SETTINGS_DEFINITION[0].to_yaml
       end
+
       def get_data
-        hash = Hash.new
-        self.instance_variables.each {|var| hash[var.to_s.delete("@")] = self.instance_variable_get(var).to_s }
+        hash = {}
+        self.instance_variables.each {|key| hash[key.to_s.delete("@")] = self.instance_variable_get(key).to_s }
         hash.to_yaml
       end
     end

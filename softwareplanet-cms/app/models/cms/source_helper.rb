@@ -1,3 +1,12 @@
+# Methods:
+
+#   get_source_settings       # <= layout source settings
+#   get_source_seo            # <= layout source seo tags
+#   read_seo_values           # <= hash seo tags
+
+#   create_default_settings
+#   create_default_seo
+
 module Cms
   module SourceHelper
 
@@ -19,12 +28,43 @@ module Cms
         settings = source.create_default_settings if settings.nil?
         SourceSettings.new.parse(settings)
       end
+
+      def get_source_seo(source_id)
+        source = Source.get_source_by_id(source_id)
+        seo = source.get_source_attach(SourceType::SEO)
+        seo = source.create_default_seo if seo.nil?
+        SourceSEO.new.parse(seo)
+      end
+
+      def read_seo_values(seo_source)
+        hash = {}
+        File.open(seo_source.get_source_filepath, "r").each_line  do |line|
+          line = line.downcase()
+          if line.slice('title')
+            str1 = "<title>"
+            str2 = "</title>"
+            hash['title'] = line[line.index(str1) + str1.size .. line.index(str2)-1]
+          end
+          if line.slice('keywords')
+            str = "<meta name='keywords' content='"
+            hash['keywords'] = line[line.index(str) + str.size .. -5]
+          end
+          if line.slice('description')
+            str = "<meta name='description' content='"
+            hash['description'] = line[line.index(str) + str.size .. -4]
+          end
+        end
+        hash
+      end
     end
 
     def create_default_settings
       Source.build(:type => SourceType::SETTINGS, :name => self.get_source_name, :data => SourceSettings.default_settings.to_s, :target => self)
     end
 
+    def create_default_seo
+      Source.build(:type => SourceType::SEO, :name => self.get_source_name, :data => SourceSEO.default_seo, :target => self)
+    end
 
   extend ClassMethods
   end

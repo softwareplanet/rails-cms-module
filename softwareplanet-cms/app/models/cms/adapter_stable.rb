@@ -163,8 +163,13 @@ module Cms
       end
     end
 
-    def rename
-
+    def rename_source(source_name)
+      attaches = self.get_source_attaches
+      attaches.each do |at|
+        new_source_path = at.get_source_folder.chomp('/') + '/' + at.get_source_name
+        !!File.rename(at.get_source_filepath, new_source_path)
+      end
+      self
     end
 
     def get_source_attach(source_type)

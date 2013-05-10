@@ -32,11 +32,11 @@ module Cms
       @css3 = Source.build(:name => 'css3.css', :type => SourceType::CSS)
       @css4 = Source.build(:name => 'css4.css', :type => SourceType::CSS)
       @css5 = Source.build(:name => 'css5.css', :type => SourceType::CSS)
-      @seo1 = Source.build(:name => 'seo1', :type => SourceType::SEO)
-      @seo2 = Source.build(:name => 'seo2', :type => SourceType::SEO)
-      @seo3 = Source.build(:name => 'seo3', :type => SourceType::SEO)
-      @seo4 = Source.build(:name => 'seo4', :type => SourceType::SEO)
-      @seo5 = Source.build(:name => 'seo5', :type => SourceType::SEO)
+      @seo1 = Source.build(:name => 'seo1', :type => SourceType::SEO, :data => SourceSEO.default_seo.to_s)
+      @seo2 = Source.build(:name => 'seo2', :type => SourceType::SEO, :data => SourceSEO.default_seo.to_s)
+      @seo3 = Source.build(:name => 'seo3', :type => SourceType::SEO, :data => SourceSEO.default_seo.to_s)
+      @seo4 = Source.build(:name => 'seo4', :type => SourceType::SEO, :data => SourceSEO.default_seo.to_s)
+      @seo5 = Source.build(:name => 'seo5', :type => SourceType::SEO, :data => SourceSEO.default_seo.to_s)
       @setting1 = Source.build(:type => SourceType::SETTINGS, :name => 'setting1', :data => SourceSettings.default_settings.to_s)
       @setting2 = Source.build(:type => SourceType::SETTINGS, :name => 'setting2', :data => SourceSettings.default_settings.to_s)
       @setting3 = Source.build(:type => SourceType::SETTINGS, :name => 'setting3', :data => SourceSettings.default_settings.to_s)
@@ -107,40 +107,103 @@ module Cms
       assert_equal(source_attaches.size, 2)
     end
 
-    def test_parse_settings_source
+    def test_parse_source_settings
       create_sample_sources
       settings = SourceSettings.new.parse(@setting1)
       settings_in_array = settings.instance_variables
       assert_equal(settings_in_array.size, SETTINGS_DEFINITION[0].size)
-      assert_equal(settings.publish, SETTINGS_DEFINITION[0][:publish])
-      assert_equal(settings.display, SETTINGS_DEFINITION[0][:display])
+      assert_equal(settings.publish, SETTINGS_DEFINITION[0]['publish'])
+      assert_equal(settings.display, SETTINGS_DEFINITION[0]['display'])
     end
 
-    #def test_get_data_from_settings
-    #  create_sample_sources
-    #  test_value = '0'
-    #  settings = SourceSettings.new.parse(@setting1)
-    #  settings.publish= test_value
-    #  settings.display= test_value
-    #  @setting1.set_data(settings.get_data)
-    #  settings = SourceSettings.new.parse(@setting1)
-    #  assert_equal(settings.publish, test_value)
-    #  assert_equal(settings.display, test_value)
-    #end
-    #def test_get_source_settings
-    #  create_sample_sources
-    #  @seo1.attach_to(@layout1)
-    #  @settings_count = Source.get_source_settings(@layout1.get_id).size
-    #  assert_equal(@settings_count, SETTINGS_DEFINITION.size)
-    #end
+    def test_get_data_from_parsed_settings
+      create_sample_sources
+      parsed_settings = SourceSettings.new.parse(@setting1)
+      data = parsed_settings.get_data
+      assert_equal(data, SETTINGS_DEFINITION[0].to_yaml)
+    end
 
-    #def test_rename_source_with_attaches
-    #  layout = Source.build(:type =>Cms::SourceType::LAYOUT, :name => 'test')
-    #  css = Source.build(:type => Cms::SourceType::CSS, :target => layout, :name => 'test')
-    #  rename
-    #end
+    def test_set_data_to_settings
+      create_sample_sources
+      test_value = '0'
+      parsed_settings = SourceSettings.new.parse(@setting1)
+      parsed_settings.publish= test_value
+      parsed_settings.display= test_value
+      @setting1.set_data(parsed_settings.get_data)
+      parsed_settings = SourceSettings.new.parse(@setting1)
+      assert_equal(parsed_settings.publish, test_value)
+      assert_equal(parsed_settings.display, test_value)
+    end
 
-    ############################################
+    def test_get_source_settings
+      create_sample_sources
+      @setting1.attach_to(@layout1)
+      source_settings = Source.get_source_settings(@layout1.get_id)
+      source_settings.instance_variables.each do |key|
+          assert_equal(source_settings.instance_variable_get(key), SETTINGS_DEFINITION[0][key.to_s.delete("@")])
+      end
+    end
+
+    def test_rename_source_with_attaches
+      create_sample_sources
+      name_prefix = 'test_'
+      @css1.attach_to(@layout1)
+      @seo1.attach_to(@layout1)
+      @setting1.attach_to(@layout1)
+      new_name = name_prefix + @layout1.get_source_name
+      @layout1.rename_source(new_name)
+      @layout1.get_source_attaches.each do |attach|
+        assert_equal(attach.get_source_filename, attach.get_source_name)
+      end
+    end
+
+    def test_parse_source_seo
+      create_sample_sources
+      @seo_tags = SourceSEO.new.parse(@seo1)
+      @seo_tags.instance_variables.each do |key|
+        assert_equal(@seo_tags.instance_variable_get(key), SEO_DEFINITION[0][key.to_s.delete("@")])
+      end
+    end
+
+    def test_get_seo_data
+      create_sample_sources
+      @seo_tags = SourceSEO.new.parse(@seo1)
+      assert_equal(@seo_tags.get_data, @seo1.data)
+    end
+
+    def test_save_seo_data
+      create_sample_sources
+      hash = {
+          'title' => 'title',
+          'keywords' => 'key1 key2 key3',
+          'description' => 'description1 description2 description3'
+      }
+      @seo_tags1 = SourceSEO.new.parse(@seo1)
+      @seo_tags1.title += hash['title']
+      @seo_tags1.keywords += hash['keywords']
+      @seo_tags1.description += hash['description']
+      @seo1.set_data(@seo_tags1.get_data)
+      @seo2 = Source.find_source_by_name_and_type(@seo1.get_source_name, @seo1.type).first
+      @seo_tags2 = SourceSEO.new.parse(@seo2)
+      @seo_tags2.instance_variables.each do |key|
+        assert_equal(@seo_tags2.instance_variable_get(key), hash[key.to_s.delete("@")])
+      end
+    end
+
+    def load_check_when_creating_resources
+      #in console last result is time=15.893040497 seconds! for all source * 10 000
+      time = Time.now
+      source_types = SourceType::all
+      for number in 1..10000
+        source_types.map do |k,v|
+          Source.build(:name => k.to_s + number.to_s, :type => v)
+        end
+      end
+      result = Time.now - time
+      puts "result is time=#{result} seconds!"
+    end
+
+    ##########@seo_tags.get_data##################################
     Test.new.runner(PREPARE)
   end
 end
