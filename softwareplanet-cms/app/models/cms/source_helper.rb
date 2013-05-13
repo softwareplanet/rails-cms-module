@@ -92,6 +92,8 @@ module Cms
         parsed_seo_tags.keywords = params[:keywords] ? params[:keywords] : ''
         parsed_seo_tags.description = params[:description] ? params[:description] : ''
         layout = Source.build(:type => SourceType::LAYOUT, :name => name)
+        layout.seed!
+        layout.flash!
         hash['layout'] = layout
         hash['css'] =  Source.build(:type => SourceType::CSS, :target => layout, :name => name + '.scss')
         hash['seo'] = Source.build(:type => SourceType::SEO, :target => layout, :name => name, :data => parsed_seo_tags.get_data)

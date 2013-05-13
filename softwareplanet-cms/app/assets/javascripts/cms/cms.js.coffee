@@ -106,15 +106,14 @@ $(document).ready ->
 
 # UTIL FUNCTIONS
 
-window.theme_select = (theme) ->
+window.theme_select = (theme, that) ->
   $(".haml-tab .themes-dropdown .dropdown-menu a").removeClass "dropdown-selected"
-  $(this).addClass "dropdown-selected"
+  $(that).addClass "dropdown-selected"
   editorManager.editors[0].editor.code_editor.setOption "theme", theme
 
-window.lang_select = (lang) ->
+window.lang_select = (lang, that) ->
   $(".haml-tab .languages-dropdown .dropdown-menu a").removeClass "dropdown-selected"
-  $(this).addClass "dropdown-selected"
-  console.log(lang)
+  $(that).addClass "dropdown-selected"
   editorManager.editors[0].editor.code_editor.setOption "mode", lang
 
 window.SwitchTo = (panel) ->
