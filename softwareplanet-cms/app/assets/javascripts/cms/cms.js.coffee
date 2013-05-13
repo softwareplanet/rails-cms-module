@@ -19,6 +19,7 @@ $(document).ready ->
 
 # Handlers
 $(document).ready ->
+
 # do not remove next 5 lines!...or remove...
 #  $('.icon').hover (->
 #    tooltip_text = $(this).data("tooltip")
@@ -75,6 +76,7 @@ $(document).ready ->
     theme = $(this).data("theme")
     editorManager.editors[0].editor.code_editor.setOption "theme", theme
 
+
   $("body").click ->
 
 #  $('.edit').click  ->
@@ -103,6 +105,17 @@ $(document).ready ->
     SwitchTo(".page-properties")
 
 # UTIL FUNCTIONS
+
+window.theme_select = (theme) ->
+  $(".haml-tab .themes-dropdown .dropdown-menu a").removeClass "dropdown-selected"
+  $(this).addClass "dropdown-selected"
+  editorManager.editors[0].editor.code_editor.setOption "theme", theme
+
+window.lang_select = (lang) ->
+  $(".haml-tab .languages-dropdown .dropdown-menu a").removeClass "dropdown-selected"
+  $(this).addClass "dropdown-selected"
+  console.log(lang)
+  editorManager.editors[0].editor.code_editor.setOption "mode", lang
 
 window.SwitchTo = (panel) ->
   $(panel).show()
