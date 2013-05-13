@@ -13,6 +13,8 @@ group :assets do
 end
 gem 'jquery-rails'
 
+gem 'proxylocal'
+
 gem 'codemirror-rails' 
 gem 'aloha-rails' 
 #=   CMS REQUIREMENTS END   =#

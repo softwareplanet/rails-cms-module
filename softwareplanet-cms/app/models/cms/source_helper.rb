@@ -53,6 +53,7 @@ module Cms
         SourceSettings.new.parse(settings)
       end
 
+=begin
       def get_source_seo(source_id)
         source = Source.get_source_by_id(source_id)
         seo = source.get_source_attach(SourceType::SEO)
@@ -80,25 +81,23 @@ module Cms
         end
         hash
       end
+=end
 
+      # Creates layout, default settings file and css (.scss)
       def create_page(params)
-        hash ={}
         name = params[:name]
-        parsed_settings = SourceSettings.new
-        parsed_settings.publish = params[:publish] == 'on' ? 0 : 1
-        parsed_settings.display = params[:display] =='on' ? 0 : 1
-        parsed_seo_tags = SourceSEO.new
-        parsed_seo_tags.title = params[:title] ? params[:title] : ''
-        parsed_seo_tags.keywords = params[:keywords] ? params[:keywords] : ''
-        parsed_seo_tags.description = params[:description] ? params[:description] : ''
+        settings_builder = SourceSettings.new
+        settings_builder.publish = params[:publish] == 'on' ? 0 : 1
+        settings_builder.display = params[:display] =='on' ? 0 : 1
+        settings_builder.title = params[:title].to_s
+        settings_builder.keywords = params[:keywords].to_s
+        settings_builder.description = params[:description].to_s
+
         layout = Source.build(:type => SourceType::LAYOUT, :name => name)
-        layout.seed!
-        layout.flash!
-        hash['layout'] = layout
-        hash['css'] =  Source.build(:type => SourceType::CSS, :target => layout, :name => name + '.scss')
-        hash['seo'] = Source.build(:type => SourceType::SEO, :target => layout, :name => name, :data => parsed_seo_tags.get_data)
-        hash['settings'] = Source.build(:type => SourceType::SETTINGS, :target => layout, :name => name, :data => parsed_settings.get_data)
-        hash
+        settings_file = Source.build(:type => SourceType::SETTINGS, :name => name, :target => layout)
+        settings_builder.write_source_settings(settings_file)
+        Source.build(:type => SourceType::CSS, :name => name + '.scss', :target => layout)
+        layout
       end
     end
 

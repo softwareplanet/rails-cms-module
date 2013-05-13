@@ -1,18 +1,15 @@
 require_dependency "cms/application_controller"
+
 module Cms
   class SourceManagerController < ApplicationController
-
     protect_from_forgery :except => [:upload]
 
     before_filter :admin_access
     before_filter :check_aloha_enable
 
-    # Display sources manage page
+    # Show list of all sources, 'structure' panel:
     def index
-      #@img
-      @layouts = Source.where :type => SourceType::LAYOUT
-      #@contents = Source.where(:type => SourceType::CONTENT).reverse
-      #@images = Source.where :type => SourceType::IMAGE
+      @layouts = Source.where(:type => SourceType::LAYOUT)
     end
 
     # GET /source_manager/new
@@ -21,19 +18,17 @@ module Cms
     end
 
     # POST /source_manager
+    # Create new layout with specified settings. Layout name should be not empty and unique.
     def create
-      name = params[:name]
-      if name.blank?
-        @message = I18n.t('create_layout_form.blank_address')
-      elsif !Source.find_source_by_name_and_type(name, SourceType::LAYOUT).blank?
-        @message = I18n.t('create_layout_form.wrong_address')
-      else
-        @source = Source.create_page(params)
-        @layout = @source['layout']
-        render 'create'
-        return
+      layout_name = params[:name]
+      begin
+        raise I18n.t('create_layout_form.blank_address') if layout_name.blank?
+        raise I18n.t('create_layout_form.wrong_address') if Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).any?
+      rescue => error
+        render :js => "alert('#{@message}');" and return
       end
-      render :js => "alert('#{@message}');"
+      @layout = Source.create_page(params)
+      render 'create'
     end
 
     def edit_source
@@ -120,11 +115,11 @@ module Cms
     end
 
     def save_properties
-      @layout_name = params[:id]
-      title = params[:title]
-      @address = params[:url]
+      layout_id = params[:id]
+      address = params[:url]
       no_show = params[:no_show]
       no_publish = params[:no_publish]
+      title = params[:title]
       keywords = params[:keywords]
       description = params[:description]
 
@@ -283,6 +278,9 @@ module Cms
       end
     end
 
+    #
+    #
+    #
     def panel_structure
       @activity = params[:activity]
       @object = params[:object]
