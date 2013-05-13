@@ -1,29 +1,7 @@
-- @layouts.each do |layout|
-  .droppable.draggable
-    = render 'layout', :layout => layout
+%ul#sortable.layouts-list
+  - @layouts.each do |layout|
+    %li
+      = render 'layout', :layout => layout
 
 :javascript
-  var drop_area = "aa";
-  var drag_item = "bb";
-  $('.draggable').draggable({
-    axis: "y",
-    revert: true,
-    start: function() {
-      $(this).addClass('layout-drag');
-    },
-    drag: function() {
-    },
-    stop: function() {
-      $(this).removeClass('layout-drag');
-    }
-  });
-  $('.droppable').droppable({
-    accept: ".draggable",
-    activeClass: "ui-state-hover",
-    hoverClass: "ui-state-active",
-    drop: function( event, ui ) {
-      drop_area = this;
-      drag_item = ui.draggable;
-      structure_drag_and_drop(drag_item, drop_area);
-    }
-  });
+  $('#sortable').sortable();

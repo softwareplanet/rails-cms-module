@@ -22,8 +22,8 @@ config/*.yml
 /data_source/compiled
 /softwareplanet-cms/test/data_source_test/
 
-# Documentation compiled sources
-#/softwareplanet-cms/guide/compiled
+# Test results
+/softwareplanet-cms/test/data_css_test
 
 
 

@@ -916,32 +916,10 @@ body.cms {
 .CodeMirror-lines {
 }
 
-/* Layout List, dragging */
+/* Layout List, sortable */
 ul.layouts-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
   margin-bottom: 10px;
-}
-.layout-drag {
-  color: black!important;
-  background: #4b82c3 !important;
-  opacity: 0.7;
-  z-index: 1000;
-}
-.layout-drop-placeholder {
-  height: 45px;
-  background: #76ff5f;
-}
-.layout-child-placeholder {
-  height: 25px;
-  background: rgba(212, 212, 212, 0.79);
-  color: black;
-  text-align: center;;
-
-}
-.ui-state-hover {
-}
-.ui-state-active {
-  background: green;
 }
