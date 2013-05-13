@@ -87,7 +87,7 @@
   .title
     Свойства страницы
   .line
-  = form_tag url_for( :controller => "source_manager", :action => "save_properties", :method => "post" ), :id => "properties_form", :style => 'padding: 10px;', :remote => true do
+  = form_tag url_for( :controller => "source_manager", :action => "update_properties", :method => "post" ), :id => "properties_form", :style => 'padding: 10px;', :remote => true do
     %fieldset
       %input{:type => "hidden", :name => "id"}
       %label Адрес / Имя

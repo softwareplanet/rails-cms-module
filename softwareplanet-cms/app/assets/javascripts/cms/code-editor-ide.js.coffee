@@ -89,7 +89,7 @@ class window.CodeEditorIDE
   getRequestSource: (id) ->
     request_json = {}
     request_json['id'] =  id
-    $.post('/source_manager/edit_source/', request_json )
+    $.post('/source_manager/edit_source_code/', request_json )
 
   saveSourceSimple: () ->
     request_json = {}
@@ -97,14 +97,14 @@ class window.CodeEditorIDE
     request_json["url"] = @url
     request_json["public"] = 1
     request_json["model"] = {source: this.getSourceWithSeparator(), name: "test"}
-    $.post '/source_manager/update_source/', request_json
+    $.post '/code_manager/update_source_code/', request_json
 
   saveSource: (name) ->
     this.setSourceName(name) unless name is undefined
     request_json = {}
     request_json["id"] = @source_id
     request_json["data"] = this.getSourceWithSeparator()
-    $.post '/source_manager/update_source/', request_json
+    $.post '/code_manager/update_source_code/', request_json
 
   deleteSourceHelper: (id) ->
     request_json = {}

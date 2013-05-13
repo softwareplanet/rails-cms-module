@@ -3,7 +3,6 @@ require_dependency "cms/application_controller"
 module Cms
   class SourceManagerController < ApplicationController
     protect_from_forgery :except => [:upload]
-
     before_filter :admin_access
     before_filter :check_aloha_enable
 
@@ -12,12 +11,6 @@ module Cms
       @layouts = Source.where(:type => SourceType::LAYOUT)
     end
 
-    # GET /source_manager/new
-    def new
-      render :nothing => true
-    end
-
-    # POST /source_manager
     # Create new layout with specified settings. Layout name should be not empty and unique.
     def create
       layout_name = params[:name]
@@ -31,90 +24,13 @@ module Cms
       render 'create'
     end
 
-    def edit_source
-      @sourceObject = Source.find_by_id(params[:id])
-    end
+    def update_properties
+      layout_id = params[:id]
+      @layout = Source.update_page(layout_id, params)
 
-    # PUT /souSource.find_source_by_name_and_type("green", SourceType::LAYOUT).blank?rce_manager/1
-    def update_source
-      #fix me!
-      @sourceObject = Source.find_by_id(params[:id])
-      unless @sourceObject.nil?
-        # rename
-        @sourceObject.name = params[:name] unless params[:name].nil?
-        # data change
-        @sourceObject.data = params[:data] unless params[:data].nil?
-        @sourceObject.flash!
-      end
-    end
 
-    # DELETE /page_layouts/1
-    def destroy
-      source = Source.get_source_by_id(params[:id])
-      source.eliminate! unless source.blank?
-    end
 
-    def upload
-      uploaded_io = params[:Filedata]
-      render :nothing => true and return unless uploaded_io
-      to_dir = params[:to_dir]
-      uploaded_filename = uploaded_io.original_filename.downcase
-
-      basename = File.basename(uploaded_filename, '.*')
-      extension = File.extname(uploaded_filename)[1..-1]
-      appendix = 0
-      get_source = Source.where(:name => basename, :path => to_dir)
-
-      unless get_source.empty?
-          while appendix < 1000
-            appendix+=1
-            get_source = Source.where(:name => basename + appendix.to_s, :path => to_dir)
-            break unless !get_source.empty?
-          end
-          raise "File with such name already exists!" if appendix == 1000
-          basename = basename + appendix.to_s
-      end
-      @img_src = Source.new(:type => SourceType::IMAGE, :name => basename, :extension => extension, :path => to_dir)
-      @img_src.data = uploaded_io.read
-      @img_src.save!
-      session[:last_image_name] = @img_src.name
-      @image = Source.find_by_id(@img_src.get_id)
-      str = 'public/'
-      line = @image.path
-      @image.image_path = line[line.index(str) + str.size .. -1]
-    end
-
-    def upload_success
-      @last_image_name = session[:last_image_name]
-      session[:last_image_name] = nil
-      @img = Source.find_by_name(@last_image_name).first
-    end
-
-    def delete_image
-      name, extension = params[:full_name].split('.')
-      image_dir = 'public/'
-      path = image_dir + params[:path]
-      @source = nil
-      @sources = Source.find_by_name_and_extension(name, extension).select do |source|
-        if source.path == path
-          @source = source
-        end
-      end
-      @source.delete
-    end
-
-    def properties
-
-    end
-
-    def reorder_layouts
-      items = params[:items]
-      list_id = params[:list_id]
-      Source.reorder(items, list_id)
-      render :nothing => true
-    end
-
-    def save_properties
+=begin
       layout_id = params[:id]
       address = params[:url]
       no_show = params[:no_show]
@@ -179,12 +95,78 @@ module Cms
         #  render :js => 'alert("' +  I18n.t('save_layout_form.wrong') + '");'
         #  return
         end
-        render 'save_properties'
+        render 'update_properties'
         return
       end
       render :js => 'alert("' +  @message + '");'
+=end
     end
 
+    #
+    def destroy
+      source = Source.get_source_by_id(params[:id])
+      source.eliminate! unless source.blank?
+    end
+
+    def upload
+      uploaded_io = params[:Filedata]
+      render :nothing => true and return unless uploaded_io
+      to_dir = params[:to_dir]
+      uploaded_filename = uploaded_io.original_filename.downcase
+
+      basename = File.basename(uploaded_filename, '.*')
+      extension = File.extname(uploaded_filename)[1..-1]
+      appendix = 0
+      get_source = Source.where(:name => basename, :path => to_dir)
+
+      unless get_source.empty?
+          while appendix < 1000
+            appendix+=1
+            get_source = Source.where(:name => basename + appendix.to_s, :path => to_dir)
+            break unless !get_source.empty?
+          end
+          raise "File with such name already exists!" if appendix == 1000
+          basename = basename + appendix.to_s
+      end
+      @img_src = Source.new(:type => SourceType::IMAGE, :name => basename, :extension => extension, :path => to_dir)
+      @img_src.data = uploaded_io.read
+      @img_src.save!
+      session[:last_image_name] = @img_src.name
+      @image = Source.find_by_id(@img_src.get_id)
+      str = 'public/'
+      line = @image.path
+      @image.image_path = line[line.index(str) + str.size .. -1]
+    end
+
+    def upload_success
+      @last_image_name = session[:last_image_name]
+      session[:last_image_name] = nil
+      @img = Source.find_by_name(@last_image_name).first
+    end
+
+    def delete_image
+      name, extension = params[:full_name].split('.')
+      image_dir = 'public/'
+      path = image_dir + params[:path]
+      @source = nil
+      @sources = Source.find_by_name_and_extension(name, extension).select do |source|
+        if source.path == path
+          @source = source
+        end
+      end
+      @source.delete
+    end
+
+    def properties
+
+    end
+
+    def reorder_layouts
+      items = params[:items]
+      list_id = params[:list_id]
+      Source.reorder(items, list_id)
+      render :nothing => true
+    end
 
     def rename_image
       @path =  'public/' + params[:path]
@@ -293,37 +275,8 @@ module Cms
           case @object
             when 'edit_properties'
               @layout = Source.find_by_id(params['layout_id'])
-              @settings = Source.get_source_settings(params[:layout_id])
-              @seo = @layout.get_source_attach(SourceType::SEO)
-              @seo_tags = Source.parse_seo_tags(@seo)
-
-=begin
-              @layout_id = params[:layout_id]
-              #@seo, @path = Source.quick_build_seo_with_path(@layout_id)
-              @page_name = Source.quick_get_layout_name_by_id(@layout_id)
-              #no_show = params[:no_show]
-              @no_publish = @layout_id.match('pre1-id-').blank?
-              @seo_id = @layout_id.gsub(/pre(1|8)-id-/, '1-tar-')
-              @seo = Source.quick_attach(SourceType::LAYOUT,  @page_name, SourceType::SEO)
-              @path = @seo.get_source_folder + @seo.name
-
-              File.open(@path, "r").each_line  do |line|
-                line = line.downcase()
-                if line.slice('title')
-                  str1 = "<title>"
-                  str2 = "</title>"
-                  @title = line[line.index(str1) + str1.size .. line.index(str2)-1]
-                end
-                if line.slice('keywords')
-                  str = "content=\""
-                  @keywords = line[line.index(str) + str.size .. -5]
-                end
-                if line.slice('description')
-                  str = "content=\""
-                  @description = line[line.index(str) + str.size .. -5]
-                end
-              end
-=end
+              @settings_file = @layout.get_source_attach(SourceType::SETTINGS)
+              @settings = SourceSettings.new.read_source_settings(@settings_file)
             when 'edit_component'
               component_id = params[:component_id]
               @component = Source.find_by_id(component_id)
@@ -436,5 +389,11 @@ module Cms
       end
       render :js => 'alert("' +  @message + '");'
     end
+
+    # GET /source_manager/new
+    def new
+      render :nothing => true
+    end
+
   end
 end

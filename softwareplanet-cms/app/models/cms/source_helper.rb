@@ -53,62 +53,48 @@ module Cms
         SourceSettings.new.parse(settings)
       end
 
-=begin
-      def get_source_seo(source_id)
-        source = Source.get_source_by_id(source_id)
-        seo = source.get_source_attach(SourceType::SEO)
-        seo = source.create_default_seo if seo.nil?
-        SourceSEO.new.parse(seo)
-      end
 
-      def read_seo_values(seo_source)
-        hash = {}
-        File.open(seo_source.get_source_filepath, "r").each_line  do |line|
-          line = line.downcase()
-          if line.slice('title')
-            str1 = "<title>"
-            str2 = "</title>"
-            hash['title'] = line[line.index(str1) + str1.size .. line.index(str2)-1]
-          end
-          if line.slice('keywords')
-            str = "<meta name='keywords' content='"
-            hash['keywords'] = line[line.index(str) + str.size .. -5]
-          end
-          if line.slice('description')
-            str = "<meta name='description' content='"
-            hash['description'] = line[line.index(str) + str.size .. -4]
-          end
-        end
-        hash
+      # Before filter method, to pre-process incoming parameters
+      def prepare_parameters(params)
+        params[:publish] = params[:publish] == 'on' ? 0 : 1
+        params[:display] = params[:display] =='on' ? 0 : 1
+        params
       end
-=end
 
       # Creates layout, default settings file and css (.scss)
       def create_page(params)
         name = params[:name]
-        settings_builder = SourceSettings.new
-        settings_builder.publish = params[:publish] == 'on' ? 0 : 1
-        settings_builder.display = params[:display] =='on' ? 0 : 1
-        settings_builder.title = params[:title].to_s
-        settings_builder.keywords = params[:keywords].to_s
-        settings_builder.description = params[:description].to_s
-
         layout = Source.build(:type => SourceType::LAYOUT, :name => name)
-        settings_file = Source.build(:type => SourceType::SETTINGS, :name => name, :target => layout)
-        settings_builder.write_source_settings(settings_file)
         Source.build(:type => SourceType::CSS, :name => name + '.scss', :target => layout)
+        settings_file = Source.build(:type => SourceType::SETTINGS, :name => name, :target => layout)
+
+        settings_builder = SourceSettings.new.elect_params( prepare_parameters(params) )
+        settings_builder.write_source_settings(settings_file)
         layout
       end
-    end
 
-    def create_default_settings
-      Source.build(:type => SourceType::SETTINGS, :name => self.get_source_name, :data => SourceSettings.default_settings.to_s, :target => self)
-    end
+      # Updates layout name and layout settings
+      def update_page(id, params)
+        layout = Source.get_source_by_id(id)
+        new_name = params[:name]
+        layout.rename_source(new_name) if new_name != layout.get_source_name
 
-    def create_default_seo
-      Source.build(:type => SourceType::SEO, :name => self.get_source_name, :data => SourceSEO.default_seo, :target => self)
-    end
+        settings_file = layout.get_source_attach(SourceType::SETTINGS)
+        settings_builder = SourceSettings.new.elect_params( prepare_parameters(params) )
+        settings_builder.write_source_settings(settings_file)
+        layout
+      end
 
-  extend ClassMethods
+      def create_default_settings
+        Source.build(:type => SourceType::SETTINGS, :name => self.get_source_name, :data => SourceSettings.default_settings.to_s, :target => self)
+      end
+
+      def create_default_seo
+        Source.build(:type => SourceType::SEO, :name => self.get_source_name, :data => SourceSEO.default_seo, :target => self)
+      end
+
+    extend ClassMethods
+    end#ClassMethods
+
   end
 end
