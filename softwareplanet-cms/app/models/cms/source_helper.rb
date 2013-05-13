@@ -20,6 +20,30 @@ module Cms
         source.attach_to(parent) if parent
         source
       end
+      #
+      #
+      def build_default_order_settings(parent_layout=nil)
+        order_settings = Source.build(:name => 'order', :type => SourceType::LAYOUTS_ORDER, :parent => layout)
+        layouts = Source.where(:type => SourceType::LAYOUTS_ORDER)
+        top_level_layouts = layouts.select{|layout| layout.target == nil}
+      end
+      #
+      #
+      def get_order_settings(parent_source, source_type)
+        if parent_source == nil
+          order_settings = Source.find_by_name_and_type('order'+source_type.to_s, SourceType::LAYOUTS_ORDER)
+          if order_settings.nil?
+            build_default_order_settings
+          end
+
+        end
+      end
+      # Reorder list of layouts at some structure level.
+      # If parent is empty, reorder on top level
+      def reorder(items, list_id)
+        #order_settings = get_order_settings(list_id, SourceType::LAYOUT)
+        #TODO: reorder
+      end
       # Read source settings from settings file
       # If settings file not exists, it will be created with default settings
       def get_source_settings(source_id)
@@ -67,10 +91,11 @@ module Cms
         parsed_seo_tags.title = params[:title] ? params[:title] : ''
         parsed_seo_tags.keywords = params[:keywords] ? params[:keywords] : ''
         parsed_seo_tags.description = params[:description] ? params[:description] : ''
-        hash['layout'] = Source.build(:type => SourceType::LAYOUT, :name => name)
-        hash['css'] =  Source.build(:type => SourceType::CSS, :target => @source, :name => name + '.scss')
-        hash['seo'] = Source.build(:type => SourceType::SEO, :target => @source, :name => name, :data => parsed_seo_tags.get_data)
-        hash['settings'] = Source.build(:type => SourceType::SETTINGS, :target => @source, :name => name, :data => parsed_settings.get_data)
+        layout = Source.build(:type => SourceType::LAYOUT, :name => name)
+        hash['layout'] = layout
+        hash['css'] =  Source.build(:type => SourceType::CSS, :target => layout, :name => name + '.scss')
+        hash['seo'] = Source.build(:type => SourceType::SEO, :target => layout, :name => name, :data => parsed_seo_tags.get_data)
+        hash['settings'] = Source.build(:type => SourceType::SETTINGS, :target => layout, :name => name, :data => parsed_settings.get_data)
         hash
       end
     end

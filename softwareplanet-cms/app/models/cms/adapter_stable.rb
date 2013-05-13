@@ -44,7 +44,6 @@ module Cms
       def build(attributes={})
         raise ArgumentError, "expected an attributes Hash, got #{attributes.inspect}" unless attributes.is_a?(Hash)
         source_instance = Source.new(attributes)
-        raise 'Source file with such name already exists!' if File.exists?(source_instance.get_source_filepath)
         if source_instance.target
           source_instance.name = source_instance.associated_name(source_instance.target)
         end
@@ -58,7 +57,7 @@ module Cms
           set_data(source_instance.data)
         rescue
         end
-
+        raise 'Source file with such name already exists!' if File.exists?(source_instance.get_source_filepath)
         source_instance.flash!
         source_instance
       end

@@ -41,6 +41,7 @@ Cms::Engine.routes.draw do
       post "create_folder"
       post "create_component"
       post "save_component"
+      post "reorder_layouts"
 
       put "rename_image"
 

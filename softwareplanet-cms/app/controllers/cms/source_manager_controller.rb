@@ -112,6 +112,13 @@ module Cms
 
     end
 
+    def reorder_layouts
+      items = params[:items]
+      list_id = params[:list_id]
+      Source.reorder(items, list_id)
+      render :nothing => true
+    end
+
     def save_properties
 
       @layout_name = params[:id]

@@ -234,22 +234,21 @@ window.component_properties = (obj) ->
   parent = $(obj).parents('.component-row')
   id = $(parent).data('component_id')
   request_json = {
-  component_id: id,
-  object: 'edit_component',
-  activity: 'load'
+    component_id: id,
+    object: 'edit_component',
+    activity: 'load'
   }
   $.ajax
     url: '/source_manager/panel_structure'
     type: 'POST',
     data: request_json
 
-
-$(document).ready ->
-#  $('.layout-row').draggable({revert: "invalid",helper:'clone',cursor: "move"});
-#  $('.content').sortable({connectWith: "div"});
-#  $(".panel_structure").droppable
-#    activeClass: "ui-state-hover"
-#    hoverClass: "ui-state-active"
-#    drop: (event, ui) ->
-##      alert 'finish him!'
-#      false
+window.reorder_layouts = (items, list_id) ->
+  request_json = {
+    items: items,
+    list_id: list_id
+  }
+  $.ajax
+    url: '/source_manager/reorder_layouts'
+    type: 'POST',
+    data: request_json

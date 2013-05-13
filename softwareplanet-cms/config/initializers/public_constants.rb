@@ -18,6 +18,7 @@ module Cms
       SourceType::SETTINGS    => "#{SOURCE_FOLDER}/settings/",
       SourceType::CONTENT   => "#{SOURCE_FOLDER}/contents/",
       SourceType::HIDDEN_LAYOUT   => "#{SOURCE_FOLDER}/hidden_layouts/",
+      SourceType::LAYOUTS_ORDER   => "#{SOURCE_FOLDER}/layouts_order/",
       SourceType::SEO       => "#{SOURCE_FOLDER}/seotags/",
       SourceType::UNDEFINED => "#{SOURCE_FOLDER}/others/",
       SourceType::COMPILED => "#{SOURCE_FOLDER}/compiled/",
@@ -31,6 +32,7 @@ module Cms
       SourceType::SETTINGS    => "#{TEST_SOURCE_FOLDER}/settings/",
       SourceType::CONTENT   => "#{TEST_SOURCE_FOLDER}/contents/",
       SourceType::HIDDEN_LAYOUT   => "#{TEST_SOURCE_FOLDER}/hidden_layouts/",
+      SourceType::LAYOUTS_ORDER   => "#{TEST_SOURCE_FOLDER}/layouts_order/",
       SourceType::SEO       => "#{TEST_SOURCE_FOLDER}/seotags/",
       SourceType::UNDEFINED => "#{TEST_SOURCE_FOLDER}/others/",
       SourceType::COMPILED =>  "#{TEST_SOURCE_FOLDER}/compiled/"
