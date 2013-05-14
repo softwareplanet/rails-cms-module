@@ -15,12 +15,12 @@ module Cms
       basename = File.basename(uploaded_filename, '.*')
       extension = File.extname(uploaded_filename)[1..-1]
       appendix = 0
-      get_source = Source.where(:name => basename, :path => to_dir)
+      get_source = Source.where(:name => basename+'.'+extension, :path => to_dir)
 
       unless get_source.empty?
         while appendix < 1000
           appendix+=1
-          get_source = Source.where(:name => basename + appendix.to_s, :path => to_dir)
+          get_source = Source.where(:name => basename + appendix.to_s + '.' + extension, :path => to_dir)
           break unless !get_source.empty?
         end
         raise "File with such name already exists!" if appendix == 1000
