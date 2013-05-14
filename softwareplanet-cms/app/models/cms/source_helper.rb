@@ -98,6 +98,36 @@ module Cms
         hash['settings'] = Source.build(:type => SourceType::SETTINGS, :target => layout, :name => name, :data => parsed_settings.get_data)
         hash
       end
+
+      def load_gallery(params)
+        hash ={}
+        current_path = params[:path] ? params[:path] : SOURCE_FOLDERS[SourceType::IMAGE]
+
+        hash['breadcrumbs'] = params[:path] ?  params[:path] : '/'
+
+        hash['folders'] = []
+        Dir.glob(current_path + '*').each do |file|
+          if File.directory?(file)
+            dir = OpenStruct.new
+            dir.name = File.basename(file)
+            dir.path = current_path
+            dir.size = Dir.glob(file + '/*').size
+            hash['folders'].push(dir)
+          end
+        end
+
+        hash['images'] = []
+        sources = Source.find_source_by_path(current_path)
+        sources.each do |source|
+          filepath = source.get_source_filepath
+          hash['images'].push(source) unless File.directory?(filepath)
+        end
+        hash
+      end
+
+      def create_folder
+
+      end
     end
 
     def create_default_settings

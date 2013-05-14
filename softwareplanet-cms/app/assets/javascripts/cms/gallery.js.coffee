@@ -22,7 +22,7 @@ window.renameOnEnterKey = (image) ->
 
 window.renameFolderOnEnterKey = (input) ->
   if window.event.keyCode == 13
-    rename_folder_finish input
+    renameFolder input
 
 window.rename_finish = (obj) ->
   image = $(obj).parent()
@@ -41,7 +41,7 @@ window.rename_finish = (obj) ->
 
 
 # image deleting
-window.delete_image = (this_ptr) ->
+window.deleteImage = (this_ptr) ->
   if confirm('Are you sure to delete this?')
 #    console.log $(this_ptr).parent().data('full-name')
     image = $(this_ptr).parent()
@@ -61,7 +61,7 @@ window.on_gallery_name_keyup = (event, this_ptr) ->
       data: {id: img_id, name: img_name}
     $(this_ptr).blur()
 
-window.rename_image = (edit_item) ->
+window.renameImage = (edit_item) ->
   image = $(edit_item).parent().parent()
   input =  $(image).find("input")
   name = $(image).attr('data-name')
@@ -73,26 +73,26 @@ $(document).ready ->
     request_json =
       activity: 'click',
       object: 'add_folder',
-      path:  $('.panel_gallery .content').attr('data-path')
+      path:  $('.panel_gallery .content .breadcrumbs').attr('data-path')
     $.ajax
       url: "/source_manager/panel_gallery"
       type: "POST"
       data: request_json
 
-window.open_folder= (obj) ->
+window.openFolder= (obj) ->
   folder = $(obj).parent()
   name = $(folder).attr('data-name')
   path = $(folder).attr('data-path')
   $('.panel_gallery .content').attr('data-path', path + name + '/')
   $('.icon-gallery').click()
 
-window.rename_folder = (edit_icon) ->
+window.editFolderName = (edit_icon) ->
   folder = $(edit_icon).parent().parent()
   input = $(folder).find("input")
   input.css("display", "block").focus()
   input.val $(folder).attr("data-name")
 
-window.rename_folder_finish = (input) ->
+window.renameFolder = (input) ->
   folder = $(input).parent()
   path = $(folder).attr('data-path')
   old_name = $(folder).attr('data-name')
@@ -103,7 +103,6 @@ window.rename_folder_finish = (input) ->
     path: path
     new_name: new_name
     old_name: old_name
-  console.log request_json
   $.ajax
     url: "/source_manager/panel_gallery"
     type: "POST"

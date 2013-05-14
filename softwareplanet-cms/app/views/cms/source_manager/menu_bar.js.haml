@@ -16,7 +16,14 @@ $(panel_content).html("");
       - when 'components'
         $(panel_content).html("#{ escape_javascript(render(:partial => 'component', :collection => @components)) }");
       - when 'gallery'
-        $(panel_content).html("#{ escape_javascript(render(:partial => 'images')) }");
+        - @breadcrumb = @sources['breadcrumbs']
+        - @folders = @sources['folders']
+        - @images = @sources['images']
+        $(panel_content).html(
+        "#{ escape_javascript(render(:partial => 'breadcrumb', :object => @breadcrumb)) }" +
+        "#{ escape_javascript(render(:partial => 'folder', :collection => @folders)) }" +
+        "#{ escape_javascript(render(:partial => 'image', :collection => @images)) }"
+        );
       - else
         $(panel_content).html("<br>&nbsp;&nbsp;..nothing to show yet");
 

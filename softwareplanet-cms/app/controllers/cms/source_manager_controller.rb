@@ -225,39 +225,7 @@ module Cms
             when "components"
               @components = Source.where(:type => SourceType::CONTENT)
             when "gallery"
-              if params[:path]
-                @current_path = params[:path]
-              else
-                @current_path = SOURCE_FOLDERS[SourceType::IMAGE]
-              end
-              @images = Dir.glob(@current_path + "*.*")
-              @images.map!{|image_path| File.basename(image_path)}
-              #File@layouts.basename('/qwe/img.png')         =>  img.png
-              #File.basename('/qwe/img.png','.*')    =>  img
-              @result = []
-              str = 'public/'
-              @sources = Source.where :type => SourceType::IMAGE, :path => @current_path
-              @sources.each { |source|
-                @images.map { |image|
-                  if source.get_filename == image
-                    line = source.path
-                    source.image_path = line[line.index(str) + str.size .. -1]
-                    @result.push(source)
-                  end
-                }
-              }
-
-              @dirs = []
-              Dir.glob(@current_path + '*').each { |file|
-                if File.directory?(file)
-                  dir = OpenStruct.new
-                  dir.name = File.basename(file)
-                  dir.path = @current_path
-                  dir.size = Dir.glob(file + '/*').size
-                  @dirs.push(dir)
-                end
-              }
-              #render :nothing => true
+              @sources = Source.load_gallery(params)
           end
       end
     end
@@ -373,11 +341,8 @@ module Cms
               @dir.size = Dir.glob(folder_full_path + '/*').size
               puts 1
             when 'rename_folder'
-              @new_name = params[:new_name]
+              @new_filepath = Source.rename_dir(params)
               @old_name = params[:old_name]
-              @path = params[:path]
-              @new_full_path = Source.rename_dir(@path + @old_name, @new_name)
-              @new_path = File.dirname(@new_full_path) + '/'
           end
         when "load"
       end

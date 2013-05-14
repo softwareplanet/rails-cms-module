@@ -226,11 +226,9 @@ body.cms {
   float: left;
   width: 100%;
   z-index: 100;
-  //position: static;
   background-color: white;
   .header {
     background-color: white;
-    //margin-left: 100px;
     .title {
       color: #000000;
       margin-left: 46px;
@@ -316,6 +314,9 @@ body.cms {
       display: block;
     }
   }
+  .content > div {
+    float:left;
+  }
   .content {
     padding-top: 5px;
     font-size: 13px;
@@ -337,10 +338,8 @@ body.cms {
       .dir:hover {
         cursor: pointer;
       }
-      .count-image {
+      .count-source {
           position: absolute;
-          //width: 20px;
-          //height: 20px;
           z-index: 50;
           margin-left: 150px;
           font-size: 13px;
@@ -372,7 +371,8 @@ body.cms {
       width: 166px;
       margin-top:132px;
     }
-    .image_description {
+    .image_description,
+    .folder_description {
       line-height: 30px;
       text-align: left;
       max-height: 30px;
@@ -391,7 +391,8 @@ body.cms {
         opacity: 1;
       }
     }
-    .image_description:hover {
+    .image_description:hover,
+    .folder_description:hover {
       .edit_name {
         display: inline-block;
       }

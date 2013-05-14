@@ -68,7 +68,7 @@ module Cms
       if self.path.nil?
         @source_path = get_source_path
       else
-        @source_path = self.path + self.name + self.get_extension
+        @source_path = self.get_source_filepath
       end
       @size = "not detected"
       open(@source_path, "rb") do |fh|
@@ -230,7 +230,6 @@ module Cms
     end
 
     def self.mkdir(path, fname = 'folder')
-      #path = 'public/img/'
 
       raise('wrong name') unless !/\W/.match(fname)
 
@@ -249,11 +248,12 @@ module Cms
       end
     end
 
-    def self.rename_dir(old_path, fname)
-      raise('wrong name') unless !/\W/.match(fname)
-      new_path = Pathname.new(old_path).dirname.to_s + '/' + fname
-      FileUtils.mv(old_path, new_path) unless new_path == old_path
-      new_path
+    def self.rename_dir(params)
+      raise('wrong name') unless !/\W/.match(params[:new_name])
+      new_filepath = params[:path] + params[:new_name]
+      old_filepath = params[:path] + params[:old_name]
+      FileUtils.mv(old_filepath, new_filepath) unless new_filepath == old_filepath
+      new_filepath
     end
 
     def self.delete_dir(path)

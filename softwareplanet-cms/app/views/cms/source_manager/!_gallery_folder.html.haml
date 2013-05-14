@@ -1,7 +1,7 @@
 .gallery-folder{ 'data-path' => "#{@dir.path}" + "/", 'data-name' => "#{@dir.name}"}
   .delete_image{:onclick => "deleteFolder(this)"}
     x
-  .count-image
+  .count-source
     = @dir.size
   %input{:onfocusout => "rename_folder_finish(this)", :onkeypress => "renameFolderOnEnterKey(this)"}
   .dir{:onclick => 'open_folder(this)'}

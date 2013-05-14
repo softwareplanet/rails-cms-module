@@ -1,0 +1,13 @@
+- @folders.each do |folder|
+  .gallery-folder{ 'data-path' => "#{folder.path.chomp('/')+'/'}", 'data-name' => "#{folder.name}"}
+    .delete_image{:onclick => "deleteFolder(this)"}
+      x
+    .count-source
+      = folder.size
+    %input{:onfocusout => "renameFolder(this)", :onkeypress => "renameFolderOnEnterKey(this)"}
+    .dir{:onclick => 'open_folder(this)'}
+    .folder_description
+      #{truncate(folder.name, :length => 22, :omission => '...')}
+      .edit_name{:onclick => "editFolderName(this)"}
+
+

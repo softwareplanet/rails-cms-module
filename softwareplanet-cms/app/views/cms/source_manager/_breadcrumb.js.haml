@@ -1,0 +1,3 @@
+%ul.breadcrumbs{'data-path' => "#{breadcrumb}"}
+  - breadcrumb.split('/').each do |file|
+    %li #{file}/
