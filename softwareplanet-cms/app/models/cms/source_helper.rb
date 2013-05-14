@@ -41,7 +41,7 @@ module Cms
       # Reorder list of layouts at some structure level.
       # If parent is empty, reorder on top level
       def reorder(items, list_id)
-        #order_settings = get_order_settings(list_id, SourceType::LAYOUT)
+        order_settings = get_order_settings(list_id, SourceType::LAYOUT)
         #TODO: reorder
       end
       # Read source settings from settings file
@@ -120,17 +120,10 @@ module Cms
         settings_builder.write_source_settings(settings_file)
         layout
       end
-
-    end#ClassMethods
-    extend ClassMethods
+    end; extend ClassMethods
 
     def create_default_settings
       Source.build(:type => SourceType::SETTINGS, :name => self.get_source_name, :data => SourceSettings.default_settings.to_s, :target => self)
     end
-
-    def create_default_seo
-      Source.build(:type => SourceType::SEO, :name => self.get_source_name, :data => SourceSEO.default_seo, :target => self)
-    end
-
   end
 end

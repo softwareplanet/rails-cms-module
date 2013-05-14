@@ -8,7 +8,9 @@ module Cms
 
     def edit_source_code
       @sourceObject = Source.find_by_id(params[:id])
-      if @sourceObject.type == SourceType::CSS && @sourceObject.get_data.length > 0
+      @sourceObject.get_data
+
+      if @sourceObject.type == SourceType::CSS && @sourceObject.data.length > 0
         from = @sourceObject.data.index("\n")+1
         to = -@sourceObject.data.reverse.index("\n")-1
         @sourceObject.data = @sourceObject.data[from..to]

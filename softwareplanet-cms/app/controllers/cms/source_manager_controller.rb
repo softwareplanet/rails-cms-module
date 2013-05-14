@@ -24,6 +24,7 @@ module Cms
       render 'create'
     end
 
+    # Update properties of existed layout.
     def update_page_properties
       layout_id = params[:id]
       layout_name = params[:name]
@@ -38,14 +39,10 @@ module Cms
       @old_layout_id = layout_id
     end
 
-    #
+    # Destroy source by id.
     def destroy
       source = Source.get_source_by_id(params[:id])
       source.eliminate! unless source.blank?
-    end
-
-    def properties
-
     end
 
     def reorder_layouts
@@ -70,8 +67,6 @@ module Cms
           case @object
             when "structure"
               @layouts = Source.where(:type => SourceType::LAYOUT)
-              @hiddens = Source.where(:type => SourceType::HIDDEN_LAYOUT).collect{ |source| source.hidden = true; source }
-              @layouts |= @hiddens
             when "content"
               @layouts = Source.where(:type => SourceType::LAYOUT)
             when "components"

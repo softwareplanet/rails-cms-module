@@ -10,7 +10,7 @@
       start: function(event, ui) {ui.item.addClass('draggable-layout')},
       stop: function(event, ui) {ui.item.removeClass('draggable-layout')},
       update: function(event, ui) {
-        var items = $('.layouts-list li').map(function(){ return $(this).data("layout-id")} ).toArray();;
+        var items = $('.layouts-list .layout-row').map(function(){ return $(this).data("source_id")} ).toArray();
         var list_id = $('.layouts-list').data('list-id');
         reorder_layouts(items, list_id);
       }
