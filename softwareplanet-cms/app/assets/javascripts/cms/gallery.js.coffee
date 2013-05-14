@@ -5,9 +5,9 @@ $(document).ready ->
   # <input file> on change handler
   $("#image_src").change ->
     to_path = $('.panel_gallery .current_gallery_path').val()
+    console.log to_path
     $('#to_dir').val(to_path)
     console.log $('#to_dir').val()
-    console.log to_path
     $(this).parent().ajaxSubmit()
     $(this).parent().clearForm()
 
@@ -88,8 +88,15 @@ window.openFolder= (obj) ->
   folder = $(obj).parent()
   name = $(folder).attr('data-name')
   path = $(folder).attr('data-path')
-  $('.panel_gallery .content').attr('data-path', path + name + '/')
-  $('.icon-gallery').click()
+  request_json = {
+  object: 'gallery',
+  activity: 'load',
+  path: path + name + '/'
+  }
+  $.ajax
+    url: '/source_manager/menu_bar'
+    type: 'GET',
+    data: request_json
 
 window.editFolderName = (edit_icon) ->
   folder = $(edit_icon).parent().parent()

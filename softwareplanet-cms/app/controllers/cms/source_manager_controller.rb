@@ -77,6 +77,7 @@ module Cms
             when "components"
               @components = Source.where(:type => SourceType::CONTENT)
             when "gallery"
+              @images_folder = Cms::SOURCE_FOLDERS[SourceType::IMAGE]
               @sources = Source.load_gallery(params)
           end
       end

@@ -77,7 +77,7 @@ module Cms
         hash ={}
         current_path = params[:path] ? params[:path] : SOURCE_FOLDERS[SourceType::IMAGE]
 
-        hash['breadcrumbs'] = params[:path] ?  params[:path] : current_path
+        hash['breadcrumbs'] = current_path
 
         hash['folders'] = []
         Dir.glob(current_path + '*').each do |file|

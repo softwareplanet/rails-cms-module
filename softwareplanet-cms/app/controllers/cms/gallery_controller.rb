@@ -10,7 +10,7 @@ module Cms
       uploaded_io = params[:Filedata]
       render :nothing => true and return unless uploaded_io
       to_dir = params[:to_dir]
-      uploaded_filename = uploaded_io.original_filename.downcase
+      uploaded_filename = uploaded_io.original_filename
 
       basename = File.basename(uploaded_filename, '.*')
       extension = File.extname(uploaded_filename)[1..-1]
@@ -26,14 +26,10 @@ module Cms
         raise "File with such name already exists!" if appendix == 1000
         basename = basename + appendix.to_s
       end
-      @img_src = Source.new(:type => SourceType::IMAGE, :name => basename, :extension => extension, :path => to_dir)
+      @img_src = Source.new(:type => SourceType::IMAGE, :name => basename + '.' + extension, :path => to_dir)
       @img_src.data = uploaded_io.read
-      @img_src.save!
-      session[:last_image_name] = @img_src.name
-      @image = Source.find_by_id(@img_src.get_id)
-      str = 'public/'
-      line = @image.path
-      @image.image_path = line[line.index(str) + str.size .. -1]
+      @img_src.flash!
+      @images = [@img_src]
     end
 
     def upload_success
