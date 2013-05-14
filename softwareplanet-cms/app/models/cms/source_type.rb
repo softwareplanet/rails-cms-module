@@ -7,7 +7,6 @@ module Cms
     SEO = 4
     IMAGE = 6
     COMPILED = 7
-    HIDDEN_LAYOUT = 8
     SETTINGS = 9
     LAYOUTS_ORDER = 10
 
