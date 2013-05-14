@@ -85,16 +85,10 @@ module Cms
         layout
       end
 
-      def create_default_settings
-        Source.build(:type => SourceType::SETTINGS, :name => self.get_source_name, :data => SourceSettings.default_settings.to_s, :target => self)
-      end
+    end; extend ClassMethods
 
-      def create_default_seo
-        Source.build(:type => SourceType::SEO, :name => self.get_source_name, :data => SourceSEO.default_seo, :target => self)
-      end
-
-    extend ClassMethods
-    end#ClassMethods
-
+    def create_default_settings
+      Source.build(:type => SourceType::SETTINGS, :name => self.get_source_name, :data => SourceSettings.default_settings.to_s, :target => self)
+    end
   end
 end
