@@ -16,15 +16,15 @@ $(document).ready ->
     $("#image_src").click()
 
 
-window.renameOnEnterKey = (image) ->
+window.renameImageOnEnterKey = (image) ->
   if window.event.keyCode == 13
-    rename_finish image
+    renameImage image
 
 window.renameFolderOnEnterKey = (input) ->
   if window.event.keyCode == 13
     renameFolder input
 
-window.rename_finish = (obj) ->
+window.renameImage = (obj) ->
   image = $(obj).parent()
   old_image_name = $(image).attr('data-name')
   image_path = $(image).attr('data-path')
@@ -61,8 +61,8 @@ window.on_gallery_name_keyup = (event, this_ptr) ->
       data: {id: img_id, name: img_name}
     $(this_ptr).blur()
 
-window.renameImage = (edit_item) ->
-  image = $(edit_item).parent().parent()
+window.editImageName = (edit_item) ->
+  image = $(edit_item).parents('.image')
   input =  $(image).find("input")
   name = $(image).attr('data-name')
   input.val name

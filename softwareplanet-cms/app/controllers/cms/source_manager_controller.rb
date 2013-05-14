@@ -333,16 +333,11 @@ module Cms
               @name = params[:name]
               Source.delete_dir(@path + @name)
             when 'add_folder'
-              path =  params[:path]
-              folder_full_path = Source.mkdir(path)
-              @dir = OpenStruct.new
-              @dir.name = File.basename(folder_full_path)
-              @dir.path = File.dirname(folder_full_path)
-              @dir.size = Dir.glob(folder_full_path + '/*').size
-              puts 1
+              @directory = Source.create_folder(params)
             when 'rename_folder'
               @new_filepath = Source.rename_dir(params)
               @old_name = params[:old_name]
+
           end
         when "load"
       end

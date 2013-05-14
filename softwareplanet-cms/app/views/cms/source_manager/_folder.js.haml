@@ -1,4 +1,5 @@
 - @folders.each do |folder|
+
   .gallery-folder{ 'data-path' => "#{folder.path.chomp('/')+'/'}", 'data-name' => "#{folder.name}"}
     .delete_image{:onclick => "deleteFolder(this)"}
       x

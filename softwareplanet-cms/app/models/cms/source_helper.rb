@@ -125,8 +125,14 @@ module Cms
         hash
       end
 
-      def create_folder
-
+      def create_folder(params)
+        path = SOURCE_FOLDERS[SourceType::IMAGE].chomp('/') + params[:path]
+        filepath = Source.mkdir(path)
+        dir = OpenStruct.new
+        dir.name = File.basename(filepath)
+        dir.path = File.dirname(filepath)
+        dir.size = Dir.glob(filepath + '/*').size
+        dir
       end
     end
 

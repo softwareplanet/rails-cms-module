@@ -19,10 +19,10 @@ $(panel_content).html("");
         - @breadcrumb = @sources['breadcrumbs']
         - @folders = @sources['folders']
         - @images = @sources['images']
+        $(panel_content).before("#{ escape_javascript(render(:partial => 'breadcrumb', :object => @breadcrumb)) }");
         $(panel_content).html(
-        "#{ escape_javascript(render(:partial => 'breadcrumb', :object => @breadcrumb)) }" +
-        "#{ escape_javascript(render(:partial => 'folder', :collection => @folders)) }" +
-        "#{ escape_javascript(render(:partial => 'image', :collection => @images)) }"
+        "#{ escape_javascript(render(:partial => 'folder', :object => @folders)) }" +
+        "#{ escape_javascript(render(:partial => 'image', :object => @images)) }"
         );
       - else
         $(panel_content).html("<br>&nbsp;&nbsp;..nothing to show yet");
