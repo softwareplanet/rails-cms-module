@@ -50,12 +50,11 @@ module Cms
     def elect_params(params)
       params.each do |k, v|
         send("#{k}=", v) if SETTINGS_DEFINITION[0].include?(k)
-        puts 'sd'
       end
       self
     end
 
-    # Reads `source` settings from settings file and populate self instance variables
+    # Reads settings from `source` settings file and populate self instance variables
     def read_source_settings(source)
       source.load!
       result = YAML.load(source.data)

@@ -1,0 +1,10 @@
+$('#properties_form')[0].reset();
+$('.panel_properties').css('display', 'none');
+
+var layout_item = $('.panel_structure').find('.layout-row[data-source_id=#{@old_layout_id}]');
+layout_item.attr('data-source_id', '#{@layout.get_source_id}')
+layout_item.attr('data-source_name', '#{@layout.get_source_name}')
+layout_item.find('.name').html('#{@layout.get_source_name}')
+
+alert(" '#{I18n.t('update_page_properties.success')}' ");
+

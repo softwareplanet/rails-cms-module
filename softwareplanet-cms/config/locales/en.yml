@@ -29,6 +29,14 @@ en:
     wrong: Failed to create a page
     success: Successfully added
 
+  update_page_properties:
+    blank_page_name: Name cannot be blank
+    name_already_exist: Page name already exists
+    page_name_incorrect: Page name is incorrect
+    success: Page properties successfully updated
+
+
+
   create_component_form:
     blank_name: Name can not be empty
     wrong_name: The name has invalid characters

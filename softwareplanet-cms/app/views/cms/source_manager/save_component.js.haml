@@ -1,8 +1,9 @@
 $('#component_properties_form')[0].reset();
 $('.panel_component_properties').css('display', 'none');
 
-$('.panel_components').find('.component-row[data-component_id=#{@old_id}]').next().remove();
-$('.panel_components').find('.component-row[data-component_id=#{@old_id}]').remove();
-$('.panel_components .content').append("#{ escape_javascript(render(:partial => 'component', :object => @component)) }");
+var component_item = $('.panel_components').find('.component-row[data-component_id=#{@old_component_id}]')
+component_item.attr('data-component_id', '#{@component.get_source_id}')
+component_item.attr('data-name', '#{@component.get_source_name}')
+component_item.find('.name').html('#{@component.get_source_name}')
 
-alert('Данные успешно сохранены');
+alert(" '#{I18n.t('update_page_properties.success')}' ");

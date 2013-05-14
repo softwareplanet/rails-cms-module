@@ -87,11 +87,11 @@
   .title
     Свойства страницы
   .line
-  = form_tag url_for( :controller => "source_manager", :action => "update_properties", :method => "post" ), :id => "properties_form", :style => 'padding: 10px;', :remote => true do
+  = form_tag url_for( :controller => "source_manager", :action => "update_page_properties", :method => "post" ), :id => "properties_form", :style => 'padding: 10px;', :remote => true do
     %fieldset
       %input{:type => "hidden", :name => "id"}
       %label Адрес / Имя
-      %input.url{:placeholder => "Input layout url…", :type => "text", :name => "url"}
+      %input.url{:placeholder => "Input layout url…", :type => "text", :name => "name"}
       %br
       %label.checkbox
         %input{:id => "no_show", :type => "checkbox", :name => "no_show",}

@@ -28,6 +28,12 @@ ru:
     wrong: Не удалось создать страницу
     success: Успешно добавлено
 
+  update_page_properties:
+    blank_page_name: Имя не может быть пустым
+    name_already_exist: Страница с таким именем уже существует
+    page_name_incorrect: Имя страницы некорректное
+    success: Параметры успешно обновлены
+
   create_component_form:
     blank_name: Укажите имя компонента
     wrong_name: Имя имеет недопустимые символы
@@ -41,3 +47,4 @@ ru:
     component_exist: Компонент с таким именем уже существует
     error: Невозможно переименовать компонент
     success: Компонент успешно переименовано
+

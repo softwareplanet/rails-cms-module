@@ -163,8 +163,13 @@ module Cms
     end
 
     def rename_source(new_source_name)
-      attaches = get_source_attaches
-      !!File.rename(get_source_filepath, get_source_folder + new_source_name)
+      attaches = get_source_attaches || []
+      target = get_source_target
+      load!
+      File.delete(get_source_filepath)
+      self.name = new_source_name
+      flash!
+      self.attach_to(target) if target
       attaches.each do |at|
         at.attach_to(self)
       end
@@ -174,13 +179,19 @@ module Cms
     def get_source_attach(source_type)
       source_folder = (AdapterStable.get_rails_env == 'test' ? TEST_SOURCE_FOLDERS[source_type] : SOURCE_FOLDERS[source_type])
       source_path = Dir.glob(source_folder + "/**/*#{type.to_i}#{TARGET_DIVIDER}#{get_source_name}#{TARGET_DIVIDER}*").flatten.compact
-      source_path.length == 0  ? nil : AdapterStable.build_source(source_path[0])
+      return nil if source_path.length == 0
+      return AdapterStable.build_source(source_path[0]) if source_path.length == 1
+      sources = []
+      source_path.each do |path|
+        sources << AdapterStable.build_source(path)
+      end
+      sources
     end
 
     def get_source_attaches
       source_attaches = []
       source_attaches << SourceType.all.collect{ |source_type| get_source_attach(source_type[1]) }
-      source_attaches.flatten.compact
+      source_attaches.flatten.compact || []
     end
 
     def attach_to(target_instance)

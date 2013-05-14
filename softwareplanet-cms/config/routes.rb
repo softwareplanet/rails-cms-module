@@ -37,7 +37,7 @@ Cms::Engine.routes.draw do
       post "panel_components"
       post "panel_gallery"
       post "panel_settings"
-      post "update_properties"
+      post "update_page_properties"
       post "create_folder"
       post "create_component"
       post "save_component"

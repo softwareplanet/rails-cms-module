@@ -1,8 +1,0 @@
-$('#properties_form')[0].reset();
-$('.panel_properties').css('display', 'none');
-
-$('.panel_structure').find('.layout-row[data-source_id=#{@old_layout_id}]').next().remove();
-$('.panel_structure').find('.layout-row[data-source_id=#{@old_layout_id}]').remove();
-$('.panel_structure .content').append("#{ escape_javascript(render(:partial => 'layout', :locals => {:layout => @source })) }");
-
-alert('Данные успешно сохранены');
