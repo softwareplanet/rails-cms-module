@@ -1,0 +1,11 @@
+- image_size = @image.get_image_size[0].to_s + 'x' + @image.get_image_size[1].to_s
+- image_info = @image.get_source_name + ' ' + image_size
+image = $("div[data-name=\"#{params[:old_name]}\"][data-path=\"#{params[:path]}\"]");
+image.attr('id',"#{@new_id}");
+image.attr('title',"#{File.basename(@image.get_source_name)}");
+image.attr('data-name',"#{@image.get_source_name}");
+image.attr('data-path',"#{@image.get_source_filepath}");
+image.find('.gallery-image').attr('data-href', "#{@image.get_source_filepath.gsub('public/','')}");
+image.find('.gallery-image > img').attr('src', "#{@image.get_source_filepath.gsub('public/','')}");
+image.find('.image_description').attr('data-info', "#{image_info}");
+image.find('.image_description').html("#{truncate(image_info, :length => 22, :omission => '...')}"+'<div class="edit_name", onclick="editImageName(this)"></div>');

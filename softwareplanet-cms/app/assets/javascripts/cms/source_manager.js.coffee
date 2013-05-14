@@ -31,14 +31,14 @@ $(document).ready ->
   # Image Gallery upload:
 #  $("#file_upload").uploadify
     swf: window.uploadify_asset_path #<-from _popups partial
-    uploader : '/source_manager/upload.js'
+    uploader : '/gallery/upload.js'
     buttonText  : 'Add image!'
     #scriptData : {"<%= key = Rails.application.config.session_options[:key] %>" :"<%= cookies[key] %>", "<%= request_forgery_protection_token %>" : "<%= form_authenticity_token %>"}
     onUploadStart: (file) ->
       $(".modal-body").animate({scrollTop: $(".gallery-content").height()}, 800)
       $(".gallery-content").append("<div class='img-box spinner'><img src='http://top.rate.ru/images/ajax-loader.gif' class='spinner'></div>")
     onUploadSuccess: (file, data, response) ->
-      $.get "/source_manager/upload_success"
+      $.get "/gallery/upload_success"
 
   $(".collapse").collapse()
 
@@ -108,19 +108,12 @@ window.deleteSource = (type, id) ->
     type: "DELETE",
     data: request_json
 
-#window.delete_image = (this_ptr) ->
-#  console.log 1
-#  if confirm("Are you sure to delete this?")
-#    full_name = $(this_ptr).parent().attr('data-full-name')
-#    console.log full_name
-#    $.post("/source_manager/delete_image.js", {full_name: $(this_ptr).parent().attr('data-full-name')})
-
 window.on_gallery_name_keyup = (event, this_ptr) ->
   if event.keyCode==13
     img_id = $(this_ptr).parent().data('id')
     img_name = $(this_ptr).val()
     $.ajax
-      url: "/source_manager/rename_image"
+      url: "/gallery/rename_image"
       type: "PUT"
       data: {id: img_id, name: img_name}
     $(this_ptr).blur()

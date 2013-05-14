@@ -50,7 +50,7 @@ module Cms
         source = Source.get_source_by_id(source_id)
         settings = source.get_source_attach(SourceType::SETTINGS)
         settings = source.create_default_settings if settings.nil?
-        SourceSettings.new.parse(settings)
+        SourceSettings.new.read_source_settings(settings)
       end
 
 
@@ -77,7 +77,7 @@ module Cms
         hash ={}
         current_path = params[:path] ? params[:path] : SOURCE_FOLDERS[SourceType::IMAGE]
 
-        hash['breadcrumbs'] = params[:path] ?  params[:path] : '/'
+        hash['breadcrumbs'] = params[:path] ?  params[:path] : current_path
 
         hash['folders'] = []
         Dir.glob(current_path + '*').each do |file|
@@ -100,7 +100,7 @@ module Cms
       end
 
       def create_folder(params)
-        path = SOURCE_FOLDERS[SourceType::IMAGE].chomp('/') + params[:path]
+        path = params[:path]
         filepath = Source.mkdir(path)
         dir = OpenStruct.new
         dir.name = File.basename(filepath)

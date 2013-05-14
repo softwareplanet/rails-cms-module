@@ -4,10 +4,10 @@ $(document).ready ->
 
   # <input file> on change handler
   $("#image_src").change ->
-    to_path = $('.panel_gallery .content').attr('data-path')
-    console.log to_path
+    to_path = $('.panel_gallery .current_gallery_path').val()
     $('#to_dir').val(to_path)
     console.log $('#to_dir').val()
+    console.log to_path
     $(this).parent().ajaxSubmit()
     $(this).parent().clearForm()
 
@@ -24,20 +24,22 @@ window.renameFolderOnEnterKey = (input) ->
   if window.event.keyCode == 13
     renameFolder input
 
-window.renameImage = (obj) ->
-  image = $(obj).parent()
+window.renameImage = (input) ->
+  image = $(input).parents('.image')
+  image_id = image.attr('id')
   old_image_name = $(image).attr('data-name')
   image_path = $(image).attr('data-path')
-  new_imame_name = $(obj).val()
+  new_imame_name = $(input).val()
   request_json =
+    id: image_id
     new_name: new_imame_name
     old_name: old_image_name
     path: image_path
   $.ajax
-    url: "/source_manager/rename_image"
+    url: "/gallery/rename_image"
     type: "PUT"
     data: request_json
-  $(obj).css "display", "none"
+  $(input).css "display", "none"
 
 
 # image deleting
@@ -47,7 +49,7 @@ window.deleteImage = (this_ptr) ->
     image = $(this_ptr).parent()
     full_image_name = $(image).data('full-name')
     image_path = $(image).data('path')
-    $.post('/source_manager/delete_image.js', {full_name: full_image_name, path: image_path})
+    $.post('/gallery/delete_image.js', {full_name: full_image_name, path: image_path})
 
 #
 window.on_gallery_name_keyup = (event, this_ptr) ->
@@ -56,7 +58,7 @@ window.on_gallery_name_keyup = (event, this_ptr) ->
     img_id = $(this_ptr).parent().data('id')
     img_name = $(this_ptr).val()
     $.ajax
-      url: "/source_manager/rename_image"
+      url: "/gallery/rename_image"
       type: "PUT"
       data: {id: img_id, name: img_name}
     $(this_ptr).blur()
@@ -70,14 +72,17 @@ window.editImageName = (edit_item) ->
 
 $(document).ready ->
   $(".add_folder").click ->
-    request_json =
-      activity: 'click',
-      object: 'add_folder',
-      path:  $('.panel_gallery .content .breadcrumbs').attr('data-path')
-    $.ajax
-      url: "/source_manager/panel_gallery"
-      type: "POST"
-      data: request_json
+    addFolder()
+
+window.addFolder= () ->
+  request_json =
+    activity: 'click',
+    object: 'add_folder',
+    path:  $('.panel_gallery .current_gallery_path').val()
+  $.ajax
+    url: "/gallery/panel_gallery"
+    type: "POST"
+    data: request_json
 
 window.openFolder= (obj) ->
   folder = $(obj).parent()
@@ -104,7 +109,7 @@ window.renameFolder = (input) ->
     new_name: new_name
     old_name: old_name
   $.ajax
-    url: "/source_manager/panel_gallery"
+    url: "/gallery/panel_gallery"
     type: "POST"
     data: request_json
   $(input).css "display", "none"
@@ -121,6 +126,6 @@ window.deleteFolder = (detele_item) ->
     name: name
     }
     $.ajax
-      url: '/source_manager/panel_gallery'
+      url: '/gallery/panel_gallery'
       type: 'POST',
       data: request_json

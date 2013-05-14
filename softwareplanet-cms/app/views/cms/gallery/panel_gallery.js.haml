@@ -4,13 +4,13 @@
     obj = $('.gallery-folder[data-path="#{@path}"][data-name="#{@name}"]');
     obj.fadeOut();
   - when 'add_folder'
-    - @folders =[@directory]
-    new_folder = "#{ escape_javascript(render(:partial => 'folder', :collection => @folders)) }";
-    last_folder = $('.panel_gallery .content .gallery-folder').last()
+    - @folders = [@directory]
+    new_folder = "#{ escape_javascript(render(:partial => 'folder', :object => @folders)) }";
+    last_folder = $('.panel_gallery .content .gallery-folder').last();
     if(last_folder) {
     last_folder.after(new_folder);
     }else{
-    $('.panel_gallery .content).prepend(new_folder);
+    $('.panel_gallery .content').prepend(new_folder);
     };
   - when 'rename_folder'
     obj = $(".gallery-folder[data-path=\"#{File.dirname(@new_filepath)+'/'}\"][data-name=\"#{@old_name}\"]");

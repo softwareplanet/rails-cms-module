@@ -27,15 +27,22 @@ Cms::Engine.routes.draw do
     end
   end
 
-  resources :source_manager do
+  resources :gallery do
     collection do
       post "upload"
       post "delete_image"
+      post "panel_gallery"
+      put "rename_image"
+      get "upload_success"
+    end
+  end
+
+  resources :source_manager do
+    collection do
       post "panel_main"
       post "panel_structure"
       post "panel_content"
       post "panel_components"
-      post "panel_gallery"
       post "panel_settings"
       post "update_page_properties"
       post "create_folder"
@@ -43,9 +50,6 @@ Cms::Engine.routes.draw do
       post "save_component"
       post "reorder_layouts"
 
-      put "rename_image"
-
-      get "upload_success"
       get 'tool_bar'
       get 'menu_bar'
       get 'editor'

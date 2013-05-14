@@ -62,7 +62,7 @@
       .navigation_panel
         #help_icon
         #load_to_gallery{'data-toggle'=> 'dropdown'}
-        %form{:id => "load_image", :action => "source_manager/upload", :method => "post", :enctype => "multipart/form-data"}
+        %form{:id => "load_image", :action => "gallery/upload", :method => "post", :enctype => "multipart/form-data"}
           %input{:id => "to_dir", :type => "hidden", :name => "to_dir"}
           %input{:type => 'file', :id => "image_src", :name => "Filedata"}
           %button{:type => "submit"}
@@ -73,6 +73,7 @@
           %li.add_image
             Добавить картинку
   #gallery{"data-selector" => ".gallery-image", "data-target" => "#modal-gallery", "data-toggle" => "modal-gallery"}
+    .current_gallery_path{:type => 'hidden'}
     .content
 .panel.panel_settings
   .header

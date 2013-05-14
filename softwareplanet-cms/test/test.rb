@@ -109,7 +109,7 @@ module Cms
 
     def test_parse_source_settings
       create_sample_sources
-      settings = SourceSettings.new.parse(@setting1)
+      settings = SourceSettings.new.read_source_settings(@setting1)
       settings_in_array = settings.instance_variables
       assert_equal(settings_in_array.size, SETTINGS_DEFINITION[0].size)
       assert_equal(settings.publish, SETTINGS_DEFINITION[0]['publish'])
@@ -118,19 +118,19 @@ module Cms
 
     def test_get_data_from_parsed_settings
       create_sample_sources
-      parsed_settings = SourceSettings.new.parse(@setting1)
-      data = parsed_settings.get_data
+      parsed_settings = SourceSettings.new.read_source_settings(@setting1)
+      data = parsed_settings.get_data_yml
       assert_equal(data, SETTINGS_DEFINITION[0].to_yaml)
     end
 
     def test_set_data_to_settings
       create_sample_sources
       test_value = '0'
-      parsed_settings = SourceSettings.new.parse(@setting1)
+      parsed_settings = SourceSettings.new.read_source_settings(@setting1)
       parsed_settings.publish= test_value
       parsed_settings.display= test_value
-      @setting1.set_data(parsed_settings.get_data)
-      parsed_settings = SourceSettings.new.parse(@setting1)
+      @setting1.set_data(parsed_settings.get_data_yml)
+      parsed_settings = SourceSettings.new.read_source_settings(@setting1)
       assert_equal(parsed_settings.publish, test_value)
       assert_equal(parsed_settings.display, test_value)
     end

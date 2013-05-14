@@ -6,7 +6,7 @@
     .count-source
       = folder.size
     %input{:onfocusout => "renameFolder(this)", :onkeypress => "renameFolderOnEnterKey(this)"}
-    .dir{:onclick => 'open_folder(this)'}
+    .dir{:onclick => 'openFolder(this)'}
     .folder_description
       #{truncate(folder.name, :length => 22, :omission => '...')}
       .edit_name{:onclick => "editFolderName(this)"}
