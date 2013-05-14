@@ -40,7 +40,7 @@
         request_locale = Cms::SiteLanguage.first.url
       end
       # search for requested locale in database
-      site_locale = Cms::SiteLanguage.find_by_url(request_locale.downcase) || SiteLanguage.first
+      site_locale = Cms::SiteLanguage.find_by_url(request_locale.downcase) || Cms::SiteLanguage.first
       # save correct locale in cookies
       if USE_COOKIES
         cookies[:lang] = request_locale

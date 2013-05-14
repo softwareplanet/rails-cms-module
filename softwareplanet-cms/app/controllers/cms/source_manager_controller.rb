@@ -1,59 +1,44 @@
 require_dependency "cms/application_controller"
+
 module Cms
   class SourceManagerController < ApplicationController
-
     protect_from_forgery :except => [:upload]
-
     before_filter :admin_access
     before_filter :check_aloha_enable
 
-    # Display sources manage page
+    # Show list of all sources, 'structure' panel:
     def index
-      #@img
-      @layouts = Source.where :type => SourceType::LAYOUT
-      #@contents = Source.where(:type => SourceType::CONTENT).reverse
-      #@images = Source.where :type => SourceType::IMAGE
+      @layouts = Source.where(:type => SourceType::LAYOUT)
     end
 
-    # GET /source_manager/new
-    def new
-      render :nothing => true
-    end
-
-    # POST /source_manager
+    # Create new layout with specified settings. Layout name should be not empty and unique.
     def create
-      name = params[:name]
-      if name.blank?
-        @message = I18n.t('create_layout_form.blank_address')
-      elsif !Source.find_source_by_name_and_type(name, SourceType::LAYOUT).blank?
-        @message = I18n.t('create_layout_form.wrong_address')
-      else
-        @source = Source.create_page(params)
-        @layout = @source['layout']
-        render 'create'
-        return
+      layout_name = params[:name]
+      begin
+        raise I18n.t('create_layout_form.blank_address') if layout_name.blank?
+        raise I18n.t('create_layout_form.wrong_address') if Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).any?
+      rescue => error
+        render :js => "alert('#{error}');" and return
       end
-      render :js => "alert('#{@message}');"
+      @layout = Source.create_page(params)
+      render 'create'
     end
 
-    def edit_source
-      @sourceObject = Source.find_by_id(params[:id])
-    end
-
-    # PUT /souSource.find_source_by_name_and_type("green", SourceType::LAYOUT).blank?rce_manager/1
-    def update_source
-      #fix me!
-      @sourceObject = Source.find_by_id(params[:id])
-      unless @sourceObject.nil?
-        # rename
-        @sourceObject.name = params[:name] unless params[:name].nil?
-        # data change
-        @sourceObject.data = params[:data] unless params[:data].nil?
-        @sourceObject.flash!
+    def update_page_properties
+      layout_id = params[:id]
+      layout_name = params[:name]
+      begin
+        raise I18n.t('update_page_properties.blank_page_name') if layout_name.blank?
+        existed_named_layout = Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).first
+        raise I18n.t('update_page_properties.name_already_exist') if existed_named_layout && existed_named_layout.get_source_id != layout_id
+      rescue => error
+        render :js => "alert('#{error}');" and return
       end
+      @layout = Source.update_page(layout_id, params)
+      @old_layout_id = layout_id
     end
 
-    # DELETE /page_layouts/1
+    #
     def destroy
       source = Source.get_source_by_id(params[:id])
       source.eliminate! unless source.blank?
@@ -119,77 +104,6 @@ module Cms
       render :nothing => true
     end
 
-    def save_properties
-
-      @layout_name = params[:id]
-      title = params[:title]
-      @address = params[:url]
-      no_show = params[:no_show]
-      no_publish = params[:no_publish]
-      keywords = params[:keywords]
-      description = params[:description]
-
-      if @address.blank?
-        @message = I18n.t('save_layout_form.blank_addressparh')
-
-      elsif  /\W/.match(@address)
-          @message = I18n.t('save_layout_form.wrong_address')
-
-      elsif (@layout_name != @address) && (Source.find_by_name_and_type(@address, SourceType::LAYOUT).length > 0 )
-          @message = I18n.t('save_layout_form.address_exist')
-
-      else
-        begin
-          @css = Source.quick_attach(SourceType::LAYOUT,  @layout_name, SourceType::CSS)
-          @seo = Source.quick_attach(SourceType::LAYOUT,  @layout_name, SourceType::SEO)
-          @seo.data = "<title>#{title}</title>\n<meta name=\"keywords\" content=\"#{keywords}\"/>\n<meta name=\"description\" content=\"#{description}\"/>\n"
-          @seo.save!
-
-          if @layout_name != @address
-            seo_path = @seo.get_source_folder + @seo.get_filename
-            raise unless File.exist? seo_path
-            File.rename(seo_path, @seo.get_source_folder + '1-tar-' + @address)
-
-            css_path = @css.get_source_folder + @css.get_filename
-            raise unless File.exist? css_path
-            #before
-            #css_type = SOURCE_TYPE_EXTENSIONS[SourceType::CSS]
-            #File.rename(css_path, @css.get_source_folder + '1-tar-' + @address + '.' + css_type)
-            #after
-            File.rename(css_path, @css.get_source_folder + '1-tar-' + @address)
-            #end
-          end
-
-          @layout = Source.find_by_name_and_type(@layout_name, SourceType::LAYOUT).first
-          if !@layout
-            @layout = Source.find_by_name_and_type(@layout_name, SourceType::HIDDEN_LAYOUT).first
-          end
-
-          @old_layout_id = @layout.get_id
-          open_layouts = '/layouts/'
-          hidden_layouts = '/hidden_layouts/'
-          old_path = @layout.path + @layout_name
-
-          if no_publish.nil?
-            new_path = File.dirname(@layout.path) + open_layouts + @address
-          else
-            new_path = File.dirname(@layout.path) + hidden_layouts + @address
-          end
-
-          File.rename(old_path, new_path)
-          @source = Source.find_by_name(@address).first
-
-        rescue Exception => exc
-          render :js => 'alert("' +  I18n.t('save_layout_form.wrong') + '");'
-          return
-        end
-        render 'save_properties'
-        return
-      end
-      render :js => 'alert("' +  @message + '");'
-    end
-
-
     def rename_image
       @path =  'public/' + params[:path]
       @new_name = params[:new_name]
@@ -236,6 +150,7 @@ module Cms
       case @activity
         when "edit"
           @source = Source.find_by_id @object
+          #get_source_by_id
       end
     end
 
@@ -249,6 +164,9 @@ module Cms
       end
     end
 
+    #
+    #
+    #
     def panel_structure
       @activity = params[:activity]
       @object = params[:object]
@@ -261,37 +179,8 @@ module Cms
           case @object
             when 'edit_properties'
               @layout = Source.find_by_id(params['layout_id'])
-              @settings = Source.get_source_settings(params[:layout_id])
-              @seo = @layout.get_source_attach(SourceType::SEO)
-              @seo_tags = Source.parse_seo_tags(@seo)
-
-=begin
-              @layout_id = params[:layout_id]
-              #@seo, @path = Source.quick_build_seo_with_path(@layout_id)
-              @page_name = Source.quick_get_layout_name_by_id(@layout_id)
-              #no_show = params[:no_show]
-              @no_publish = @layout_id.match('pre1-id-').blank?
-              @seo_id = @layout_id.gsub(/pre(1|8)-id-/, '1-tar-')
-              @seo = Source.quick_attach(SourceType::LAYOUT,  @page_name, SourceType::SEO)
-              @path = @seo.get_source_folder + @seo.name
-
-              File.open(@path, "r").each_line  do |line|
-                line = line.downcase()
-                if line.slice('title')
-                  str1 = "<title>"
-                  str2 = "</title>"
-                  @title = line[line.index(str1) + str1.size .. line.index(str2)-1]
-                end
-                if line.slice('keywords')
-                  str = "content=\""
-                  @keywords = line[line.index(str) + str.size .. -5]
-                end
-                if line.slice('description')
-                  str = "content=\""
-                  @description = line[line.index(str) + str.size .. -5]
-                end
-              end
-=end
+              @settings_file = @layout.get_source_attach(SourceType::SETTINGS)
+              @settings = SourceSettings.new.read_source_settings(@settings_file)
             when 'edit_component'
               component_id = params[:component_id]
               @component = Source.find_by_id(component_id)
@@ -361,8 +250,8 @@ module Cms
         @message = I18n.t('create_component_form.component_exist')
       else
         begin
-          @component = Source.new(:type => type, :name => component_name)
-          @component.save!
+          @component = Source.build(:type => type, :name => component_name)
+          @css = Source.build(:type => SourceType::CSS, :name => component_name, :target => @component)
         rescue Exception => exc
           render :js => 'alert("' +  I18n.t('create_component_form.error') + '");'
           return
@@ -374,27 +263,25 @@ module Cms
     end
 
     def save_component
+      component_id = params[:id]
       component_name = params[:name]
-      if component_name.blank?
-        @message = I18n.t('save_component_form.blank_name')
-      elsif !Source.find_by_name_and_type(component_name, SourceType::CONTENT).blank?
-        @message = I18n.t('save_component_form.component_exist')
-      else
-        begin
-          @component = Source.find_by_id(params[:id])
-          path = @component.path
-          old_name = @component.name
-          File.rename(path + old_name,path + component_name)
-          @component = Source.find_by_name_and_type(component_name, SourceType::CONTENT).first
-          @old_id = params[:id]
-        rescue Exception => exc
-          render :js => 'alert("' +  I18n.t('save_component_form.error') + '");'
-          return
-        end
-        render 'save_component'
-        return
+      begin
+        raise I18n.t('save_component_form.blank_name') if component_name.blank?
+        existed_named_component = Source.find_source_by_name_and_type(component_name, SourceType::CONTENT).first
+        raise I18n.t('save_component_form.component_exist') if existed_named_component && existed_named_component.get_source_id != component_id
+      rescue => error
+        render :js => "alert('#{error}');" and return
       end
-      render :js => 'alert("' +  @message + '");'
+      @component = Source.get_source_by_id(component_id)
+      @old_component_id = @component.get_source_id
+      @component.rename_source(component_name)
+      render 'save_component'
     end
+
+    # GET /source_manager/new
+    def new
+      render :nothing => true
+    end
+
   end
 end

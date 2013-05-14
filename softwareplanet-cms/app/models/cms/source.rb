@@ -56,7 +56,7 @@ module Cms
     end
 
     def self.quick_content_search(content_name, content_type)
-      ext = SOURCE_TYPE_EXTENSIONS[content_type.to_i]
+      ext = ""#SOURCE_TYPE_EXTENSIONS[content_type.to_i]
       Source.new({ :type => content_type, :name => content_name, :extension => ext, :data => nil })
     end
 
@@ -159,8 +159,8 @@ module Cms
 
     def build(var_hash, layout)
       is_admin = var_hash[:admin?] == true
+      self.load!
       src = self.data
-
       lang_name = var_hash[:locale]
       lang_id = SiteLanguage.find_by_url(lang_name).id
 

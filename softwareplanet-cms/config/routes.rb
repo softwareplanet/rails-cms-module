@@ -37,7 +37,7 @@ Cms::Engine.routes.draw do
       post "panel_components"
       post "panel_gallery"
       post "panel_settings"
-      post "save_properties"
+      post "update_page_properties"
       post "create_folder"
       post "create_component"
       post "save_component"
@@ -50,8 +50,13 @@ Cms::Engine.routes.draw do
       get 'menu_bar'
       get 'editor'
       get 'properties'
-      post 'edit_source'
-      post 'update_source'
+    end
+  end
+
+  resources :source_code do
+    collection do
+      post 'edit_source_code'
+      post 'update_source_code'
     end
   end
 

@@ -3,8 +3,8 @@
     $('#properties_form').find('[name="id"]').val('#{@layout.get_id}');
     $('#properties_form').find('.name').val('#{}');
     $('#properties_form').find('.url').val('#{@layout.get_source_name}');
-    $('#properties_form').find('.keywords').val('#{@keywords}');
-    $('#properties_form').find('.description').val('#{@description}');
+    $('#properties_form').find('.keywords').val('#{@settings.keywords}');
+    $('#properties_form').find('.description').val('#{@settings.description}');
     - if @settings.publish == '1'
       document.getElementById("no_publish").checked = true;
     - else
@@ -18,13 +18,9 @@
     $('.panel_properties').show();
     setTimeout(function(){$('.panel_properties').css('-webkit-transform','translate3d(0, 0, 0)');;},250);
   - when 'edit_component'
-    $('#component_properties_form').find('[name="id"]').val('#{@component.get_id}');
-    $('#component_properties_form').find('[name="name"]').val('#{@component.name}');
+    $('#component_properties_form').find('[name="id"]').val('#{@component.get_source_id}');
+    $('#component_properties_form').find('[name="name"]').val('#{@component.get_source_name}');
     $('[data-level=child]').hide();
     $('.panel_component_properties').css('-webkit-transform','translate3d(' + $(window).width() + 'px, 0, 0)');
     $('.panel_component_properties').show();
     setTimeout(function(){$('.panel_component_properties').css('-webkit-transform','translate3d(0, 0, 0)');;},250);
-
-
-
-    @layout.get_source_name

@@ -89,38 +89,6 @@ window.saveSource = (this_ptr) ->
   editor = editorManager.getEditor(editor_name)
   editor.saveSource()
 
-  #DELETE SOURCE WITH CONFIRMATION
-window.deleteSourceWithConfirmation = (obj) ->
-  id_to_delete = $(obj).data("source_id")
-  name = $(obj).data("source_name")
-  if confirm('Are you sure to delete layout \'' + name + "\' ?")
-    $('[data-level=child]').hide()
-    deleteSource('layout', id_to_delete)
-    $(obj).parents('.layout-row').next().fadeOut()
-    $(obj).parents('.layout-row').fadeOut()
-
-window.deleteComponent = (obj) ->
-  component = $(obj).parents('.component-row')
-  id_to_delete = $(component).data("component_id")
-  name = $(component).data("name")
-  if confirm('Are you sure to delete component \'' + name + "\' ?")
-    deleteSource('component', id_to_delete)
-    $(component).next().fadeOut()
-    $(component).fadeOut()
-
- #OPEN CODE EDITOR FOR LAYOUT
-window.editLayoutData = (obj) ->
-  $('[data-level=child]').hide()
-  layout_id = $(obj).data("source_id")
-  showCodeEditor(layout_id)
-
-#OPEN CODE EDITOR FOR LAYOUT
-window.editComponentData = (obj) ->
-  $('[data-level=child]').hide()
-  parent = $(obj).parents('.component-row')
-  component_id = $(parent).data("component_id")
-  showCodeEditor(component_id)
-
 #SHOW CODE EDITOR FOR SOURCE
 window.showCodeEditor = (source_id) ->
   request_json =
@@ -212,36 +180,6 @@ jQuery.fn.slideRightHide = (callback) ->
 
 jQuery.fn.slideHide = ->
     $(this).css('display','none')
-
-$(document).ready ->
-  $('.add-component').click ->
-    if $('.panel_new-component').css('display') == 'block'
-      $('.panel_new-component').css('display', 'none')
-    else
-      $("[data-level=child]").hide()
-      $(".panel_new-component").css "-webkit-transform", "translate3d(" + $(window).width() + "px, 0, 0)"
-      $(".panel_new-component").show()
-      setTimeout (->
-        $(".panel_new-component").css "-webkit-transform", "translate3d(0, 0, 0)"), 250
-
-  $('.panel_new-component .close-btn').click ->
-    $('.panel.panel_new-component').css('display', 'none')
-
-  $('.panel_component_properties .close-btn').click ->
-    $('.panel_component_properties').css('display', 'none')
-
-window.component_properties = (obj) ->
-  parent = $(obj).parents('.component-row')
-  id = $(parent).data('component_id')
-  request_json = {
-    component_id: id,
-    object: 'edit_component',
-    activity: 'load'
-  }
-  $.ajax
-    url: '/source_manager/panel_structure'
-    type: 'POST',
-    data: request_json
 
 window.reorder_layouts = (items, list_id) ->
   request_json = {

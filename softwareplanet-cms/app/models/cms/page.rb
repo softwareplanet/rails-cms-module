@@ -56,27 +56,37 @@ module Cms
 
         header_named_editable_content + prepended.gsub("\n", gsub_value)
       }
-      puts page_styles.inspect
 
-      seo_string = layout.get_source_attach(SourceType::SEO).get_data
+      layout_settings = SourceSettings.new.read_source_settings(layout.get_source_attach(SourceType::SETTINGS))
+      seo_string =
+          "<title>#{layout_settings.title}</title>\n" +
+          "<meta name=\"keywords\" content=\"#{layout_settings.keywords}\"/>\n" +
+          "<meta name=\"description\" content=\"#{layout_settings.description}\"/>\n"
+      seo_tags = seo_string
 
       # parse data. locales separated by '%ru' or '%en' titles:
+      # temporary, feature disabled:
+      @INTERNATIONAL_SEO_ENABLE = false
 
-      locale = var_hash[:locale]
-      ru_index = seo_string.index("%ru")
-      en_index = seo_string.index("%en")
+      if @INTERNATIONAL_SEO_ENABLE
 
-      seo_tags = ""
+        locale = var_hash[:locale]
+        ru_index = seo_string.index("%ru")
+        en_index = seo_string.index("%en")
 
-      if ru_index != nil && en_index != nil
-        ru_string = (ru_index > en_index) ? seo_string[ru_index+3 .. -1] : seo_string[ru_index+3 .. en_index-1]
-        en_string = (en_index > ru_index) ? seo_string[en_index+3 .. -1] : seo_string[en_index+3 .. ru_index-1]
-        seo_tags = locale == "ru" ? ru_string : en_string
-      elsif ru_index == nil && en_index == nil
-        seo_tags = seo_string
-      else
-        seo_tags = seo_string.gsub('%ru', '').gsub('%en', '')
+        seo_tags = ""
+
+        if ru_index != nil && en_index != nil
+          ru_string = (ru_index > en_index) ? seo_string[ru_index+3 .. -1] : seo_string[ru_index+3 .. en_index-1]
+          en_string = (en_index > ru_index) ? seo_string[en_index+3 .. -1] : seo_string[en_index+3 .. ru_index-1]
+          seo_tags = locale == "ru" ? ru_string : en_string
+        elsif ru_index == nil && en_index == nil
+          seo_tags = seo_string
+        else
+          seo_tags = seo_string.gsub('%ru', '').gsub('%en', '')
+        end
       end
+
 
       [plain_src, layout.get_id, page_styles, seo_tags]
     end

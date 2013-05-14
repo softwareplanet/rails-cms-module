@@ -1,37 +1,74 @@
-# Methods:
+# SourceSettings - builder class, with dynamic list of attributes, specified in SETTINGS_DEFINITION array.
+# You can add any new items to SETTINGS_DEFINITION array, and they will be automatically included as class accessors methods.
+# Later,
 
-#   parse                 # <= parse source settings
-#   default_settings      # <= default settings to yaml format
-#   get_data              # <= source settings to yaml format
+# Methods definition:
+#
+#   parse                    # <= parse source settings
+#   self.default_settings    # <= default settings to yaml format
+#   get_data                 # <= source settings to yaml format
+
 
 require 'yaml'
 
 module Cms
-    SETTINGS_DEFINITION = [
-      'publish' => '1',
-      'display' => '1'
-    ]
-    class SourceSettings
-      attr_accessor *SETTINGS_DEFINITION[0].keys
 
-      def parse(settings_source)
-        settings_source.load!
-        result = YAML.load(settings_source.data)
-        SETTINGS_DEFINITION[0].map{ |n, v|
-          send("#{n}=", result[n])
-        }
-        self
-      end
+  # Settings array:
+  SETTINGS_DEFINITION = [
+    'publish' => '1',
+    'display' => '1',
+    'display' => '1',
+    'title' => '',
+    'keywords' => '',
+    'description' => ''
+  ]
 
-      def self.default_settings
-        SETTINGS_DEFINITION[0].to_yaml
-      end
+  class SourceSettings
+    attr_accessor *SETTINGS_DEFINITION[0].keys
 
-      def get_data
-        hash = {}
-        self.instance_variables.each {|key| hash[key.to_s.delete("@")] = self.instance_variable_get(key).to_s }
-        hash.to_yaml
-      end
+    def self.default_settings
+      SETTINGS_DEFINITION[0].to_yaml
     end
 
+    # Get settings in yml format
+    def get_data_yml
+      hash = {}
+      self.instance_variables.each {|key| hash[key.to_s.delete("@")] = self.instance_variable_get(key).to_s }
+      hash.to_yaml
+    end
+
+    def get_data_hash
+      hash = {}
+      SETTINGS_DEFINITION[0].map{ |n, v|
+        attr = send("#{n}")
+        hash[n] = attr
+      }
+      hash
+    end
+
+    # Elect only those parameters, that correspond to SETTINGS_DEFINITION
+    def elect_params(params)
+      params.each do |k, v|
+        send("#{k}=", v) if SETTINGS_DEFINITION[0].include?(k)
+      end
+      self
+    end
+
+    # Reads settings from `source` settings file and populate self instance variables
+    def read_source_settings(source)
+      source.load!
+      result = YAML.load(source.data)
+      SETTINGS_DEFINITION[0].map{ |n, v|
+        send("#{n}=", result[n])
+      }
+      self
+    end
+
+    # Write own settings variables to settings file, specified in `source`
+    def write_source_settings(source)
+      raise 'source type is not SourceType::SETTINGS' if source.type != SourceType::SETTINGS
+      source.set_data(get_data_hash.to_yaml)
+      source.flash!
+    end
+  end
 end
