@@ -49,7 +49,6 @@ Cms::Engine.routes.draw do
       get 'tool_bar'
       get 'menu_bar'
       get 'editor'
-      get 'properties'
     end
   end
 
@@ -64,12 +63,6 @@ Cms::Engine.routes.draw do
     collection do
       get "backup"
       post "upload"
-    end
-  end
-
-  resources :page_contents do
-    collection do
-      post 'aloha'
     end
   end
 

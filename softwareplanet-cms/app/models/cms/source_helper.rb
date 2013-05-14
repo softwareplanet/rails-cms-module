@@ -41,7 +41,7 @@ module Cms
       # Reorder list of layouts at some structure level.
       # If parent is empty, reorder on top level
       def reorder(items, list_id)
-        #order_settings = get_order_settings(list_id, SourceType::LAYOUT)
+        order_settings = get_order_settings(list_id, SourceType::LAYOUT)
         #TODO: reorder
       end
       # Read source settings from settings file

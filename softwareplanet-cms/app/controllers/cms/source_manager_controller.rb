@@ -24,6 +24,7 @@ module Cms
       render 'create'
     end
 
+    # Update properties of existed layout.
     def update_page_properties
       layout_id = params[:id]
       layout_name = params[:name]
@@ -38,11 +39,12 @@ module Cms
       @old_layout_id = layout_id
     end
 
-    #
+    # Destroy source by id.
     def destroy
       source = Source.get_source_by_id(params[:id])
       source.eliminate! unless source.blank?
     end
+
 
     def upload
       uploaded_io = params[:Filedata]
@@ -93,10 +95,6 @@ module Cms
       @source.delete
     end
 
-    def properties
-
-    end
-
     def reorder_layouts
       items = params[:items]
       list_id = params[:list_id]
@@ -132,8 +130,6 @@ module Cms
           case @object
             when "structure"
               @layouts = Source.where(:type => SourceType::LAYOUT)
-              @hiddens = Source.where(:type => SourceType::HIDDEN_LAYOUT).collect{ |source| source.hidden = true; source }
-              @layouts |= @hiddens
             when "content"
               @layouts = Source.where(:type => SourceType::LAYOUT)
             when "components"
@@ -146,8 +142,6 @@ module Cms
               end
               @images = Dir.glob(@current_path + "*.*")
               @images.map!{|image_path| File.basename(image_path)}
-              #File@layouts.basename('/qwe/img.png')         =>  img.png
-              #File.basename('/qwe/img.png','.*')    =>  img
               @result = []
               str = 'public/'
               @sources = Source.where :type => SourceType::IMAGE, :path => @current_path
