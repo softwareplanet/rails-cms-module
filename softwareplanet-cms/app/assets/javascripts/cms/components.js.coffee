@@ -20,8 +20,8 @@ $(document).ready ->
 #
 window.getComponentData = (obj) ->
   {
-  component_id: $(obj).parents('.component-row').attr('data-component_id'),
-  component_name: $(obj).parents('.component-row').attr('data-name')
+  component_id: $(obj).parents('.component-row').attr('data-source_id'),
+  component_name: $(obj).parents('.component-row').attr('data-source_name')
   }
 
 window.component_properties = (obj) ->

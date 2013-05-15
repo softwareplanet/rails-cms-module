@@ -53,6 +53,33 @@ module Cms
       assert_true(@layout3.get_source_attaches.size == 1)
     end
 
+    def super_test_get_order
+      create_sample_sources
+      order = Source.get_order(nil, SourceType::LAYOUT)
+      assert_true(order.size == 3)
+      order = Source.get_order(@layout1.get_source_id)
+      assert_equal(order, [])
+      @layout1.drop!
+      assert_equal(Source.get_order(nil, SourceType::LAYOUT).size, 2)
+    end
+
+    def test_order_settings
+      create_sample_sources
+      parent_source, source_type = nil, SourceType::LAYOUT
+      order_settings = Source.get_order_settings(parent_source, source_type)
+      assert_equal(order_settings.get_data.split(',').size, 3)
+    end
+
+    def test_reorder
+      create_sample_sources
+      list_id = nil
+      items = [@layout2, @layout1, @layou3]
+      Source.reorder(items, list_id)
+      parent_source, source_type = nil, SourceType::LAYOUT
+      order_settings = Source.get_order_settings(parent_source, source_type)
+      assert_equal(order_settings.get_data.split(','), ["pre1-id-layout1", "pre1-id-layout3", "pre1-id-layout2"])
+    end
+
     ############################################
     Test.new.runner(PREPARE)
   end

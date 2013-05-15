@@ -236,8 +236,6 @@ module Cms
           match_hash = {}
           attributes.each_with_index {|attr, index| match_hash[attr.to_sym] = args[index]}
           return AdapterStable.where(match_hash)
-        else
-          puts "There's no method called #{m} here -- please try again with args #{args}"
         end
       end
       def where(attributes)

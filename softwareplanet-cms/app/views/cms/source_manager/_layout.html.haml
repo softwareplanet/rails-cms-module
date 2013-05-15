@@ -1,24 +1,25 @@
 - source_id = layout.get_source_id
 - source_name = layout.get_source_name
+- page_counter = "0 #{I18n.t('ui.page_single_word')}"
 
 %li
   .layout-row{"data-source_id" => source_id, "data-source_name" => source_name}
-    .inner
+    .inner{:onclick => 'openSubPanel(this)'}
       .list
       .name
         = source_name
       .counter
-        0 страниц
+        = page_counter
       %a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences"}
       %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", :onclick => 'editLayoutCode(this)'}
       .dropdown-menu.preferences
         .edit-properties{:onclick => "editProperties(this)"}
           .preferences-rect
           .pencil
-          Редактировать свойства
+          = I18n.t('ui.edit_properties')
         .delete-page{:onclick => 'deleteSourceWithConfirmation(this)'}
           %div
-          Удалить страницу
+          = I18n.t('ui.delete_page')
       .short-counter
         0
   .line

@@ -174,12 +174,12 @@ jQuery.fn.slideRightHide = (callback) ->
 jQuery.fn.slideHide = ->
     $(this).css('display','none')
 
-window.reorder_layouts = (items, list_id) ->
+window.reorder_sources = (items, list_id) ->
   request_json = {
     items: items,
     list_id: list_id
   }
   $.ajax
-    url: '/source_manager/reorder_layouts'
+    url: '/source_manager/reorder_sources'
     type: 'POST',
     data: request_json

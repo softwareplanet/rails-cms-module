@@ -1,16 +1,20 @@
-.component-row{"data-component_id" => component.get_id, "data-name" => component.name}
-  .inner
-    .list
-    .name
-      = component.name
-    %a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences"}
-    %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", :onclick => 'editComponentData(this)'}
-    .dropdown-menu.preferences
-      %li.edit-properties{:onclick => 'component_properties(this)'}
-        .preferences-rect
-        .pencil
-        Редактировать свойства
-      %li.delete-page{:onclick => 'deleteComponent(this)'}
-        %div
-        Удалить компонент
-.line
+- source_id = component.get_source_id
+- source_name = component.get_source_name
+
+%li
+  .component-row{"data-source_id" => source_id, "data-source_name" => source_name}
+    .inner
+      .list
+      .name
+        = source_name
+      %a.properties{"data-toggle" => "dropdown", :href => "#", :title => "preferences"}
+      %a.edit{"data-toggle" => "tooltip", :href => "#", :title => "edit", :onclick => 'editComponentData(this)'}
+      .dropdown-menu.preferences
+        .edit-properties{:onclick => 'component_properties(this)'}
+          .preferences-rect
+          .pencil
+          = I18n.t('ui.edit_properties')
+        .delete-page{:onclick => 'deleteComponent(this)'}
+          %div
+          = I18n.t('ui.delete_component')
+  .line

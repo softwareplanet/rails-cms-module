@@ -1,9 +1,9 @@
-%ul#sortable.layouts-list{:data => {'list-id' => nil}}
+%ul#sortable_layouts.layouts-list{:data => {'list-id' => nil}}
   - @layouts.each do |layout|
     = render 'layout', :layout => layout
 
 :javascript
-  $('#sortable').sortable({
+  $('#sortable_layouts').sortable({
       cursor: "move",
       tolerance: "intersect",
       axis: "y",
@@ -12,6 +12,6 @@
       update: function(event, ui) {
         var items = $('.layouts-list .layout-row').map(function(){ return $(this).data("source_id")} ).toArray();
         var list_id = $('.layouts-list').data('list-id');
-        reorder_layouts(items, list_id);
+        reorder_sources(items, list_id);
       }
   }).disableSelection();

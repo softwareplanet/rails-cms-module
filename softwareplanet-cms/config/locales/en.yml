@@ -50,3 +50,12 @@ en:
     component_exist: A component with the same name already exists
     error: Impossible to rename a component
     success: The component has successfully renamed
+
+  ui:
+    edit_properties: Edit properties
+    delete_page: Delete page
+    delete_component: Delete component
+
+    page_single_word: page
+    page_few_word: pages
+    pages_many_word: pages

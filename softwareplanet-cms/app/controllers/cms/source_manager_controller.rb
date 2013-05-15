@@ -45,10 +45,13 @@ module Cms
       source.eliminate! unless source.blank?
     end
 
-    def reorder_layouts
+    def reorder_sources
       items = params[:items]
       list_id = params[:list_id]
-      Source.reorder(items, list_id)
+      # just for now:
+      ordered_items_type = Source.get_source_by_id(items.first).type
+
+      Source.set_order(list_id, items, ordered_items_type)
       render :nothing => true
     end
 
@@ -66,11 +69,13 @@ module Cms
         when "load"
           case @object
             when "structure"
-              @layouts = Source.where(:type => SourceType::LAYOUT)
+              @layouts_ids = Source.get_order(nil, SourceType::LAYOUT)
+              @layouts = @layouts_ids.collect{|id| Source.get_source_by_id(id) }
             when "content"
               @layouts = Source.where(:type => SourceType::LAYOUT)
             when "components"
-              @components = Source.where(:type => SourceType::CONTENT)
+              @components_ids = Source.get_order(nil, SourceType::CONTENT)
+              @components = @components_ids.collect{|id| Source.get_source_by_id(id) }
             when "gallery"
               @images_folder = Cms::SOURCE_FOLDERS[SourceType::IMAGE]
               @sources = Source.load_gallery(params)

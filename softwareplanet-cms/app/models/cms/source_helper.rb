@@ -28,26 +28,57 @@ module Cms
         if parent_layout
           layouts = layouts.select{|layout| layout.target == parent_layout}
         end
-        layout_names = layouts.map(&:get_source_name)
+        layout_names = layouts.map(&:get_source_id)
         order_settings.set_data(layout_names.join(','))
         order_settings
       end
       #
       #
-      def get_order_settings(parent_source, source_type)
-        if parent_source == nil
-          order_settings = Source.find_by_name_and_type('order'+source_type.to_s, SourceType::LAYOUTS_ORDER)
-          if order_settings.nil?
-            build_default_order_settings
+      def get_order_settings(list_id, ordered_items_type=nil)
+        if list_id.nil?
+          order_file_name = 'base_order_type_'+ordered_items_type.to_s
+          if (list_order = Source.find_source_by_type_and_name(SourceType::ORDER, order_file_name)).empty?
+            list_order = Source.build(:type => SourceType::ORDER, :name => order_file_name)
           end
-
+          all_items_ids = Source.where(:type => ordered_items_type).map(&:get_source_id)
+        else
+          list_source = Source.get_source_by_id(list_id)
+          if (list_order = list_source.get_source_attach(SourceType::ORDER)).nil?
+            list_order = Source.build(:type => SourceType::ORDER, :name => list_source.get_source_name, :parent => list_source)
+          end
+          all_items_ids = Source.where(:type => list_source)
+          all_items_ids = all_items_ids.to_a.select{|source| source.get_source_target &&  source.get_source_target.get_source_id == list_source.get_source_id}.map(&:get_source_id)
         end
+        list_order = list_order.first if list_order.is_a?(Array)
+        [list_order, all_items_ids]
+      end
+      #
+      #
+      def get_order(list_id, ordered_items_type=nil)
+        list_order, all_items_ids = get_order_settings(list_id, ordered_items_type)
+        order_data = list_order.get_data.split(',')
+        # cleanup order_data
+        order_data.each_with_index do |order_item_id, index|
+          all_items_ids.delete(order_item_id)
+          order_source = Source.get_source_by_id(order_item_id)
+          if order_source.nil?
+            order_data[index] = nil
+          end
+        end
+        if order_data.include?(nil) || all_items_ids.any?
+          order_data = order_data + all_items_ids
+          order_string = (order_data).compact.join(',')
+          list_order.set_data(order_string)
+        end
+        order_data.compact
       end
       # Reorder list of layouts at some structure level.
       # If parent is empty, reorder on top level
-      def reorder(items, list_id)
-        order_settings = get_order_settings(list_id, SourceType::LAYOUT)
-        #TODO: reorder
+      def set_order(list_id, ordered_items_array,  ordered_items_type=nil)
+        list_order, all_items_ids = get_order_settings(list_id, ordered_items_type)
+        order_data = (ordered_items_array + all_items_ids).uniq
+        list_order.set_data(order_data.join(','))
+        order_data
       end
       # Read source settings from settings file
       # If settings file not exists, it will be created with default settings

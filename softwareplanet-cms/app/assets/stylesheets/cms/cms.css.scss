@@ -918,7 +918,7 @@ body.cms {
 }
 
 /* Layout List, sortable */
-ul.layouts-list {
+ul.layouts-list, ul.components-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -926,4 +926,7 @@ ul.layouts-list {
 }
 .draggable-layout {
   opacity: 0.5;
+}
+.preferences {
+  height: 74px;
 }

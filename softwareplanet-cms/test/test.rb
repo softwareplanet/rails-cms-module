@@ -153,41 +153,9 @@ module Cms
       new_name = name_prefix + @layout1.get_source_name
       @layout1.rename_source(new_name)
       @layout1.get_source_attaches.each do |attach|
-        assert_equal(attach.get_source_filename, attach.get_source_name)
+        assert_equal(attach.get_source_target.get_source_id, @layout1.get_source_id)
       end
-    end
-
-    def test_parse_source_seo
-      create_sample_sources
-      @seo_tags = SourceSEO.new.parse(@seo1)
-      @seo_tags.instance_variables.each do |key|
-        assert_equal(@seo_tags.instance_variable_get(key), SEO_DEFINITION[0][key.to_s.delete("@")])
-      end
-    end
-
-    def test_get_seo_data
-      create_sample_sources
-      @seo_tags = SourceSEO.new.parse(@seo1)
-      assert_equal(@seo_tags.get_data, @seo1.data)
-    end
-
-    def test_save_seo_data
-      create_sample_sources
-      hash = {
-          'title' => 'title',
-          'keywords' => 'key1 key2 key3',
-          'description' => 'description1 description2 description3'
-      }
-      @seo_tags1 = SourceSEO.new.parse(@seo1)
-      @seo_tags1.title += hash['title']
-      @seo_tags1.keywords += hash['keywords']
-      @seo_tags1.description += hash['description']
-      @seo1.set_data(@seo_tags1.get_data)
-      @seo2 = Source.find_source_by_name_and_type(@seo1.get_source_name, @seo1.type).first
-      @seo_tags2 = SourceSEO.new.parse(@seo2)
-      @seo_tags2.instance_variables.each do |key|
-        assert_equal(@seo_tags2.instance_variable_get(key), hash[key.to_s.delete("@")])
-      end
+      assert_true(@layout1.get_source_name.start_with?(name_prefix))
     end
 
     def test_create_page
@@ -205,7 +173,7 @@ module Cms
     end
 
     def load_check_when_creating_resources
-      #in console last result is time=15.893040497 seconds! for all source * 10 000
+      #in console last result is time=15.893040497 seconds! for all sources * 10 000
       time = Time.now
       source_types = SourceType::all
       for number in 1..10000

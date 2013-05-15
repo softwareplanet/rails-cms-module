@@ -1,0 +1,17 @@
+%ul#sortable_components.components-list{:data => {'list-id' => nil}}
+  - @components.each do |component|
+    = render 'component', :component => component
+
+:javascript
+  $('#sortable_components').sortable({
+      cursor: "move",
+      tolerance: "intersect",
+      axis: "y",
+      start: function(event, ui) {ui.item.addClass('draggable-layout')},
+      stop: function(event, ui) {ui.item.removeClass('draggable-layout')},
+      update: function(event, ui) {
+        var items = $('.components-list .component-row').map(function(){ return $(this).data("source_id")} ).toArray();
+        var list_id = $('.components-list').data('list-id');
+        reorder_sources(items, list_id);
+      }
+  }).disableSelection();

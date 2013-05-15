@@ -48,3 +48,12 @@ ru:
     error: Невозможно переименовать компонент
     success: Компонент успешно переименовано
 
+  ui:
+    edit_properties: Редактировать свойства
+    delete_page: Удалить страницу
+    delete_component: Удалить компонент
+
+    page_single_word: страница
+    page_few_word: страницы
+    pages_many_word: страниц
+

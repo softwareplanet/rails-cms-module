@@ -48,7 +48,7 @@ Cms::Engine.routes.draw do
       post "create_folder"
       post "create_component"
       post "save_component"
-      post "reorder_layouts"
+      post "reorder_sources"
 
       get 'tool_bar'
       get 'menu_bar'
