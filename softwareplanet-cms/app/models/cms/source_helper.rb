@@ -24,8 +24,13 @@ module Cms
       #
       def build_default_order_settings(parent_layout=nil)
         order_settings = Source.build(:name => 'order', :type => SourceType::LAYOUTS_ORDER, :parent => layout)
-        layouts = Source.where(:type => SourceType::LAYOUTS_ORDER)
-        top_level_layouts = layouts.select{|layout| layout.target == nil}
+        layouts = Source.where(:type => SourceType::LAYOUT)
+        if parent_layout
+          layouts = layouts.select{|layout| layout.target == parent_layout}
+        end
+        layout_names = layouts.map(&:get_source_name)
+        order_settings.set_data(layout_names.join(','))
+        order_settings
       end
       #
       #
