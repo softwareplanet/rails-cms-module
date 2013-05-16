@@ -35,7 +35,12 @@ module Cms
       rescue => error
         render :js => "alert('#{error}');" and return
       end
-      @layout = Source.update_page(layout_id, params)
+      begin
+        @layout = Source.update_page(layout_id, params)
+      rescue
+        render :js => "alert('#{I18n.t('update_page_properties.error')}');" and return
+      end
+
       @old_layout_id = layout_id
     end
 

@@ -16,6 +16,18 @@ en:
   credentials: Since 2000, the company Interlink provides full cycle of software projects, including analysis, design, programming, testing and development of graphic design.
 
   create_layout_form:
+    title: Create page
+    name_title: Address / name
+    not_show_in_menu: Not show in menu
+    not_publish: Not publish on site
+    seo_settings: SEO settings
+    seo_title: Title
+    seo_title_placeholder: <title>
+    seo_keywords: Keywords
+    seo_keywords_placeholder: <keywords>
+    seo_description: Description
+    seo_description_placeholder: <description>
+
     blank_address: Cannot be blank
     wrong_address: Already exists
     wrong: Failed to create a page
@@ -33,11 +45,15 @@ en:
     blank_page_name: Name cannot be blank
     name_already_exist: Page name already exists
     page_name_incorrect: Page name is incorrect
+    error: Error, page parameters are incorrect.
     success: Page properties successfully updated
 
 
 
   create_component_form:
+    title: Create component
+    name_title: Component name
+    name_placeholder: Input component name…
     blank_name: Name can not be empty
     wrong_name: The name has invalid characters
     component_exist: A component with the same name already exists
@@ -59,3 +75,6 @@ en:
     page_single_word: page
     page_few_word: pages
     pages_many_word: pages
+
+    save: Save
+    cancel: Cancel

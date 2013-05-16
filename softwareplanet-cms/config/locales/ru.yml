@@ -16,6 +16,18 @@ ru:
   credentials: "Начиная с 2000 года компания ИнтерЛинк осуществляет полный цикл разработки программных проектов, включая анализ, проектирование, программирование, тестирование и разработку графического дизайна.                                                                                                                                                                                                                        credentials: Начиная с 2000 годакомпания ИнтерЛинк осуществляет полный цикл разработки программных проектов, включая анализ, проектирование, программирование, тестирование и разработку графического дизайна."
 
   create_layout_form:
+    title: Создать страницу
+    name_title: Адрес / Имя
+    not_show_in_menu: Не показывать в меню
+    not_publish: Не публиковать на сайте
+    seo_settings: Настройки SEO
+    seo_title: Заголовок
+    seo_title_placeholder: <title>
+    seo_keywords: Ключевые слова
+    seo_keywords_placeholder: <keywords>
+    seo_description: Описание
+    seo_description_placeholder: <description>
+
     blank_address: Не может быть пустым
     wrong_address: Уже существует
     wrong: Не удалось создать страницу
@@ -32,9 +44,13 @@ ru:
     blank_page_name: Имя не может быть пустым
     name_already_exist: Страница с таким именем уже существует
     page_name_incorrect: Имя страницы некорректное
+    error: Ошибка, введенные параметры некорректны.
     success: Параметры успешно обновлены
 
   create_component_form:
+    title: Создать компонент
+    name_title: Имя компонента
+    name_placeholder: Введите имя компонента…
     blank_name: Укажите имя компонента
     wrong_name: Имя имеет недопустимые символы
     component_exist: Компонент с таким именем уже существует
@@ -56,4 +72,11 @@ ru:
     page_single_word: страница
     page_few_word: страницы
     pages_many_word: страниц
+
+    save: Сохранить
+    cancel: Отмена
+
+
+
+
 

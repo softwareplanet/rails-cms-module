@@ -60,6 +60,6 @@ window.deleteSourceWithConfirmation = (obj) ->
     $(obj).parents('.layout-row').fadeOut()
 
 window.openSubPanel = (obj) ->
-  component_data = getLayoutData(obj)
+  layout_data = getLayoutData(obj)
   console.log(layout_data['source_id'])
   console.log(layout_data['source_name'])

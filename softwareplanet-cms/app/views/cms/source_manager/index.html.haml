@@ -123,51 +123,52 @@
 
 .panel.panel_new-page{'data-level' => 'child'}
   .title
-    Создать страницу
+    = I18n.t('create_layout_form.title')
   .line
 
   = form_tag url_for( :controller => "source_manager", :action => "create" ), :id => "global_action_form", :remote => true do
     %fieldset
-      %label Адрес / Имя
+      %label= I18n.t('create_layout_form.name_title')
+
       %input.url{:placeholder => "Input layout url…", :type => "text", :tabindex => 2, :name => "name"}
       %br
       %label.checkbox
         %input{:type => "checkbox", :name => "display", :tabindex => 3}
-        Не показывать в меню
+        = I18n.t('create_layout_form.not_show_in_menu')
       %label.checkbox
         %input{:type => "checkbox", :name => "publish", :tabindex => 4}
-        Не публиковать на сайте
+        = I18n.t('create_layout_form.not_publish')
       #accordion2.seoblock{:tabindex => 5}
         .accordion-group
           .accordion-heading
             %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", :href => "#collapseOne2"}
               %i.rotable-icon.icon-info-sign
-              Настройки SEO
+              = I18n.t('create_layout_form.seo_settings')
           #collapseOne2.accordion-body.collapse.in
             .accordion-inner
-              %label Заголовок
-              %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1, :name => "title"}
+              %label= I18n.t('create_layout_form.seo_title')
+              %input.name{:placeholder => "#{I18n.t('create_layout_form.seo_title_placeholder')}", :type => "text", :tabindex => 1, :name => "title"}
 
-              %label Ключевые слова
-              %input.name{:placeholder => "Keywords…", :type => "text", :tabindex => 7, :name => "keywords"}
+              %label= I18n.t('create_layout_form.seo_keywords')
+              %input.name{:placeholder => "#{I18n.t('create_layout_form.seo_keywords_placeholder')}", :type => "text", :tabindex => 7, :name => "keywords"}
 
-              %label Описание
-              %input.url{:placeholder => "Description…", :tabindex => 8, :type => "text", :name => "description"}
+              %label= I18n.t('create_layout_form.seo_description')
+              %input.url{:placeholder => "#{I18n.t('create_layout_form.seo_description_placeholder')}", :tabindex => 8, :type => "text", :name => "description"}
       %div
-        = submit_tag ' Save', :class => 'btn btn-primary'
-        .close-btn.btn.btn-primary Close
+        = submit_tag "#{I18n.t('ui.save')}", :class => 'btn btn-primary'
+        .close-btn.btn.btn-primary= I18n.t('ui.cancel')
 
 .panel.panel_new-component{'data-level' => 'child'}
   .title
-    Создать компонент
+    = I18n.t('create_component_form.title')
   .line
   = form_tag url_for( :controller => 'source_manager', :action => 'create_component', :method => 'POST'), :id => "component_form", :remote => true do
-    %label Имя сомпонента
-    %input.url{:placeholder => "Input component name…", :type => "text", :name => "name"}
+    %label= I18n.t('create_component_form.name_title')
+    %input.url{:placeholder => "#{I18n.t('create_component_form.name_placeholder')}", :type => "text", :name => "name"}
     %br
     %div
-      = submit_tag ' Save', :class => 'btn btn-primary'
-      .close-btn.btn.btn-primary Close
+      = submit_tag "#{I18n.t('ui.save')}", :class => 'btn btn-primary'
+      .close-btn.btn.btn-primary= I18n.t('ui.cancel')
 
 .panel.panel_component_properties{'data-level' => 'child'}
   .rect
@@ -180,8 +181,8 @@
     %input{:type => "text", :name => "name"}
     %br
     %div
-      %button.btn.btn-primary.save-source{:type => "submit"} СОХРАНИТЬ
-      .close-btn.btn.btn-primary Close
+      %button.btn.btn-primary.save-source{:type => "submit"} =I18n.t('ui.save')
+      .close-btn.btn.btn-primary =I18n.t('ui.cancel')
 
 / modal-gallery is the modal dialog used for the image gallery
 #modal-gallery.modal.modal-gallery.hide.fade{:tabindex => "-1"}
