@@ -1,5 +1,5 @@
 %ul#sortable_layouts.layouts-list{:data => {'list-id' => nil}}
-  - @layouts.each do |layout|
+  - items.each do |layout|
     = render 'layout', :layout => layout
 
 :javascript

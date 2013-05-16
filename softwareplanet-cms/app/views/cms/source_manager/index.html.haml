@@ -17,20 +17,19 @@
       Главная
     .line
   .content
--#.cms-folder
-  %div{:title => 'folder name'}
-    .delete_image{:onclick => "delete_image(this)"}
-      x
-    %input{:onfocusout => "rename_finish(this)", :onkeypress => "renameFolderOnEnterKey(this)"}
-    .gallery-image
-      1111
-    .image_description
-      foo bar
-      .edit_name{:onclick => "rename_image(this)"}
 
--#.panel.panel_structure.inactive{:data_name => 'panel_structure', :data_menu => 'structure'}
-.panel.panel_structure{:data_name => 'panel_structure', :data_menu => 'structure'}
+.panel.panel_child_structure.inactive{:data_name => 'panel_structure', :data_menu => 'structure'}
   .header
+    .rect
+    .title
+      .name
+        Вложенная структура
+      %a.add-structure.child-window{"data-toggle" => "tooltip", :href => "#", :title => "add structure", :data_name => 'add-structure', :data_menu => 'structure'}
+    .line
+  .content
+.panel.panel_structure.scrollable{:data_name => 'panel_structure', :data_menu => 'structure'}
+  .header
+    %i.close-child
     .rect
     .title
       Структура сайта
@@ -39,13 +38,8 @@
   .content
 
 .panel.panel_content
-  -#.header
-    .rect
-    .title
-      Содержание
-    .line
   .content
-.panel.panel_components
+.panel.panel_components.scrollable
   .header
     .rect
     .title

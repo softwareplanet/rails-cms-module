@@ -119,6 +119,10 @@ module Cms
         when 'drag_and_drop'
           Source.reorganize_by_ids(@object, @data)
         when 'click'
+          @layout = Source.find_by_id(params['layout_id'])
+          @sub_layouts = @layout.get_source_attach(SourceType::LAYOUT)
+          @sub_layouts = @sub_layouts.nil? ? [] : @sub_layouts
+          raise 'sub_layouts should be array' unless @sub_layouts.is_a?(Array)
         when 'load'
           case @object
             when 'edit_properties'

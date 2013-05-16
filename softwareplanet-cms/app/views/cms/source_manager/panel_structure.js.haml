@@ -1,26 +1,48 @@
-- case @object
-  - when 'edit_properties'
-    $('#properties_form').find('[name="id"]').val('#{@layout.get_id}');
-    $('#properties_form').find('.name').val('#{}');
-    $('#properties_form').find('.url').val('#{@layout.get_source_name}');
-    $('#properties_form').find('.keywords').val('#{@settings.keywords}');
-    $('#properties_form').find('.description').val('#{@settings.description}');
-    - if @settings.publish == '1'
-      document.getElementById("no_publish").checked = true;
-    - else
-      document.getElementById("no_publish").checked = false;
-    - if @settings.display == '1'
-      document.getElementById("no_show").checked = true;
-    - else
-      document.getElementById("no_show").checked = false;
-    $('[data-level=child]').hide();
-    $('.panel_properties').css('-webkit-transform','translate3d(' + $(window).width() + 'px, 0, 0)');
-    $('.panel_properties').show();
-    setTimeout(function(){$('.panel_properties').css('-webkit-transform','translate3d(0, 0, 0)');;},250);
-  - when 'edit_component'
-    $('#component_properties_form').find('[name="id"]').val('#{@component.get_source_id}');
-    $('#component_properties_form').find('[name="name"]').val('#{@component.get_source_name}');
-    $('[data-level=child]').hide();
-    $('.panel_component_properties').css('-webkit-transform','translate3d(' + $(window).width() + 'px, 0, 0)');
-    $('.panel_component_properties').show();
-    setTimeout(function(){$('.panel_component_properties').css('-webkit-transform','translate3d(0, 0, 0)');;},250);
+- case @activity
+  - when 'click'
+    - case @object
+      - when 'structure'
+        $('.panel_structure').addClass('inactive');
+        $('.panel_structure .close-child').css('opacity', 1);
+
+        $('.panel_child_structure .title .name').html("#{@layout.get_source_name}")
+        $('.panel_child_structure').show();
+
+        $('.panel_child_structure .content').html("#{ escape_javascript(render(:partial => 'layouts', :locals => {items: @sub_layouts} )) }");
+
+        $('.panel_child_structure').css('-webkit-transition-duration', '0ms,0ms' );
+        $('.panel_child_structure').css({ translate: [0,0] });
+        setTimeout(function() {
+        $('.panel_child_structure').css('-webkit-transition-duration', '250ms,250ms' );
+        $('.panel_child_structure').show();
+        $('.panel_child_structure').css({ translate: [280,0] });
+        }, 1)
+
+
+  - when 'load'
+    - case @object
+      - when 'edit_properties'
+        $('#properties_form').find('[name="id"]').val('#{@layout.get_id}');
+        $('#properties_form').find('.name').val('#{}');
+        $('#properties_form').find('.url').val('#{@layout.get_source_name}');
+        $('#properties_form').find('.keywords').val('#{@settings.keywords}');
+        $('#properties_form').find('.description').val('#{@settings.description}');
+        - if @settings.publish == '1'
+          document.getElementById("no_publish").checked = true;
+        - else
+          document.getElementById("no_publish").checked = false;
+        - if @settings.display == '1'
+          document.getElementById("no_show").checked = true;
+        - else
+          document.getElementById("no_show").checked = false;
+        $('[data-level=child]').hide();
+        $('.panel_properties').css('-webkit-transform','translate3d(' + $(window).width() + 'px, 0, 0)');
+        $('.panel_properties').show();
+        setTimeout(function(){$('.panel_properties').css('-webkit-transform','translate3d(0, 0, 0)');;},250);
+      - when 'edit_component'
+        $('#component_properties_form').find('[name="id"]').val('#{@component.get_source_id}');
+        $('#component_properties_form').find('[name="name"]').val('#{@component.get_source_name}');
+        $('[data-level=child]').hide();
+        $('.panel_component_properties').css('-webkit-transform','translate3d(' + $(window).width() + 'px, 0, 0)');
+        $('.panel_component_properties').show();
+        setTimeout(function(){$('.panel_component_properties').css('-webkit-transform','translate3d(0, 0, 0)');;},250);

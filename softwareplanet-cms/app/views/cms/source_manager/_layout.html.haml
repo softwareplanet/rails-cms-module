@@ -4,7 +4,8 @@
 
 %li
   .layout-row{"data-source_id" => source_id, "data-source_name" => source_name}
-    .inner{:onclick => 'openSubPanel(this)'}
+    .clickable_area{:onclick => 'openSubPanel(this)'}
+    .inner
       .list
       .name
         = source_name

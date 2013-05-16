@@ -28,6 +28,10 @@ $(document).ready ->
 #    $(this).find('.icon-tooltip').remove()
 
   $('.icon').click ->
+    $('.icon').removeClass("highlighted");
+    $(this).addClass("highlighted");
+
+
     request_json = {
     object: $(this).data('icon'),
     activity: 'click'

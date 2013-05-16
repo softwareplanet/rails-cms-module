@@ -6,8 +6,14 @@ $(document).ready ->
       $("[data-level=child]").hide()
       $(".panel_new-page").css "-webkit-transform", "translate3d(" + $(window).width() + "px, 0, 0)"
       $(".panel_new-page").show()
+
+      if $(this).hasClass("child-window")
+        offset = 280
+      else
+        offset = 370
+
       setTimeout (->
-        $(".panel_new-page").css "-webkit-transform", "translate3d(0, 0, 0)"),
+        $(".panel_new-page").css "-webkit-transform", "translate3d("+offset+"px, 0, 0)"),
         250
 
   $('.panel_new-page .close-btn').click ->
@@ -15,6 +21,17 @@ $(document).ready ->
 
   $('.panel_properties .close-btn').click ->
     $('.panel_properties').css('display', 'none')
+
+  $('.close-child').click ->
+    #$('.panel_child_structure').hide();
+    $('.panel_child_structure').css({ translate: [-700,0] })
+    $('.panel_structure').removeClass('inactive')
+    $(this).css('opacity', 0)
+    setTimeout (->
+      $('.panel_child_structure').hide()),
+      50
+
+
 
 #
 # Get layout data from layout_row
@@ -60,6 +77,18 @@ window.deleteSourceWithConfirmation = (obj) ->
     $(obj).parents('.layout-row').fadeOut()
 
 window.openSubPanel = (obj) ->
+  $('.panel_new-page').hide()
+  $('.clickable_area').parent().removeClass('selected')
+  $(obj).parent().addClass('selected');
+
   layout_data = getLayoutData(obj)
-  console.log(layout_data['source_id'])
-  console.log(layout_data['source_name'])
+  request_json = {
+    layout_id: layout_data['source_id'],
+    object: 'structure',
+    activity: 'click'
+  }
+  $.ajax
+    url: '/source_manager/panel_structure'
+    type: 'POST',
+    data: request_json
+
