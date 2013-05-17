@@ -24,7 +24,7 @@ module Cms
       #
       #
       def build_default_order_settings(parent_layout=nil)
-        order_settings = Source.build(:name => 'order', :type => SourceType::LAYOUTS_ORDER, :parent => layout)
+        order_settings = Source.build(:name => 'order', :type => SourceType::LAYOUTS_ORDER, :target => layout)
         layouts = Source.where(:type => SourceType::LAYOUT)
         if parent_layout
           layouts = layouts.select{|layout| layout.target == parent_layout}
@@ -36,18 +36,20 @@ module Cms
       #
       #
       def get_order_settings(list_id, ordered_items_type=nil)
-        if list_id.nil?
+        if list_id.blank?
           order_file_name = 'base_order_type_'+ordered_items_type.to_s
           if (list_order = Source.find_source_by_type_and_name(SourceType::ORDER, order_file_name)).empty?
             list_order = Source.build(:type => SourceType::ORDER, :name => order_file_name)
           end
-          all_items_ids = Source.where(:type => ordered_items_type).map(&:get_source_id)
+          all_items = Source.where(:type => ordered_items_type)
+          all_items = all_items.select{|parent_filter| parent_filter.get_source_target == nil}
+          all_items_ids = all_items.map(&:get_source_id)
         else
           list_source = Source.get_source_by_id(list_id)
           if (list_order = list_source.get_source_attach(SourceType::ORDER)).nil?
-            list_order = Source.build(:type => SourceType::ORDER, :name => list_source.get_source_name, :parent => list_source)
+            list_order = Source.build(:type => SourceType::ORDER, :name => list_source.get_source_name, :target => list_source)
           end
-          all_items_ids = Source.where(:type => list_source)
+          all_items_ids = Source.where(:type => list_source.type)
           all_items_ids = all_items_ids.to_a.select{|source| source.get_source_target &&  source.get_source_target.get_source_id == list_source.get_source_id}.map(&:get_source_id)
         end
         list_order = list_order.first if list_order.is_a?(Array)
@@ -107,8 +109,9 @@ module Cms
 
       # Creates layout, default settings file and css (.scss)
       def create_page(params)
+        layout_parent = params[:parent_layout].blank? ? nil : Source.find_by_id(params[:parent_layout])
         name = params[:name]
-        layout = Source.build(:type => SourceType::LAYOUT, :name => name)
+        layout = Source.build(:type => SourceType::LAYOUT, :name => name, :target => layout_parent)
         Source.build(:type => SourceType::CSS, :name => name + '.scss', :target => layout)
         settings_file = Source.build(:type => SourceType::SETTINGS, :name => name, :target => layout)
 
@@ -119,9 +122,9 @@ module Cms
 
       def load_gallery(params)
         hash ={}
-        current_path = params[:path] ? params[:path] : SOURCE_FOLDERS[SourceType::IMAGE]
+        current_path = params[:path].empty? ? SOURCE_FOLDERS[SourceType::IMAGE] : params[:path]
 
-        hash['breadcrumbs'] = current_path
+            hash['breadcrumbs'] = current_path
 
         hash['folders'] = []
         Dir.glob(current_path + '*').each do |file|

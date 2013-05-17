@@ -2,13 +2,14 @@
   - when 'click'
     - case @object
       - when 'structure'
+        $('.panel_child_structure').attr('data_parent', '#{@layout.get_source_id}')
         $('.panel_structure').addClass('inactive');
         $('.panel_structure .close-child').css('opacity', 1);
 
         $('.panel_child_structure .title .name').html("#{@layout.get_source_name}")
         $('.panel_child_structure').show();
 
-        $('.panel_child_structure .content').html("#{ escape_javascript(render(:partial => 'layouts', :locals => {items: @sub_layouts} )) }");
+        $('.panel_child_structure .content').html("#{ escape_javascript(render(:partial => 'layouts', :locals => {items: @sub_layouts, list_id: @layout.get_source_id} )) }");
 
         $('.panel_child_structure').css('-webkit-transition-duration', '0ms,0ms' );
         $('.panel_child_structure').css({ translate: [0,0] });

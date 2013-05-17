@@ -10,7 +10,7 @@ $(panel_content).html("");
   - when 'load'
     - case @object
       - when 'structure'
-        $(panel_content).html("#{ escape_javascript(render(:partial => 'layouts', :locals => {items: @layouts} )) }");
+        $(panel_content).html("#{ escape_javascript(render(:partial => 'layouts', :locals => {items: @layouts, list_id: nil} )) }");
       - when 'content'
         $(panel_content).html("#{ escape_javascript(render(:partial => 'content')) }");
       - when 'components'

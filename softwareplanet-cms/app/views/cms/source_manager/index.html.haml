@@ -18,7 +18,7 @@
     .line
   .content
 
-.panel.panel_child_structure.inactive{:data_name => 'panel_structure', :data_menu => 'structure'}
+.panel.panel_child_structure.inactive{:data_name => 'panel_structure', :data_menu => 'structure', :data_parent => ''}
   .header
     .rect
     .title
@@ -120,8 +120,10 @@
     = I18n.t('create_layout_form.title')
   .line
 
-  = form_tag url_for( :controller => "source_manager", :action => "create" ), :id => "global_action_form", :remote => true do
+  = form_tag url_for( :controller => "source_manager", :action => "create" ), :id => "new_structure_form", :remote => true do
     %fieldset
+      %input{:type => "hidden", :name => "parent_layout", :value => '', :id => "parent_layout"}
+
       %label= I18n.t('create_layout_form.name_title')
 
       %input.url{:placeholder => "Input layout url…", :type => "text", :tabindex => 2, :name => "name"}

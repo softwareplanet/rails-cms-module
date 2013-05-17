@@ -12,3 +12,12 @@
       .edit_name{:onclick => "editFolderName(this)"}
 
 
+:javascript
+  $('.gallery-folder').droppable({
+    accept: ".image",
+    activeClass: "folder-state-hover",
+    hoverClass: "folder-state-active",
+    drop: function( event, ui ) {
+      $(ui.helper).remove();
+    }
+  });

@@ -1,20 +1,6 @@
 $(document).ready ->
   $('.add-structure').click ->
-    if $('.panel_new-page').css('display') == 'block'
-      $('.panel_new-page').css('display', 'none')
-    else
-      $("[data-level=child]").hide()
-      $(".panel_new-page").css "-webkit-transform", "translate3d(" + $(window).width() + "px, 0, 0)"
-      $(".panel_new-page").show()
-
-      if $(this).hasClass("child-window")
-        offset = 280
-      else
-        offset = 370
-
-      setTimeout (->
-        $(".panel_new-page").css "-webkit-transform", "translate3d("+offset+"px, 0, 0)"),
-        250
+    UI.toggleNewStructurePanel(this)
 
   $('.panel_new-page .close-btn').click ->
     $('.panel.panel_new-page').css('display', 'none')
@@ -23,13 +9,7 @@ $(document).ready ->
     $('.panel_properties').css('display', 'none')
 
   $('.close-child').click ->
-    #$('.panel_child_structure').hide();
-    $('.panel_child_structure').css({ translate: [-700,0] })
-    $('.panel_structure').removeClass('inactive')
-    $(this).css('opacity', 0)
-    setTimeout (->
-      $('.panel_child_structure').hide()),
-      50
+    UI.hideStructureChildPanel()
 
 
 

@@ -3,6 +3,16 @@
     .inner
       .list
       .name
-        = layout.name
+        = layout.get_source_name
+
+  - children_ids = Cms::Source.get_order(layout.get_source_id, Cms::SourceType::LAYOUT)
+  - children = children_ids.collect{|id| Cms::Source.get_source_by_id(id) }
+  - children.each do |child|
+    .layout-row{"data-source_name" => child.name, :onclick => 'loadViewer(this)', :style=> "background:rgb(64, 125, 187);"}
+      .inner
+        .list
+        .name
+          = child.get_source_name
+
   .line
 

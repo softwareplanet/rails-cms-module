@@ -1,6 +1,6 @@
 - source_id = layout.get_source_id
 - source_name = layout.get_source_name
-- page_counter = "0 #{I18n.t('ui.page_single_word')}"
+- page_counter = "#{layout.get_source_attach(Cms::SourceType::LAYOUT).try(:size) || 0} #{I18n.t('ui.page_single_word')}"
 
 %li
   .layout-row{"data-source_id" => source_id, "data-source_name" => source_name}

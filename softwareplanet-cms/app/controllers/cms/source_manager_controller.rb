@@ -77,7 +77,9 @@ module Cms
               @layouts_ids = Source.get_order(nil, SourceType::LAYOUT)
               @layouts = @layouts_ids.collect{|id| Source.get_source_by_id(id) }
             when "content"
-              @layouts = Source.where(:type => SourceType::LAYOUT)
+              @layouts_ids = Source.get_order(nil, SourceType::LAYOUT)
+              @layouts = @layouts_ids.collect{|id| Source.get_source_by_id(id) }
+              #@layouts = Source.where(:type => SourceType::LAYOUT)
             when "components"
               @components_ids = Source.get_order(nil, SourceType::CONTENT)
               @components = @components_ids.collect{|id| Source.get_source_by_id(id) }
@@ -120,8 +122,8 @@ module Cms
           Source.reorganize_by_ids(@object, @data)
         when 'click'
           @layout = Source.find_by_id(params['layout_id'])
-          @sub_layouts = @layout.get_source_attach(SourceType::LAYOUT)
-          @sub_layouts = @sub_layouts.nil? ? [] : @sub_layouts
+          @layouts_ids = Source.get_order(@layout.get_source_id, SourceType::LAYOUT)
+          @sub_layouts = @layouts_ids.collect{|id| Source.get_source_by_id(id) }
           raise 'sub_layouts should be array' unless @sub_layouts.is_a?(Array)
         when 'load'
           case @object

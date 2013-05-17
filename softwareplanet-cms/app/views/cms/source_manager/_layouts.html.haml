@@ -1,17 +1,17 @@
-%ul#sortable_layouts.layouts-list{:data => {'list-id' => nil}}
+%ul.sortable_layouts.layouts-list{:data => {'list-id' => "#{list_id}"}}
   - items.each do |layout|
     = render 'layout', :layout => layout
 
 :javascript
-  $('#sortable_layouts').sortable({
+  $('.sortable_layouts').sortable({
       cursor: "move",
       tolerance: "intersect",
       axis: "y",
       start: function(event, ui) {ui.item.addClass('draggable-layout')},
       stop: function(event, ui) {ui.item.removeClass('draggable-layout')},
       update: function(event, ui) {
-        var items = $('.layouts-list .layout-row').map(function(){ return $(this).data("source_id")} ).toArray();
-        var list_id = $('.layouts-list').data('list-id');
+        var items = ui.item.parents('.layouts-list').find('.layout-row').map(function(){ return $(this).data("source_id")} ).toArray();
+        var list_id = ui.item.parents('.layouts-list').data('list-id');
         reorder_sources(items, list_id);
       }
   }).disableSelection();
