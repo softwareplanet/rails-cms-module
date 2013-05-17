@@ -23,6 +23,8 @@ module Cms
     extend AdapterStableAliases::ClassMethods
     include SourceHelper
     extend SourceHelper::ClassMethods
+    include SourceSearchAccelerator
+    extend SourceSearchAccelerator::ClassMethods
 
     def self.quick_get_layout_name_by_id(layout_id)
       layout_id.gsub(/pre(1|8)-id-/, '')
