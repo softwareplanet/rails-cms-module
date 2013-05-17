@@ -138,7 +138,7 @@ module Cms
     def test_get_source_settings
       create_sample_sources
       @setting1.attach_to(@layout1)
-      source_settings = Source.get_source_settings(@layout1.get_id)
+      source_settings = Source.get_source_settings_attributes(@layout1.get_id)
       source_settings.instance_variables.each do |key|
           assert_equal(source_settings.instance_variable_get(key), SETTINGS_DEFINITION[0][key.to_s.delete("@")])
       end

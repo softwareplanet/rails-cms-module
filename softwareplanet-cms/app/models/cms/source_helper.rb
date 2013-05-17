@@ -1,8 +1,9 @@
 # Methods:
 
-#   get_source_settings       # <= layout source settings
-#   get_source_seo            # <= layout source seo tags
-#   read_seo_values           # <= hash seo tags
+#   get_source_settings_attributes  # <= layout source settings attributes
+#   get_source_settings_file        # <= layout source settings file
+#   get_source_seo                  # <= layout source seo tags
+#   read_seo_values                 # <= hash seo tags
 
 #   create_default_settings
 #   create_default_seo
@@ -80,13 +81,20 @@ module Cms
         list_order.set_data(order_data.join(','))
         order_data
       end
-      # Read source settings from settings file
+
+      # Read source settings attributes from settings file
       # If settings file not exists, it will be created with default settings
-      def get_source_settings(source_id)
+      def get_source_settings_attributes(source_id)
+        SourceSettings.new.read_source_settings( get_source_settings_file(source_id) )
+      end
+
+      # Read source settings file, type Source
+      # If settings file not exists, it will be created with default settings
+      def get_source_settings_file(source_id)
         source = Source.get_source_by_id(source_id)
-        settings = source.get_source_attach(SourceType::SETTINGS)
-        settings = source.create_default_settings if settings.nil?
-        SourceSettings.new.read_source_settings(settings)
+        settings_file = source.get_source_attach(SourceType::SETTINGS)
+        settings_file = source.create_default_settings if settings_file.nil?
+        settings_file
       end
 
 

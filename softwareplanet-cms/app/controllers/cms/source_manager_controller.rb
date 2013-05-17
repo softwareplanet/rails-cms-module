@@ -127,7 +127,7 @@ module Cms
           case @object
             when 'edit_properties'
               @layout = Source.find_by_id(params['layout_id'])
-              @settings_file = @layout.get_source_attach(SourceType::SETTINGS)
+              @settings_file = Source.get_source_settings_file(@layout.get_source_id)
               @settings = SourceSettings.new.read_source_settings(@settings_file)
             when 'edit_component'
               component_id = params[:component_id]

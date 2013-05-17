@@ -57,7 +57,7 @@ module Cms
         header_named_editable_content + prepended.gsub("\n", gsub_value)
       }
 
-      layout_settings = SourceSettings.new.read_source_settings(layout.get_source_attach(SourceType::SETTINGS))
+      layout_settings = Source.get_source_settings_attributes(layout.get_source_id)
       seo_string =
           "<title>#{layout_settings.title}</title>\n" +
           "<meta name=\"keywords\" content=\"#{layout_settings.keywords}\"/>\n" +

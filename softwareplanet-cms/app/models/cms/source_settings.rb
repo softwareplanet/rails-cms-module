@@ -68,7 +68,6 @@ module Cms
     def write_source_settings(source)
       raise 'source type is not SourceType::SETTINGS' if source.type != SourceType::SETTINGS
       source.set_data(get_data_hash.to_yaml)
-      source.flash!
     end
   end
 end
