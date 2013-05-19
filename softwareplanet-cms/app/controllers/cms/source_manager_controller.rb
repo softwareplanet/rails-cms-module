@@ -86,6 +86,9 @@ module Cms
             when "gallery"
               @images_folder = Cms::SOURCE_FOLDERS[SourceType::IMAGE]
               @sources = Source.load_gallery(params)
+            when "settings"
+              @layouts = Source.find_source_by_type(SourceType::LAYOUT) || []
+              @default_layout = @layouts.any? ? nil : @layouts.first
           end
       end
     end
