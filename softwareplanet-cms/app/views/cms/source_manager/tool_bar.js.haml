@@ -1,13 +1,20 @@
 -# Tool_Bar ajax methods process all user actions, captured on the ToolBar (left-side black panel)
 -#
 
-var activity = '#{@activity}';
-var icon_name = '#{@object}';
-var gallery_path = '#{@path}';
+- if @object=='exit'
+  if ( confirm("#{ I18n.t('ui.quit') }") ) {
+  window.location = '/adm/logout';
+  }
 
-- case @activity
-  - when 'click'
-    UI.hideAllPanels()
-    UI.showPanel(icon_name)
-    UI.showPanelSpinner(icon_name)
-    Request.getPanelData(icon_name, {path: gallery_path})
+-else
+
+  var activity = '#{@activity}';
+  var icon_name = '#{@object}';
+  var gallery_path = '#{@path}';
+
+  - case @activity
+    - when 'click'
+      UI.hideAllPanels()
+      UI.showPanel(icon_name)
+      UI.showPanelSpinner(icon_name)
+      Request.getPanelData(icon_name, {path: gallery_path})
