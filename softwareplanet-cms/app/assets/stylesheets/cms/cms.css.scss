@@ -54,11 +54,12 @@ body.cms {
   .icon {
     position: relative;
     margin-top: 24px;
-    width: 90px;
-    height: 70px;
+
+    height: 60px;
     cursor: pointer;
     float: left;
     text-align: right;
+    margin-left: 27px;
 
     .icon-tooltip {
       opacity: 0.8;
@@ -91,26 +92,94 @@ body.cms {
     left: 0;
 
   }
-  .icon-main { background: url(#{$assets_path}/main.png) no-repeat 22px ;}
-  .icon-main:hover, .icon-main.highlighted  { background: url(#{$assets_path}/mainH.png) no-repeat 22px; }
+  .icon-main {
+    width: 51px;
+    margin-left: 21px;
+    background-image: url(#{$assets_path}/main-toolbar.png);
+    background-position: 0 0;
+  }
+  .icon-main:hover, .icon-main.highlighted  {
+    width: 51px;
+    margin-left: 21px;
+    background-image: url(#{$assets_path}/main-toolbar.png);
+    background-position: -51px 0;
+  }
 
-  .icon-structure { background: url(#{$assets_path}/structure.png) no-repeat 16px;}
-  .icon-structure:hover, .icon-structure.highlighted { background: url(#{$assets_path}/structureH.png) no-repeat 16px; }
+  .icon-structure {
+    width: 61px;
+    margin-left: 16px;
+    background-image: url(#{$assets_path}/structure-toolbar.png);
+    background-position: 0 0;
+  }
+  .icon-structure:hover, .icon-structure.highlighted {
+    width: 61px;
+    margin-left: 16px;
+    background-image: url(#{$assets_path}/structure-toolbar.png);
+    background-position: -61px 0;
+  }
 
-  .icon-content { background: url(#{$assets_path}/content.png) no-repeat 11px;}
-  .icon-content:hover, .icon-content.highlighted { background: url(#{$assets_path}/contentH.png) no-repeat 11px; }
+  .icon-content {
+    width: 75px;
+    margin-left: 9px;
+    background-image: url(#{$assets_path}/content-toolbar.png);
+    background-position: 0 0;
+  }
+  .icon-content:hover, .icon-content.highlighted {
+    width: 75px;
+    margin-left: 9px;
+    background-image: url(#{$assets_path}/content-toolbar.png);
+    background-position: -75px 0;
+  }
 
-  .icon-components { background: url(#{$assets_path}/components.png) no-repeat 11px;}
-  .icon-components:hover, .icon-components.highlighted { background: url(#{$assets_path}/componentsH.png) no-repeat 11px; }
+  .icon-components {
+    width: 73px;
+    margin-left: 10px;
+    background-image: url(#{$assets_path}/components-toolbar.png);
+    background-position: 0 0;
+  }
+  .icon-components:hover, .icon-components.highlighted {
+    width: 73px;
+    margin-left: 10px;
+    background-image: url(#{$assets_path}/components-toolbar.png);
+    background-position: -73px 0;
+  }
 
-  .icon-gallery { background: url(#{$assets_path}/gallery.png) no-repeat 24px;}
-  .icon-gallery:hover, .icon-gallery.highlighted { background: url(#{$assets_path}/galleryH.png) no-repeat 24px; }
+  .icon-gallery {
+    width: 49px;
+    margin-left: 25px;
+    background-image: url(#{$assets_path}/gallery-toolbar.png);
+    background-position: 0 0;
+  }
+  .icon-gallery:hover, .icon-gallery.highlighted {
+    width: 49px;
+    margin-left: 25px;
+    background-image: url(#{$assets_path}/gallery-toolbar.png);
+    background-position: -49px 0;
+  }
 
-  .icon-settings{ background: url(#{$assets_path}/settings.png) no-repeat 15px;}
-  .icon-settings:hover, .icon-settings.highlighted { background: url(#{$assets_path}/settingsH.png) no-repeat 15px; }
+  .icon-settings{
+    width: 63px;
+    margin-left: 15px;
+    background-image: url(#{$assets_path}/settings-toolbar.png);
+    background-position: 0 0;
+  }
+  .icon-settings:hover, .icon-settings.highlighted {
+    width: 63px;
+    margin-left: 15px;
+    background-image: url(#{$assets_path}/settings-toolbar.png);
+    background-position: -63px 0;
+  }
 
-  .icon-exit { background: url(#{$assets_path}/exit.png) no-repeat 26px;}
-  .icon-exit:hover, .icon-exit.highlighted { background: url(#{$assets_path}/exitH.png) no-repeat 26px; }
+  .icon-exit {
+    width: 38px;
+    background-image: url(#{$assets_path}/exit-toolbar.png);
+    background-position: 0 0;
+  }
+  .icon-exit:hover, .icon-exit.highlighted {
+    width: 38px;
+    background-image: url(#{$assets_path}/exit-toolbar.png);
+    background-position: -38px 0;
+  }
 }
 
 .menu-bar.menu-bar-inactive {
@@ -994,4 +1063,8 @@ ul.layouts-list, ul.components-list {
 .folder-state-hover {
   -webkit-box-shadow: 0px 0px 10px 8px lightblue;
   box-shadow: 0px 0px 10px 8px lightblue;
+}
+
+.settings-content {
+  margin: 10px;
 }
