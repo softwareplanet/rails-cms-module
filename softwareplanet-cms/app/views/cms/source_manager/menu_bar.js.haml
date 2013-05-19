@@ -15,6 +15,9 @@ $(panel_content).html("");
         $(panel_content).html("#{ escape_javascript(render(:partial => 'content')) }");
       - when 'components'
         $(panel_content).html("#{ escape_javascript(render(:partial => 'components', :locals => {items: @components} )) }");
+      - when 'settings'
+        $(panel_content).html("#{ escape_javascript(render(:partial => 'settings', :locals => {items: @layouts, default: @default_layout} )) }");
+
       - when 'gallery'
         - @breadcrumb = @sources['breadcrumbs']
         - @folders = @sources['folders']

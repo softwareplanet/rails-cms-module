@@ -67,6 +67,9 @@ en:
     error: Impossible to rename a component
     success: The component has successfully renamed
 
+  settings_form:
+    default_layout: Choose startup layout
+
   ui:
     edit_properties: Edit properties
     delete_page: Delete page
