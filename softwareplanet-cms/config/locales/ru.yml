@@ -3,7 +3,7 @@
 
 ru:
   login:
-    title: Вход в систему
+    title: SoftwarePlanet CMS
     username: Логин
     password: Пароль
     button: Войти

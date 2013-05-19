@@ -60,6 +60,7 @@
       if (request.url.include?("/adm") ||
           request.url.include?("/page_layouts") ||
           request.url.include?("/page_contents") ||
+          request.url.include?("/gallery") ||
           request.url.include?("/source_code") ||
           request.url.include?("/source_manager")) && !check_admin
         flash[:error] =  t("access.denied")
