@@ -30,9 +30,10 @@ desc "Setup script"
       puts "***Welcome to Cms setup Wizard. What is your wish?"
       puts "1 - Setup Cms for current project."
       puts "0 - Exit Wizard"
-      user_choice = STDIN.getc
-      exit if user_choice != '1'
-      
+      user_choice = STDIN.gets
+      puts user_choice.inspect
+      exit if user_choice != "1\n"
+
       #
       # Touch the database:
       #
@@ -55,7 +56,7 @@ desc "Setup script"
             puts "Dont worry. It seems that your database was not prepeared yet. May I create it manually with rake db:create?"
             puts "1 - yes, please"
             puts "2 - no, thanks"
-            begin puts("Do it manually, if you wish."); exit; end if STDIN.getch != '1'
+            begin puts("Do it manually, if you wish."); exit; end if STDIN.gets != "1\n"
             puts ".."
             Rake::Task['db:create'].reenable
             Rake::Task['db:create'].invoke
@@ -118,12 +119,13 @@ desc "Setup script"
       end
       puts "Including of minor dependencies (if you wish):"
       minor_gemfile_dependencies.each_with_index do |gem_file, index|
+
         next if text_exists?(OWNER_GEMFILE_PATH, gem_file)
         sleep UI_DELAY
         puts "Optional #{gem_file} wants to be included in Gemfile. Allow it?"
         puts "1 - yes, please"
         puts "2 - no, thanks"
-        if STDIN.getch == '1'
+        if STDIN.gets == "1\n"
           inject_text(OWNER_GEMFILE_PATH, -1, gem_file + "\n") 
           minor_gemfile_selections[index] = true
         end
@@ -182,7 +184,7 @@ desc "Setup script"
             puts "Are you wish #{css_prompts[index]} to be included?"
             puts "1 - yes, please"
             puts "2 - no, thanks"
-            if STDIN.getch == '1'
+            if STDIN.gets == "1\n"
               inject_text(OWNER_APP_CSS_PATH, 2, "*= " + css_asset + "\n")
             end
           end
