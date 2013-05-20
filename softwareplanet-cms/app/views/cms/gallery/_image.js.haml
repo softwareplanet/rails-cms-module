@@ -1,7 +1,7 @@
 - @images.each do |image|
   - image_size = image.get_image_size[0].to_s + 'x' + image.get_image_size[1].to_s
   - image_info = image.get_source_name + ' ' + image_size
-  .image{:id => image.get_source_id, :title => "#{image.get_source_name}", 'data-name' => "#{image.get_source_name}", 'data-path' => "#{image.get_source_filepath}"}
+  .image.atom{:id => image.get_source_id, :title => "#{image.get_source_name}", 'data-name' => "#{image.get_source_name}", 'data-path' => "#{image.get_source_filepath}"}
     .delete_image{:onclick => "deleteImage(this)"}
       x
     %input{:onfocusout => "renameImage(this)", :onkeypress => "renameImageOnEnterKey(this)"}

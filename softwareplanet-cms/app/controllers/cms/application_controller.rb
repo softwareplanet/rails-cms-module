@@ -56,7 +56,6 @@
     end
 
     def admin_access
-      puts 'debug'
       if (request.url.include?("/adm") ||
           request.url.include?("/page_layouts") ||
           request.url.include?("/page_contents") ||

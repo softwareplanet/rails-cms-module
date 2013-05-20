@@ -26,6 +26,7 @@
         $('#properties_form').find('[name="id"]').val('#{@layout.get_id}');
         $('#properties_form').find('.name').val('#{}');
         $('#properties_form').find('.url').val('#{@layout.get_source_name}');
+        $('#properties_form').find('.layout-title').val('#{@settings.keywords}');
         $('#properties_form').find('.keywords').val('#{@settings.keywords}');
         $('#properties_form').find('.description').val('#{@settings.description}');
         - if @settings.no_publish == 1

@@ -1,10 +1,10 @@
-html {
+html#loginpage {
   background: url(/assets/ui/background.png) repeat;
 }
-body {
+#loginpage body {
   background-color: initial;
   height: 100%;
 }
-.container {
+#loginpage .container {
   margin: 200px auto;
 }

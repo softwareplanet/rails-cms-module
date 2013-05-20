@@ -2,7 +2,7 @@
   - if @without_cache
     - output = Haml::Engine.new(@html, :format => :html5).render(Object.new, :app => @application_data )
     != output
-    =# render :partial => "softwareplanet-cms/source_manager/popups", :locals => {images: @images, aloha: true} if @application_data[:admin?]
+    = render :partial => "cms/source_manager/popups", :locals => {images: @images, aloha: true} if @application_data[:admin?]
 
   != @compiled_file_content
 

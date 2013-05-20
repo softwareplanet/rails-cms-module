@@ -62,7 +62,7 @@ module Cms
     end
 
     def get_image_path
-      get_source_path["public".size..-1]
+        get_source_filepath["public".size..-1]
     end
 
     def get_image_size

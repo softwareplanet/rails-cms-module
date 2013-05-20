@@ -2,6 +2,12 @@
 
 $(document).ready ->
 
+  #if $('.panel_gallery').is(':visible')
+  #  console.log('aa')
+  #  $(".panel_gallery .content").isotope
+  #    itemSelector: ".image"
+  #    layoutMode: "fitRows"
+
   # <input file> on change handler
   $("#image_src").change ->
     to_path = $('.panel_gallery .current_gallery_path').val()

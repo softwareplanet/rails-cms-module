@@ -7,7 +7,6 @@ module Cms
     module ClassMethods
 
       def find_source_by_name_and_type(source_name, source_type)
-        puts "accelerated method used.."
         files = Array.new
         dir = AdapterStable.get_source_folder(source_type)
         Dir.glob(dir+"**/*"+source_name).each do |f|

@@ -43,6 +43,8 @@ module Cms
         return
       end
 
+      @images = Source.find_source_by_type(SourceType::IMAGE)
+
       #@html, @wrapper_id, @stylesheets, @seo_tags = Page.compose(@layout, @application_data)
       #@images = Source.where :type => SourceType::IMAGE if check_admin
       # images count decreased for faster page loading

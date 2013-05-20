@@ -57,16 +57,17 @@
   .modal-body
     .gallery-content{:style => "margin: 30px 10px;"}
       - images.each do |img|
-        .img-box{"data-name" => img.name, "data-id" => img.get_id}
-          .delete-image{:id => "#{img.get_id}", :onclick => "delete_image(this)"}
+        - next if File.directory?(img.get_source_filepath)
+        .img-box{"data-name" => img.get_source_name, "data-id" => img.get_source_id}
+          .delete-image{:id => "#{img.get_source_id}", :onclick => "delete_image(this)"}
           - image_width = img.get_image_size[0]
           - image_height = img.get_image_size[1]
-          - image_name = img.get_name
+          - image_name = img.get_source_name
           .img-container
-            %img.box{:src => "#{img.get_image_path}", :id => "#{img.get_id}", :class=> "#{'gallery-image' if aloha}", 'data-width' => image_width, 'data-height' => image_height, 'data-name' => image_name}
+            %img.box{:src => "#{img.get_image_path}", :id => "#{img.get_source_id}", :class=> "#{'gallery-image' if aloha}", 'data-width' => image_width, 'data-height' => image_height, 'data-name' => image_name}
           .tagname-description
             Multimedia tag name:
-          %input.image-name{:type => "text", :value => "#{img.name}", :onkeyup => "on_gallery_name_keyup(event, this)", 'data-source-name' => "#{img.name}"}
+          %input.image-name{:type => "text", :value => "#{img.get_source_name}", :onkeyup => "on_gallery_name_keyup(event, this)", 'data-source-name' => "#{img.get_source_name}"}
           %br
           .imgsize
             .imgsize-description
