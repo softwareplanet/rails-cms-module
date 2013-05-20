@@ -4,7 +4,25 @@
 }
 .CodeMirror-scroll {
   height: auto!important;
-  overflow-y: hidden!important;
+  overflow-y: auto!important;
   overflow-x: auto!important;
+}
 
+.CodeMirror-sizer {
+  max-height: 100px!important;
+  min-height: 100px!important;
+}
+
+.CodeMirror-linenumber {
+  background-color: white;
+}
+
+.CodeMirror {
+  overflow-y: auto;
+  overflow-x: scroll;
+  width: 700px;
+  height: auto;
+  line-height: 1em;
+  font-family: monospace;
+  _position: relative; /* IE6 hack */
 }
