@@ -9,8 +9,8 @@
 }
 
 .CodeMirror-sizer {
-  max-height: 100px!important;
-  min-height: 100px!important;
+  max-height: 600px!important;
+  min-height: 600px!important;
 }
 
 .CodeMirror-linenumber {
@@ -20,7 +20,7 @@
 .CodeMirror {
   overflow-y: auto;
   overflow-x: scroll;
-  width: 700px;
+  width: 100%;
   height: auto;
   line-height: 1em;
   font-family: monospace;
