@@ -13,7 +13,7 @@ module Cms
   SOURCE_FOLDER = "data_source"
   SOURCE_FOLDERS = {
       SourceType::CSS       => "app/assets/stylesheets/custom/",
-      SourceType::IMAGE     => "public/img/storage/",
+      SourceType::IMAGE     => "public/img/",
       SourceType::LAYOUT    => "#{SOURCE_FOLDER}/layouts/",
       SourceType::SETTINGS    => "#{SOURCE_FOLDER}/settings/",
       SourceType::CONTENT   => "#{SOURCE_FOLDER}/contents/",
