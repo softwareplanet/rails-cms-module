@@ -331,9 +331,10 @@ i.close-child:hover {
   height: 100%;
   overflow: auto;
   z-index: 100;
-  background-color: white;
+  /*background-color: white;*/
+  background: url(/assets/ui/background.png) repeat;
   .header {
-    background-color: white;
+    /*background-color: white;*/
     .title {
       color: #000000;
       margin-left: 46px;
@@ -428,7 +429,7 @@ i.close-child:hover {
     color: black;
     margin-left: 23px;
     margin-right: 23px;
-    background-color: white;
+    /*background-color: white;*/
     display: inline-block;
     .gallery-folder {
       background: none;
