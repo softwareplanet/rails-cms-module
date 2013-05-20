@@ -100,7 +100,8 @@
             %a.accordion-toggle{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#collapseOne"}
               %i.rotable-icon.icon-info-sign
               Настройки SEO
-          #collapseOne.accordion-body.collapse.in
+          -##collapseOne.accordion-body.collapse.in{:style => "height: 100px;"}
+          .in{:style => "height: auto;"}
             .accordion-inner
 
               %label Заголовок

@@ -767,7 +767,8 @@ i.close-child:hover {
         }
         .edit-properties:hover {
           color: white;
-          background-color: #539ce5;
+          /*background-color: #539ce5;*/
+          background-color: rgb(50, 137, 224);
           .preferences-rect {
             background: url(#{$assets_path}/icons/rect_top_blue.png) no-repeat;
           }

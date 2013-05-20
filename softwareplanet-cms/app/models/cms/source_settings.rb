@@ -15,9 +15,8 @@ module Cms
 
   # Settings array:
   SETTINGS_DEFINITION = [
-    'publish' => '1',
-    'display' => '1',
-    'display' => '1',
+    'no_publish' => '1',
+    'no_show' => '1',
     'title' => '',
     'keywords' => '',
     'description' => ''

@@ -102,8 +102,9 @@ module Cms
 
       # Before filter method, to pre-process incoming parameters
       def prepare_parameters(params)
-        params[:publish] = params[:publish] == 'on' ? 0 : 1
-        params[:display] = params[:display] =='on' ? 0 : 1
+        # S_Sh I kill you!
+        params[:no_publish] = params[:no_publish] == 'on' ? 1 : 0
+        params[:no_show] = params[:no_show] == 'on' ? 1 : 0
         params
       end
 
@@ -162,7 +163,7 @@ module Cms
         new_name = params[:name]
         layout.rename_source(new_name) if new_name != layout.get_source_name
 
-        settings_file = layout.get_source_attach(SourceType::SETTINGS)
+        settings_file = Source.get_source_settings_file(layout.get_source_id)
         settings_builder = SourceSettings.new.elect_params( prepare_parameters(params) )
         settings_builder.write_source_settings(settings_file)
         layout

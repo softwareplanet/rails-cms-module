@@ -28,11 +28,11 @@
         $('#properties_form').find('.url').val('#{@layout.get_source_name}');
         $('#properties_form').find('.keywords').val('#{@settings.keywords}');
         $('#properties_form').find('.description').val('#{@settings.description}');
-        - if @settings.publish == '1'
+        - if @settings.no_publish == 1
           document.getElementById("no_publish").checked = true;
         - else
           document.getElementById("no_publish").checked = false;
-        - if @settings.display == '1'
+        - if @settings.no_show == 1
           document.getElementById("no_show").checked = true;
         - else
           document.getElementById("no_show").checked = false;
