@@ -139,7 +139,8 @@ module Cms
         localized = SiteLocal.create(:tag_id => tag_id, :text => "#{image_id}#{image_size}")
         image_src = "#"
       else
-        image_src = localized.text
+        img = Source.find_source_by_name_and_type(localized.text+".*", SourceType::IMAGE).first
+        image_src = img ? img.get_image_path : "notfound!"
         unless image_size
           image_width_attr = image_height_attr = ""
         end
