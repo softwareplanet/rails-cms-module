@@ -8,38 +8,25 @@
             %a{"data-toggle" => "tab", :href => "#tab1"} Исходный код
           %li.css-navtab
             %a{"data-toggle" => "tab", :href => "#tab2"} Стили оформления
-          -#%li.preview-navtab
-            %a{"data-toggle" => "tab", :href => "#tab3"} Предварительный просмотр
+          -#%li.head-navtab
+            %a{"data-toggle" => "tab", :href => "#tab3"} Редактирование секции HEAD
         .tab-content
           #tab1.haml-tab.tab-pane.active
+            .head-tag
+              .heading
+                Head content
+                = render "cms/source_code/panel_editor_dropdown"
+              %textarea{:id => "head_editor"}
+            Body content
             %textarea{:id => "haml_editor"}
             .save-haml-btn
               Сохранить
-
-            %ul.nav.nav-pills{:style => "position: relative"}
-              %li.dropdown.languages-dropdown{:style => "position: absolute; top: -60px; right: -3px;"}
-                %a#languages.dropdown-toggle{:href => "#", "data-toggle" => "dropdown", :role => "button"}
-                  Code languages
-                  %b.caret
-                %ul.dropdown-menu{"aria-labelledby" => "languages", :role => "menu", :style => "height: 270px;overflow-y: auto;"}
-                  - languages = %w(asterisk clike clojure coffeescri commonlisp css d diff ecl erlang gfm go groovy haskell haxe htmlembedd htmlmixed http javascript jinja2 less lua markdown mysql ntriples ocaml pascal perl php pig plsql properties python r rpm-change rpm-spec rst ruby rust sass scheme shell sieve smalltalk smarty sparql sql stex tiddlywiki tiki vb vbscript velocity verilog xml xquery yaml z80)
-                  - languages.each do |lang|
-                    %li{:role => "presentation"}
-                      %a{:role => "menuitem", :tabindex => "-1", :href => "#", "data-language" => lang, :onclick => "lang_select('#{lang}', this)"}
-                        = lang
-              %li.dropdown.themes-dropdown{:style => "position: absolute; top: -60px; right: 135px;"}
-                %a#themes.dropdown-toggle{:href => "#", "data-toggle" => "dropdown", :role => "button"}
-                  Code editor themes
-                  %b.caret
-                %ul.dropdown-menu{"aria-labelledby" => "themes", :role => "menu", :style => "height: 270px;overflow-y: auto;"}
-                  - themes = %w(ambiance-mobile ambiance blackboard cobalt eclipse elegant erlang-dark lesser-dark monokai neat night rubyblue solarized twilight vibrant-ink xq-dark)
-                  - themes.each do |theme|
-                    %li{:role => "presentation"}
-                      %a{:role => "menuitem", :tabindex => "-1", :href => "#", "data-theme" => theme, :onclick => "theme_select('#{theme}', this)"}
-                        = theme
 
           #tab2.css-tab.tab-pane
             %textarea{:id => "css_editor"}
             .save-css-btn
               Сохранить
-          #tab3.preview-content.tab-pane
+          -##tab3.head-tab.tab-pane
+            %textarea{:id => "head_editor"}
+            .save-head-btn
+              Сохранить

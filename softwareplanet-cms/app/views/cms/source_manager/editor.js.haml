@@ -1,4 +1,5 @@
 $(".panel_editor").html("#{ escape_javascript(render(:partial =>  "panel_editor", :locals => {:source => @source})) }");
+
 $(".panel_editor .title").html("#{@source.get_source_name}");
 
 $(".panel_editor").slideRightShow()
@@ -8,13 +9,15 @@ editorManager.removeEditors()
 editorManager.setRequestPath
 editorManager.addEditor("haml_editor", new CodeEditorIDE("haml_editor"));
 editorManager.addEditor("css_editor", new CodeEditorIDE("css_editor"));
+editorManager.addEditor("head_editor", new CodeEditorIDE("head_editor"));
 editorManager.getEditor("haml_editor").code_editor.setOption("mode", "stex");
 editorManager.getEditor("css_editor").code_editor.setOption("mode", "css");
+editorManager.getEditor("head_editor").code_editor.setOption("mode", "clojure");
 editorManager.getEditor("haml_editor").code_editor.clearHistory();
 editorManager.getEditor("css_editor").code_editor.clearHistory();
+editorManager.getEditor("head_editor").code_editor.clearHistory();
 
 $(".layout-row").removeClass("layout-row-selected");
-
 editorManager.getEditor("haml_editor").setRequestPath("/source_code/edit_source_code/");
 editorManager.getEditor("haml_editor").getRequestSource("#{@source.get_id}");
 editorManager.getEditor("haml_editor").setSourceId("#{@source.get_id}");
@@ -24,20 +27,27 @@ css_id = $(this).data("#{@css.get_source_name}");
 editorManager.getEditor("css_editor").setRequestPath("/source_manager/");
 editorManager.getEditor("css_editor").getRequestSource("#{@css.get_id}");
 editorManager.getEditor("css_editor").setSourceId("#{@css.get_id}");
+- @head = @source.get_source_attach_or_create(Cms::SourceType::HEAD)
+head_id = $(this).data("#{@head.get_source_name}");
+editorManager.getEditor("head_editor").setRequestPath("/source_manager/");
+editorManager.getEditor("head_editor").getRequestSource("#{@head.get_id}");
+editorManager.getEditor("head_editor").setSourceId("#{@head.get_id}");
 $(".editor-panel").show();
 setTimeout("editorManager.getEditor('css_editor').code_editor.refresh();", 1000);
 
 $(".save-haml-btn").bind("click", function(){
 editorManager.getEditor("haml_editor").saveSource();
+editorManager.getEditor("head_editor").saveSource();
 });
 $(".save-css-btn").bind("click", function(){
 editorManager.getEditor("css_editor").saveSource();
 });
 
-$(".preview-navtab").bind("click", function(){
-$("#tab3").html( "<iframe style='width:100%; height: 100%;' src='/#{@source.get_source_name}'>" );
-});
-- if @source.type == Cms::SourceType::LAYOUT
-  $('.editor-panel .preview-navtab').show();
-- else
-  $('.editor-panel .preview-navtab').hide();
+-#
+  $(".preview-navtab").bind("click", function(){
+  $("#tab3").html( "<iframe style='width:100%; height: 100%;' src='/#{@source.get_source_name}'>" );
+  });
+  - if @source.type == Cms::SourceType::LAYOUT
+    $('.editor-panel .preview-navtab').show();
+  - else
+    $('.editor-panel .preview-navtab').hide();

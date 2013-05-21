@@ -4,9 +4,12 @@ window.InitializeCms = () ->
   editorManager = new CodeEditorsManager
   editorManager.addEditor "haml_editor", new CodeEditorIDE("haml_editor")
   editorManager.addEditor "css_editor", new CodeEditorIDE("css_editor")
-  editorManager.getEditor("haml_editor").code_editor.setOption "mode", "stex"
+  editorManager.addEditor "head_editor", new CodeEditorIDE("head_editor")
+  editorManager.getEditor("haml_editor").code_editor.setOption "mode", "clojure"
+  editorManager.getEditor("head_editor").code_editor.setOption "mode", "clojure"
   editorManager.getEditor("css_editor").code_editor.setOption "mode", "css"
   editorManager.getEditor("haml_editor").code_editor.clearHistory()
+  editorManager.getEditor("head_editor").code_editor.clearHistory()
   editorManager.getEditor("css_editor").code_editor.clearHistory()
 
 $(document).ready ->
@@ -109,11 +112,13 @@ window.theme_select = (theme, that) ->
   $(".haml-tab .themes-dropdown .dropdown-menu a").removeClass "dropdown-selected"
   $(that).addClass "dropdown-selected"
   editorManager.editors[0].editor.code_editor.setOption "theme", theme
+  editorManager.editors[2].editor.code_editor.setOption "theme", theme
 
 window.lang_select = (lang, that) ->
   $(".haml-tab .languages-dropdown .dropdown-menu a").removeClass "dropdown-selected"
   $(that).addClass "dropdown-selected"
   editorManager.editors[0].editor.code_editor.setOption "mode", lang
+  editorManager.editors[2].editor.code_editor.setOption "mode", lang
 
 window.SwitchTo = (panel) ->
   $(panel).show()

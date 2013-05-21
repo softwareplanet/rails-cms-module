@@ -1,3 +1,7 @@
+.tab-content {
+  font-weight: bold;;
+}
+
 .CodeMirror {
   border: 1px solid #eee!important;
   height: auto!important;
@@ -8,13 +12,30 @@
   overflow-x: auto!important;
 }
 
+.head-tag {
+  .heading ul{
+    float: right;
+    width: 400px;
+    .dropdown-toggle {
+      color: white;
+    }
+  }
+  a:hover {
+    background-color: #257bd2!important;
+  }
+
+  .CodeMirror-sizer {
+    max-height: 60px!important;
+    min-height: 60px!important;
+  }
+}
 .CodeMirror-sizer {
-  max-height: 600px!important;
-  min-height: 600px!important;
+  max-height: 540px!important;
+  min-height: 540px!important;
 }
 
 .CodeMirror-linenumber {
-  background-color: white;
+  /*background-color: white;*/
 }
 
 .CodeMirror {

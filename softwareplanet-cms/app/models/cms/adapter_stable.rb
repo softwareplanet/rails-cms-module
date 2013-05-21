@@ -176,6 +176,14 @@ module Cms
       self
     end
 
+    def get_source_attach_or_create(source_type)
+      attach = get_source_attach(source_type)
+      if attach.nil?
+        attach = Source.build(:type => source_type, :name => self.get_source_name, :target => self)
+      end
+      attach
+    end
+
     def get_source_attach(source_type)
       source_folder = (AdapterStable.get_rails_env == 'test' ? TEST_SOURCE_FOLDERS[source_type] : SOURCE_FOLDERS[source_type])
       source_path = Dir.glob(source_folder + "/**/*#{type.to_i}#{TARGET_DIVIDER}#{get_source_name}#{TARGET_DIVIDER}*").flatten.compact
