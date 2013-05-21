@@ -18,7 +18,7 @@ module Cms
       @without_cache = !ALLOW_COMPILED_CACHE || check_admin
 
       if @without_cache # do not display cached:
-        @html, @wrapper_id, @stylesheets, @seo_tags = Page.compose(@layout, @application_data)
+        @html, @wrapper_id, @stylesheets, @seo_tags, @head_content = Page.compose(@layout, @application_data)
           # images count decreased for faster page loading
           #@images = Source.where(:type => SourceType::IMAGE)[] if check_admin
       else
@@ -28,7 +28,7 @@ module Cms
         compiled_file_path = compiled_file_folder + layout_name
         @compiled_layout = File.read(compiled_file_path) if File.exists?(compiled_file_path)
         if @compiled_layout.nil?
-          @html, @wrapper_id, @stylesheets, @seo_tags = Page.compose(layout_name, @application_data)
+          @html, @wrapper_id, @stylesheets, @seo_tags, @head_content = Page.compose(layout_name, @application_data)
           @compiled_file_content = Haml::Engine.new(@html, :format => :html5).render(Object.new, :app => @application_data )
           @compiled_layout = render_to_string
 

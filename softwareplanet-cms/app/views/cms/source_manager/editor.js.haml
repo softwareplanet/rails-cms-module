@@ -6,13 +6,18 @@ $(".panel_editor").slideRightShow()
 window.editorManager = new CodeEditorsManager();
 var editorManager = window.editorManager;
 editorManager.removeEditors()
-editorManager.setRequestPath
+
 editorManager.addEditor("haml_editor", new CodeEditorIDE("haml_editor"));
 editorManager.addEditor("css_editor", new CodeEditorIDE("css_editor"));
 editorManager.addEditor("head_editor", new CodeEditorIDE("head_editor"));
+
 editorManager.getEditor("haml_editor").code_editor.setOption("mode", "stex");
+
 editorManager.getEditor("css_editor").code_editor.setOption("mode", "css");
+
 editorManager.getEditor("head_editor").code_editor.setOption("mode", "clojure");
+editorManager.getEditor("head_editor").code_editor.setOption("lineWrapping", false);
+
 editorManager.getEditor("haml_editor").code_editor.clearHistory();
 editorManager.getEditor("css_editor").code_editor.clearHistory();
 editorManager.getEditor("head_editor").code_editor.clearHistory();
@@ -33,7 +38,9 @@ editorManager.getEditor("head_editor").setRequestPath("/source_manager/");
 editorManager.getEditor("head_editor").getRequestSource("#{@head.get_id}");
 editorManager.getEditor("head_editor").setSourceId("#{@head.get_id}");
 $(".editor-panel").show();
+
 setTimeout("editorManager.getEditor('css_editor').code_editor.refresh();", 1000);
+setTimeout("editorManager.getEditor('haml_editor').code_editor.refresh();", 1000);
 
 $(".save-haml-btn").bind("click", function(){
 editorManager.getEditor("haml_editor").saveSource();

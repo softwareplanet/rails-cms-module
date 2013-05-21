@@ -12,9 +12,12 @@ module Cms
       #quick:
       layout = Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).first
 
+
       if layout.nil?
         raise ArgumentError, "Attempt to generate layout<b> #{layout_name}"
       end
+
+      head_content = layout.get_source_attach_or_create(SourceType::HEAD).get_data
 
       str = layout.get_data
 
@@ -88,7 +91,7 @@ module Cms
       end
 
 
-      [plain_src, layout.get_id, page_styles, seo_tags]
+      [plain_src, layout.get_id, page_styles, seo_tags, head_content]
     end
   end
 end

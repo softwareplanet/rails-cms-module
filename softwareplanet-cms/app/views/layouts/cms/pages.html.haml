@@ -2,15 +2,13 @@
 %html
   %head
     =""
-    /
-      _|  _|      _|  _|_|_|_|_|  _|_|_|_|  _|_|_|    _|      _|  _|      _|  _|    _|
-      _|  _|_|    _|      _|      _|        _|    _|  _|      _|  _|_|    _|  _|  _|
-      _|  _|  _|  _|      _|      _|_|_|    _|_|_|    _|      _|  _|  _|  _|  _|_|
-      _|  _|    _|_|      _|      _|        _|    _|  _|      _|  _|    _|_|  _|  _|
-      _|  _|      _|      _|      _|_|_|_|  _|    _|  _|_|_|  _|  _|      _|  _|    _|
     = @seo_tags.html_safe
     = ""
-    %link{:href => "http://fonts.googleapis.com/css?family=Arimo&subset=latin,cyrillic-ext", :rel => "stylesheet", :type => "text/css"}
+    - output = Haml::Engine.new(@head_content, :format => :html5).render(Object.new, :app => @application_data )
+    != output
+    = ""
+    -#%link{:href => "http://fonts.googleapis.com/css?family=Arimo&subset=latin,cyrillic-ext", :rel => "stylesheet", :type => "text/css"}
+
     = stylesheet_link_tag    "application", :media => "all"
     - @stylesheets.each do |style_file|
       = stylesheet_link_tag style_file

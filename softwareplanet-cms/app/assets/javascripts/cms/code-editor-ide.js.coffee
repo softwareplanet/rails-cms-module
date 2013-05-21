@@ -40,12 +40,14 @@ class window.CodeEditorIDE
   constructor: (code_textarea_id) ->
     code_textarea = document.getElementById (code_textarea_id)
     @code_editor = CodeMirror.fromTextArea(code_textarea,
+      continuousScanning: 500,
+      lineNumbers: true,
+
       lineNumbers: true,
       mode: "css",
       theme: "ambiance",
       electricChars: false,
-      autofocus: true
-
+      #autofocus: true
       styleActiveLine: true,
       lineWrapping: true
     )
