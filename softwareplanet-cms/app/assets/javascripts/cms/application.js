@@ -23,14 +23,12 @@
 //= require codemirror/modes/less
 //= require codemirror/modes/lua
 //= require codemirror/modes/markdown
-//= require codemirror/modes/mysql
 //= require codemirror/modes/ntriples
 //= require codemirror/modes/ocaml
 //= require codemirror/modes/pascal
 //= require codemirror/modes/perl
 //= require codemirror/modes/php
 //= require codemirror/modes/pig
-//= require codemirror/modes/plsql
 //= require codemirror/modes/properties
 //= require codemirror/modes/python
 //= require codemirror/modes/r
