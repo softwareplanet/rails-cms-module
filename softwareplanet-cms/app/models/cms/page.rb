@@ -6,13 +6,7 @@ module Cms
     # Returns the array in form [  html, wrapper_id, [stylesheets_filenames] ]
     def self.compose(layout_name, var_hash)
       is_admin = var_hash[:admin?] == true
-
-      #slow:
-      #layout = Source.find_by_type_and_name(SourceType::LAYOUT,  layout_name).first
-      #quick:
       layout = Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).first
-
-
       if layout.nil?
         raise ArgumentError, "Attempt to generate layout<b> #{layout_name}"
       end
@@ -23,9 +17,6 @@ module Cms
 
       page_styles = []
 
-      #slow:
-      #slow_style_path = CUSTOM_SCSS_FOLDER + layout.get_attach.get_filename
-      #quick:
       page_styles << "custom/" + layout.get_source_attach(SourceType::CSS).get_source_filename
 
       plain_src = str.gsub(/[" "]*%content:([\w_\-]+)/) { |r|
@@ -33,29 +24,17 @@ module Cms
         next_line_offset_length = offset_length + 2
         offset_whitespaces = " " * offset_length
         next_line_offset_whitespaces = " " * next_line_offset_length
-
         content_name = /:([\w_\-]+)/.match(r)[1]
-
-        #slow:
-        #replacement = Source.find_by_name_and_type(content_name, SourceType::CONTENT).first
-        #quick:
         replacement = Source.quick_content_search(content_name, SourceType::CONTENT)
         raise ArgumentError, "Content with name #{content_name} is not found!" if replacement.blank?
 
-
-        # slow
-        #page_styles << (CUSTOM_SCSS_FOLDER + replacement.get_attach.get_filename) unless replacement.get_attach.blank?
-        # quick
-
-        # TODO!! DISABLED BECAUSE ALL STYLES INCLUDED IN SINGLE (LAYOUT) CSS!!!!!! Uncomment!
-        #custom_style = CUSTOM_SCSS_FOLDER + "2" + Cms::TARGET_DIVIDER + replacement.name + ".scss"
-        #page_styles << custom_style
+        custom_style = SOURCE_FOLDERS[SourceType::CSS] + "2" + Cms::TARGET_DIVIDER + replacement.name + Cms::TARGET_DIVIDER + replacement.name + ".scss"
+        page_styles << custom_style
 
         content_source = replacement.build(var_hash, layout)
         prepended = content_source.prepend(next_line_offset_whitespaces)
         gsub_value = ("\n" + " "*next_line_offset_length)
         header_named_editable_content = "%div#{ ".editable-long-text" if replacement.editable && is_admin }{'data-content_name' => '#{replacement.name}', :id => '#{replacement.get_id.to_s}'}".prepend(offset_whitespaces) + NEWLINE
-
 
         header_named_editable_content + prepended.gsub("\n", gsub_value)
       }

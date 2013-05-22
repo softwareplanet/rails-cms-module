@@ -30,6 +30,8 @@ window.UI =
         $('.panel_child_structure').hide()),
       50
     $('.close-child').css 'opacity', 0
+    $('.panel_new-page').hide();
+    $('.panel_editor').removeClass('subPanelOffset');
 
   #
   # TOGGLE VISIBILITY OF NEW STRUCTURE PANEL
@@ -44,7 +46,7 @@ window.UI =
 
       if $(that).hasClass("child-window")
         $('#new_structure_form #parent_layout').val($('.panel_child_structure').attr('data_parent'));
-        offset = 280
+        offset = 280+90
       else
         offset = 369
 

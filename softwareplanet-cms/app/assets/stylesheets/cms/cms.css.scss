@@ -238,6 +238,7 @@ i.close-child:hover {
 .panel_child_structure {
   -webkit-transition-duration: 250ms,250ms;
   z-index: 10000!important;
+  margin-right: -90px;
   .title {
     height: 19px;
   }
@@ -324,6 +325,9 @@ i.close-child:hover {
   display: none;
   position: relative;
   min-width: 1210px;
+}
+.panel_editor.subPanelOffset {
+  margin-left: 180px;
 }
 .panel_gallery {
   float: left;

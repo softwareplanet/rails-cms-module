@@ -1,5 +1,6 @@
 $(document).ready ->
   $('.add-structure').click ->
+    return if hasUnsavedChanges()
     UI.toggleNewStructurePanel(this)
 
   $('.panel_new-page .close-btn').click ->
@@ -9,6 +10,12 @@ $(document).ready ->
     $('.panel_properties').css('display', 'none')
 
   $('.close-child').click ->
+    editor_instance = editorManager.getEditor("haml_editor")
+    if editor_instance
+      editor_instance_id = editor_instance.getSourceId()
+      if $('.panel_child_structure .layout-row[data-source_id='+editor_instance_id+']').length > 0
+        #child layout currently edited:
+        return if hasUnsavedChanges()
     UI.hideStructureChildPanel()
 
 
@@ -41,6 +48,7 @@ window.editProperties = (obj) ->
 # Opens code editor
 #
 window.editLayoutCode = (obj) ->
+  return if hasUnsavedChanges()
   layout_data = getLayoutData(obj)
   $('[data-level=child]').hide()
   showCodeEditor(layout_data['source_id'])
@@ -57,18 +65,39 @@ window.deleteSourceWithConfirmation = (obj) ->
     $(obj).parents('.layout-row').fadeOut()
 
 window.openSubPanel = (obj) ->
-  $('.panel_new-page').hide()
-  $('.clickable_area').parent().removeClass('selected')
-  $(obj).parent().addClass('selected');
+  clicked_id = $(obj).parent().attr('data-source_id')
 
-  layout_data = getLayoutData(obj)
-  request_json = {
-    layout_id: layout_data['source_id'],
-    object: 'structure',
-    activity: 'click'
-  }
-  $.ajax
-    url: '/source_manager/panel_structure'
-    type: 'POST',
-    data: request_json
+  editor_instance = editorManager.getEditor("haml_editor")
+  editor_instance = editor_instance.getSourceId() if editor_instance
+
+  if editor_instance != clicked_id
+    return if hasUnsavedChanges()
+    $('.editor-panel').html('')
+
+  $('.layout-row').removeClass('layout-row-selected');
+
+  open_next_subpanel = true
+  already_opened_id = $('.panel_child_structure:visible').length > 0
+
+  if already_opened_id
+    opened_parent_id = $('.panel_child_structure').attr('data_parent')
+    if opened_parent_id == clicked_id
+      UI.hideStructureChildPanel()
+      open_next_subpanel = false
+
+  if open_next_subpanel == true
+    $('.panel_new-page').hide()
+    $('.clickable_area').parent().removeClass('selected')
+    $(obj).parent().addClass('selected');
+
+    layout_data = getLayoutData(obj)
+    request_json = {
+      layout_id: layout_data['source_id'],
+      object: 'structure',
+      activity: 'click'
+    }
+    $.ajax
+      url: '/source_manager/panel_structure'
+      type: 'POST',
+      data: request_json
 

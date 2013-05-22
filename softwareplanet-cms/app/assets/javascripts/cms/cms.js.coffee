@@ -14,17 +14,6 @@ window.InitializeEditors = (names, ids, modes) ->
     editor.getRequestSource(ids[index]);
     editor.setSourceId(ids[index]);
 
-
-    #editorManager.addEditor "haml_editor", new CodeEditorIDE("haml_editor")
-    #editorManager.addEditor "css_editor", new CodeEditorIDE("css_editor")
-    #editorManager.addEditor "head_editor", new CodeEditorIDE("head_editor")
-    #editorManager.getEditor("haml_editor").code_editor.setOption "mode", "clojure"
-    #editorManager.getEditor("head_editor").code_editor.setOption "mode", "clojure"
-      #editorManager.getEditor("css_editor").code_editor.setOption "mode", "css"
-    #editorManager.getEditor("haml_editor").code_editor.clearHistory()
-    #editorManager.getEditor("head_editor").code_editor.clearHistory()
-    #editorManager.getEditor("css_editor").code_editor.clearHistory()
-
 $(document).ready ->
   $(window).bind "resize", ->
     body_height = $('body').height()
@@ -44,10 +33,9 @@ $(document).ready ->
 #    $(this).find('.icon-tooltip').remove()
 
   $('.icon').click ->
+    return if hasUnsavedChanges()
     $('.icon').removeClass("highlighted");
     $(this).addClass("highlighted");
-
-
     request_json = {
     object: $(this).data('icon'),
     activity: 'click'
@@ -129,8 +117,13 @@ window.addSpinner = (targetObj) ->
 window.updateCssEditor = () ->
   setTimeout("editorManager.getEditor('css_editor').code_editor.refresh();", 100);
 
-
 window.codeEditorOnChange = (cm, change, textarea_id) ->
   if change.origin != 'setValue'
-    save_btn = $('#'+textarea_id).parents('.tab-content').find('.save-src-btn')
+    save_btn = $('#'+textarea_id).parents('.tab-pane').find('.save-src-btn')
     $(save_btn).addClass('source-modified')
+
+window.hasUnsavedChanges = () ->
+  if $('.source-modified').length > 0
+    if confirm("Editors contains unsaved content.\nAre you sure you want to lost your changes?") == false
+      return true
+  false

@@ -19,7 +19,7 @@ class window.CodeEditorsManager
     while i < @editors.length
       return @editors[i]["editor"]  if @editors[i]["editor_name"] is editor_name
       i+=1
-    alert('not found name ' + editor_name)
+    #alert('not found name ' + editor_name)
     return null
 
 
@@ -98,6 +98,8 @@ class window.CodeEditorIDE
     @code_editor.setValue(value)
   getSource: () ->
     @code_editor.getValue()
+  getSourceId: () ->
+    @source_id
   setUrl: (url) ->
     @url = url
   setPublicPage: (public_page) ->

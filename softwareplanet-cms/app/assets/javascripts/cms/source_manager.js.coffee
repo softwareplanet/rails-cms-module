@@ -121,6 +121,7 @@ window.on_gallery_name_keyup = (event, this_ptr) ->
 
 
 window.properties = (obj) ->
+  return if hasUnsavedChanges()
   $(".panel_editor").html ""
   $(obj).parent().find(".preferences").toggle()
 
