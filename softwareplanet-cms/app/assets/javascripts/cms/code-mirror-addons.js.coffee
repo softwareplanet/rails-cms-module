@@ -19,7 +19,6 @@
   WRAP_CLASS = "CodeMirror-activeline"
   BACK_CLASS = "CodeMirror-activeline-background"
   CodeMirror.defineOption "styleActiveLine", false, (cm, val, old) ->
-    console.log('213');
     prev = old and old isnt CodeMirror.Init
     if val and not prev
       updateActiveLine cm

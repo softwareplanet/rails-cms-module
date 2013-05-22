@@ -1,60 +1,23 @@
-$(".panel_editor").html("#{ escape_javascript(render(:partial =>  "panel_editor", :locals => {:source => @source})) }");
+$(".panel_editor").html("#{ escape_javascript(render(:partial =>  "cms/source_code/panel_editor", :locals => {:source => @source})) }");
+
+var haml_id = "#{@source.get_source_id}";
+var head_id = "#{@source.get_source_attach_or_create(Cms::SourceType::HEAD).get_source_id}";
+var css_id = "#{@source.get_source_attach_or_create(Cms::SourceType::CSS).get_source_id}";
+InitializeEditors(['haml_editor', 'head_editor', 'css_editor'], [haml_id, head_id, css_id], ['stex', 'clojure', 'css'])
 
 $(".panel_editor .title").html("#{@source.get_source_name}");
-
-$(".panel_editor").slideRightShow()
-window.editorManager = new CodeEditorsManager();
-var editorManager = window.editorManager;
-editorManager.removeEditors()
-
-editorManager.addEditor("haml_editor", new CodeEditorIDE("haml_editor"));
-editorManager.addEditor("css_editor", new CodeEditorIDE("css_editor"));
-editorManager.addEditor("head_editor", new CodeEditorIDE("head_editor"));
-
-editorManager.getEditor("haml_editor").code_editor.setOption("mode", "stex");
-
-editorManager.getEditor("css_editor").code_editor.setOption("mode", "css");
-
-editorManager.getEditor("head_editor").code_editor.setOption("mode", "clojure");
-editorManager.getEditor("head_editor").code_editor.setOption("lineWrapping", false);
-
-editorManager.getEditor("haml_editor").code_editor.clearHistory();
-editorManager.getEditor("css_editor").code_editor.clearHistory();
-editorManager.getEditor("head_editor").code_editor.clearHistory();
-
+$(".panel_editor").slideRightShow();
 $(".layout-row").removeClass("layout-row-selected");
-editorManager.getEditor("haml_editor").setRequestPath("/source_code/edit_source_code/");
-editorManager.getEditor("haml_editor").getRequestSource("#{@source.get_id}");
-editorManager.getEditor("haml_editor").setSourceId("#{@source.get_id}");
-$(".preview-navtab a").attr("data-preview", "#{@source.get_source_name}");
-- @css = @source.get_source_attach(Cms::SourceType::CSS)
-css_id = $(this).data("#{@css.get_source_name}");
-editorManager.getEditor("css_editor").setRequestPath("/source_manager/");
-editorManager.getEditor("css_editor").getRequestSource("#{@css.get_id}");
-editorManager.getEditor("css_editor").setSourceId("#{@css.get_id}");
-- @head = @source.get_source_attach_or_create(Cms::SourceType::HEAD)
-head_id = $(this).data("#{@head.get_source_name}");
-editorManager.getEditor("head_editor").setRequestPath("/source_manager/");
-editorManager.getEditor("head_editor").getRequestSource("#{@head.get_id}");
-editorManager.getEditor("head_editor").setSourceId("#{@head.get_id}");
-$(".editor-panel").show();
+$('.layout-row[data-source_id=' + haml_id + ']').addClass('layout-row-selected')
 
-setTimeout("editorManager.getEditor('css_editor').code_editor.refresh();", 1000);
-setTimeout("editorManager.getEditor('haml_editor').code_editor.refresh();", 1000);
+:plain
 
-$(".save-haml-btn").bind("click", function(){
-editorManager.getEditor("haml_editor").saveSource();
-editorManager.getEditor("head_editor").saveSource();
-});
-$(".save-css-btn").bind("click", function(){
-editorManager.getEditor("css_editor").saveSource();
-});
-
--#
-  $(".preview-navtab").bind("click", function(){
-  $("#tab3").html( "<iframe style='width:100%; height: 100%;' src='/#{@source.get_source_name}'>" );
+  $(".save-haml-btn").bind("click", function() {
+    editorManager.getEditor("haml_editor").saveSource();
+    editorManager.getEditor("head_editor").saveSource();
+    $(this).removeClass('source-modified')
   });
-  - if @source.type == Cms::SourceType::LAYOUT
-    $('.editor-panel .preview-navtab').show();
-  - else
-    $('.editor-panel .preview-navtab').hide();
+  $(".save-css-btn").bind("click", function(){
+    editorManager.getEditor("css_editor").saveSource();
+    $(this).removeClass('source-modified')
+  });

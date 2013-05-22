@@ -1,16 +1,29 @@
-#editorManager = null
 
-window.InitializeCms = () ->
+# params:
+# name - textarea id
+window.InitializeEditors = (names, ids, modes) ->
+  delete editorManager
   editorManager = new CodeEditorsManager
-  editorManager.addEditor "haml_editor", new CodeEditorIDE("haml_editor")
-  editorManager.addEditor "css_editor", new CodeEditorIDE("css_editor")
-  editorManager.addEditor "head_editor", new CodeEditorIDE("head_editor")
-  editorManager.getEditor("haml_editor").code_editor.setOption "mode", "clojure"
-  editorManager.getEditor("head_editor").code_editor.setOption "mode", "clojure"
-  editorManager.getEditor("css_editor").code_editor.setOption "mode", "css"
-  editorManager.getEditor("haml_editor").code_editor.clearHistory()
-  editorManager.getEditor("head_editor").code_editor.clearHistory()
-  editorManager.getEditor("css_editor").code_editor.clearHistory()
+  editorManager.removeEditors()
+  for editor_name, index in names
+    editorManager.addEditor(editor_name, new CodeEditorIDE(editor_name))
+    editor = editorManager.getEditor(editor_name)
+    editor.setMode(modes[index])
+    editor.clearHistory()
+    editor.setRequestPath("/source_manager/");
+    editor.getRequestSource(ids[index]);
+    editor.setSourceId(ids[index]);
+
+
+    #editorManager.addEditor "haml_editor", new CodeEditorIDE("haml_editor")
+    #editorManager.addEditor "css_editor", new CodeEditorIDE("css_editor")
+    #editorManager.addEditor "head_editor", new CodeEditorIDE("head_editor")
+    #editorManager.getEditor("haml_editor").code_editor.setOption "mode", "clojure"
+    #editorManager.getEditor("head_editor").code_editor.setOption "mode", "clojure"
+      #editorManager.getEditor("css_editor").code_editor.setOption "mode", "css"
+    #editorManager.getEditor("haml_editor").code_editor.clearHistory()
+    #editorManager.getEditor("head_editor").code_editor.clearHistory()
+    #editorManager.getEditor("css_editor").code_editor.clearHistory()
 
 $(document).ready ->
   $(window).bind "resize", ->
@@ -56,16 +69,6 @@ $(document).ready ->
   $(".save-css-btn").click ->
     editorManager.getEditor("css_editor").saveSource()
 
-  $(".preview-navtab a").click ->
-    if $(".preview-content").children().size() is 0
-      layout_name = "ru/" + $(".preview-navtab a").data("preview") + "?admin=false"
-      $(".preview-content").append "<iframe src=" + layout_name + " width='100%' height='100%'/> "
-    else
-      layout_name = "ru/" + $(".preview-navtab a").data("preview") + "?admin=false"
-      $(".preview-content").html("")
-      $(".preview-content").append "<iframe src=" + layout_name + " width='100%' height='100%' style=''/> "
-
-
   $(".haml-tab .languages-dropdown .dropdown-menu a").click ->
     $(".haml-tab .languages-dropdown .dropdown-menu a").removeClass "dropdown-selected"
     $(this).addClass "dropdown-selected"
@@ -77,31 +80,6 @@ $(document).ready ->
     $(this).addClass "dropdown-selected"
     theme = $(this).data("theme")
     editorManager.editors[0].editor.code_editor.setOption "theme", theme
-
-
-  $("body").click ->
-
-#  $('.edit').click  ->
-#
-#    $.get({
-#      url: "/source_manager/menu_bar",
-#      data: request_json
-#    })
-#    $(".layout-row").removeClass "layout-row-selected"
-#    $(this).parents(".layout-row").addClass "layout-row-selected"
-#    $(".menu-bar").addClass "menu-bar-inactive"
-#    source_id = $(this).data("source_id")
-#    source_name = $(this).data("source_name")
-#    $(".editor-panel .title").html source_name
-#    editorManager.getEditor("haml_editor").setRequestPath "/source_manager/"
-#    editorManager.getEditor("haml_editor").getRequestSource source_id
-#    editorManager.getEditor("haml_editor").setSourceId source_id
-#    $(".preview-navtab a").attr "data-preview", source_name
-#    css_id = $(this).data("css_id")
-#    editorManager.getEditor("css_editor").setRequestPath "/source_manager/"
-#    editorManager.getEditor("css_editor").getRequestSource css_id
-#    editorManager.getEditor("css_editor").setSourceId css_id
-#    $(".editor-panel").show()
 
   $(".properties").click ->
     SwitchTo(".page-properties")
@@ -147,3 +125,12 @@ window.addSpinner = (targetObj) ->
   $(targetObj).append(spinner.el)
   #target = document.getElementById(id)
   #target.appendChild(spinner.el)
+
+window.updateCssEditor = () ->
+  setTimeout("editorManager.getEditor('css_editor').code_editor.refresh();", 100);
+
+
+window.codeEditorOnChange = (cm, change, textarea_id) ->
+  if change.origin != 'setValue'
+    save_btn = $('#'+textarea_id).parents('.tab-content').find('.save-src-btn')
+    $(save_btn).addClass('source-modified')

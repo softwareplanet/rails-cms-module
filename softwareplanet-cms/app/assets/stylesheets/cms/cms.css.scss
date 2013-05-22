@@ -924,8 +924,8 @@ i.close-child:hover {
 
 .editor-panel {
   height: 100%;
-  //background: #2681dc;
-  display: none;
+  /*background: #2681dc;*/
+  /*display: none;*/
   float: left;
   width: 100%;
   margin-left: -469px;
@@ -1011,7 +1011,15 @@ i.close-child:hover {
       display: inline-block;
     }
     .save-haml-btn:hover {
+      background: #5aa5ee;
+      -webkit-box-shadow: 0px 0px 10px 4px lightblue;
+    }
+    .save-haml-btn.source-modified {
       background: blue;
+      -webkit-box-shadow: 0px 0px 10px 4px lightblue;
+    }
+    .save-haml-btn.source-modified:hover {
+      background: #0000cd;
       -webkit-box-shadow: 0px 0px 10px 4px lightblue;
     }
   }
@@ -1027,7 +1035,15 @@ i.close-child:hover {
       display: inline-block;
     }
     .save-css-btn:hover {
+      background: #5aa5ee;
+      -webkit-box-shadow: 0px 0px 10px 4px lightblue;
+    }
+    .save-css-btn.source-modified {
       background: blue;
+      -webkit-box-shadow: 0px 0px 10px 4px lightblue;
+    }
+    .save-css-btn.source-modified:hover {
+      background: #0000cd;
       -webkit-box-shadow: 0px 0px 10px 4px lightblue;
     }
   }

@@ -99,7 +99,6 @@ module Cms
       case @activity
         when "edit"
           @source = Source.find_by_id @object
-          #get_source_by_id
       end
     end
 

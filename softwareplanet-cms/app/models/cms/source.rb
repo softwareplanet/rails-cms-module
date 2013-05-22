@@ -140,7 +140,7 @@ module Cms
         image_src = "#"
       else
         img = Source.find_source_by_name_and_type(localized.text+".*", SourceType::IMAGE).first
-        image_src = img ? img.get_image_path : "notfound!"
+        image_src = img ? img.get_image_path : "#!"
         unless image_size
           image_width_attr = image_height_attr = ""
         end

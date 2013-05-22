@@ -10,7 +10,7 @@ module Cms
       @sourceObject = Source.find_by_id(params[:id])
       @sourceObject.get_data
 
-      if @sourceObject.type == SourceType::CSS && @sourceObject.data.length > 0
+      if @sourceObject.type == SourceType::CSS && @sourceObject.data.length > 0 && @sourceObject.get_source_target.type == SourceType::CONTENT
         from = @sourceObject.data.index("\n")+1
         to = -@sourceObject.data.reverse.index("\n")-1
         @sourceObject.data = @sourceObject.data[from..to]
@@ -27,7 +27,7 @@ module Cms
         # data change
         @sourceObject.set_data(params[:data]) unless params[:data].nil?
 
-        if @sourceObject.type == SourceType::CSS
+        if @sourceObject.type == SourceType::CSS && @sourceObject.get_source_target.type == SourceType::CONTENT
           @sourceObject.set_data('#' + @sourceObject.get_source_target.get_source_id + '{/*do not remove first and last line manually!*/' + "\n" + @sourceObject.get_data + "\n" + '}/*do not remove first and last line manually!*/')
         end
 

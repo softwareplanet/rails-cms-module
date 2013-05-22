@@ -8,9 +8,10 @@ class window.CodeEditorsManager
       editor_name: editor_name
       editor: editor
     @editors.push editor
+    editor
 
   removeEditors: () ->
-      @editors.pop()
+    while @editors.length > 0
       @editors.pop()
 
   getEditor: (editor_name) ->
@@ -35,6 +36,26 @@ class window.CodeEditorIDE
   public_page : null
   editable_content : null
 
+  isFullScreen = (cm) ->
+    /\bCodeMirror-fullscreen\b/.test cm.getWrapperElement().className
+  winHeight = ->
+    window.innerHeight or (document.documentElement or document.body).clientHeight
+  setFullScreen = (cm, full) ->
+    wrap = cm.getWrapperElement()
+    if full
+      wrap.className += " CodeMirror-fullscreen"
+      wrap.style.height = winHeight() + "px"
+      document.documentElement.style.overflow = "hidden"
+    else
+      wrap.className = wrap.className.replace(" CodeMirror-fullscreen", "")
+      wrap.style.height = ""
+      document.documentElement.style.overflow = ""
+    cm.refresh()
+  CodeMirror.on window, "resize", ->
+    showing = document.body.getElementsByClassName("CodeMirror-fullscreen")[0]
+    return  unless showing
+    showing.CodeMirror.getWrapperElement().style.height = winHeight() + "px"
+
 
   #constructor: (code_textarea_id, newline_separator) ->
   constructor: (code_textarea_id) ->
@@ -49,11 +70,23 @@ class window.CodeEditorIDE
       electricChars: false,
       #autofocus: true
       styleActiveLine: true,
-      lineWrapping: true
+      lineWrapping: true,
+      extraKeys:
+        F11: (cm) ->
+          setFullScreen cm, not isFullScreen(cm)
+        Esc: (cm) ->
+          setFullScreen cm, false  if isFullScreen(cm)
     )
-    #@newline_separator = newline_separator
+    @code_editor.on "change", (cm, change) ->
+      codeEditorOnChange(cm, change, code_textarea_id)
+
     @newline_separator = "\n"
     @source_id = 'new'
+  clearHistory: () ->
+    @code_editor.clearHistory()
+  setMode: (mode_name) ->
+    @code_editor.setOption("mode", mode_name)
+    this
   setRequestSourceType: (source_type) ->
     @source_type = source_type
   setDefaultTemplate: (default_template) ->
@@ -75,7 +108,6 @@ class window.CodeEditorIDE
     @code_editor.getValue(@newline_separator)
 
   setSourceWithSeparator: (id, name, source) ->
-    #alert('!')
     this.setValue(source.toString().split(@newline_separator).join("\n"));
     this.setSourceName(name)
     this.setSourceId(id)

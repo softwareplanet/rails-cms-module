@@ -7,9 +7,7 @@
           %li.active
             %a{"data-toggle" => "tab", :href => "#tab1"} Исходный код
           %li.css-navtab
-            %a{"data-toggle" => "tab", :href => "#tab2"} Стили оформления
-          -#%li.head-navtab
-            %a{"data-toggle" => "tab", :href => "#tab3"} Редактирование секции HEAD
+            %a{"data-toggle" => "tab", :href => "#tab2", :onclick => "updateCssEditor()"} Стили оформления
         .tab-content
           #tab1.haml-tab.tab-pane.active
             .head-tag
@@ -19,14 +17,10 @@
               %textarea{:id => "head_editor"}
             Body content
             %textarea{:id => "haml_editor"}
-            .save-haml-btn
+            .save-haml-btn.save-src-btn
               Сохранить
 
           #tab2.css-tab.tab-pane
             %textarea{:id => "css_editor"}
-            .save-css-btn
-              Сохранить
-          -##tab3.head-tab.tab-pane
-            %textarea{:id => "head_editor"}
-            .save-head-btn
+            .save-css-btn.save-src-btn
               Сохранить

@@ -35,7 +35,7 @@
 }
 
 .CodeMirror-linenumber {
-  /*background-color: white;*/
+  background-color: #555555;
 }
 
 .CodeMirror {
@@ -46,4 +46,16 @@
   line-height: 1em;
   font-family: monospace;
   _position: relative; /* IE6 hack */
+}
+
+.CodeMirror-fullscreen {
+  display: block;
+  position: absolute!important;
+  top: 0; left: 0;
+  width: 100%!important;
+  height: 100%!important;
+  z-index: 9999;
+  .CodeMirror-scroll {
+    height: 100%!important;
+  }
 }

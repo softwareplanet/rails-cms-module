@@ -24,7 +24,7 @@ module Cms
       else
         layout_name = @layout
         lang_path = @application_data[:lang]
-        compiled_file_folder = Adapter.get_source_folder(SourceType::COMPILED) + lang_path + "/"
+        compiled_file_folder = Source.get_source_folder(SourceType::COMPILED) + lang_path + "/"
         compiled_file_path = compiled_file_folder + layout_name
         @compiled_layout = File.read(compiled_file_path) if File.exists?(compiled_file_path)
         if @compiled_layout.nil?
