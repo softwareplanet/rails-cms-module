@@ -176,10 +176,11 @@ module Cms
       self
     end
 
-    def get_source_attach_or_create(source_type)
+    def get_source_attach_or_create(source_type, custom_name = nil)
       attach = get_source_attach(source_type)
       if attach.nil?
-        attach = Source.build(:type => source_type, :name => self.get_source_name, :target => self)
+        custom_name = self.get_source_name unless custom_name
+        attach = Source.build(:type => source_type, :name => custom_name, :target => self)
       end
       attach
     end

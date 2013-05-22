@@ -28,7 +28,7 @@ module Cms
         replacement = Source.quick_content_search(content_name, SourceType::CONTENT)
         raise ArgumentError, "Content with name #{content_name} is not found!" if replacement.blank?
 
-        custom_style = SOURCE_FOLDERS[SourceType::CSS] + "2" + Cms::TARGET_DIVIDER + replacement.name + Cms::TARGET_DIVIDER + replacement.name + ".scss"
+        custom_style = "custom/" +  "2" + Cms::TARGET_DIVIDER + replacement.name + Cms::TARGET_DIVIDER + replacement.name + ".scss"
         page_styles << custom_style
 
         content_source = replacement.build(var_hash, layout)
@@ -38,6 +38,11 @@ module Cms
 
         header_named_editable_content + prepended.gsub("\n", gsub_value)
       }
+
+      #
+      # AutoMenu
+      #
+      plain_src = inject_menu(plain_src)
 
       layout_settings = Source.get_source_settings_attributes(layout.get_source_id)
       seo_string =
@@ -71,6 +76,33 @@ module Cms
 
 
       [plain_src, layout.get_id, page_styles, seo_tags, head_content]
+    end
+    #
+    # AutoMenu
+    #
+    def self.inject_menu(plain_src)
+      plain_src = plain_src.gsub(/[" "]*%menu/) { |r|
+        offset_length = r.gsub(/[\s\/]*/).first.length
+        next_line_offset_length = offset_length + 2 - 2
+        offset_whitespaces = " " * offset_length
+        next_line_offset_whitespaces = " " * next_line_offset_length
+
+
+        menu_ids = Source.get_order(nil, SourceType::LAYOUT)
+        menu_links = menu_ids.collect{|id|
+          source = Source.get_source_by_id(id)
+          settings = Source.get_source_settings_attributes(id)
+          next if settings.no_publish == 0 || settings.no_show == 0
+          source_name = source.get_source_name
+          "  %li\n    %a{:href=>'#'}\n      " + source_name + "\n"
+        }
+
+        content_source = "%ul.nav.nav-layout\n" + menu_links.join
+
+        prepended = content_source.prepend(next_line_offset_whitespaces)
+        gsub_value = ("\n" + " "*next_line_offset_length)
+        prepended.gsub("\n", gsub_value)
+      }
     end
   end
 end

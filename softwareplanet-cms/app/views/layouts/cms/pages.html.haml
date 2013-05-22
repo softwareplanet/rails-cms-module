@@ -7,11 +7,10 @@
     - output = Haml::Engine.new(@head_content, :format => :html5).render(Object.new, :app => @application_data )
     != output
     = ""
-    -#%link{:href => "http://fonts.googleapis.com/css?family=Arimo&subset=latin,cyrillic-ext", :rel => "stylesheet", :type => "text/css"}
-
     = stylesheet_link_tag    "application", :media => "all"
     - @stylesheets.each do |style_file|
-      = stylesheet_link_tag style_file
+      - stylesheet_name = style_file.chomp(".scss") << ".css"
+      = stylesheet_link_tag stylesheet_name
     = javascript_include_tag "application"
     = ""
     = csrf_meta_tags
