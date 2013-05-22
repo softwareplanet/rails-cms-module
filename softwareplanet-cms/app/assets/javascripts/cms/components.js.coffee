@@ -25,6 +25,9 @@ window.getComponentData = (obj) ->
   }
 
 window.component_properties = (obj) ->
+  return if hasUnsavedChanges()
+  $('.editor-panel').html('')
+  
   component_data = getComponentData(obj)
   request_json = {
     component_id: component_data['component_id'],
@@ -38,6 +41,9 @@ window.component_properties = (obj) ->
 
 #OPEN CODE EDITOR FOR LAYOUT
 window.editComponentData = (obj) ->
+  return if hasUnsavedChanges()
+  $('.component-row').removeClass('component-row-selected')
+  $(obj).parents('.component-row').addClass('component-row-selected')
   $('[data-level=child]').hide()
   component_data = getComponentData(obj)
   showCodeEditor(component_data['component_id'])

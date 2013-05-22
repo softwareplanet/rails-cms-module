@@ -33,6 +33,8 @@ window.getLayoutData = (obj) ->
 # Edit layout properties Click
 #
 window.editProperties = (obj) ->
+  return if hasUnsavedChanges()
+  $('.editor-panel').html('')
   layout_data = getLayoutData(obj)
   request_json = {
   layout_id: layout_data['source_id'],
