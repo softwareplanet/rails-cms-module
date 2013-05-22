@@ -182,7 +182,7 @@ module Cms
       else
         begin
           @component = Source.build(:type => type, :name => component_name)
-          @css = Source.build(:type => SourceType::CSS, :name => component_name, :target => @component)
+          @css = Source.build(:type => SourceType::CSS, :name => component_name+'.scss', :target => @component)
         rescue Exception => exc
           render :js => 'alert("' +  I18n.t('create_component_form.error') + '");'
           return
