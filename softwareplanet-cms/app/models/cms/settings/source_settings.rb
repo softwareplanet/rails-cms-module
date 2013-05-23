@@ -14,7 +14,7 @@ require 'yaml'
 module Cms
 
   # Settings array:
-  SETTINGS_DEFINITION = [
+  LAYOUT_SETTINGS_DEFINITION = [
     'no_publish' => '1',
     'no_show' => '1',
     'title' => '',
@@ -23,10 +23,14 @@ module Cms
   ]
 
   class SourceSettings
-    attr_accessor *SETTINGS_DEFINITION[0].keys
+    attr_accessor *LAYOUT_SETTINGS_DEFINITION[0].keys
+
+    def self.get_settings_definition
+      LAYOUT_SETTINGS_DEFINITION
+    end
 
     def self.default_settings
-      SETTINGS_DEFINITION[0].to_yaml
+      self.get_settings_definition[0].to_yaml
     end
 
     # Get settings in yml format
@@ -38,7 +42,7 @@ module Cms
 
     def get_data_hash
       hash = {}
-      SETTINGS_DEFINITION[0].map{ |n, v|
+      self.class.get_settings_definition[0].map{ |n, v|
         attr = send("#{n}")
         hash[n] = attr
       }
@@ -48,7 +52,7 @@ module Cms
     # Elect only those parameters, that correspond to SETTINGS_DEFINITION
     def elect_params(params)
       params.each do |k, v|
-        send("#{k}=", v) if SETTINGS_DEFINITION[0].include?(k)
+        send("#{k}=", v) if self.class.get_settings_definition[0].include?(k)
       end
       self
     end
@@ -57,7 +61,7 @@ module Cms
     def read_source_settings(source)
       source.load!
       result = YAML.load(source.data)
-      SETTINGS_DEFINITION[0].map{ |n, v|
+      self.class.get_settings_definition[0].map{ |n, v|
         send("#{n}=", result[n])
       }
       self
@@ -65,7 +69,6 @@ module Cms
 
     # Write own settings variables to settings file, specified in `source`
     def write_source_settings(source)
-      raise 'source type is not SourceType::SETTINGS' if source.type != SourceType::SETTINGS
       source.set_data(get_data_hash.to_yaml)
     end
   end

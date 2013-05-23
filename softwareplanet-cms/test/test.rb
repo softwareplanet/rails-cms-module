@@ -32,16 +32,16 @@ module Cms
       @css3 = Source.build(:name => 'css3.css', :type => SourceType::CSS)
       @css4 = Source.build(:name => 'css4.css', :type => SourceType::CSS)
       @css5 = Source.build(:name => 'css5.css', :type => SourceType::CSS)
-      @seo1 = Source.build(:name => 'seo1', :type => SourceType::SEO, :data => SourceSEO.default_seo.to_s)
-      @seo2 = Source.build(:name => 'seo2', :type => SourceType::SEO, :data => SourceSEO.default_seo.to_s)
-      @seo3 = Source.build(:name => 'seo3', :type => SourceType::SEO, :data => SourceSEO.default_seo.to_s)
-      @seo4 = Source.build(:name => 'seo4', :type => SourceType::SEO, :data => SourceSEO.default_seo.to_s)
-      @seo5 = Source.build(:name => 'seo5', :type => SourceType::SEO, :data => SourceSEO.default_seo.to_s)
-      @setting1 = Source.build(:type => SourceType::SETTINGS, :name => 'setting1', :data => SourceSettings.default_settings.to_s)
-      @setting2 = Source.build(:type => SourceType::SETTINGS, :name => 'setting2', :data => SourceSettings.default_settings.to_s)
-      @setting3 = Source.build(:type => SourceType::SETTINGS, :name => 'setting3', :data => SourceSettings.default_settings.to_s)
-      @setting4 = Source.build(:type => SourceType::SETTINGS, :name => 'setting4', :data => SourceSettings.default_settings.to_s)
-      @setting5 = Source.build(:type => SourceType::SETTINGS, :name => 'setting5', :data => SourceSettings.default_settings.to_s)
+      @seo1 = Source.build(:name => 'seo1', :type => SourceType::SEO)
+      @seo2 = Source.build(:name => 'seo2', :type => SourceType::SEO)
+      @seo3 = Source.build(:name => 'seo3', :type => SourceType::SEO)
+      @seo4 = Source.build(:name => 'seo4', :type => SourceType::SEO)
+      @seo5 = Source.build(:name => 'seo5', :type => SourceType::SEO)
+      @setting1 = Source.build(:type => SourceType::LAYOUT_SETTINGS, :name => 'setting1', :data => SourceSettings.default_settings.to_s)
+      @setting2 = Source.build(:type => SourceType::LAYOUT_SETTINGS, :name => 'setting2', :data => SourceSettings.default_settings.to_s)
+      @setting3 = Source.build(:type => SourceType::LAYOUT_SETTINGS, :name => 'setting3', :data => SourceSettings.default_settings.to_s)
+      @setting4 = Source.build(:type => SourceType::LAYOUT_SETTINGS, :name => 'setting4', :data => SourceSettings.default_settings.to_s)
+      @setting5 = Source.build(:type => SourceType::LAYOUT_SETTINGS, :name => 'setting5', :data => SourceSettings.default_settings.to_s)
 
     end
 
@@ -111,28 +111,28 @@ module Cms
       create_sample_sources
       settings = SourceSettings.new.read_source_settings(@setting1)
       settings_in_array = settings.instance_variables
-      assert_equal(settings_in_array.size, SETTINGS_DEFINITION[0].size)
-      assert_equal(settings.publish, SETTINGS_DEFINITION[0]['publish'])
-      assert_equal(settings.display, SETTINGS_DEFINITION[0]['display'])
+      assert_equal(settings_in_array.size, SourceSettings.get_settings_definition[0].size)
+      assert_equal(settings.no_publish, SourceSettings.get_settings_definition[0]['no_publish'])
+      assert_equal(settings.no_show, SourceSettings.get_settings_definition[0]['no_show'])
     end
 
     def test_get_data_from_parsed_settings
       create_sample_sources
       parsed_settings = SourceSettings.new.read_source_settings(@setting1)
       data = parsed_settings.get_data_yml
-      assert_equal(data, SETTINGS_DEFINITION[0].to_yaml)
+      assert_equal(data, SourceSettings.get_settings_definition[0].to_yaml)
     end
 
     def test_set_data_to_settings
       create_sample_sources
       test_value = '0'
       parsed_settings = SourceSettings.new.read_source_settings(@setting1)
-      parsed_settings.publish= test_value
-      parsed_settings.display= test_value
+      parsed_settings.no_publish= test_value
+      parsed_settings.no_show= test_value
       @setting1.set_data(parsed_settings.get_data_yml)
       parsed_settings = SourceSettings.new.read_source_settings(@setting1)
-      assert_equal(parsed_settings.publish, test_value)
-      assert_equal(parsed_settings.display, test_value)
+      assert_equal(parsed_settings.no_publish, test_value)
+      assert_equal(parsed_settings.no_show, test_value)
     end
 
     def test_get_source_settings
@@ -140,7 +140,7 @@ module Cms
       @setting1.attach_to(@layout1)
       source_settings = Source.get_source_settings_attributes(@layout1.get_id)
       source_settings.instance_variables.each do |key|
-          assert_equal(source_settings.instance_variable_get(key), SETTINGS_DEFINITION[0][key.to_s.delete("@")])
+          assert_equal(source_settings.instance_variable_get(key), SourceSettings.get_settings_definition[0][key.to_s.delete("@")])
       end
     end
 
@@ -161,8 +161,8 @@ module Cms
     def test_create_page
       params ={
           :name => 'test_name',
-          :publish => 'on',
-          :display => nil,
+          :no_publish => '1',
+          :no_show => '1',
           :title => 'test title',
           :keywords => 'test keywords',
           :description => 'test description'
@@ -172,20 +172,28 @@ module Cms
       end
     end
 
-    def load_check_when_creating_resources
-      #in console last result is time=15.893040497 seconds! for all sources * 10 000
-      time = Time.now
-      source_types = SourceType::all
-      for number in 1..10000
-        source_types.map do |k,v|
-          Source.build(:name => k.to_s + number.to_s, :type => v)
-        end
-      end
-      result = Time.now - time
-      puts "result is time=#{result} seconds!"
+    def test_cms_settings
+      create_sample_sources
+      @cms_settings = Source.get_cms_settings_attributes
+      assert_true(!@cms_settings.nil?)
+      assert_equal(@cms_settings.default_layout_id, '')
     end
 
-    ##########@seo_tags.get_data##################################
+    # Speed test:
+    #
+    #def load_check_when_creating_resources
+    #  ##in console last result is time=15.893040497 seconds! for all sources * 10 000
+    #  time = Time.now
+    #  source_types = SourceType::all
+    #  for number in 1..10000
+    #    source_types.map do |k,v|
+    #      Source.build(:name => k.to_s + number.to_s, :type => v)
+    #    end
+    #  end
+    #  result = Time.now - time
+    #  puts "result is time=#{result} seconds!"
+    #end
+
     Test.new.runner(PREPARE)
   end
 end

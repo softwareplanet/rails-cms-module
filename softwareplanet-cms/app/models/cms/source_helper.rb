@@ -1,5 +1,6 @@
 # Methods:
 
+#   get_cms_settings                # <= get cms settings
 #   get_source_settings_attributes  # <= layout source settings attributes
 #   get_source_settings_file        # <= layout source settings file
 #   get_source_seo                  # <= layout source seo tags
@@ -12,6 +13,18 @@ module Cms
   module SourceHelper
 
     module ClassMethods
+      # CMS default swettings:
+      def get_cms_settings_source
+        source = Source.find_source_by_type(SourceType::CMS_SETTINGS)
+        source = source.is_a?(Array) ? source.first : nil
+        source = Source.build(:type => SourceType::CMS_SETTINGS, :name => 'default', :data => CmsSettings.default_settings.to_s) if source == nil
+        source
+      end
+
+      def get_cms_settings_attributes
+        CmsSettings.new.read_source_settings( Source.get_cms_settings_source )
+      end
+
       # For nested layouts structure.
       # If parent is empty, layout became a top-level.
       def reorganize_by_ids(source_id, parent_id)
@@ -94,27 +107,28 @@ module Cms
       # If settings file not exists, it will be created with default settings
       def get_source_settings_file(source_id)
         source = Source.get_source_by_id(source_id)
-        settings_file = source.get_source_attach(SourceType::SETTINGS)
+        settings_file = source.get_source_attach(SourceType::LAYOUT_SETTINGS)
         settings_file = source.create_default_settings if settings_file.nil?
         settings_file
       end
 
-
       # Before filter method, to pre-process incoming parameters
       def prepare_parameters(params)
         # S_Sh I kill you!
-        params[:no_publish] = params[:no_publish] == 'on' ? 1 : 0
-        params[:no_show] = params[:no_show] == 'on' ? 1 : 0
+        no_p = params[:no_publish].to_s
+        no_s = params[:no_show].to_s
+        params[:no_publish] = no_p == 'on' || no_p == '1' ? 1 : 0
+        params[:no_show] = no_s == 'on' || no_s == '1' ? 1 : 0
         params
       end
 
       # Creates layout, default settings file and css (.scss)
       def create_page(params)
-        layout_parent = params[:parent_layout].blank? ? nil : Source.find_by_id(params[:parent_layout])
+        layout_parent = params[:parent_layout].to_s.empty? ? nil : Source.find_by_id(params[:parent_layout])
         name = params[:name]
         layout = Source.build(:type => SourceType::LAYOUT, :name => name, :target => layout_parent)
         Source.build(:type => SourceType::CSS, :name => name + '.scss', :target => layout)
-        settings_file = Source.build(:type => SourceType::SETTINGS, :name => name, :target => layout)
+        settings_file = Source.build(:type => SourceType::LAYOUT_SETTINGS, :name => name, :target => layout)
 
         settings_builder = SourceSettings.new.elect_params( prepare_parameters(params) )
         settings_builder.write_source_settings(settings_file)
@@ -171,7 +185,7 @@ module Cms
     end; extend ClassMethods
 
     def create_default_settings
-      Source.build(:type => SourceType::SETTINGS, :name => self.get_source_name, :data => SourceSettings.default_settings.to_s, :target => self)
+      Source.build(:type => SourceType::LAYOUT_SETTINGS, :name => self.get_source_name, :data => SourceSettings.default_settings.to_s, :target => self)
     end
   end
 end

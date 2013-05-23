@@ -50,6 +50,12 @@ module Cms
       source.eliminate! unless source.blank?
     end
 
+    def set_default_layout
+      layout_id = Source.get_source_by_id params[:id]
+      #Source.get_cms_settings_source .default_layout_id
+      1+1
+    end
+
     def reorder_sources
       items = params[:items]
       list_id = params[:list_id]
@@ -88,7 +94,7 @@ module Cms
               @sources = Source.load_gallery(params)
             when "settings"
               @layouts = Source.find_source_by_type(SourceType::LAYOUT) || []
-              @default_layout = @layouts.any? ? nil : @layouts.first
+              @default_layout_id = Source.get_cms_settings_attributes.default_layout_id
           end
       end
     end

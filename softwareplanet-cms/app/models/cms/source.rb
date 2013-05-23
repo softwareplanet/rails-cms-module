@@ -2,13 +2,12 @@ require "image_size"
 
 module Cms
   require 'ostruct'
-  require_relative 'source_settings'
+  require_relative './settings/source_settings'
+  require_relative './settings/cms_settings'
   require_relative 'source_helper'
   require_relative 'adapter_stable'
   require_relative 'adapter_stable_aliases'
-
-  # deprecated:
-  #require_relative 'adapter'
+  require_relative 'source_search_accelerator'
 
   class Source < OpenStruct
 
