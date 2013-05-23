@@ -37,14 +37,14 @@ In brief, you should not forget to run this two commands with terminal inside yo
 - add to your Gemfile:
 
 ```ruby
-gem 'softwareplanet-cms', :path => 'softwareplanet-cms'
+gem 'softwareplanet-cms', :path => './cms/softwareplanet-cms'
 ```
 - run `bundle` command
 - run `rake cms:wizard` rake command to finish setup.
 
 If you clone from github, you will get the folder with dummy application that included `softwareplanet-cms` cms 
 folder inside. It is already configured, and you can run it after both bundle and rake commands listed above.
-If you need real gem using, move the `softwareplanet-cms` folder into your project root.
+If you need real gem using, move the `softwareplanet-cms` folder into your project root, and change the `path` for new gem folder.
 
 ### Contributing
 
