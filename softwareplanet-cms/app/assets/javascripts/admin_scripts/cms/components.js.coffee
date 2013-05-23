@@ -40,6 +40,7 @@ window.component_properties = (obj) ->
     data: request_json
 
 #OPEN CODE EDITOR FOR LAYOUT
+
 window.editComponentData = (obj) ->
   return if hasUnsavedChanges()
   $('.component-row').removeClass('component-row-selected')

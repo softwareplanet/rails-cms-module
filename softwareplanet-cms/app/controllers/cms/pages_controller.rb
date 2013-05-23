@@ -7,7 +7,7 @@ module Cms
   class PagesController < ApplicationController
     before_filter :all_locales_redirect, :check_aloha_enable
 
-    ALLOW_COMPILED_CACHE = false
+    ALLOW_COMPILED_CACHE = true
 
     def show
       #response.headers["Expires"] = 1.year.from_now.httpdate
