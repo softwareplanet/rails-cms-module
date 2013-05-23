@@ -66,6 +66,7 @@ ru:
 
   settings_form:
       default_layout: Выберите начальную страницу
+      images_path: Путь к галерее
 
   ui:
     edit_properties: Редактировать свойства

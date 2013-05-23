@@ -16,7 +16,7 @@ $(panel_content).html("");
       - when 'components'
         $(panel_content).html("#{ escape_javascript(render(:partial => 'components', :locals => {items: @components} )) }");
       - when 'settings'
-        $(panel_content).html("#{ escape_javascript(render(:partial => '/cms/source_manager/panels/settings', :locals => {items: @layouts, default_id: @default_layout_id} )) }");
+        $(panel_content).html("#{ escape_javascript(render(:partial => '/cms/source_manager/panels/settings', :locals => {items: @layouts, default_id: @default_layout_id, images_path: @images_path} )) }");
 
       - when 'gallery'
         - @breadcrumb = @sources['breadcrumbs']

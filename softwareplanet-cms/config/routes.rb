@@ -49,7 +49,7 @@ Cms::Engine.routes.draw do
       post "create_component"
       post "save_component"
       post "reorder_sources"
-      post "set_default_layout"
+      post "update_cms_settings"
 
       get 'tool_bar'
       get 'menu_bar'

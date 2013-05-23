@@ -13,7 +13,7 @@ module Cms
   SOURCE_FOLDER = "data_source"
   SOURCE_FOLDERS = {
       SourceType::CSS       => "app/assets/stylesheets/custom/",
-      SourceType::IMAGE     => "public/img/",
+      SourceType::IMAGE     => "app/assets/images",
       SourceType::LAYOUT    => "#{SOURCE_FOLDER}/layouts/",
       SourceType::HEAD    => "#{SOURCE_FOLDER}/head/",
       SourceType::LAYOUT_SETTINGS    => "#{SOURCE_FOLDER}/layout_settings/",
@@ -46,5 +46,9 @@ module Cms
   ID_PREFIX = 'pre'
   ID_DIVIDER = '-id-'
   TARGET_DIVIDER = '-tar-'
+
+  # overridden folders:
+  overridden_path = Source.get_cms_settings_attributes.images_path
+  SOURCE_FOLDER[SourceType::IMAGE] = overridden_path unless overridden_path.nil?
 
 end

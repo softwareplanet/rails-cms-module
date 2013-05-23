@@ -14,7 +14,7 @@ module Cms
 
     module ClassMethods
       # CMS default swettings:
-      def get_cms_settings_source
+      def get_cms_settings_file
         source = Source.find_source_by_type(SourceType::CMS_SETTINGS)
         source = source.is_a?(Array) ? source.first : nil
         source = Source.build(:type => SourceType::CMS_SETTINGS, :name => 'default', :data => CmsSettings.default_settings.to_s) if source == nil
@@ -22,7 +22,7 @@ module Cms
       end
 
       def get_cms_settings_attributes
-        CmsSettings.new.read_source_settings( Source.get_cms_settings_source )
+        CmsSettings.new.read_source_settings( Source.get_cms_settings_file )
       end
 
       # For nested layouts structure.
@@ -169,6 +169,12 @@ module Cms
         dir.path = File.dirname(filepath)
         dir.size = Dir.glob(filepath + '/*').size
         dir
+      end
+
+      def update_cms_properties(params)
+        settings_file = Source.get_cms_settings_file
+        settings_builder = CmsSettings.new.elect_params( params )
+        settings_builder.write_source_settings(settings_file)
       end
 
       # Updates layout name and layout settings

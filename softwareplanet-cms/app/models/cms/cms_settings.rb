@@ -5,9 +5,10 @@ module Cms
   # Settings array:
   CMS_SETTINGS_DEFINITION = [
     'default_layout_id' => '',
+    'images_path' => SOURCE_FOLDERS[SourceType::IMAGE]
   ]
 
-  class CmsSettings < Cms::SourceSettings
+  class CmsSettings < SourceSettings
     attr_accessor *CMS_SETTINGS_DEFINITION[0].keys
 
     def self.get_settings_definition

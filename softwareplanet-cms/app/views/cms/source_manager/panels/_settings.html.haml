@@ -1,16 +1,12 @@
 .settings-content
   = I18n.t('settings_form.default_layout')
   %br
-  %br
   - options_for_select = ""
   - items.each {|src| options_for_select << "<option id='#{ src.get_source_id }'   #{"selected='selected'" if default_id && src.get_source_id == default_id}>#{src.get_source_name}</option>"}
   = select_tag "layouts", options_for_select.html_safe
   %br
+  = I18n.t('settings_form.images_path')
   %br
-  = I18n.t('settings_form.default_layout')
-
-:javascript
-  $('#layouts').change(function(object){
-     var id = $("#layouts option:selected").attr('id');
-     setDefaultLayout(id)
-  });
+  %input.images-path{:placeholder => "app/assets/images", :type => "text", :value => "#{images_path}"}
+  %br
+  %button.btn.btn-primary.save-cms-settings{:onclick => 'saveCmsProperties(this)'} #{I18n.t('ui.save')}

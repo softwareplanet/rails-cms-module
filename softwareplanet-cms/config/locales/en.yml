@@ -69,6 +69,7 @@ en:
 
   settings_form:
     default_layout: Choose startup layout
+    images_path: Modify images gallery path
 
   ui:
     edit_properties: Edit properties

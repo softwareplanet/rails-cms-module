@@ -50,10 +50,9 @@ module Cms
       source.eliminate! unless source.blank?
     end
 
-    def set_default_layout
-      layout_id = Source.get_source_by_id params[:id]
-      #Source.get_cms_settings_source .default_layout_id
-      1+1
+    def update_cms_settings
+      Source.update_cms_properties params
+      render :js => 'alert("Updated");'
     end
 
     def reorder_sources
@@ -94,7 +93,10 @@ module Cms
               @sources = Source.load_gallery(params)
             when "settings"
               @layouts = Source.find_source_by_type(SourceType::LAYOUT) || []
-              @default_layout_id = Source.get_cms_settings_attributes.default_layout_id
+              attributes = Source.get_cms_settings_attributes
+              @default_layout_id = attributes.default_layout_id
+              @images_path = attributes.images_path
+              SOURCE_FOLDER[SourceType::IMAGE] = @images_path
           end
       end
     end
