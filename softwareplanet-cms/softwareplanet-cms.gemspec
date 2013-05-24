@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'uglifier'
   # rspec dependencies:
   s.add_development_dependency "aloha-rails"
-  s.add_development_dependency "sqlite3"
+  # s.add_development_dependency "sqlite3"
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "factory_girl_rails"
