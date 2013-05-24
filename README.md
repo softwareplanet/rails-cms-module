@@ -21,21 +21,30 @@ Installer checks your existing configuration automatically, and it is quite verb
 
 ![Image gallery](https://github.com/softwareplanet/cms/blob/master/doc/gallery.png?raw=true "Image gallery")
 
+### Languages support
+
+The SoftwarePlanet CMS is distributed with two administrative locals: en and ru.
+Language selector for site guests can be expanded with any number of languages.
+
 ### Installation
 
 [This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/cms/master/softwareplanet-cms/guide/compiled/setup.html)
 describes the setup process.
 
-In brief, you should:
+In brief, you should not forget to run this two commands with terminal inside your project root path:
 
 - add softwareplanet-cms gem folder to your project root path
 - add to your Gemfile:
 
 ```ruby
-gem 'softwareplanet-cms', :path => 'softwareplanet-cms'
+gem 'softwareplanet-cms', :path => './cms/softwareplanet-cms'
 ```
 - run `bundle` command
 - run `rake cms:wizard` rake command to finish setup.
+
+If you clone from github, you will get the folder with dummy application that included `softwareplanet-cms` cms 
+folder inside. It is already configured, and you can run it after both bundle and rake commands listed above.
+If you need real gem using, move the `softwareplanet-cms` folder into your project root, and change the `path` for new gem folder.
 
 ### Contributing
 

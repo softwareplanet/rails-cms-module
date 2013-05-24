@@ -1,37 +1,3 @@
-/ Layout:
-#layout_popup.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog"}
-  .modal-header
-    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-    %h3 Create new layout
-  .modal-body
-    %form
-      %fieldset
-        %label Layout name
-        %input.name{:placeholder => "Input layout name…", :type => "text", :tabindex => 1}
-
-        %label Layout url
-        %input.url{:placeholder => "Input layout url…", :type => "text"}
-        %br
-        %button.btn.btn-primary.add-source{:type => "submit", "data-type" => Cms::SourceType::LAYOUT, :tabindex => 2} Create
-  .modal-footer
-    %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Cancel
-
-
-/ Content
-#content_popup.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog"}
-  .modal-header
-    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-    %h3 Create new content
-  .modal-body
-    %form
-      %fieldset
-        %label Content name
-        %input.name{:placeholder => "Input content name…", :type => "text", :tabindex => 1}
-        %br
-        %button.btn.btn-primary.add-source{:type => "submit", "data-type" => Cms::SourceType::CONTENT, :tabindex => 2} Create
-  .modal-footer
-    %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Cancel
-
 / Images Gallery
 #gallery_popup.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :style => "width: 800px"}
   %input#target_image{:type => 'hidden'}
