@@ -19,4 +19,4 @@ gem 'codemirror-rails'
 gem 'aloha-rails' 
 #=   CMS REQUIREMENTS END   =#
 gem 'bootstrap-sass' 
-gem 'haml' 
+gem 'haml'
