@@ -5,12 +5,13 @@
     = @seo_tags.html_safe
     = ''
 
-    = stylesheet_link_tag    "pages", :media => "all"
-    = javascript_include_tag "pages"
-
     - output = Haml::Engine.new(@head_content, :format => :html5).render(Object.new, :app => @application_data )
     != output
     = ''
+
+    = stylesheet_link_tag    "pages", :media => "all"
+    = javascript_include_tag "pages"
+
 
     - @stylesheets.each do |style_file|
       - stylesheet_name = style_file.chomp(".scss") << ".css"

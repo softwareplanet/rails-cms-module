@@ -142,6 +142,8 @@ module Cms
             hash['breadcrumbs'] = current_path
 
         hash['folders'] = []
+        current_path = current_path.chomp('/') + '/'
+
         Dir.glob(current_path + '*').each do |file|
           if File.directory?(file)
             dir = OpenStruct.new

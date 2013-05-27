@@ -92,9 +92,9 @@ module Cms
         menu_links = menu_ids.collect{|id|
           source = Source.get_source_by_id(id)
           settings = Source.get_source_settings_attributes(id)
-          next if settings.no_publish == 0 || settings.no_show == 0
-          source_name = source.get_source_name
-          "  %li\n    %a{:href=>'#'}\n      " + source_name + "\n"
+          next if settings.no_publish == 1 || settings.no_show == 1
+          link_title = settings.title
+          "  %li\n    %a{:href=>'"+source.get_source_name+"'}\n      " + link_title + "\n"
         }
 
         content_source = "%ul.nav.nav-layout\n" + menu_links.join

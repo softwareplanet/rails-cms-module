@@ -61,7 +61,8 @@ module Cms
     end
 
     def get_image_path
-        get_source_filepath["public".size..-1]
+      base_dir = Cms::SOURCE_FOLDERS[Cms::SourceType::IMAGE]
+      get_source_filepath.gsub(base_dir, '/assets')
     end
 
     def get_image_size
@@ -138,7 +139,8 @@ module Cms
         localized = SiteLocal.create(:tag_id => tag_id, :text => "#{image_id}#{image_size}")
         image_src = "#"
       else
-        img = Source.find_source_by_name_and_type(localized.text+".*", SourceType::IMAGE).first
+        #img = Source.find_source_by_name_and_type(localized.text+".*", SourceType::IMAGE).first
+        img = Source.find_source_by_name_and_type(localized.text.split('/').last, SourceType::IMAGE).first
         image_src = img ? img.get_image_path : "#!"
         unless image_size
           image_width_attr = image_height_attr = ""

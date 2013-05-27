@@ -4,6 +4,7 @@ Cms::Engine.routes.draw do
 
   match "/img/:img.png" => redirect("/assets/%{img}.png")
   match "/img/:img.gif" => redirect("/assets/%{img}.gif")
+  #match "/assets/:rc.js" => redirect("/assets/%{img}.gif")
 
   root :to => "pages#show", :layout => "welcome"
 
@@ -15,6 +16,12 @@ Cms::Engine.routes.draw do
   resources :pages do
     collection do
       get 'show'
+    end
+  end
+
+  resources :page_contents do
+    collection do
+      post 'aloha'
     end
   end
 
