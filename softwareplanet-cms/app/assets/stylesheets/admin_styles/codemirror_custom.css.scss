@@ -5,11 +5,21 @@
 .CodeMirror {
   border: 1px solid #eee!important;
   height: auto!important;
+  overflow-y: hidden;
+
+  /*overflow-y: auto;
+  overflow-x: scroll;*/
+  width: 100%;
+  /*height: auto;*/
+  line-height: 1em;
+  font-family: monospace;
+  _position: relative; /* IE6 hack */
+
 }
 .CodeMirror-scroll {
   height: auto!important;
-  overflow-y: auto!important;
-  overflow-x: auto!important;
+  /*overflow-y: auto!important;
+  overflow-x: auto!important;*/
 }
 
 .head-tag {
@@ -36,16 +46,6 @@
 
 .CodeMirror-linenumber {
   background-color: #555555;
-}
-
-.CodeMirror {
-  overflow-y: auto;
-  overflow-x: scroll;
-  width: 100%;
-  height: auto;
-  line-height: 1em;
-  font-family: monospace;
-  _position: relative; /* IE6 hack */
 }
 
 .CodeMirror-fullscreen {
