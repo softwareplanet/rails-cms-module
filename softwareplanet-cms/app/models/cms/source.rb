@@ -120,7 +120,12 @@ module Cms
     def get_image(image_id, image_class, image_size, layout, var_hash, source_id, lang_id)
       is_admin = var_hash[:admin?] || false
 
-      image_class = " class='changeable-image' " if is_admin
+      if is_admin
+        image_class = image_class ? "#{image_class} changeable-image" : "changeable-image"
+      end
+
+      class_str = image_class ? "class='#{image_class}'" : ""
+
       image_styles_attr = " style='font-size: 10px' "
       if image_size
         image_width_attr = "width='#{image_size.split('x')[0]}' "
@@ -157,8 +162,7 @@ module Cms
       #    image_src = "#"
       #  end
       #end
-     class_str = image_class ? "class='#{image_class}'" : ""
-     resulted_value = "<img id='#{tag_id}' #{class_str} src='#{image_src}' #{image_class.to_s} #{image_width_attr.to_s} #{image_height_attr.to_s} alt='#{image_id}#{image_size}' #{image_styles_attr} data-hardsize='#{image_size_specified}'/>"
+     resulted_value = "<img id='#{tag_id}' #{class_str} src='#{image_src}' #{image_width_attr.to_s} #{image_height_attr.to_s} alt='#{image_id}#{image_size}' #{image_styles_attr} data-hardsize='#{image_size_specified}'/>"
     end
 
     def build(var_hash, layout)
@@ -178,10 +182,10 @@ module Cms
           @resulted_value = get_text(text_id, layout, var_hash, self.get_id, lang_id)
         elsif var_name.match(/^image/).to_s.length > 0
           image_size_attr = /image(\w+)/.match(r)  #%var:image.span3\"cubex_logo_header\"
-          image_class_attr = /\.(\w+)/.match(r)
+          image_class_attr = /image\.((\w|\-)+)(\"|')/.match(r)
 
           offset = image_size_attr.nil? ? "image".length+1 : image_size_attr[0].length+1
-          offset += image_class_attr.nil? ? 0 : image_class_attr[0].length
+          offset += image_class_attr.nil? ? 0 : image_class_attr[1].length+1
 
           image_size = image_size_attr ? image_size_attr[1] : nil
           image_class = image_class_attr ? image_class_attr[1] : nil
