@@ -4,7 +4,11 @@ Cms::Engine.routes.draw do
 
   match "/img/:img.png" => redirect("/assets/%{img}.png")
   match "/img/:img.gif" => redirect("/assets/%{img}.gif")
-  #match "/assets/:rc.js" => redirect("/assets/%{img}.gif")
+
+  match "/lib/vendor/ext-3.2.1/resources/images/gray/qtip/:img.gif" => redirect("/assets/aloha/lib/vendor/ext-3.2.1/resources/images/gray/qtip/%{img}.gif")
+  match "/lib/vendor/ext-3.2.1/resources/images/gray/tabs/:img.gif" => redirect("/assets/aloha/lib/vendor/ext-3.2.1/resources/images/gray/tabs/%{img}.gif")
+  match "/lib/vendor/ext-3.2.1/resources/images/gray/button/:img.gif" => redirect("/assets/aloha/lib/vendor/ext-3.2.1/resources/images/gray/button/%{img}.gif")
+  match "/lib/vendor/ext-3.2.1/resources/images/gray/toolbar/:img.gif" => redirect("/assets/aloha/lib/vendor/ext-3.2.1/resources/images/gray/toolbar/%{img}.gif")
 
   root :to => "pages#show", :layout => "welcome"
 
