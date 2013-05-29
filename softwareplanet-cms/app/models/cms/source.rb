@@ -117,7 +117,7 @@ module Cms
       prepended_aloha_tags + localized.text
     end
 
-    def get_image(image_id, image_size, layout, var_hash, source_id, lang_id)
+    def get_image(image_id, image_class, image_size, layout, var_hash, source_id, lang_id)
       is_admin = var_hash[:admin?] || false
 
       image_class = " class='changeable-image' " if is_admin
@@ -157,7 +157,8 @@ module Cms
       #    image_src = "#"
       #  end
       #end
-     resulted_value = "<img id='#{tag_id}' src='#{image_src}' #{image_class.to_s} #{image_width_attr.to_s} #{image_height_attr.to_s} alt='#{image_id}#{image_size}' #{image_styles_attr} data-hardsize='#{image_size_specified}'/>"
+     class_str = image_class ? "class='#{image_class}'" : ""
+     resulted_value = "<img id='#{tag_id}' #{class_str} src='#{image_src}' #{image_class.to_s} #{image_width_attr.to_s} #{image_height_attr.to_s} alt='#{image_id}#{image_size}' #{image_styles_attr} data-hardsize='#{image_size_specified}'/>"
     end
 
     def build(var_hash, layout)
@@ -168,19 +169,26 @@ module Cms
       lang_id = SiteLanguage.find_by_url(lang_name).id
 
       # Build variables
-      plain_src = src.gsub(/%var:([\w\-\"_\']+)/) { |r|
-        var_name = /:([\w_\-\"\']+)/.match(r)[1]
+      plain_src = src.gsub(/%var:([\w\-\"_\'\.]+)/) { |r|
+        var_name = /:([\w_\-\"\'\.]+)/.match(r)[1]
 
         @resulted_value = ""
         if var_name.match(/^text/).to_s.length > 0
           text_id = var_name["text".length..-1].to_s
           @resulted_value = get_text(text_id, layout, var_hash, self.get_id, lang_id)
         elsif var_name.match(/^image/).to_s.length > 0
-          image_size_attr = /image(\w+)/.match(r)
+          image_size_attr = /image(\w+)/.match(r)  #%var:image.span3\"cubex_logo_header\"
+          image_class_attr = /\.(\w+)/.match(r)
+
           offset = image_size_attr.nil? ? "image".length+1 : image_size_attr[0].length+1
+          offset += image_class_attr.nil? ? 0 : image_class_attr[0].length
+
           image_size = image_size_attr ? image_size_attr[1] : nil
+          image_class = image_class_attr ? image_class_attr[1] : nil
+
+
           image_id = var_name[offset..-2].to_s
-          @resulted_value = get_image(image_id, image_size, layout, var_hash, self.get_id, lang_id)
+          @resulted_value = get_image(image_id, image_class, image_size, layout, var_hash, self.get_id, lang_id)
         elsif false #...var_name.match(/^%content:/).to_s.length > 0
 
         else
