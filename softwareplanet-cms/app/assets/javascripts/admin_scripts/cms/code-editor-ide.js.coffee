@@ -56,6 +56,10 @@ class window.CodeEditorIDE
     return  unless showing
     showing.CodeMirror.getWrapperElement().style.height = winHeight() + "px"
 
+  saveEditorsContent = (textarea_name) ->
+    $('.save-src-btn').click()
+    console.log('all sources were saved!');
+
 
   #constructor: (code_textarea_id, newline_separator) ->
   constructor: (code_textarea_id) ->
@@ -74,6 +78,9 @@ class window.CodeEditorIDE
       extraKeys:
         F11: (cm) ->
           setFullScreen cm, not isFullScreen(cm)
+        "Ctrl-S": (cm) ->
+          saveEditorsContent(code_textarea)
+          console.log "saved"
         Esc: (cm) ->
           setFullScreen cm, false  if isFullScreen(cm)
     )
