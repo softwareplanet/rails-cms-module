@@ -11,6 +11,7 @@ module Cms
       editor_name = "head_editor" if (sourceObj.type == Cms::SourceType::HEAD)
       "
       editorManager.getEditor('#{ editor_name }').setSourceWithSeparator('#{ sourceObj.get_id }', '#{ sourceObj.get_source_name }', '#{escape_javascript(sourceObj.data) }');
+      editorManager.getEditor('#{ editor_name }').clearHistory();
       ".html_safe
     end
   end
