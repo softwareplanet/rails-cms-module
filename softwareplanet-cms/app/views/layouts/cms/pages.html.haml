@@ -1,25 +1,23 @@
 !!!
 %html
   %head
-    = ''
-    = @seo_tags.html_safe
-    = ''
-
-    - output = Haml::Engine.new(@head_content, :format => :html5).render(Object.new, :app => @application_data )
-    != output
-    = ''
 
     = stylesheet_link_tag    "pages", :media => "all"
     = javascript_include_tag "pages"
 
+    = ''
+    = @seo_tags.html_safe
 
     - @stylesheets.each do |style_file|
-      - stylesheet_name = style_file.chomp(".scss") << ".css"
-      = stylesheet_link_tag stylesheet_name
+      - if File.read('app/assets/stylesheets/' + style_file).size > 0
+        - stylesheet_name = style_file.chomp(".scss") << ".css"
+        = stylesheet_link_tag stylesheet_name
 
-    = ''
+    - output = Haml::Engine.new(@head_content, :format => :html5).render(Object.new, :app => @application_data )
+    != output
+
     = csrf_meta_tags
-
+  = ''
   %body
     = aloha! if @aloha_enable
     %div.page-wrapper{:id => @wrapper_id}
