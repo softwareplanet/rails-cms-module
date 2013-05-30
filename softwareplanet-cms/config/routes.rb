@@ -10,7 +10,7 @@ Cms::Engine.routes.draw do
   match "/lib/vendor/ext-3.2.1/resources/images/gray/button/:img.gif" => redirect("/assets/aloha/lib/vendor/ext-3.2.1/resources/images/gray/button/%{img}.gif")
   match "/lib/vendor/ext-3.2.1/resources/images/gray/toolbar/:img.gif" => redirect("/assets/aloha/lib/vendor/ext-3.2.1/resources/images/gray/toolbar/%{img}.gif")
 
-  root :to => "pages#show", :layout => "welcome"
+  root :to => "pages#default_layout"
 
   resources :tests do
     get '/' => 'tests#basic'
@@ -20,6 +20,7 @@ Cms::Engine.routes.draw do
   resources :pages do
     collection do
       get 'show'
+      get 'default_layout'
     end
   end
 

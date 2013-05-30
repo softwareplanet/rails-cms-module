@@ -9,6 +9,13 @@ module Cms
 
     ALLOW_COMPILED_CACHE = true
 
+    def default_layout
+      cms_attributes = Source.get_cms_settings_attributes
+      default_layout_id = cms_attributes.default_layout_id
+      default_layout_name = Source.get_source_by_id(default_layout_id)
+      redirect_to :action => 'show', :layout => default_layout_name.get_source_name
+    end
+
     def show
       #response.headers["Expires"] = 1.year.from_now.httpdate
       #@t1 = Time.now
