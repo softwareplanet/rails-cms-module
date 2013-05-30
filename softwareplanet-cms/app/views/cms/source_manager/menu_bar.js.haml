@@ -16,7 +16,7 @@ $(panel_content).html("");
       - when 'components'
         $(panel_content).html("#{ escape_javascript(render(:partial => 'components', :locals => {items: @components} )) }");
       - when 'settings'
-        $(panel_content).html("#{ escape_javascript(render(:partial => '/cms/source_manager/panels/settings', :locals => {items: @layouts, default_id: @default_layout_id, images_path: @images_path} )) }");
+        $(panel_content).html("#{ escape_javascript(render(:partial => '/cms/source_manager/panels/settings', :locals => {layouts: @layouts, default_layout_id: @default_layout_id, images_path: @images_path, locales: @locales, admin_locale_name: @admin_locale_name, show_locale_in_url: @show_locale_in_url} )) }");
 
       - when 'gallery'
         - @breadcrumb = @sources['breadcrumbs']

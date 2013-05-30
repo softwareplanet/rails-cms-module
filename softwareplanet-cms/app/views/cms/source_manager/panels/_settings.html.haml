@@ -1,12 +1,28 @@
 .settings-content
+
   = I18n.t('settings_form.default_layout')
   %br
-  - options_for_select = ""
-  - items.each {|src| options_for_select << "<option id='#{ src.get_source_id }'   #{"selected='selected'" if default_id && src.get_source_id == default_id}>#{src.get_source_name}</option>"}
-  = select_tag "layouts", options_for_select.html_safe
+  - options_for_default_layouts = ""
+  - layouts.each {|src| options_for_default_layouts << "<option id='#{ src.get_source_id }'   #{"selected='selected'" if default_layout_id && src.get_source_id == default_layout_id}>#{src.get_source_name}</option>"}
+  = select_tag "layouts", options_for_default_layouts.html_safe
   %br
+
   = I18n.t('settings_form.images_path')
   %br
   %input.images-path{:placeholder => "app/assets/images", :type => "text", :value => "#{images_path}"}
   %br
+
+  = I18n.t('settings_form.admin_locale_name')
+  %br
+  - options_for_default_locale = ""
+  - locales.each {|loc| options_for_default_locale << "<option id='#{ loc }' #{"selected='selected'" if admin_locale_name == loc }>#{loc}</option>"}
+  = select_tag "locales", options_for_default_locale.html_safe
+  %br
+
+  = check_box_tag 'show_locale_in_url', 'yes', show_locale_in_url == '1'
+  = I18n.t('settings_form.show_locale_in_url')
+  %br
+  %br
+  %br
+
   %button.btn.btn-primary.save-cms-settings{:onclick => 'saveCmsProperties(this)'} #{I18n.t('ui.save')}

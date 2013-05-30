@@ -70,6 +70,8 @@ en:
   settings_form:
     default_layout: Choose startup layout
     images_path: Modify images gallery path
+    admin_locale_name: Change CMS language
+    show_locale_in_url: Show locale in url?
 
   ui:
     edit_properties: Edit properties

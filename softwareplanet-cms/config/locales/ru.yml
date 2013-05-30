@@ -65,8 +65,10 @@ ru:
     success: Компонент успешно переименовано
 
   settings_form:
-      default_layout: Выберите начальную страницу
-      images_path: Путь к галерее
+    default_layout: Выберите начальную страницу
+    images_path: Путь к галерее картинок
+    admin_locale_name: Change CMS language
+    show_locale_in_url: Выводить локаль в адресе?
 
   ui:
     edit_properties: Редактировать свойства

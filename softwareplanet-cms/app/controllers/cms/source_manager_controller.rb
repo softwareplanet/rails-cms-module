@@ -97,6 +97,9 @@ module Cms
               @default_layout_id = attributes.default_layout_id
               @images_path = attributes.images_path
               SOURCE_FOLDER[SourceType::IMAGE] = @images_path
+              @locales = Cms::SiteLanguage.all.map(&:name)
+              @admin_locale_name = attributes.admin_locale_name
+              @show_locale_in_url = attributes.show_locale_in_url
           end
       end
     end
