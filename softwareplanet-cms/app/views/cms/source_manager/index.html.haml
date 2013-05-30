@@ -1,11 +1,15 @@
+- cms_settings = Cms::Source.get_cms_settings_attributes
+- admin_locale_name = cms_settings.admin_locale_name.downcase
+
+
 .toolbar
-  .icon.icon-main{'data-tooltip' => 'Главная', 'data-icon' => 'main'}
-  .icon.icon-structure{'data-tooltip' => 'Структура', 'data-icon' => 'structure'}
-  .icon.icon-content{'data-tooltip' => 'Содержание', 'data-icon' => 'content'}
-  .icon.icon-components{'data-tooltip' => 'Компоненты', 'data-icon' => 'components'}
-  .icon.icon-gallery{'data-tooltip' => 'Галлерея', 'data-icon' => 'gallery'}
-  .icon.icon-settings{'data-tooltip' => 'Настройки', 'data-icon' => 'settings'}
-  .icon.icon-exit{'data-tooltip' => 'Выход', 'data-icon' => 'exit'}
+  .icon.icon-main{'data-tooltip' => 'Главная', 'data-icon' => 'main', :class=>"#{admin_locale_name}"}
+  .icon.icon-structure{'data-tooltip' => 'Структура', 'data-icon' => 'structure', :class=>"#{admin_locale_name}"}
+  .icon.icon-content{'data-tooltip' => 'Содержание', 'data-icon' => 'content', :class=>"#{admin_locale_name}"}
+  .icon.icon-components{'data-tooltip' => 'Компоненты', 'data-icon' => 'components', :class=>"#{admin_locale_name}"}
+  .icon.icon-gallery{'data-tooltip' => 'Галлерея', 'data-icon' => 'gallery', :class=>"#{admin_locale_name}"}
+  .icon.icon-settings{'data-tooltip' => 'Настройки', 'data-icon' => 'settings', :class=>"#{admin_locale_name}"}
+  .icon.icon-exit{'data-tooltip' => 'Выход', 'data-icon' => 'exit', :class=>"#{admin_locale_name}"}
 .panel.panel_main
   .header
     .rect

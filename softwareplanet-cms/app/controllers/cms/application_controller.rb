@@ -75,6 +75,18 @@
       end
     end
 
+    def localize
+      if session[:cms_localize] == nil
+        cms_attributes = Cms::Source.get_cms_settings_attributes
+        admin_locale_name = cms_attributes.admin_locale_name
+        session[:admin_locale_name] = admin_locale_name
+        admin_locale = Cms::SiteLanguage.find_by_name(admin_locale_name) || Cms::SiteLanguage.first
+        session[:cms_localize] = admin_locale.url
+      end
+
+      I18n.locale = session[:cms_localize]
+    end
+
     def check_aloha_enable
       @aloha_enable = check_admin
     end

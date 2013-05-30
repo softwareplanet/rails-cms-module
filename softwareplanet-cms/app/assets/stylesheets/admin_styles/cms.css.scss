@@ -92,6 +92,9 @@ body.cms {
     left: 0;
 
   }
+  .icon-main.english, .icon-main.english:hover, .icon-main.english.highlighted {
+    background-image: url(#{$assets_path}/main-toolbar_en.png);
+  }
   .icon-main {
     width: 51px;
     margin-left: 21px;
@@ -105,6 +108,9 @@ body.cms {
     background-position: -51px 0;
   }
 
+  .icon-structure.english, .icon-structure.english:hover, .icon-structure.english.highlighted {
+    background-image: url(#{$assets_path}/structure-toolbar_en.png);
+  }
   .icon-structure {
     width: 61px;
     margin-left: 16px;
@@ -118,6 +124,9 @@ body.cms {
     background-position: -61px 0;
   }
 
+  .icon-content.english, .icon-content.english:hover, .icon-content.english.highlighted {
+    background-image: url(#{$assets_path}/content-toolbar_en.png);
+  }
   .icon-content {
     width: 75px;
     margin-left: 9px;
@@ -131,6 +140,9 @@ body.cms {
     background-position: -75px 0;
   }
 
+  .icon-components.english, .icon-components.english:hover, .icon-components.english.highlighted {
+    background-image: url(#{$assets_path}/components-toolbar_en.png);
+  }
   .icon-components {
     width: 73px;
     margin-left: 10px;
@@ -144,6 +156,9 @@ body.cms {
     background-position: -73px 0;
   }
 
+  .icon-gallery.english, .icon-gallery.english:hover, .icon-gallery.english.highlighted {
+    background-image: url(#{$assets_path}/gallery-toolbar_en.png);
+  }
   .icon-gallery {
     width: 49px;
     margin-left: 25px;
@@ -157,6 +172,9 @@ body.cms {
     background-position: -49px 0;
   }
 
+  .icon-settings.english, .icon-settings.english:hover, .icon-settings.english.highlighted {
+    background-image: url(#{$assets_path}/settings-toolbar_en.png);
+  }
   .icon-settings{
     width: 63px;
     margin-left: 15px;
@@ -170,6 +188,9 @@ body.cms {
     background-position: -63px 0;
   }
 
+  .icon-exit.english, .icon-exit.english:hover, .icon-exit.english.highlighted {
+    background-image: url(#{$assets_path}/exit-toolbar_en.png);
+  }
   .icon-exit {
     width: 38px;
     background-image: url(#{$assets_path}/exit-toolbar.png);

@@ -5,6 +5,7 @@ module Cms
     protect_from_forgery
     before_filter :admin_access
     before_filter :check_aloha_enable
+    before_filter :localize
 
     # Show list of all sources, 'structure' panel:
     def index
@@ -52,6 +53,10 @@ module Cms
 
     def update_cms_settings
       Source.update_cms_properties params
+      if session[:admin_locale_name] != params[:admin_locale_name]
+        session[:cms_localize] = nil
+        render :js => 'alert("Page will be reloaded to apply localization options");location.reload();' and return
+      end
       render :js => 'alert("Updated");'
     end
 
