@@ -17,17 +17,14 @@ module Cms
     end
 
     def show
-      #response.headers["Expires"] = 1.year.from_now.httpdate
-      #@t1 = Time.now
       return unless all_locales_redirect
+
       @layout = params[:layout]
 
       @without_cache = !ALLOW_COMPILED_CACHE || check_admin
 
       if @without_cache # do not display cached:
         @html, @wrapper_id, @stylesheets, @seo_tags, @head_content = Page.compose(@layout, @application_data)
-          # images count decreased for faster page loading
-          #@images = Source.where(:type => SourceType::IMAGE)[] if check_admin
       else
         layout_name = @layout
         lang_path = @application_data[:lang]
@@ -44,22 +41,9 @@ module Cms
             file.write(@compiled_layout.force_encoding('utf-8'))
           end
         end
-        render(:text => @compiled_layout)
-        #p "RENDERED IN:"
-        #p (Time.now - @t1)
-        return
+        render(:text => @compiled_layout) and return
       end
-
       @images = Source.find_source_by_type(SourceType::IMAGE)
-
-      #@html, @wrapper_id, @stylesheets, @seo_tags = Page.compose(@layout, @application_data)
-      #@images = Source.where :type => SourceType::IMAGE if check_admin
-      # images count decreased for faster page loading
-      #@images = @images[0..10] if @images
-    #rescue => e
-    # puts e.backtrace
-    # @fail_reason = e.message
-    # render :action => "404", :layout => false and return
     end
 
   end

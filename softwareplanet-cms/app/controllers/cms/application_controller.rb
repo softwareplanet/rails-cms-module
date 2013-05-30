@@ -7,6 +7,11 @@
 
     # If request locale not specified, redirect to session locale:
     def all_locales_redirect
+      cms_attributes = Cms::Source.get_cms_settings_attributes
+      if cms_attributes.show_locale_in_url == '0'
+        return true
+      end
+
       if params[:locale].blank? && !!session[:locale] && !!params[:layout]
         redirect_to "/#{session[:locale]}/#{params[:layout]}" and return false
       end
