@@ -1,7 +1,9 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
+
 ru:
+  rus: Русский
   login:
     title: SoftwarePlanet CMS
     username: Логин
@@ -15,23 +17,87 @@ ru:
 
   credentials: "Начиная с 2000 года компания ИнтерЛинк осуществляет полный цикл разработки программных проектов, включая анализ, проектирование, программирование, тестирование и разработку графического дизайна.                                                                                                                                                                                                                        credentials: Начиная с 2000 годакомпания ИнтерЛинк осуществляет полный цикл разработки программных проектов, включая анализ, проектирование, программирование, тестирование и разработку графического дизайна."
 
-  create_layout_form:
-    title: Создать страницу
-    name_title: Адрес / Имя
-    not_show_in_menu: Не показывать в меню
-    not_publish: Не публиковать на сайте
-    seo_settings: Настройки SEO
-    seo_title: Заголовок
-    seo_title_placeholder: <title>
-    seo_keywords: Ключевые слова
-    seo_keywords_placeholder: <keywords>
-    seo_description: Описание
-    seo_description_placeholder: <description>
+  panels:
+    main:
+      title: Главная
 
-    blank_address: Не может быть пустым
-    wrong_address: Уже существует
-    wrong: Не удалось создать страницу
-    success: Успешно добавлено
+    structure:
+      title: Структура сайта
+
+    components:
+      title: Компоненты
+
+    gallery:
+      title: Галерея
+      create_folder: Добавить папку
+      add_image: Добавить картинку
+
+    settings:
+      title: Настройки
+
+    page_properties:
+      update_title: Свойства страницы
+      create_title: Создать страницу
+      name_title: Адрес / Имя
+      name_placeholder: Введите имя страницы
+      not_show_in_menu: Не показывать в меню
+      not_publish: Не публиковать на сайте
+      seo_settings: Настройки SEO
+      seo_title: Заголовок
+      seo_title_placeholder: <title>
+      seo_keywords: Ключевые слова
+      seo_keywords_placeholder: <keywords>
+      seo_description: Описание
+      seo_description_placeholder: <description>
+
+      blank_address: Не может быть пустым
+      wrong_address: Уже существует
+      wrong: Не удалось создать страницу
+      success: Успешно добавлено
+
+    code_editor:
+      source_code_title: Исходный код
+      style_code_title: Стили оформления
+
+
+
+
+#  create_layout_form:
+#    title: Создать страницу
+#    name_title: Адрес / Имя
+#    not_show_in_menu: Не показывать в меню
+#    not_publish: Не публиковать на сайте
+#    seo_settings: Настройки SEO
+#    seo_title: Заголовок
+#    seo_title_placeholder: <title>
+#    seo_keywords: Ключевые слова
+#    seo_keywords_placeholder: <keywords>
+#    seo_description: Описание
+#    seo_description_placeholder: <description>
+#
+#    blank_address: Не может быть пустым
+#    wrong_address: Уже существует
+#    wrong: Не удалось создать страницу
+#    success: Успешно добавлено
+#
+#   # MERGE WITH create_layout_form ~!!!~
+#  layout_settings:
+#    title: Создать страницу
+#    name_title: Адрес / Имя
+#    not_show_in_menu: Не показывать в меню
+#    not_publish: Не публиковать на сайте
+#    seo_settings: Настройки SEO
+#    seo_title: Заголовок
+#    seo_title_placeholder: <title>
+#    seo_keywords: Ключевые слова
+#    seo_keywords_placeholder: <keywords>
+#    seo_description: Описание
+#    seo_description_placeholder: <description>
+#
+#    blank_address: Не может быть пустым
+#    wrong_address: Уже существует
+#    wrong: Не удалось создать страницу
+#    success: Успешно добавлено
 
   save_layout_form:
     blank_address: Не может быть пустым
@@ -67,8 +133,8 @@ ru:
   settings_form:
     default_layout: Выберите начальную страницу
     images_path: Путь к галерее картинок
-    admin_locale_name: Change CMS language
-    show_locale_in_url: Выводить локаль в адресе?
+    admin_locale_name: Сменить язык (CMS language)
+    show_locale_in_url: Выводить текущую локаль в адресе сайта?
 
   ui:
     edit_properties: Редактировать свойства

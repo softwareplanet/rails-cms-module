@@ -1,7 +1,9 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
+
 en:
+  rus: Русский
   login:
     title: SoftwarePlanet CMS
     username: Username
@@ -15,23 +17,84 @@ en:
 
   credentials: Since 2000, the company Interlink provides full cycle of software projects, including analysis, design, programming, testing and development of graphic design.
 
-  create_layout_form:
-    title: Create page
-    name_title: Address / name
-    not_show_in_menu: Not show in menu
-    not_publish: Not publish on site
-    seo_settings: SEO settings
-    seo_title: Title
-    seo_title_placeholder: <title>
-    seo_keywords: Keywords
-    seo_keywords_placeholder: <keywords>
-    seo_description: Description
-    seo_description_placeholder: <description>
+  panels:
+      main:
+        title: Main
 
-    blank_address: Cannot be blank
-    wrong_address: Already exists
-    wrong: Failed to create a page
-    success: Successfully added
+      structure:
+        title: Site structure
+
+      components:
+        title: Components
+
+      gallery:
+        title: Gallery
+        create_folder: Create new folder
+        add_image: Upload an image
+
+      settings:
+        title: Settings
+
+      page_properties:
+        update_title: Page properties
+        create_title: Create page
+        name_title: Address/Name
+        name_placeholder: Input page name
+        not_show_in_menu: Not show in menu
+        not_publish: Not publish on site
+        seo_settings: SEO settings
+        seo_title: Title
+        seo_title_placeholder: <title>
+        seo_keywords: Keywords
+        seo_keywords_placeholder: <keywords>
+        seo_description: Description
+        seo_description_placeholder: <description>
+
+        blank_address: Cannot be blank
+        wrong_address: Already exists
+        wrong: Failed to create a page
+        success: Successfully added
+
+      code_editor:
+        source_code_title: Source code
+        style_code_title: Stylesheets
+
+#  create_layout_form:
+#    title: Create page
+#    name_title: Address / name
+#    not_show_in_menu: Not show in menu
+#    not_publish: Not publish on site
+#    seo_settings: SEO settings
+#    seo_title: Title
+#    seo_title_placeholder: <title>
+#    seo_keywords: Keywords
+#    seo_keywords_placeholder: <keywords>
+#    seo_description: Description
+#    seo_description_placeholder: <description>
+#
+#    blank_address: Cannot be blank
+#    wrong_address: Already exists
+#    wrong: Failed to create a page
+#    success: Successfully added
+#
+#  # MERGE WITH create_layout_form ~!!!~
+#  layout_settings:
+#    title: Create page
+#    name_title: Address / name
+#    not_show_in_menu: Not show in menu
+#    not_publish: Not publish on site
+#    seo_settings: SEO settings
+#    seo_title: Title
+#    seo_title_placeholder: <title>
+#    seo_keywords: Keywords
+#    seo_keywords_placeholder: <keywords>
+#    seo_description: Description
+#    seo_description_placeholder: <description>
+#
+#    blank_address: Cannot be blank
+#    wrong_address: Already exists
+#    wrong: Failed to create a page
+#    success: Successfully added
 
 
   save_layout_form:

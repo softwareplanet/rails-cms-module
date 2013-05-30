@@ -5,9 +5,9 @@
       .tabbable
         %ul.nav.nav-tabs
           %li.active
-            %a{"data-toggle" => "tab", :href => "#tab1"} Исходный код
+            %a{"data-toggle" => "tab", :href => "#tab1"}= I18n.t('panels.code_editor.source_code_title')
           %li.css-navtab
-            %a{"data-toggle" => "tab", :href => "#tab2", :onclick => "updateCssEditor()"} Стили оформления
+            %a{"data-toggle" => "tab", :href => "#tab2", :onclick => "updateCssEditor()"}= I18n.t('panels.code_editor.style_code_title')
         .tab-content
           #tab1.haml-tab.tab-pane.active
             .head-tag
@@ -18,9 +18,9 @@
             Body content
             %textarea{:id => "haml_editor"}
             .save-haml-btn.save-src-btn
-              Сохранить
+              = I18n.t('ui.save')
 
           #tab2.css-tab.tab-pane
             %textarea{:id => "css_editor"}
             .save-css-btn.save-src-btn
-              Сохранить
+              = I18n.t('ui.save')

@@ -16,8 +16,8 @@ module Cms
     def create
       layout_name = params[:name]
       begin
-        raise I18n.t('create_layout_form.blank_address') if layout_name.blank?
-        raise I18n.t('create_layout_form.wrong_address') if Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).any?
+        raise I18n.t('panels.page_properties.blank_address') if layout_name.blank?
+        raise I18n.t('panels.page_properties.wrong_address') if Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).any?
       rescue => error
         render :js => "alert('#{error}');" and return
       end
@@ -102,7 +102,7 @@ module Cms
               @default_layout_id = attributes.default_layout_id
               @images_path = attributes.images_path
               SOURCE_FOLDER[SourceType::IMAGE] = @images_path
-              @locales = Cms::SiteLanguage.all.map(&:name)
+              @locales = ['Engilsh', "#{I18n.t('rus')}"]
               @admin_locale_name = attributes.admin_locale_name
               @show_locale_in_url = attributes.show_locale_in_url
           end
