@@ -42,6 +42,7 @@ window.UI =
     else
       $("[data-level=child]").hide()
       $(".panel_new-page").css "-webkit-transform", "translate3d(" + $(window).width() + "px, 0, 0)"
+      $(".panel_new-page").css "-moz-transform", "translate3d(" + $(window).width() + "px, 0, 0)"
       $(".panel_new-page").show()
 
       if $(that).hasClass("child-window")
@@ -51,7 +52,8 @@ window.UI =
         offset = 369
 
       setTimeout (->
-        $(".panel_new-page").css "-webkit-transform", "translate3d("+offset+"px, 0, 0)"),
+        $(".panel_new-page").css "-webkit-transform", "translate3d("+offset+"px, 0, 0)"
+        $(".panel_new-page").css "-moz-transform", "translate3d("+offset+"px, 0, 0)"),
       250
 
   #
@@ -68,6 +70,7 @@ window.UI =
     else
       $(".panel_gallery").hide()
       $(".panel").removeClass "show_panel_level_1"
+
       $(panel_class).show()
       setTimeout (->
         $(panel_class).addClass "show_panel_level_1"
