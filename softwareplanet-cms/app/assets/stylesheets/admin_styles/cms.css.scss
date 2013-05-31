@@ -1,5 +1,5 @@
 /*
-  Copyright: Interlink Software. All rights reserved © 2000 ? 2013
+  Copyright: Interlink Software
 */
 
 $assets_path: "/assets/ui";
@@ -252,9 +252,13 @@ i.close-child:hover {
 .panel_settings,
 .panel_content {
   position: absolute;
-  display: block;
-  -webkit-transform: translate3d(-500px, 0, 0)!important;
-  -webkit-transition-duration: 250ms,250ms!important;
+  transform: translate3d(-500px, 0, 0)!important;
+    -webkit-transform: translate3d(-500px, 0, 0)!important;
+    -moz-transform: translate3d(-500px, 0, 0)!important;
+  transition-duration: 250ms,250ms!important;
+    -webkit-transition-duration: 250ms,250ms!important;
+    -moz-transition-duration: 250ms,250ms!important;
+
 }
 .panel_child_structure {
   -webkit-transition-duration: 250ms,250ms;
@@ -268,8 +272,6 @@ i.close-child:hover {
   }
 }
 
-/*.panel_new-page,*/
-/*.panel_child_structure,*/
 .panel_editor,
 .panel_properties,
 .panel_component_properties,
@@ -316,6 +318,10 @@ i.close-child:hover {
 .show_panel_level_1 {
   display: block!important;
   -webkit-transform: translate3d(0, 0, 0)!important;
+  -moz-transform: translate3d(0, 0, 0)!important;
+  -ms-transform: translate3d(0, 0, 0)!important;
+  -o-transform: translate3d(0, 0, 0)!important;
+  transform: translate3d(0, 0, 0)!important;
 }
 
 .panel_properties,

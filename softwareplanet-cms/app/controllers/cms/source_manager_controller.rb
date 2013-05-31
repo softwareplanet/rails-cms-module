@@ -102,7 +102,7 @@ module Cms
               @default_layout_id = attributes.default_layout_id
               @images_path = attributes.images_path
               SOURCE_FOLDER[SourceType::IMAGE] = @images_path
-              @locales = ['Engilsh', "#{I18n.t('rus')}"]
+              @locales = ['English', "#{I18n.t('rus')}"]
               @admin_locale_name = attributes.admin_locale_name
               @show_locale_in_url = attributes.show_locale_in_url
           end
