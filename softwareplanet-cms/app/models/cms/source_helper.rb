@@ -127,8 +127,21 @@ module Cms
         layout_parent = params[:parent_layout].to_s.empty? ? nil : Source.find_by_id(params[:parent_layout])
         name = params[:name]
         layout = Source.build(:type => SourceType::LAYOUT, :name => name, :target => layout_parent)
-        Source.build(:type => SourceType::CSS, :name => name + '.scss', :target => layout)
-        settings_file = Source.build(:type => SourceType::LAYOUT_SETTINGS, :name => name, :target => layout)
+
+        begin
+          Source.build(:type => SourceType::CSS, :name => name + '.scss', :target => layout)
+        rescue => e
+          puts e
+          # a little patch for already existed scss
+        end
+
+        begin
+          settings_file = Source.build(:type => SourceType::LAYOUT_SETTINGS, :name => name, :target => layout)
+        rescue => e
+          puts e
+          settings_file = layout.get_source_attach(SourceType::LAYOUT_SETTINGS)
+          # a little patch for already existed layout settings
+        end
 
         settings_builder = SourceSettings.new.elect_params( prepare_parameters(params) )
         settings_builder.write_source_settings(settings_file)
