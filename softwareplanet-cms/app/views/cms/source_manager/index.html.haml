@@ -132,7 +132,7 @@
 
       %label= I18n.t('panels.page_properties.name_title')
 
-      %input.url{:placeholder => "#{I18n.t('panels.page_properties.name_placeholder')}", :type => "text", :tabindex => 2, :name => "name"}
+      %input.url{:placeholder => "#{I18n.t('panels.page_properties.name_placeholder')}", :autocomplete => "off", :type => "text", :tabindex => 2, :name => "name"}
       %br
       %label.checkbox
         %input{:type => "checkbox", :name => "display", :tabindex => 3}
@@ -150,13 +150,13 @@
           .in{:style => "height: auto;"}
             .accordion-inner
               %label= I18n.t('panels.page_properties.seo_title')
-              %input.name{:placeholder => "#{I18n.t('panels.page_properties.seo_title_placeholder')}", :type => "text", :tabindex => 1, :name => "title"}
+              %input.name{:placeholder => "#{I18n.t('panels.page_properties.seo_title_placeholder')}", :autocomplete => "off", :type => "text", :tabindex => 1, :name => "title"}
 
               %label= I18n.t('panels.page_properties.seo_keywords')
-              %input.name{:placeholder => "#{I18n.t('panels.page_properties.seo_keywords_placeholder')}", :type => "text", :tabindex => 7, :name => "keywords"}
+              %input.name{:placeholder => "#{I18n.t('panels.page_properties.seo_keywords_placeholder')}", :autocomplete => "off", :type => "text", :tabindex => 7, :name => "keywords"}
 
               %label= I18n.t('panels.page_properties.seo_description')
-              %input.url{:placeholder => "#{I18n.t('panels.page_properties.seo_description_placeholder')}", :tabindex => 8, :type => "text", :name => "description"}
+              %input.url{:placeholder => "#{I18n.t('panels.page_properties.seo_description_placeholder')}", :autocomplete => "off", :tabindex => 8, :type => "text", :name => "description"}
       %div
         = submit_tag "#{I18n.t('ui.save')}", :class => 'btn btn-primary'
         .close-btn.btn.btn-primary= I18n.t('ui.cancel')
@@ -181,7 +181,7 @@
   = form_tag url_for( :controller => "source_manager", :action => "save_component", :method => "post" ), :id => "component_properties_form", :style => 'padding: 10px;', :remote => true do
     %input{:type => "hidden", :name => "id"}
     %label Имя компонента
-    %input{:type => "text", :name => "name"}
+    %input{:type => "text", :name => "name", :autocomplete => "off"}
     %br
     %div
       %button.btn.btn-primary.save-source{:type => "submit"} =I18n.t('ui.save')
