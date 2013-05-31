@@ -338,6 +338,7 @@ i.close-child:hover {
   z-index: 1;
   .view_pane {
     background: white;
+    height: 100%;
     iframe {
       overflow: auto;
       border: none;
@@ -900,19 +901,20 @@ i.close-child:hover {
       display: inline-block;
     }
     .properties_animate_config {
-      -webkit-transition-duration: 0.3s;
-      -moz-transition-duration: 0.3s;
-      -o-transition-duration: 0.3s;
       transition-duration: 0.3s;
-      -webkit-transition-property: -webkit-transform;
-      -moz-transition-property: -moz-transform;
-      -o-transition-property: -o-transform;
+        -webkit-transition-duration: 0.3s;
+        -moz-transition-duration: 0.3s;
+        -o-transition-duration: 0.3s;
       transition-property: transform;
+        -webkit-transition-property: -webkit-transform;
+        -moz-transition-property: -moz-transform;
+        -o-transition-property: -o-transform;
     }
     .properties_animate_run {
-      -webkit-transform:rotate(60deg);
-      -moz-transform:rotate(60deg);
-      -o-transform:rotate(60deg);
+      transform:rotate(60deg);
+        -webkit-transform:rotate(60deg);
+        -moz-transform:rotate(60deg);
+        -o-transform:rotate(60deg);
     }
     .edit:hover {-webkit-box-shadow: 0px 0px 10px 4px lightblue; box-shadow: 0px 0px 10px 4px lightblue;}
     .properties:hover {-webkit-box-shadow: 0px 0px 10px 4px lightblue; box-shadow: 0px 0px 10px 4px lightblue;}
@@ -955,8 +957,6 @@ i.close-child:hover {
 
 .editor-panel {
   height: 100%;
-  /*background: #2681dc;*/
-  /*display: none;*/
   float: left;
   width: 100%;
   margin-left: -469px;
@@ -964,10 +964,7 @@ i.close-child:hover {
   .inner {
     margin-left: 469px;
     background: #2681dc;
-    //padding: 30px;
     height: 100%;
-    //-webkit-box-shadow: -10px 0px 15px 2px #aaa;
-    //box-shadow: -10px 0px 15px 2px #333;
 
     .title {
       padding: 45px 15px 0px 20px;
@@ -990,15 +987,12 @@ i.close-child:hover {
     color: white;
   }
   .nav-tabs > li > a {
-    padding: 9px 0 14px 35px;
-
-
-    line-height: 16px;
-
-
-    border: none;
-    -moz-border-radius: none;
     border-radius: none;
+      -moz-border-radius: none;
+
+    padding: 9px 0 14px 35px;
+    line-height: 16px;
+    border: none;
     display: block;
     color: white;
     font-size: 12px;
