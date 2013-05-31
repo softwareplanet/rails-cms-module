@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails"
   s.add_dependency "haml"
   s.add_dependency "minitest"
-  s.add_dependency "jquery-rails"
+  #s.add_dependency "jquery-rails", "~> 3.0.0"
   s.add_dependency "aloha-rails"
   s.add_dependency "bootstrap-sass"
   s.add_dependency "codemirror-rails"

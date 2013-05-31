@@ -13,6 +13,7 @@ module Cms
       cms_attributes = Source.get_cms_settings_attributes
       default_layout_id = cms_attributes.default_layout_id
       default_layout_name = Source.get_source_by_id(default_layout_id)
+      render :text => 'SoftwarePlanet CMS<br>Default layout has not been set.' and return if default_layout_name.nil?
       redirect_to :action => 'show', :layout => default_layout_name.get_source_name
     end
 

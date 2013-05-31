@@ -294,7 +294,11 @@ module Cms
       end
       def get_source_by_id(id)
         id = id[ID_PREFIX.size .. -1]
-        type, name = id.split(ID_DIVIDER)
+        begin
+          type, name = id.split(ID_DIVIDER)
+        rescue
+          return nil
+        end
         find_source_by_name_and_type(name, type.to_i).first
       end
     end

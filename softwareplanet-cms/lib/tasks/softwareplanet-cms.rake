@@ -135,7 +135,7 @@ desc "Setup script"
       #
       # Add javascript assets
       #
-      
+=begin
       puts "Add javascript assets to application.js..";sleep UI_DELAY;
       major_js_assets = [
         "//= require cms/application",
@@ -207,7 +207,7 @@ desc "Setup script"
         puts(css_asset + " including..");
         inject_text(OWNER_APP_CSS_PATH, 2,  "*= " + css_asset + "\n")
       end
-      
+=end
       #
       #  Add Cms routes
       #
