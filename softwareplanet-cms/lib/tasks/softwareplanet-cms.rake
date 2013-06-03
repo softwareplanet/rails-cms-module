@@ -109,13 +109,15 @@ desc "Setup script"
         false
       ]
       gemfile_comment = "#=   CMS REQUIREMENTS END   =#"
+      first_slash = "\n"
       major_gemfile_dependencies.each do |gem_file|
         sleep UI_DELAY;
         if text_exists?(OWNER_GEMFILE_PATH, gem_file)
           puts(gem_file + " already installed."); next;
         end
         puts(gem_file + " including..")
-        inject_text(OWNER_GEMFILE_PATH, -1, gem_file + "\n")
+        inject_text(OWNER_GEMFILE_PATH, -1, first_slash + gem_file + "\n")
+        first_slash = ''
       end
       puts "Including of minor dependencies (if you wish):"
       minor_gemfile_dependencies.each_with_index do |gem_file, index|
