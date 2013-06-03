@@ -19,6 +19,7 @@ module Cms
     end
 
     def update_source_code
+      Source.delete_compiled_sources
       #fix me!
       @sourceObject = Source.find_by_id(params[:id])
       unless @sourceObject.nil?
@@ -30,7 +31,6 @@ module Cms
         if @sourceObject.type == SourceType::CSS && @sourceObject.get_source_target.type == SourceType::CONTENT
           @sourceObject.set_data('#' + @sourceObject.get_source_target.get_source_id + '{/*do not remove first and last line manually!*/' + "\n" + @sourceObject.get_data + "\n" + '}/*do not remove first and last line manually!*/')
         end
-
         @sourceObject.flash!
       end
     end

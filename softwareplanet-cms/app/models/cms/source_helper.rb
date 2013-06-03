@@ -13,6 +13,12 @@ module Cms
   module SourceHelper
 
     module ClassMethods
+
+      def delete_compiled_sources
+        dir_to_delete = Source.get_source_folder(SourceType::COMPILED)
+        FileUtils.rm_rf(dir_to_delete)
+      end
+
       # CMS default swettings:
       def get_cms_settings_file
         source = Source.find_source_by_type(SourceType::CMS_SETTINGS)
@@ -168,7 +174,7 @@ module Cms
         end
 
         hash['images'] = []
-        sources = Source.find_source_by_path(current_path)
+        sources = Source.find_source_by_path(current_path).select{|s| s.filename != "robots.txt"}
         sources.each do |source|
           filepath = source.get_source_filepath
           hash['images'].push(source) unless File.directory?(filepath)

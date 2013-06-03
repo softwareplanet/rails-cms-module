@@ -1,8 +1,8 @@
 $('#component_properties_form')[0].reset();
 $('.panel_component_properties').css('display', 'none');
 
-var component_item = $('.panel_components').find('.component-row[data-component_id=#{@old_component_id}]')
-component_item.attr('data-component_id', '#{@component.get_source_id}')
+var component_item = $('.panel_components').find('.component-row[data-source_id=#{@old_component_id}]')
+component_item.attr('data-source_id', '#{@component.get_source_id}')
 component_item.attr('data-name', '#{@component.get_source_name}')
 component_item.find('.name').html('#{@component.get_source_name}')
 

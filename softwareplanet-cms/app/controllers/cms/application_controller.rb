@@ -28,6 +28,20 @@
       @application_data[:admin?] = session[:logged]
     end
 
+    # Gallery previously was not designed to support dynamically options.
+    # That's why, we need override cms constants somewhere, till good refactoring
+    # Let it be there, in admin' before filter
+    def load_cms_variables
+      puts 'a'
+      #overridden_path = Cms::Source.get_cms_settings_attributes.images_path
+      #Cms::SOURCE_FOLDERS[Cms::SourceType::IMAGE] = overridden_path unless overridden_path.nil?
+    end
+
+    # TODO
+    def get_gallery_path
+      Source.get_cms_settings_attributes.images_path
+    end
+
     def initialize
       super
       I18n.default_locale = "eng"

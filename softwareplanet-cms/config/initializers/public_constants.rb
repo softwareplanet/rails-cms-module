@@ -49,6 +49,6 @@ module Cms
 
   # overridden folders:
   overridden_path = Source.get_cms_settings_attributes.images_path
-  SOURCE_FOLDER[SourceType::IMAGE] = overridden_path unless overridden_path.nil?
+  SOURCE_FOLDERS[SourceType::IMAGE] = overridden_path unless overridden_path.nil?
 
 end

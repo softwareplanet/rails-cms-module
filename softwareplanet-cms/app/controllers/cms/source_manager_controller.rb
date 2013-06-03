@@ -6,6 +6,7 @@ module Cms
     before_filter :admin_access
     before_filter :check_aloha_enable
     before_filter :localize
+    before_filter :load_cms_variables
 
     # Show list of all sources, 'structure' panel:
     def index

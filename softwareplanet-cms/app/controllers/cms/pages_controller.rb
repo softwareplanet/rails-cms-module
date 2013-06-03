@@ -44,7 +44,13 @@ module Cms
         end
         render(:text => @compiled_layout) and return
       end
-      @images = Source.find_source_by_type(SourceType::IMAGE)
+      @images = Source.find_source_by_type(SourceType::IMAGE).select{|i|i.filename != 'robots.txt'}
+
+      # remove public
+      @images = @images.collect{|i|
+        i.path = ''
+        i
+      }
     end
 
   end

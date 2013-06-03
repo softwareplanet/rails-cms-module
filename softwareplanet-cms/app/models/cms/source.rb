@@ -30,7 +30,6 @@ module Cms
 
     def self.quick_build_seo_with_path(layout_id)
       page_name = layout_id.gsub('pre1-id-', '')
-      #seo_id = layout_id.gsub('pre1-id-', '1-tar-')
       seo = Source.quick_attach(SourceType::LAYOUT, page_name, SourceType::SEO)
       path = seo.get_source_folder + seo.name
       [seo, path]
@@ -97,6 +96,10 @@ module Cms
       self.data = scss
       self.save!
     end
+
+    #
+    # TODO: CMS core needs in refactoring!
+    #
 
     def get_text(text_id, layout, var_hash, source_id, lang_id)
       tag_id = "#{source_id}-#{lang_id}-#{text_id}"

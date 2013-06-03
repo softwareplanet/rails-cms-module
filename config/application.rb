@@ -9,9 +9,9 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-PRODUCTION_ASSETS = %w(
-      source_manager.css
-    )
+#PRODUCTION_ASSETS = %w(
+#      source_manager.css
+#    )
 
 module Railscms
   class Application < Rails::Application
