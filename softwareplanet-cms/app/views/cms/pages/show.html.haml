@@ -66,3 +66,12 @@
     .link-tag:hover .link-anchor {
       display: inline;
     }
+  :javascript
+    $(document).ready(function() {
+      /* build link anchor */
+      $('a').click(function(){return false;});
+      $("a").not(".admin-linkable").addClass("link-tag")
+      $("a").not(".admin-linkable").each(function(){
+        $(this).prepend("<div class='link-anchor' onclick=\"window.location='"+$(this).attr('href')+"'\">link</div");
+      })
+     });
