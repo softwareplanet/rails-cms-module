@@ -168,7 +168,7 @@ module Cms
         end
 
         hash['images'] = []
-        sources = Source.find_source_by_path(current_path)
+        sources = Source.find_source_by_path(current_path).select{|i| i.name != 'robots.txt'}
         sources.each do |source|
           filepath = source.get_source_filepath
           hash['images'].push(source) unless File.directory?(filepath)
