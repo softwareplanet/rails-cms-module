@@ -22,7 +22,7 @@ module Cms
       end
 
       def get_cms_settings_attributes
-        CmsSettings.new.read_source_settings( Source.get_cms_settings_file )
+        CmsSettings.new.read_source_settings( Source.get_cms_settings_file_turbo )
       end
 
       # For nested layouts structure.
@@ -168,7 +168,7 @@ module Cms
         end
 
         hash['images'] = []
-        sources = Source.find_source_by_path(current_path).select{|i| i.name != 'robots.txt'}
+        sources = Source.find_source_by_path(current_path).select{|i| i.name != "robots.txt"}
         sources.each do |source|
           filepath = source.get_source_filepath
           hash['images'].push(source) unless File.directory?(filepath)
