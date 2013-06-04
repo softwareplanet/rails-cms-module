@@ -61,8 +61,9 @@ module Cms
     end
 
     def get_image_path
-      base_dir = Cms::SOURCE_FOLDERS[Cms::SourceType::IMAGE]
-      get_source_filepath.gsub(base_dir, '/assets')
+      #base_dir = Cms::SOURCE_FOLDERS[Cms::SourceType::IMAGE]
+      #get_source_filepath.gsub(base_dir, '/assets')
+      get_source_filepath.gsub('public', '')
     end
 
     def get_image_size
@@ -235,7 +236,6 @@ module Cms
             image_source = nil
           end
         end
-
 
         resulted_value = "<img #{image_id} src='#{image_source ? image_source.get_image_path : '#'}' #{image_class.to_s} #{image_width_attr.to_s} #{image_height_attr.to_s} alt='#{image_source ? image_source.name : image_name}#{image_size_attr[1] if image_size_attr}' #{image_styles_attr} data-hardsize='#{image_size_specified}'/>"
         resulted_value

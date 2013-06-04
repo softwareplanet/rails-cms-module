@@ -9,7 +9,7 @@
 
   = I18n.t('settings_form.images_path')
   %br
-  %input.images-path{:placeholder => "app/assets/images", :type => "text", :value => "#{images_path}"}
+  %input.images-path{:placeholder => "public/", :type => "text", :value => "#{images_path}", :disabled => 'disabled' }
   %br
 
   = I18n.t('settings_form.admin_locale_name')
