@@ -19,7 +19,8 @@ module Cms
     end
 
     def update_source_code
-      #fix me!
+      Source.delete_compiled_sources
+
       @sourceObject = Source.find_by_id(params[:id])
       unless @sourceObject.nil?
         # rename

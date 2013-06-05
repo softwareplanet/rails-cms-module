@@ -13,6 +13,13 @@ module Cms
   module SourceHelper
 
     module ClassMethods
+
+      def delete_compiled_sources
+        dir_to_delete = Source.get_source_folder(SourceType::COMPILED)
+        FileUtils.rm_rf(dir_to_delete)
+      end
+
+
       # CMS default swettings:
       def get_cms_settings_file
         source = Source.find_source_by_type(SourceType::CMS_SETTINGS)

@@ -41,7 +41,7 @@ module Cms
       rescue
         render :js => "alert('#{I18n.t('update_page_properties.error')}');" and return
       end
-
+      Source.delete_compiled_sources
       @old_layout_id = layout_id
     end
 
