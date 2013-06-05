@@ -17,6 +17,7 @@ module Cms
   LAYOUT_SETTINGS_DEFINITION = [
     'no_publish' => '1',
     'no_show' => '1',
+    'menu_title' => '',
     'title' => '',
     'keywords' => '',
     'description' => ''

@@ -42,6 +42,7 @@ ru:
       name_placeholder: Введите имя страницы
       not_show_in_menu: Не показывать в меню
       not_publish: Не публиковать на сайте
+      menu_string: Заголовок меню
       seo_settings: Настройки SEO
       seo_title: Заголовок
       seo_title_placeholder: <title>

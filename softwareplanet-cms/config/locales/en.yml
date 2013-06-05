@@ -42,6 +42,7 @@ en:
         name_placeholder: Input page name
         not_show_in_menu: Not show in menu
         not_publish: Not publish on site
+        menu_string: Menu title
         seo_settings: SEO settings
         seo_title: Title
         seo_title_placeholder: <title>

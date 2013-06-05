@@ -100,6 +100,8 @@
       %label.checkbox
         %input{:id => "no_publish", :type => "checkbox", :name => "no_publish"}
         = I18n.t('panels.page_properties.not_publish')
+      %label= I18n.t('panels.page_properties.menu_string')
+      %input.menu_title{:placeholder => "", :type => "text", :name => "menu_string"}
       #accordion.seoblock
         .accordion-group
           .accordion-heading

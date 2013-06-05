@@ -26,9 +26,14 @@
         $('#properties_form').find('[name="id"]').val('#{@layout.get_id}');
         $('#properties_form').find('.name').val('#{}');
         $('#properties_form').find('.url').val('#{@layout.get_source_name}');
-        $('#properties_form').find('.layout-title').val('#{@settings.keywords}');
+        $('#properties_form').find('.layout-title').val('#{@settings.title}');
         $('#properties_form').find('.keywords').val('#{@settings.keywords}');
         $('#properties_form').find('.description').val('#{@settings.description}');
+        $('#properties_form').find('.menu_title').val('#{@settings.menu_title}');
+
+        $(".layout-row").removeClass("layout-row-selected");
+        $(".layout-row[data-source_id='#{@layout.get_source_id}']").addClass('layout-row-selected')
+
         - if @settings.no_publish == 1
           document.getElementById("no_publish").checked = true;
         - else

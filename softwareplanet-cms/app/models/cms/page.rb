@@ -93,7 +93,7 @@ module Cms
           source = Source.get_source_by_id(id)
           settings = Source.get_source_settings_attributes(id)
           next if settings.no_publish == 1 || settings.no_show == 1
-          link_title = settings.title
+          link_title = settings.menu_title.blank? ? settings.title : settings.menu_title
           "  %li\n    %a{:href=>'"+source.get_source_name+"'}\n      " + link_title + "\n"
         }
 
