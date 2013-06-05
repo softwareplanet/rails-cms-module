@@ -44,7 +44,19 @@ module Cms
         end
         render(:text => @compiled_layout) and return
       end
-      @images = Source.find_source_by_type(SourceType::IMAGE)
+
+      if check_admin
+        formats = %w(.gif .jpeg .jpg .bmp .png .tiff)
+        @images = Source.find_source_by_type(SourceType::IMAGE).select{|i| i.filename.downcase.end_with?(*formats)}
+          @images.sort! { |a,b|
+            # A generic algorithm for sorting strings that contain non-padded sequence numbers at arbitrary positions.
+            # http://stackoverflow.com/questions/12943538
+            padding = 4
+            a,b = [a,b].map{|s| s.filename.gsub(/\d+/){|m| "0"*(padding - m.size) + m } }
+            a<=>b
+          }
+      end
+
     end
 
   end

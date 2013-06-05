@@ -179,7 +179,7 @@ module Cms
 
         @resulted_value = ""
         if var_name.match(/^text/).to_s.length > 0
-          text_id = var_name["text".length..-1].to_s
+          text_id = var_name["text".length..-1].to_s.gsub("\'", "\"")
           @resulted_value = get_text(text_id, layout, var_hash, self.get_id, lang_id)
         elsif var_name.match(/^image/).to_s.length > 0
           image_size_attr = /image(\w+)/.match(r)  #%var:image.span3\"cubex_logo_header\"
