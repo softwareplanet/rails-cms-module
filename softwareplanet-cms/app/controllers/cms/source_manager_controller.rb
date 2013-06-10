@@ -34,8 +34,8 @@ module Cms
       raise I18n.t('update_page_properties.name_already_exist') if existed_named_layout && existed_named_layout.get_source_id != layout_id
       @layout = Source.update_page(layout_id, params)
       @old_layout_id = layout_id
-      rescue => error
-        render :js => "alert('#{I18n.t('update_page_properties.error')}:#{error}');" and return
+    rescue => error
+      render :js => "alert('#{I18n.t('update_page_properties.error')}:#{error}');" and return
     end
 
     # Destroy source by id.
@@ -115,10 +115,6 @@ module Cms
       @activity = params[:activity]
       @object = params[:object]
       @data = params[:data]
-      case @activity
-        when "click"
-        when "load"
-      end
     end
 
     #
@@ -152,10 +148,6 @@ module Cms
     def panel_content
       @activity = params[:activity]
       @object = params[:object]
-      case @activity
-        when "click"
-        when "load"
-      end
     end
 
     def panel_components
@@ -175,47 +167,33 @@ module Cms
     def panel_settings
       @activity = params[:activity]
       @object = params[:object]
-      case @activity
-        when "click"
-        when "load"
-      end
     end
 
     def create_component
       component_name = params[:name]
       type = SourceType::CONTENT
-      if component_name.blank?
-        @message = I18n.t('create_component_form.blank_name')
-      elsif !Source.find_by_name_and_type(component_name, type).blank?
-        @message = I18n.t('create_component_form.component_exist')
-      else
-        begin
-          @component = Source.build(:type => type, :name => component_name)
-          @css = Source.build(:type => SourceType::CSS, :name => component_name+'.scss', :target => @component)
-        rescue Exception => exc
-          render :js => 'alert("' +  I18n.t('create_component_form.error') + '");'
-          return
-        end
-        render 'create_component'
-        return
-      end
-      render :js => 'alert("' +  @message + '");'
+      raise I18n.t('create_component_form.blank_name') if component_name.blank?
+      with_same_name = Source.find_by_name_and_type(component_name, type)
+      raise I18n.t('create_component_form.component_exist') unless with_same_name.blank?
+      @component = Source.build(:type => type, :name => component_name)
+      @css = Source.build(:type => SourceType::CSS, :name => component_name+'.scss', :target => @component)
+      render 'create_component' and return
+    rescue Exception => error_message
+      render :js => "alert('#{I18n.t('create_component_form.error')}:#{error_message}');" and return
     end
 
     def save_component
       component_id = params[:id]
       component_name = params[:name]
-      begin
-        raise I18n.t('save_component_form.blank_name') if component_name.blank?
-        existed_named_component = Source.find_source_by_name_and_type(component_name, SourceType::CONTENT).first
-        raise I18n.t('save_component_form.component_exist') if existed_named_component && existed_named_component.get_source_id != component_id
-      rescue => error
-        render :js => "alert('#{error}');" and return
-      end
+      raise I18n.t('save_component_form.blank_name') if component_name.blank?
+      with_same_name = Source.find_source_by_name_and_type(component_name, SourceType::CONTENT).first
+      raise I18n.t('save_component_form.component_exist') if with_same_name && with_same_name.get_source_id != component_id
+      @old_component_id = component_id
       @component = Source.get_source_by_id(component_id)
-      @old_component_id = @component.get_source_id
       @component.rename_source(component_name)
       render 'save_component'
+    rescue Exception => error_message
+      render :js => "alert('#{I18n.t('create_component_form.error')}:#{error_message}');" and return
     end
 
     # GET /source_manager/new
