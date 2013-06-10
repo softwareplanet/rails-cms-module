@@ -29,20 +29,13 @@ module Cms
     def update_page_properties
       layout_id = params[:id]
       layout_name = params[:name]
-      begin
-        raise I18n.t('update_page_properties.blank_page_name') if layout_name.blank?
-        existed_named_layout = Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).first
-        raise I18n.t('update_page_properties.name_already_exist') if existed_named_layout && existed_named_layout.get_source_id != layout_id
-      rescue => error
-        render :js => "alert('#{error}');" and return
-      end
-      begin
-        @layout = Source.update_page(layout_id, params)
-      rescue
-        render :js => "alert('#{I18n.t('update_page_properties.error')}');" and return
-      end
-
+      raise I18n.t('update_page_properties.blank_page_name') if layout_name.blank?
+      existed_named_layout = Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).first
+      raise I18n.t('update_page_properties.name_already_exist') if existed_named_layout && existed_named_layout.get_source_id != layout_id
+      @layout = Source.update_page(layout_id, params)
       @old_layout_id = layout_id
+      rescue => error
+        render :js => "alert('#{I18n.t('update_page_properties.error')}:#{error}');" and return
     end
 
     # Destroy source by id.
