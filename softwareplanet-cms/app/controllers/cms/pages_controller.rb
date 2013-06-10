@@ -19,10 +19,11 @@ module Cms
 
     def show
       return unless all_locales_redirect
+      @admin_view_mode = check_admin && params["adminmode"] == "1"
 
       @layout = params[:layout]
 
-      @without_cache = !ALLOW_COMPILED_CACHE || check_admin
+      @without_cache = !ALLOW_COMPILED_CACHE || @admin_view_mode
 
       if @without_cache # do not display cached:
         @html, @wrapper_id, @stylesheets, @seo_tags, @head_content = Page.compose(@layout, @application_data)

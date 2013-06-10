@@ -56,7 +56,6 @@
     end
 
     def check_admin
-      return false if (params["admin"] == "false")
       session[:logged] == true
     end
 
