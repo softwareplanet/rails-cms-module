@@ -108,7 +108,7 @@ module Cms
       end
       localized.text.gsub!("\n", '')
       prepended_aloha_tags = ""
-      is_admin = var_hash[:admin?] == true
+      is_admin = var_hash[:admin_view?] == true
       prepended_aloha_tags = ".aloha-editable.editable-long-text{'data-content_name' => '#{tag_id}'} " if is_admin
       # Trick with empty text:
       if localized.text.blank?
@@ -119,7 +119,7 @@ module Cms
     end
 
     def get_image(image_id, image_class, image_size, layout, var_hash, source_id, lang_id)
-      is_admin = var_hash[:admin?] || false
+      is_admin = var_hash[:admin_view?] || false
 
       if is_admin
         image_class = image_class ? "#{image_class} changeable-image" : "changeable-image"
@@ -167,7 +167,7 @@ module Cms
     end
 
     def build(var_hash, layout)
-      is_admin = var_hash[:admin?] == true
+      is_admin = var_hash[:admin_view?] == true
       self.load!
       src = self.data
       lang_name = var_hash[:locale]

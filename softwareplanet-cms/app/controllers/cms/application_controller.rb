@@ -26,6 +26,7 @@
       @application_data[:lang] = Cms::SiteLanguage.find_by_url(session[:locale]).name
       @application_data[:locale] = session[:locale]
       @application_data[:admin?] = session[:logged]
+      @application_data[:admin_view?] = check_aloha_enable
     end
 
     def initialize
@@ -87,7 +88,7 @@
     end
 
     def check_aloha_enable
-      @aloha_enable = check_admin
+      @aloha_enable = check_admin && params["adminmode"] == "1"
     end
   end
 #end

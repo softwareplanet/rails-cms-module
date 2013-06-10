@@ -33,7 +33,7 @@
       = "Line #{(e.respond_to? :line) && e.line || 'unknown'}: #{e.message}"
 
 -# Disable all links in aloha mode:
-- if @application_data[:admin?]
+- if @admin_view_mode
   :css
     .link-tag {
       position: relative;
@@ -72,6 +72,6 @@
       $('a').click(function(){return false;});
       $("a").not(".admin-linkable").addClass("link-tag")
       $("a").not(".admin-linkable").each(function(){
-        $(this).prepend("<div class='link-anchor' onclick=\"window.location='"+$(this).attr('href')+"'\">link</div");
+        $(this).prepend("<div class='link-anchor' onclick=\"window.location='"+$(this).attr('href')+"?adminmode=1'\">link</div");
       })
      });
