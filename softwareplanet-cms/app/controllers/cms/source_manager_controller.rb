@@ -195,11 +195,5 @@ module Cms
     rescue Exception => error_message
       render :js => "alert('#{I18n.t('create_component_form.error')}:#{error_message}');" and return
     end
-
-    # GET /source_manager/new
-    def new
-      render :nothing => true
-    end
-
   end
 end
