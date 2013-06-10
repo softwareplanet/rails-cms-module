@@ -5,6 +5,10 @@ module Cms
     # Wraps each content with unique id
     # Returns the array in form [  html, wrapper_id, [stylesheets_filenames] ]
     def self.compose(layout_name, var_hash)
+
+      #css_path = ''
+      css_path='custom/'
+
       is_admin = var_hash[:admin?] == true
       layout = Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).first
       if layout.nil?
@@ -17,7 +21,7 @@ module Cms
 
       page_styles = []
 
-      page_styles << "custom/" + layout.get_source_attach(SourceType::CSS).get_source_filename
+      page_styles << css_path + layout.get_source_attach(SourceType::CSS).get_source_filename
 
       plain_src = str.gsub(/[" "]*%content:([\w_\-]+)/) { |r|
         offset_length = r.gsub(/[\s\/]*/).first.length
@@ -28,7 +32,7 @@ module Cms
         replacement = Source.quick_content_search(content_name, SourceType::CONTENT)
         raise ArgumentError, "Content with name #{content_name} is not found!" if replacement.blank?
 
-        custom_style = "custom/" +  "2" + Cms::TARGET_DIVIDER + replacement.name + Cms::TARGET_DIVIDER + replacement.name + ".scss"
+        custom_style = css_path +  "2" + Cms::TARGET_DIVIDER + replacement.name + Cms::TARGET_DIVIDER + replacement.name + ".scss"
         page_styles << custom_style
 
         content_source = replacement.build(var_hash, layout)
