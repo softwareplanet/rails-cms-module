@@ -1,5 +1,5 @@
 %ul#sortable_components.components-list{:data => {'list-id' => nil}}
-  - @components.each do |component|
+  - items.each do |component|
     = render 'component', :component => component
 
 :javascript

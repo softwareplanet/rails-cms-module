@@ -7,13 +7,13 @@ $(panel_content).html("");
 /Tool bar actions
 - case @object
   - when 'structure'
-    $(panel_content).html("#{ escape_javascript(render(:partial => 'layouts', :locals => {items: @layouts, list_id: nil} )) }");
+    $(panel_content).html("#{ escape_javascript(render(:partial => 'layouts', :locals => {items: @items, list_id: nil} )) }");
   - when 'content'
-    $(panel_content).html("#{ escape_javascript(render(:partial => 'content')) }");
+    $(panel_content).html("#{ escape_javascript(render(:partial => 'content', :locals => {items: @items})) }");
   - when 'components'
-    $(panel_content).html("#{ escape_javascript(render(:partial => 'components', :locals => {items: @components} )) }");
+    $(panel_content).html("#{ escape_javascript(render(:partial => 'components', :locals => {items: @items} )) }");
   - when 'settings'
-    $(panel_content).html("#{ escape_javascript(render(:partial => '/cms/source_manager/panels/settings', :locals => {layouts: @layouts, default_layout_id: @default_layout_id, images_path: @images_path, locales: @locales, admin_locale_name: @admin_locale_name, show_locale_in_url: @show_locale_in_url} )) }");
+    $(panel_content).html("#{ escape_javascript(render(:partial => '/cms/source_manager/panels/settings', :locals => {layouts: @items, default_layout_id: @default_layout_id, images_path: @images_path, locales: @locales, admin_locale_name: @admin_locale_name, show_locale_in_url: @show_locale_in_url} )) }");
 
   - when 'gallery'
     - @breadcrumb = @sources['breadcrumbs']

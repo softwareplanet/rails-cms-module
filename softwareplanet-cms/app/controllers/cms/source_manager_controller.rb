@@ -100,17 +100,12 @@ module Cms
     # Actions related to populate requested panels
     def get_panel_data
       @object = params[:object]
+      listed_types = {"structure" => SourceType::LAYOUT, "content" => SourceType::LAYOUT, "components" => SourceType::CONTENT}
+
       case @object
-        when "structure"
-          @layouts_ids = Source.get_order(nil, SourceType::LAYOUT)
-          @layouts = @layouts_ids.collect{|id| Source.get_source_by_id(id) }
-        when "content"
-          @layouts_ids = Source.get_order(nil, SourceType::LAYOUT)
-          @layouts = @layouts_ids.collect{|id| Source.get_source_by_id(id) }
-        #@layouts = Source.where(:type => SourceType::LAYOUT)
-        when "components"
-          @components_ids = Source.get_order(nil, SourceType::CONTENT)
-          @components = @components_ids.collect{|id| Source.get_source_by_id(id) }
+        when "structure" , "content" , "components"
+          @item_ids = Source.get_order(nil, listed_types[@object])
+          @items = @item_ids.collect{|id| Source.get_source_by_id(id) }
         when "gallery"
           @images_folder = Cms::SOURCE_FOLDERS[SourceType::IMAGE]
           @sources = Source.load_gallery(params)
