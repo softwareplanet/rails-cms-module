@@ -63,13 +63,13 @@ module Cms
     end
 
     # Actions related to left-sided icons Tool Bar
-    # Incoming parameters:
-    #   :object => data-icon parameter of clicked icon (main/structure/content/components/gallery/settings/exit)
+    # :object => data-icon parameter of clicked icon (main/structure/content/components/gallery/settings/exit)
     def tool_bar
       @object = params[:object]
     end
 
-    def menu_bar
+    # Actions related
+    def get_panel_data
       @object = params[:object]
       @activity = params[:activity]
       case @activity
