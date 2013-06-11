@@ -1,20 +1,16 @@
--# Tool_Bar ajax methods process all user actions, captured on the ToolBar (left-side black panel)
--#
+// Tool_Bar ajax methods process all user actions, captured on the ToolBar (left-side black panel)
 
-- if @object=='exit'
+- if @object == 'exit'
+
   if ( confirm("#{ I18n.t('ui.quit') }") ) {
   window.location = '/adm/logout';
   }
 
--else
+- else
 
-  var activity = '#{@activity}';
   var icon_name = '#{@object}';
-  var gallery_path = '#{@path}';
-
-  - case @activity
-    - when 'click'
-      UI.hideAllPanels()
-      UI.showPanel(icon_name)
-      UI.showPanelSpinner(icon_name)
-      Request.getPanelData(icon_name, {path: gallery_path})
+  UI.hideAllPanels()
+  UI.showPanel(icon_name)
+  UI.showPanelSpinner(icon_name)
+  // Load panel data. Separate ajax request. Request class defined in ui.js.coffee.
+  Request.getPanelData(icon_name)

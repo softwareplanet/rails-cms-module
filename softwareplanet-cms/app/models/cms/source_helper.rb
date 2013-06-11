@@ -157,7 +157,7 @@ module Cms
 
       def load_gallery(params)
         hash ={}
-        current_path = params[:path].empty? ? SOURCE_FOLDERS[SourceType::IMAGE] : params[:path]
+        current_path = params[:path].blank? ? SOURCE_FOLDERS[SourceType::IMAGE] : params[:path]
 
             hash['breadcrumbs'] = current_path
 

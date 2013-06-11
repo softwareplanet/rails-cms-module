@@ -69,10 +69,10 @@ module Cms
             when 'rename_folder'
               @new_filepath = Source.rename_dir(params)
               @old_name = params[:old_name]
-
           end
-        when "load"
       end
+    rescue => error_message
+      render :js => "alert('#{error_message}');" and return
     end
 
 

@@ -100,7 +100,7 @@ window.openFolder= (obj) ->
   path: path + name + '/'
   }
   $.ajax
-    url: '/source_manager/menu_bar'
+    url: '/source_manager/get_panel_data'
     type: 'GET',
     data: request_json
 

@@ -64,7 +64,7 @@ Cms::Engine.routes.draw do
       post "update_cms_settings"
 
       get 'tool_bar'
-      get 'menu_bar'
+      get 'get_panel_data'
       get 'editor'
     end
   end
