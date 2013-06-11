@@ -1,6 +1,34 @@
 module Cms
   class Page
 
+    def self.get_compiled_source(layout_name, lang_path)
+      compiled_file_folder = Source.get_source_folder(SourceType::COMPILED) + lang_path + "/"
+      compiled_file_path = compiled_file_folder + layout_name
+      compiled_layout = File.read(compiled_file_path) if File.exists?(compiled_file_path)
+      compiled_layout
+    end
+
+    def self.create_compiled_source(compiled_layout, layout_name, lang_path)
+      compiled_file_folder = Source.get_source_folder(SourceType::COMPILED) + lang_path + "/"
+      compiled_file_path = compiled_file_folder + layout_name
+      FileUtils.mkpath(compiled_file_folder) unless File.exists?(compiled_file_folder)
+      File.open(compiled_file_path, "w") do |file|
+        file.write(compiled_layout.force_encoding('utf-8'))
+      end
+    end
+
+    def self.get_sorted_gallery_images
+      formats = %w(.gif .jpeg .jpg .bmp .png .tiff)
+      @images = Source.find_source_by_type(SourceType::IMAGE).select{|i| i.filename.downcase.end_with?(*formats)}
+      @images.sort! { |a,b|
+        # A generic algorithm for sorting strings that contain non-padded sequence numbers at arbitrary positions.
+        # http://stackoverflow.com/questions/12943538
+        padding = 4
+        a,b = [a,b].map{|s| s.filename.gsub(/\d+/){|m| "0"*(padding - m.size) + m } }
+        a<=>b
+      }
+    end
+
     # Composes the layout with included contents, variables, etc..
     # Wraps each content with unique id
     # Returns the array in form [  html, wrapper_id, [stylesheets_filenames] ]

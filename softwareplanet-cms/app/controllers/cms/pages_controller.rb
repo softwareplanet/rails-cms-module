@@ -17,47 +17,31 @@ module Cms
       redirect_to :action => 'show', :layout => default_layout_name.get_source_name
     end
 
+    #
+    # CMS Render action
+    #
     def show
       return unless all_locales_redirect
       @admin_view_mode = check_admin && params["adminmode"] == "1"
-
-      @layout = params[:layout]
-
       @without_cache = !ALLOW_COMPILED_CACHE || @admin_view_mode
+      @layout = params[:layout]
+      @images = Page.get_sorted_gallery_images if check_admin
 
       if @without_cache # do not display cached:
         @html, @wrapper_id, @stylesheets, @seo_tags, @head_content = Page.compose(@layout, @application_data)
-      else
-        layout_name = @layout
-        lang_path = @application_data[:lang]
-        compiled_file_folder = Source.get_source_folder(SourceType::COMPILED) + lang_path + "/"
-        compiled_file_path = compiled_file_folder + layout_name
-        @compiled_layout = File.read(compiled_file_path) if File.exists?(compiled_file_path)
-        if @compiled_layout.nil?
-          @html, @wrapper_id, @stylesheets, @seo_tags, @head_content = Page.compose(layout_name, @application_data)
-          @compiled_file_content = Haml::Engine.new(@html, :format => :html5).render(Object.new, :app => @application_data )
-          @compiled_layout = render_to_string
-
-          FileUtils.mkpath(compiled_file_folder) unless File.exists?(compiled_file_folder)
-          File.open(compiled_file_path, "w") do |file|
-            file.write(@compiled_layout.force_encoding('utf-8'))
-          end
-        end
-        render(:text => @compiled_layout) and return
+        render and return
       end
 
-      if check_admin
-        formats = %w(.gif .jpeg .jpg .bmp .png .tiff)
-        @images = Source.find_source_by_type(SourceType::IMAGE).select{|i| i.filename.downcase.end_with?(*formats)}
-          @images.sort! { |a,b|
-            # A generic algorithm for sorting strings that contain non-padded sequence numbers at arbitrary positions.
-            # http://stackoverflow.com/questions/12943538
-            padding = 4
-            a,b = [a,b].map{|s| s.filename.gsub(/\d+/){|m| "0"*(padding - m.size) + m } }
-            a<=>b
-          }
-      end
+      lang_path = @application_data[:lang]
+      @compiled_layout = Page.get_compiled_source(@layout, lang_path)
 
+      if @compiled_layout.nil?
+        @html, @wrapper_id, @stylesheets, @seo_tags, @head_content = Page.compose(@layout, @application_data)
+        @compiled_file_content = Haml::Engine.new(@html, :format => :html5).render(Object.new, :app => @application_data )
+        @compiled_layout = render_to_string
+        Page.create_compiled_source(@compiled_layout, @layout, lang_path)
+      end
+      render(:text => @compiled_layout) and return
     end
 
   end
