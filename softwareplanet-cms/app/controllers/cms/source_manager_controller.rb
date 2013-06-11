@@ -64,42 +64,65 @@ module Cms
       render :nothing => true
     end
 
+    def create_component
+      component_name = params[:name]
+      type = SourceType::CONTENT
+      raise I18n.t('create_component_form.blank_name') if component_name.blank?
+      with_same_name = Source.find_by_name_and_type(component_name, type)
+      raise I18n.t('create_component_form.component_exist') unless with_same_name.blank?
+      @component = Source.build(:type => type, :name => component_name)
+      @css = Source.build(:type => SourceType::CSS, :name => component_name+'.scss', :target => @component)
+      render 'create_component' and return
+    rescue Exception => error_message
+      render :js => "alert('#{I18n.t('create_component_form.error')}:#{error_message}');" and return
+    end
+
+    def save_component
+      component_id = params[:id]
+      component_name = params[:name]
+      raise I18n.t('save_component_form.blank_name') if component_name.blank?
+      with_same_name = Source.find_source_by_name_and_type(component_name, SourceType::CONTENT).first
+      raise I18n.t('save_component_form.component_exist') if with_same_name && with_same_name.get_source_id != component_id
+      @old_component_id = component_id
+      @component = Source.get_source_by_id(component_id)
+      @component.rename_source(component_name)
+      render 'save_component'
+    rescue Exception => error_message
+      render :js => "alert('#{I18n.t('create_component_form.error')}:#{error_message}');" and return
+    end
+
     # Actions related to left-sided icons Tool Bar
     # :object => data-icon parameter of clicked icon (main/structure/content/components/gallery/settings/exit)
     def tool_bar
       @object = params[:object]
     end
 
-    # Actions related
+    # Actions related to populate requested panels
     def get_panel_data
       @object = params[:object]
-      @activity = params[:activity]
-      case @activity
-        when "load"
-          case @object
-            when "structure"
-              @layouts_ids = Source.get_order(nil, SourceType::LAYOUT)
-              @layouts = @layouts_ids.collect{|id| Source.get_source_by_id(id) }
-            when "content"
-              @layouts_ids = Source.get_order(nil, SourceType::LAYOUT)
-              @layouts = @layouts_ids.collect{|id| Source.get_source_by_id(id) }
-              #@layouts = Source.where(:type => SourceType::LAYOUT)
-            when "components"
-              @components_ids = Source.get_order(nil, SourceType::CONTENT)
-              @components = @components_ids.collect{|id| Source.get_source_by_id(id) }
-            when "gallery"
-              @images_folder = Cms::SOURCE_FOLDERS[SourceType::IMAGE]
-              @sources = Source.load_gallery(params)
-            when "settings"
-              @layouts = Source.find_source_by_type(SourceType::LAYOUT) || []
-              attributes = Source.get_cms_settings_attributes
-              @default_layout_id = attributes.default_layout_id
-              @images_path = attributes.images_path
-              SOURCE_FOLDER[SourceType::IMAGE] = @images_path
-              @locales = ['English', "#{I18n.t('rus')}"]
-              @admin_locale_name = attributes.admin_locale_name
-              @show_locale_in_url = attributes.show_locale_in_url
-          end
+      case @object
+        when "structure"
+          @layouts_ids = Source.get_order(nil, SourceType::LAYOUT)
+          @layouts = @layouts_ids.collect{|id| Source.get_source_by_id(id) }
+        when "content"
+          @layouts_ids = Source.get_order(nil, SourceType::LAYOUT)
+          @layouts = @layouts_ids.collect{|id| Source.get_source_by_id(id) }
+        #@layouts = Source.where(:type => SourceType::LAYOUT)
+        when "components"
+          @components_ids = Source.get_order(nil, SourceType::CONTENT)
+          @components = @components_ids.collect{|id| Source.get_source_by_id(id) }
+        when "gallery"
+          @images_folder = Cms::SOURCE_FOLDERS[SourceType::IMAGE]
+          @sources = Source.load_gallery(params)
+        when "settings"
+          @layouts = Source.find_source_by_type(SourceType::LAYOUT) || []
+          attributes = Source.get_cms_settings_attributes
+          @default_layout_id = attributes.default_layout_id
+          @images_path = attributes.images_path
+          SOURCE_FOLDER[SourceType::IMAGE] = @images_path
+          @locales = ['English', "#{I18n.t('rus')}"]
+          @admin_locale_name = attributes.admin_locale_name
+          @show_locale_in_url = attributes.show_locale_in_url
       end
     end
 
@@ -170,31 +193,6 @@ module Cms
       @object = params[:object]
     end
 
-    def create_component
-      component_name = params[:name]
-      type = SourceType::CONTENT
-      raise I18n.t('create_component_form.blank_name') if component_name.blank?
-      with_same_name = Source.find_by_name_and_type(component_name, type)
-      raise I18n.t('create_component_form.component_exist') unless with_same_name.blank?
-      @component = Source.build(:type => type, :name => component_name)
-      @css = Source.build(:type => SourceType::CSS, :name => component_name+'.scss', :target => @component)
-      render 'create_component' and return
-    rescue Exception => error_message
-      render :js => "alert('#{I18n.t('create_component_form.error')}:#{error_message}');" and return
-    end
 
-    def save_component
-      component_id = params[:id]
-      component_name = params[:name]
-      raise I18n.t('save_component_form.blank_name') if component_name.blank?
-      with_same_name = Source.find_source_by_name_and_type(component_name, SourceType::CONTENT).first
-      raise I18n.t('save_component_form.component_exist') if with_same_name && with_same_name.get_source_id != component_id
-      @old_component_id = component_id
-      @component = Source.get_source_by_id(component_id)
-      @component.rename_source(component_name)
-      render 'save_component'
-    rescue Exception => error_message
-      render :js => "alert('#{I18n.t('create_component_form.error')}:#{error_message}');" and return
-    end
   end
 end

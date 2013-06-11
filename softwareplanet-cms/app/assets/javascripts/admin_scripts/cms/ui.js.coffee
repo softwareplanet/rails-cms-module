@@ -104,5 +104,4 @@ window.Request =
   getPanelData: (panel_name, optional_hash) ->
     @sendMenuGetRequest jQuery.extend(
       object: panel_name
-      activity: "load"
     , optional_hash)

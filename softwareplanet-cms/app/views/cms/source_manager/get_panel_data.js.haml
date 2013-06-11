@@ -1,4 +1,3 @@
-activity = '#{@activity}'
 object = '#{@object}'
 
 var panel_to_show = '.panel_' + object;
@@ -6,29 +5,27 @@ var panel_content = panel_to_show + ' .content';
 $(panel_content).html("");
 
 /Tool bar actions
-- case @activity
-  - when 'load'
-    - case @object
-      - when 'structure'
-        $(panel_content).html("#{ escape_javascript(render(:partial => 'layouts', :locals => {items: @layouts, list_id: nil} )) }");
-      - when 'content'
-        $(panel_content).html("#{ escape_javascript(render(:partial => 'content')) }");
-      - when 'components'
-        $(panel_content).html("#{ escape_javascript(render(:partial => 'components', :locals => {items: @components} )) }");
-      - when 'settings'
-        $(panel_content).html("#{ escape_javascript(render(:partial => '/cms/source_manager/panels/settings', :locals => {layouts: @layouts, default_layout_id: @default_layout_id, images_path: @images_path, locales: @locales, admin_locale_name: @admin_locale_name, show_locale_in_url: @show_locale_in_url} )) }");
+- case @object
+  - when 'structure'
+    $(panel_content).html("#{ escape_javascript(render(:partial => 'layouts', :locals => {items: @layouts, list_id: nil} )) }");
+  - when 'content'
+    $(panel_content).html("#{ escape_javascript(render(:partial => 'content')) }");
+  - when 'components'
+    $(panel_content).html("#{ escape_javascript(render(:partial => 'components', :locals => {items: @components} )) }");
+  - when 'settings'
+    $(panel_content).html("#{ escape_javascript(render(:partial => '/cms/source_manager/panels/settings', :locals => {layouts: @layouts, default_layout_id: @default_layout_id, images_path: @images_path, locales: @locales, admin_locale_name: @admin_locale_name, show_locale_in_url: @show_locale_in_url} )) }");
 
-      - when 'gallery'
-        - @breadcrumb = @sources['breadcrumbs']
-        - @folders = @sources['folders']
-        - @images = @sources['images']
-        $('.current_gallery_path').val("#{@breadcrumb}");
-        $(panel_content).html(
-        "#{ escape_javascript(render(:partial => '/cms/gallery/folder', :object => @folders)) }" +
-        "#{ escape_javascript(render(:partial => '/cms/gallery/image', :object => @images)) }"
-        );
-      - else
-        $(panel_content).html("<br>&nbsp;&nbsp;..nothing to show yet");
+  - when 'gallery'
+    - @breadcrumb = @sources['breadcrumbs']
+    - @folders = @sources['folders']
+    - @images = @sources['images']
+    $('.current_gallery_path').val("#{@breadcrumb}");
+    $(panel_content).html(
+    "#{ escape_javascript(render(:partial => '/cms/gallery/folder', :object => @folders)) }" +
+    "#{ escape_javascript(render(:partial => '/cms/gallery/image', :object => @images)) }"
+    );
+  - else
+    $(panel_content).html("<br>&nbsp;&nbsp;..nothing to show yet");
 
 -#if ($('.panel_gallery').is(':visible')) {
 -#

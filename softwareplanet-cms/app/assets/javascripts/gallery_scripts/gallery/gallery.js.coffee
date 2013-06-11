@@ -96,7 +96,6 @@ window.openFolder= (obj) ->
   path = $(folder).attr('data-path')
   request_json = {
   object: 'gallery',
-  activity: 'load',
   path: path + name + '/'
   }
   $.ajax
