@@ -27,6 +27,41 @@ module Cms
         files
       end
 
+      def quick_get_layout_name_by_id(layout_id)
+        layout_id.gsub(/pre(1|8)-id-/, '')
+      end
+
+      def quick_build_seo_with_path(layout_id)
+        page_name = layout_id.gsub('pre1-id-', '')
+        seo = Source.quick_attach(SourceType::LAYOUT, page_name, SourceType::SEO)
+        path = seo.get_source_folder + seo.name
+        [seo, path]
+      end
+
+      def quick_search(type,  name)
+        ext =  SOURCE_TYPE_EXTENSIONS[type.to_i]
+        Source.new({ :type => type, :name => name, :extension => ext, :data => nil })
+      end
+
+      def quick_attach(type, name, attach_type)
+        ext =  SOURCE_TYPE_EXTENSIONS[attach_type.to_i]
+        attach_name = type.to_s + Cms::TARGET_DIVIDER + name
+        Source.new({ :type => attach_type, :name => attach_name, :extension => ext, :data => nil })
+      end
+
+      def quick_attach_short_path(type, name, attach_type)
+        attach_name = type.to_s + Cms::TARGET_DIVIDER + name
+        if attach_type == SourceType::CSS
+          return CUSTOM_SCSS_FOLDER + attach_name
+        end
+        raise "oops for other types"
+      end
+
+      def quick_content_search(content_name, content_type)
+        ext = ""
+        Source.new({ :type => content_type, :name => content_name, :extension => ext, :data => nil })
+      end
+
     end; extend ClassMethods
   end
 end
