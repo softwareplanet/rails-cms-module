@@ -64,6 +64,10 @@ module Cms
       render :nothing => true
     end
 
+    def error_alert(error_message)
+      render :js => "alert('#{I18n.t('create_component_form.error')}:#{error_message}');"
+    end
+
     def create_component
       component_name = params[:name]
       type = SourceType::CONTENT
@@ -74,7 +78,7 @@ module Cms
       @css = Source.build(:type => SourceType::CSS, :name => component_name+'.scss', :target => @component)
       render 'create_component' and return
     rescue Exception => error_message
-      render :js => "alert('#{I18n.t('create_component_form.error')}:#{error_message}');" and return
+      error_alert(error_message) and return
     end
 
     def save_component
@@ -88,7 +92,7 @@ module Cms
       @component.rename_source(component_name)
       render 'save_component'
     rescue Exception => error_message
-      render :js => "alert('#{I18n.t('create_component_form.error')}:#{error_message}');" and return
+      error_alert(error_message) and return
     end
 
     # Actions related to left-sided icons Tool Bar
