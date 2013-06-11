@@ -12,20 +12,18 @@ module Cms
       @layouts = Source.where(:type => SourceType::LAYOUT)
     end
 
-    # Create new layout with specified settings. Layout name should be not empty and unique.
+    # Create new layout with specified settings. Layout name should be NOT empty and unique.
     def create
       layout_name = params[:name]
-      begin
-        raise I18n.t('panels.page_properties.blank_address') if layout_name.blank?
-        raise I18n.t('panels.page_properties.wrong_address') if Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).any?
-      rescue => error
-        render :js => "alert('#{error}');" and return
-      end
+      raise I18n.t('panels.page_properties.blank_address') if layout_name.blank?
+      raise I18n.t('panels.page_properties.wrong_address') if Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).any?
       @layout = Source.create_page(params)
       render 'create'
+    rescue => error_message
+      render :js => "alert('#{error_message}');" and return
     end
 
-    # Update properties of existed layout.
+    # Update properties for existed layout.
     def update_page_properties
       layout_id = params[:id]
       layout_name = params[:name]
@@ -44,8 +42,10 @@ module Cms
       source.eliminate! unless source.blank?
     end
 
+    # Update global cms settings
     def update_cms_settings
       Source.update_cms_properties params
+      # Reload page if cms locale was changed
       if session[:admin_locale_name] != params[:admin_locale_name]
         session[:cms_localize] = nil
         render :js => 'alert("Page will be reloaded to apply localization options");location.reload();' and return
@@ -53,21 +53,20 @@ module Cms
       render :js => 'alert("Updated");'
     end
 
+    # Drag and drop handler for source reordering (common for Layouts and Contents)
     def reorder_sources
       items = params[:items]
       list_id = params[:list_id]
-      # just for now:
       ordered_items_type = Source.get_source_by_id(items.first).type
-
       Source.set_order(list_id, items, ordered_items_type)
       render :nothing => true
     end
 
-    # Actions related to ToolBar
+    # Actions related to left-sided icons Tool Bar
+    # Incoming parameters:
+    #   :object => data-icon parameter of clicked icon (main/structure/content/components/gallery/settings/exit)
     def tool_bar
       @object = params[:object]
-      @activity = params[:activity]
-      @path = params[:path]
     end
 
     def menu_bar
