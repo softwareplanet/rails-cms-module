@@ -60,6 +60,7 @@ module Cms
       list_id = params[:list_id]
       ordered_items_type = Source.get_source_by_id(items.first).type
       Source.set_order(list_id, items, ordered_items_type)
+      Source.delete_compiled_sources
       render :nothing => true
     end
 
