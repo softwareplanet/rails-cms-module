@@ -19,6 +19,7 @@
 //= require codemirror/modes/groovy
 //= require codemirror/modes/haskell
 //= require codemirror/modes/haxe
+ //= require codemirror/modes/haml
 //= require codemirror/modes/htmlembedded
 //= require codemirror/modes/htmlmixed
 //= require codemirror/modes/http

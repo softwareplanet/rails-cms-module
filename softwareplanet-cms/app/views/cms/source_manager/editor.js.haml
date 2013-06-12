@@ -6,7 +6,7 @@ $(".panel_editor").removeClass('subPanelOffset');
 var haml_id = "#{@source.get_source_id}";
 var head_id = "#{@source.get_source_attach_or_create(Cms::SourceType::HEAD).get_source_id}";
 var css_id = "#{@source.get_source_attach_or_create(Cms::SourceType::CSS, @source.get_source_name+".scss").get_source_id}";
-InitializeEditors(['haml_editor', 'head_editor', 'css_editor'], [haml_id, head_id, css_id], ['stex', 'clojure', 'css'])
+InitializeEditors(['haml_editor', 'head_editor', 'css_editor'], [haml_id, head_id, css_id], ['haml', 'clojure', 'css'])
 
 $(".panel_editor .title").html("#{@source.get_source_name}");
 $(".panel_editor").slideRightShow();

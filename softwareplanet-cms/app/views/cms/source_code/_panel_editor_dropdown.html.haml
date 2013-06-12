@@ -4,7 +4,7 @@
       Code languages
       %b.caret
     %ul.dropdown-menu{"aria-labelledby" => "languages", :role => "menu", :style => "height: 270px;overflow-y: auto;"}
-      - languages = %w(asterisk clike clojure coffeescri commonlisp css d diff ecl erlang gfm go groovy haskell haxe htmlembedd htmlmixed http javascript jinja2 less lua markdown mysql ntriples ocaml pascal perl php pig plsql properties python r rpm-change rpm-spec rst ruby rust sass scheme shell sieve smalltalk smarty sparql sql stex tiddlywiki tiki vb vbscript velocity verilog xml xquery yaml z80)
+      - languages = %w(asterisk clike clojure coffeescri commonlisp css d diff ecl erlang gfm go groovy haskell haml haxe htmlembedd htmlmixed http javascript jinja2 less lua markdown mysql ntriples ocaml pascal perl php pig plsql properties python r rpm-change rpm-spec rst ruby rust sass scheme shell sieve smalltalk smarty sparql sql stex tiddlywiki tiki vb vbscript velocity verilog xml xquery yaml z80)
       - languages.each do |lang|
         %li{:role => "presentation"}
           %a{:role => "menuitem", :tabindex => "-1", :href => "#", "data-language" => lang, :onclick => "lang_select('#{lang}', this)"}
