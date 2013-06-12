@@ -3,6 +3,7 @@
 # Adds an option 'styleActiveLine' which, when enabled, gives the
 # active line's wrapping <div> the CSS class "CodeMirror-activeline",
 # and gives its background <div> the class "CodeMirror-activeline-background".
+
 (->
   clearActiveLine = (cm) ->
     if "_activeLine" of cm
@@ -18,6 +19,7 @@
   "use strict"
   WRAP_CLASS = "CodeMirror-activeline"
   BACK_CLASS = "CodeMirror-activeline-background"
+
   CodeMirror.defineOption "styleActiveLine", false, (cm, val, old) ->
     prev = old and old isnt CodeMirror.Init
     if val and not prev
@@ -29,3 +31,6 @@
       delete cm._activeLine
 
 )()
+
+CodeMirror.commands.autocomplete = (cm) ->
+  CodeMirror.showHint cm, CodeMirror.javascriptHint

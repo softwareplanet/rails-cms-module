@@ -61,6 +61,9 @@
 //= require codemirror/modes/xquery
 //= require codemirror/modes/yaml
 //= require codemirror/modes/z80
+
+//= require codemirror/addons/hint/show-hint
+
 //= require_tree .
 **
 */

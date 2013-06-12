@@ -18,6 +18,8 @@
 *= require codemirror/themes/vibrant-ink
 *= require codemirror/themes/xq-dark
 
+*= require codemirror/addons/hint/show-hint
+
 *= require aloha
 *= require codemirror
 

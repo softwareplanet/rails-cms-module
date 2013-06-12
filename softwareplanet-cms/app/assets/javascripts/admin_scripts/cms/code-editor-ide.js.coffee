@@ -65,22 +65,20 @@ class window.CodeEditorIDE
   constructor: (code_textarea_id) ->
     code_textarea = document.getElementById (code_textarea_id)
     @code_editor = CodeMirror.fromTextArea(code_textarea,
+      styleActiveLine: true,
+      lineNumbers: true,
+      lineWrapping: true,
       continuousScanning: 500,
-      lineNumbers: true,
-
-      lineNumbers: true,
       mode: "css",
       theme: "ambiance",
       electricChars: false,
       #autofocus: true
-      styleActiveLine: true,
-      lineWrapping: true,
       extraKeys:
         F11: (cm) ->
           setFullScreen cm, not isFullScreen(cm)
         "Ctrl-S": (cm) ->
           saveEditorsContent(code_textarea)
-          console.log "saved"
+        "Ctrl-Space": "autocomplete"
         Esc: (cm) ->
           setFullScreen cm, false  if isFullScreen(cm)
     )
