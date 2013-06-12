@@ -76,8 +76,11 @@
       })
      });
 
-:javascript
-  $(document).ready(function() {
-    // fix for 'open-in-new-window' aloha feature
-    $('.aloha-link-text').removeAttr('target')
-  });
+- else
+  :javascript
+    $(document).ready(function() {
+      // remove anchors, if exists for guest mode:
+      $('.link-anchor').remove()
+      // all aloha links opened in the same tab:
+      $('.aloha-link-text').removeAttr('target')
+    });
