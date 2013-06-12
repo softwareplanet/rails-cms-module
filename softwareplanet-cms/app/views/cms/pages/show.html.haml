@@ -70,8 +70,17 @@
     $(document).ready(function() {
       /* build link anchor */
       $('a').click(function(){return false;});
-      $("a").not(".admin-linkable").addClass("link-tag")
-      $("a").not(".admin-linkable").each(function(){
+      $("a").not(".admin-linkable").not(".aloha-link-text").addClass("link-tag")
+      $("a").not(".admin-linkable").not(".aloha-link-text").not(".aloha-link-pointer").each(function(){
         $(this).prepend("<div class='link-anchor' onclick=\"window.location='"+$(this).attr('href')+"?adminmode=1'\">link</div");
       })
      });
+
+- else
+  :javascript
+    $(document).ready(function() {
+      // remove anchors, if exists for guest mode:
+      $('.link-anchor').remove()
+      // all aloha links opened in the same tab:
+      $('.aloha-link-text').removeAttr('target')
+    });
