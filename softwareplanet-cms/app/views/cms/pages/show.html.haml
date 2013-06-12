@@ -70,8 +70,14 @@
     $(document).ready(function() {
       /* build link anchor */
       $('a').click(function(){return false;});
-      $("a").not(".admin-linkable").addClass("link-tag")
-      $("a").not(".admin-linkable").each(function(){
+      $("a").not(".admin-linkable").not(".aloha-link-text").addClass("link-tag")
+      $("a").not(".admin-linkable").not(".aloha-link-text").not(".aloha-link-pointer").each(function(){
         $(this).prepend("<div class='link-anchor' onclick=\"window.location='"+$(this).attr('href')+"?adminmode=1'\">link</div");
       })
      });
+
+:javascript
+  $(document).ready(function() {
+    // fix for 'open-in-new-window' aloha feature
+    $('.aloha-link-text').removeAttr('target')
+  });
