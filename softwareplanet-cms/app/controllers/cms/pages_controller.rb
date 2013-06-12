@@ -7,7 +7,8 @@ module Cms
   class PagesController < ApplicationController
     before_filter :all_locales_redirect, :check_aloha_enable
 
-    ALLOW_COMPILED_CACHE = true
+
+    ALLOW_COMPILED_CACHE = Rails.env == 'production'
 
     def default_layout
       cms_attributes = Source.get_cms_settings_attributes
