@@ -48,6 +48,13 @@ module Cms
       File.rename(old_filepath,new_filepath)
       @new_id = params[:id].gsub(params[:old_name],params[:new_name])
       @image = Source.get_source_by_id(@new_id)
+      # update SiteLocal relations, if image was been previously assigned to image tag:
+      if params[:new_name].is_a?(String)
+        assigned = SiteLocal.where("text LIKE ?", "%#{params[:old_name]}")
+        assigned.each do |t|
+          t.update_column( :text, t.text.gsub(params[:old_name], params[:new_name]) )
+        end
+      end
     end
 
     def get_images
