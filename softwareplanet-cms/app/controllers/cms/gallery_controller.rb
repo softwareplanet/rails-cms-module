@@ -17,6 +17,8 @@ module Cms
       old_filepath = file.get_source_filepath
       new_filepath = folder_path.chomp('/') + '/' + file.get_source_filename
       File.rename old_filepath, new_filepath
+      # Invalidate cache
+      Source.delete_compiled_sources
       render :nothing => true
     end
 
