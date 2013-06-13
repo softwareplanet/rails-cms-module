@@ -94,9 +94,13 @@ window.openFolder= (obj) ->
   folder = $(obj).parent()
   name = $(folder).attr('data-name')
   path = $(folder).attr('data-path')
+  if name == '..'
+    folder_path = path
+  else
+    folder_path = path + name + '/'
   request_json = {
   object: 'gallery',
-  path: path + name + '/'
+  path: folder_path
   }
   $.ajax
     url: '/source_manager/get_panel_data'

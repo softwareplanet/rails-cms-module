@@ -164,6 +164,15 @@ module Cms
         hash['folders'] = []
         current_path = current_path.chomp('/') + '/'
 
+        unless current_path == SOURCE_FOLDERS[SourceType::IMAGE]
+          parent_path = current_path.split('/')[0..-2].join('/') + '/'
+          dir = OpenStruct.new
+          dir.name = '..'
+          dir.path = parent_path
+          dir.size = Dir.glob(parent_path + '/*').size
+          hash['folders'].push(dir)
+        end
+
         Dir.glob(current_path + '*').each do |file|
           if File.directory?(file)
             dir = OpenStruct.new

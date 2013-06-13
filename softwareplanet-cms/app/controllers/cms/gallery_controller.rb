@@ -6,6 +6,20 @@ module Cms
     before_filter :admin_access
     before_filter :check_aloha_enable
 
+    def user_action
+      # reserved by ui.js.coffee
+    end
+
+    def move_image
+      image_id = params[:image_id]
+      folder_path = params[:folder_path]
+      file = Source.get_source_by_id(image_id)
+      old_filepath = file.get_source_filepath
+      new_filepath = folder_path.chomp('/') + '/' + file.get_source_filename
+      File.rename old_filepath, new_filepath
+      render :nothing => true
+    end
+
     def upload
       uploaded_io = params[:Filedata]
       render :nothing => true and return unless uploaded_io

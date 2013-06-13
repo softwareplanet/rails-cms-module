@@ -1,17 +1,18 @@
 #
-# SoftwarePlanet CMS Interface effects
+# SoftwarePlanet CMS Interface ajax helpers
 #
 # Table of content:
 #
-#  0. HIDE ALL PANELS                          - hideAllPanels
-#  1. HIDE CHILD STRUCTURE PANEL               - hideStructureChildPanel
-#  2. TOGGLE VISIBILITY OF NEW STRUCTURE PANEL - toggleNewStructurePanel
-#  3. SHOW PANEL BY NAME                       - showPanel ()
-#
-#
-#
-#
-#
+#  Panels management:
+#  0. HIDE ALL PANELS                          - UI.hideAllPanels
+#  1. HIDE CHILD STRUCTURE PANEL               - UI.hideStructureChildPanel
+#  2. TOGGLE VISIBILITY OF NEW STRUCTURE PANEL - UI.toggleNewStructurePanel
+#  3. SHOW PANEL BY NAME                       - UI.showPanel ()
+#  4. SHOW PANEL SPINNER                       - UI.showPanelSpinner(panel_name)
+#  Panel Request object:
+#  5. SEND ajax TO GET PANEL DATA              - Request.getPanelData(panel_name, optional_hash)
+#  Gallery actions:
+#  6. MOVE IMAGE TO ANOTHER FOLDER LOCATION    - GalleryAction.moveImageToFolder(image_id, folder_path)
 
 window.UI =
   #
@@ -105,3 +106,29 @@ window.Request =
     @sendMenuGetRequest jQuery.extend(
       object: panel_name
     , optional_hash)
+
+#
+# GALLERY actions
+#
+window.GalleryAction =
+  sendGalleryRequest: (request_json, optional_action) ->
+    actual_action = "/gallery/user_action"
+    if optional_action
+      actual_action = ("/gallery/"+optional_action).replace('//', '/')
+    $.ajax
+      url: actual_action
+      type: "POST"
+      data: request_json
+
+  #
+  # SEND REQUEST TO MOVE IMAGE TO ANOTHER FOLDER
+  # folder_path examples: 'newfolder', 'newfolder/subfolder', '/newfolder/subfolder/'
+  # use optional_hash to extend request parameters with new/overrided values
+  #
+  moveImageToFolder: (image_id, folder_path, optional_hash) ->
+    @sendGalleryRequest jQuery.extend(
+      {
+        image_id: image_id,
+        folder_path: folder_path
+      }
+    , optional_hash), 'move_image'

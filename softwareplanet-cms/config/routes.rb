@@ -46,6 +46,10 @@ Cms::Engine.routes.draw do
       post "panel_gallery"
       put "rename_image"
       get "upload_success"
+
+      post "user_action"
+      post "move_image"
+
     end
   end
 

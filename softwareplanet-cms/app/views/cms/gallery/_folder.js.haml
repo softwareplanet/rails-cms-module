@@ -1,15 +1,18 @@
 - @folders.each do |folder|
 
   .gallery-folder{ 'data-path' => "#{folder.path.chomp('/')+'/'}", 'data-name' => "#{folder.name}"}
-    .delete_image{:onclick => "deleteFolder(this)"}
-      x
+    - unless folder.name == '..'
+      .delete_image{:onclick => "deleteFolder(this)"}
+        x
     .count-source
       = folder.size
-    %input{:onfocusout => "renameFolder(this)", :onkeypress => "renameFolderOnEnterKey(this)"}
+    - unless folder.name == '..'
+      %input{:onfocusout => "renameFolder(this)", :onkeypress => "renameFolderOnEnterKey(this)"}
     .dir{:onclick => 'openFolder(this)'}
     .folder_description
       #{truncate(folder.name, :length => 22, :omission => '...')}
-      .edit_name{:onclick => "editFolderName(this)"}
+      - unless folder.name == '..'
+        .edit_name{:onclick => "editFolderName(this)"}
 
 
 :javascript
@@ -19,5 +22,8 @@
     hoverClass: "folder-state-active",
     drop: function( event, ui ) {
       $(ui.helper).remove();
+      image_id = $(ui.helper)[0].id
+      folder_path = $(this).data('path') + $(this).data('name').replace('..', '')
+      GalleryAction.moveImageToFolder(image_id, folder_path)
     }
   });
