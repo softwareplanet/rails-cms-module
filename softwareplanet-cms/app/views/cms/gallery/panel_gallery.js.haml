@@ -7,7 +7,7 @@
     - @folders = [@directory]
     new_folder = "#{ escape_javascript(render(:partial => 'folder', :object => @folders)) }";
     last_folder = $('.panel_gallery .content .gallery-folder').last();
-    if(last_folder) {
+    if(last_folder.length > 0) {
     last_folder.after(new_folder);
     }else{
     $('.panel_gallery .content').prepend(new_folder);
