@@ -74,8 +74,8 @@ module Cms
           text_id = var_name["text".length..-1].to_s.gsub("\'", "\"")
           @resulted_value = get_text(text_id, layout, var_hash, self.get_id, lang_id)
         elsif var_name.match(/^image/).to_s.length > 0
-          image_size_attr = /:image(\w+)/.match(r)  #%var:image.span3\"cubex_logo_header\"
-          image_class_attr = /:image\w*\.((\w|\-)+)(\"|')/.match(r)
+          image_size_attr = /image(\w+)/.match(r)  #%var:image.span3\"cubex_logo_header\"
+          image_class_attr = /image\w*\.((\w|\-)+)(\"|')/.match(r)
 
           offset = image_size_attr.nil? ? "image".length+1 : image_size_attr[0].length+1
           offset += image_class_attr.nil? ? 0 : image_class_attr[1].length+1
