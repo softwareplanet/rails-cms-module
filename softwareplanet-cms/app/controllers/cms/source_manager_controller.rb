@@ -114,7 +114,7 @@ module Cms
           @images_folder = Cms::SOURCE_FOLDERS[SourceType::IMAGE]
           @sources = Source.load_gallery(params)
         when "settings"
-          @layouts = Source.find_source_by_type(SourceType::LAYOUT) || []
+          @items = Source.find_source_by_type(SourceType::LAYOUT) || []
           attributes = Source.get_cms_settings_attributes
           @default_layout_id = attributes.default_layout_id
           @images_path = attributes.images_path
