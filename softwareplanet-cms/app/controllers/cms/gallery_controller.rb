@@ -69,6 +69,8 @@ module Cms
           t.update_column( :text, t.text.gsub(params[:old_name], params[:new_name]) )
         end
       end
+      # Invalidate cache
+      Source.delete_compiled_sources
     end
 
     def get_images
