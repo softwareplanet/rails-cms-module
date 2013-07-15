@@ -14,51 +14,49 @@ en:
 
   access:
     denied: Access denied, please authorize
-
-  credentials: Since 2000, the company Interlink provides full cycle of software projects, including analysis, design, programming, testing and development of graphic design.
-
+  #credentials: Since 2000, the company Interlink provides full cycle of software projects, including analysis, design, programming, testing and development of graphic design.
   panels:
-      main:
-        title: Main
+    main:
+      title: Main
 
-      structure:
-        title: Site structure
+    structure:
+      title: Site structure
 
-      components:
-        title: Components
+    components:
+      title: Components
 
-      gallery:
-        title: Gallery
-        create_folder: Create new folder
-        add_image: Upload an image
+    gallery:
+      title: Gallery
+      create_folder: Create new folder
+      add_image: Upload an image
 
-      settings:
-        title: Settings
+    settings:
+      title: Settings
 
-      page_properties:
-        update_title: Page properties
-        create_title: Create page
-        name_title: Address/Name
-        name_placeholder: Input page name
-        not_show_in_menu: Not show in menu
-        not_publish: Not publish on site
-        menu_string: Menu title
-        seo_settings: SEO settings
-        seo_title: Title
-        seo_title_placeholder: <title>
-        seo_keywords: Keywords
-        seo_keywords_placeholder: <keywords>
-        seo_description: Description
-        seo_description_placeholder: <description>
+    page_properties:
+      update_title: Page properties
+      create_title: Create page
+      name_title: Address/Name
+      name_placeholder: Input page name
+      not_show_in_menu: Not show in menu
+      not_publish: Not publish on site
+      menu_string: Menu title
+      seo_settings: SEO settings
+      seo_title: Title
+      seo_title_placeholder: <title>
+      seo_keywords: Keywords
+      seo_keywords_placeholder: <keywords>
+      seo_description: Description
+      seo_description_placeholder: <description>
 
-        blank_address: Cannot be blank
-        wrong_address: Already exists
-        wrong: Failed to create a page
-        success: Successfully added
+      blank_address: Cannot be blank
+      wrong_address: Already exists
+      wrong: Failed to create a page
+      success: Successfully added
 
-      code_editor:
-        source_code_title: Source code
-        style_code_title: Stylesheets
+    code_editor:
+      source_code_title: Source code
+      style_code_title: Stylesheets
 
 #  create_layout_form:
 #    title: Create page
