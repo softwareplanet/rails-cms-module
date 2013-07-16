@@ -25,22 +25,26 @@ module Cms
       return unless all_locales_redirect
       @admin_view_mode = check_admin && params["adminmode"] == "1"
       @without_cache = !ALLOW_COMPILED_CACHE || @admin_view_mode
-      @layout = params[:layout]
-      @images = Page.get_sorted_gallery_images if check_admin
+      @layout_name = params[:layout]
 
-      if @without_cache # do not display cached:
-        @html, @wrapper_id, @stylesheets, @seo_tags, @head_content = Page.compose(@layout, @application_data)
-        render and return
+      # Check for Not Publish On Site flag:
+      @layout_source = Source.find_source_by_name(@layout_name).first
+      if @layout_source != nil && @layout_source.can_publish? == false && @admin_view_mode == false
+        render :text => "Page #{@layout_name} is not published" and return
       end
 
+      @images = Page.get_sorted_gallery_images if check_admin
+      if @without_cache # do not display cached:
+        @html, @wrapper_id, @stylesheets, @seo_tags, @head_content = Page.compose(@layout_name, @application_data)
+        render and return
+      end
       lang_path = @application_data[:lang]
-      @compiled_layout = Page.get_compiled_source(@layout, lang_path)
-
+      @compiled_layout = Page.get_compiled_source(@layout_name, lang_path)
       if @compiled_layout.nil?
-        @html, @wrapper_id, @stylesheets, @seo_tags, @head_content = Page.compose(@layout, @application_data)
+        @html, @wrapper_id, @stylesheets, @seo_tags, @head_content = Page.compose(@layout_name, @application_data)
         @compiled_file_content = Haml::Engine.new(@html, :format => :html5).render(Object.new, :app => @application_data )
         @compiled_layout = render_to_string
-        Page.create_compiled_source(@compiled_layout, @layout, lang_path)
+        Page.create_compiled_source(@compiled_layout, @layout_name, lang_path)
       end
       render(:text => @compiled_layout) and return
     end

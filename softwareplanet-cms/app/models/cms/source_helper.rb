@@ -12,6 +12,19 @@
 module Cms
   module SourceHelper
 
+    # Assumed, that SourceSettings file still has 'no_publish' and 'no_show' settings definitions:
+    # TODO: source_settings_file can be cached to is will be used frequently
+    def can_publish?
+      settings_file = Source.get_source_settings_file(get_source_id)
+      settings = SourceSettings.new.read_source_settings(settings_file)
+      settings.no_publish.to_s != "1"
+    end
+    def can_show?
+      settings_file = Source.get_source_settings_file(get_source_id)
+      settings = SourceSettings.new.read_source_settings(settings_file)
+      settings.no_show.to_s != "1"
+    end
+
     module ClassMethods
 
       def delete_compiled_sources
@@ -20,7 +33,7 @@ module Cms
       end
 
 
-      # CMS default swettings:
+      # CMS default s(w)ettings:
       def get_cms_settings_file
         source = Source.find_source_by_type(SourceType::CMS_SETTINGS)
         source = source.is_a?(Array) ? source.first : nil
