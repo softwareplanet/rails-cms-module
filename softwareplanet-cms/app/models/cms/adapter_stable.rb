@@ -299,6 +299,7 @@ module Cms
         rescue
           return nil
         end
+        name.strip!
         find_source_by_name_and_type(name, type.to_i).first
       end
     end
