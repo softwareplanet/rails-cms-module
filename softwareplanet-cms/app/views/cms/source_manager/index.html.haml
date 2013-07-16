@@ -92,16 +92,16 @@
     %fieldset
       %input{:type => "hidden", :name => "id"}
       %label= I18n.t('panels.page_properties.name_title')
-      %input.url{:placeholder => "Input layout url…", :type => "text", :name => "name"}
+      %input.url{:placeholder => "Input layout url…", :type => "text", :name => "name", :tabindex => 100}
       %br
       %label.checkbox
-        %input{:id => "no_show", :type => "checkbox", :name => "no_show",}
+        %input{:id => "no_show", :type => "checkbox", :name => "no_show", :tabindex => 101}
         = I18n.t('panels.page_properties.not_show_in_menu')
       %label.checkbox
-        %input{:id => "no_publish", :type => "checkbox", :name => "no_publish"}
+        %input{:id => "no_publish", :type => "checkbox", :name => "no_publish", :tabindex => 102}
         = I18n.t('panels.page_properties.not_publish')
       %label= I18n.t('panels.page_properties.menu_string')
-      %input.menu_title{:placeholder => "", :type => "text", :name => "menu_title"}
+      %input.menu_title{:placeholder => "", :type => "text", :name => "menu_title", :tabindex => 103}
       #accordion.seoblock
         .accordion-group
           .accordion-heading
@@ -113,16 +113,16 @@
             .accordion-inner
 
               %label= I18n.t('panels.page_properties.seo_title')
-              %input.layout-title{:placeholder => "#{I18n.t('panels.page_properties.seo_title_placeholder')}", :type => "text", :tabindex => 1, :name => "title"}
+              %input.layout-title{:placeholder => "#{I18n.t('panels.page_properties.seo_title_placeholder')}", :type => "text", :tabindex => 104, :name => "title"}
 
               %label= I18n.t('panels.page_properties.seo_keywords')
-              %input.keywords{:placeholder => "#{I18n.t('panels.page_properties.seo_keywords_placeholder')}", :type => "text", :tabindex => 1, :name => "keywords"}
+              %input.keywords{:placeholder => "#{I18n.t('panels.page_properties.seo_keywords_placeholder')}", :type => "text", :tabindex => 105, :name => "keywords"}
 
               %label= I18n.t('panels.page_properties.seo_description')
-              %input.description{:placeholder => "#{I18n.t('panels.page_properties.seo_description_placeholder')}", :type => "text", :name => "description"}
+              %input.description{:placeholder => "#{I18n.t('panels.page_properties.seo_description_placeholder')}", :type => "text", :tabindex => 106, :name => "description"}
       %div
-        %button.btn.btn-primary.save-source{:type => "submit", "data-type" => Cms::SourceType::LAYOUT, :tabindex => 2}= I18n.t('ui.save')
-        .close-btn.btn.btn-primary= I18n.t('ui.cancel')
+        %button.btn.btn-primary.save-source{:type => "submit", "data-type" => Cms::SourceType::LAYOUT, :tabindex => 107}= I18n.t('ui.save')
+        .close-btn.btn.btn-primary{:tabindex => 108}= I18n.t('ui.cancel')
 -#----------------------------------------
 .panel.panel_new-page{'data-level' => 'child'}
   .title
