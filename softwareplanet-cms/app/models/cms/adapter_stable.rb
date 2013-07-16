@@ -12,17 +12,17 @@
 #   drop!                 # delete source, and unlock all attaches
 #   eliminate!            # delete source with all attaches, and attaches of attaches ....
 
-#   get_source_name            # css1.css
-#   get_source_filename        # 1-tar-main-tar-css1.css
+#   get_source_name            # returns the source name instead of source filename, like "css1.css"
+#   get_source_filename        # returns source filename, like "1-tar-main-tar-css1.css"
 #   get_source_filepath        # /data_source/css/1-tar-main-tar-css1.css
 
 #   get_source_id
 #   get_source_by_id
 
-#   get_source_target         # <= [Array]
+#   get_source_target           # <= [Array]
 #   get_source_target           # <= Target Source
 
-#   Source.find_source_by_attr_and_attr2(val1, val2)  # <= search for sources
+#   Source.find_source_by_attr_and_attr2(val1, val2)  # <= returns array of matched sources, or empty array
 #   Source.where(attr: attr)                          # <= search for resources
 
 ##rename( new_source_name )     # <= set new name, and update all dependent attaches
