@@ -1,32 +1,65 @@
-# Stable version of Adapter
+# Stable version of Adapter - source-oriented engine, developed by SoftwarePlanet
 #
+# TODO: add more specification
 # Methods:
-
-#   Source.build(name:'1.txt')   # Create ()
 #
+#   Source.new(name: 'test')
+#    #> Initialize new Source object
 #
-#   detach                        # <= detach source from parent
-#   attach_to( source )           # <= attach source to parent
-
-#   flash!                # save
-#   drop!                 # delete source, and unlock all attaches
-#   eliminate!            # delete source with all attaches, and attaches of attaches ....
-
-#   get_source_name            # returns the source name instead of source filename, like "css1.css"
-#   get_source_filename        # returns source filename, like "1-tar-main-tar-css1.css"
-#   get_source_filepath        # /data_source/css/1-tar-main-tar-css1.css
-
+#   Source.new(name: 'test').flash!
+#    #> Initialize and save new Source object
+#
+#   Source.build(name: '1.txt')
+#    #> Creates file, with Undefined type (see SourceType::UNDEFINED)
+#
+#   Source.build(name: '1.txt', type: SourceType::CONTENT )
+#    #> Creates file, with Content type (you can define any types, and specify location folders for them)
+#
+#   Source.create(name: 'child').attach_to( Source.create(name: 'parent') )
+#    #> Creates two sources, one of them belongs_to other (child will know his parent, and conversely)
+#
+#   detach
+#    #> detach source from parent
+#
+#   drop!
+#    #> Delete source, and unlock all attaches
+#
+#   eliminate!
+#    #> Delete source with all attaches, and attaches of attaches ....
+#
+#   get_source_name
+#    #> returns the source name instead of source filename, like "css1.css"
+#
+#   get_source_filename
+#    #> returns source filename, like "1-tar-main-tar-css1.css"
+#
+#   get_source_filepath
+#    #> /data_source/css/1-tar-main-tar-css1.css
+#
 #   get_source_id
+#    #> Get unique string identifier of source
+#
 #   get_source_by_id
-
+#    #> Get source instance by identifier string
+#
 #   get_source_target           # <= [Array]
-#   get_source_target           # <= Target Source
-
-#   Source.find_source_by_attr_and_attr2(val1, val2)  # <= returns array of matched sources, or empty array
-#   Source.where(attr: attr)                          # <= search for resources
-
-##rename( new_source_name )     # <= set new name, and update all dependent attaches
-##get_attaches                  # <= retrieve array of all instance attaches
+#    #> Get target (parent) instance
+#
+#   get_attaches
+#    #> Retrieve array of all instance attaches
+#
+#   Source.find_source_by_attr_and_attr2(val1, val2)
+#    #> Returns array of matched sources, or empty array
+#    #> For example: find_source_by_name_and_type('avatar.png', SourceType::IMAGE)
+#
+#   Source.where(attr: attr)
+#    #> Eq to method 'find_source_by_attr_and_attr2'
+#    #> Parameter is a hash, and may contain various attributes
+#
+#   rename( new_source_name )
+#    #> Set new name, and update all dependent attaches
+#    #> This method invalidates source id. Don't forget to update the one.
+#
 #
 
 module Cms
