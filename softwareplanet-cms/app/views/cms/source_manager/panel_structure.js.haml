@@ -34,11 +34,11 @@
         $(".layout-row").removeClass("layout-row-selected");
         $(".layout-row[data-source_id='#{@layout.get_source_id}']").addClass('layout-row-selected')
 
-        - if @settings.no_publish == 1
+        - if @settings.no_publish.to_s == "1"
           document.getElementById("no_publish").checked = true;
         - else
           document.getElementById("no_publish").checked = false;
-        - if @settings.no_show == 1
+        - if @settings.no_show.to_s == "1"
           document.getElementById("no_show").checked = true;
         - else
           document.getElementById("no_show").checked = false;

@@ -29,6 +29,12 @@ TIP: If you already have existed project, and you want to extend it with Softwar
 gem 'softwareplanet-cms', :path => 'softwareplanet-cms'
 ```
 
+  Alternatively, add to your Gemfile:
+
+```ruby
+gem 'softwareplanet-cms', :git => "git://github.com/softwareplanet/cms.git"
+```
+
 * Run `bundle` rake command.
 
 * Run `rake cms:wizard` rake command to setup SoftwarePlanet CMS. See output to understand what modifications it applied.

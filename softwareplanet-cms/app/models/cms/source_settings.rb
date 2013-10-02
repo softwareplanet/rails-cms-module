@@ -15,8 +15,8 @@ module Cms
 
   # Settings array:
   LAYOUT_SETTINGS_DEFINITION = [
-    'no_publish' => '1',
-    'no_show' => '1',
+    'no_publish' => '0',
+    'no_show' => '0',
     'menu_title' => '',
     'title' => '',
     'keywords' => '',

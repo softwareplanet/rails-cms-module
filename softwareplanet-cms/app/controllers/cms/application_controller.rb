@@ -13,7 +13,8 @@
       end
 
       if params[:locale].blank? && !!session[:locale] && !!params[:layout]
-        redirect_to "/#{session[:locale]}/#{params[:layout]}" and return false
+        parameters = params["adminmode"] ? "?adminmode=#{params["adminmode"]}" : ""
+        redirect_to "/#{session[:locale]}/#{params[:layout]}#{parameters}" and return false
       end
       return true
     end

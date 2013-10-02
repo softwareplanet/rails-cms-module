@@ -51,8 +51,8 @@ module Cms
         replacement = Source.quick_content_search(content_name, SourceType::CONTENT)
         raise ArgumentError, "Content with name #{content_name} is not found!" if replacement.blank?
 
-        custom_style = css_path +  "2" + Cms::TARGET_DIVIDER + replacement.name + Cms::TARGET_DIVIDER + replacement.name + ".scss"
-        page_styles << custom_style
+        #custom_style = css_path +  "2" + Cms::TARGET_DIVIDER + replacement.name + Cms::TARGET_DIVIDER + replacement.name + ".scss"
+        #page_styles << custom_style
 
         content_source = replacement.build(var_hash, layout)
         prepended = content_source.prepend(next_line_offset_whitespaces)

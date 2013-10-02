@@ -28,7 +28,7 @@ module Cms
     end
 
     def reset
-      dir_to_delete = Adapter.get_source_folder(SourceType::COMPILED)
+      dir_to_delete = AdapterStable.get_source_folder(SourceType::COMPILED)
       FileUtils.rm_rf(dir_to_delete)
       render :text => "COMPILED RESOURCES WERE DELETED"
     end

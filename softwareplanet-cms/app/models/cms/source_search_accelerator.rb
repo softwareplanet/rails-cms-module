@@ -22,7 +22,9 @@ module Cms
         dir = AdapterStable.get_source_folder(source_type)
         Dir.glob(dir+"**/*"+source_name).each do |f|
           s = build_source(f, source_type)
-          files.push(s) unless s.nil?
+          if !s.nil? && s.get_source_name==source_name
+            files.push(s)
+          end
         end
         files
       end

@@ -33,11 +33,10 @@ How to setup SoftwarePlanet CMS?
 
 In brief, you should:
 
-- add SoftwarePlanet CMS gem folder to your project root path
-- add to your Gemfile:
+- add SoftwarePlanet CMS gem to your Gemfile
 
 ```ruby
-gem 'softwareplanet-cms', :path => 'softwareplanet-cms'
+gem 'softwareplanet-cms', :git => "git://github.com/softwareplanet/cms.git"
 ```
 
 - run `bundle` command
