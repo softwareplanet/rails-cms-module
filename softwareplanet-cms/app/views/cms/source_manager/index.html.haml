@@ -92,7 +92,7 @@
     %fieldset
       %input{:type => "hidden", :name => "id"}
       %label= I18n.t('panels.page_properties.name_title')
-      %input.url{:placeholder => "Input layout url…", :type => "text", :name => "name"}
+      %input.url{:placeholder => "Input layout url…", :type => "text", :name => "name", :disabled => 'disabled'}
       %br
       %label.checkbox
         %input{:id => "no_show", :type => "checkbox", :name => "no_show",}
