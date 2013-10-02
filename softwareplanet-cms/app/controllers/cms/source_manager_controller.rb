@@ -26,7 +26,11 @@ module Cms
     # Update properties for existed layout.
     def update_page_properties
       layout_id = params[:id]
-      layout_name = params[:name]
+
+      #layout_name = params[:name]
+      # Layout name cannot be changed now:
+      params[:name] = layout_name = Source.find_by_id(layout_id).name
+
       raise I18n.t('update_page_properties.blank_page_name') if layout_name.blank?
       existed_named_layout = Source.find_source_by_name_and_type(layout_name, SourceType::LAYOUT).first
       raise I18n.t('update_page_properties.name_already_exist') if existed_named_layout && existed_named_layout.get_source_id != layout_id
