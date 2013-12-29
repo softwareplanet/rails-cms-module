@@ -1,6 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'bootstrap-sass'
+require 'aloha-rails'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -9,11 +11,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-PRODUCTION_ASSETS = %w(
-      source_manager.css
-    )
-
-module Railscms
+module InterlinkSite
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -56,6 +54,8 @@ module Railscms
     # in your app. As such, your models will need to explicitly whitelist or blacklist accessible
     # parameters by using an attr_accessible or attr_protected declaration.
     config.active_record.whitelist_attributes = true
+
+    config.assets.initialize_on_precompile = false
 
     # Enable the asset pipeline
     config.assets.enabled = true

@@ -1,5 +1,149 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
+
 en:
-  hello: "Hello world"
+  rus: Русский
+  login:
+    title: SoftwarePlanet CMS
+    username: Username
+    password: Password
+    button: Log In
+    wrong: Invalid username or password
+    success: You are welcome!
+
+  access:
+    denied: Access denied, please authorize
+  #credentials: Since 2000, the company Interlink provides full cycle of software projects, including analysis, design, programming, testing and development of graphic design.
+  panels:
+    main:
+      title: Main
+
+    structure:
+      title: Site structure
+
+    components:
+      title: Components
+
+    gallery:
+      title: Gallery
+      create_folder: Create new folder
+      add_image: Upload an image
+
+    settings:
+      title: Settings
+
+    page_properties:
+      update_title: Page properties
+      create_title: Create page
+      name_title: Address/Name
+      name_placeholder: Input page name
+      not_show_in_menu: Not show in menu
+      not_publish: Not publish on site
+      menu_string: Menu title
+      seo_settings: SEO settings
+      seo_title: Title
+      seo_title_placeholder: <title>
+      seo_keywords: Keywords
+      seo_keywords_placeholder: <keywords>
+      seo_description: Description
+      seo_description_placeholder: <description>
+
+      blank_address: Cannot be blank
+      wrong_address: Already exists
+      wrong: Failed to create a page
+      success: Successfully added
+
+    code_editor:
+      source_code_title: Source code
+      style_code_title: Stylesheets
+
+#  create_layout_form:
+#    title: Create page
+#    name_title: Address / name
+#    not_show_in_menu: Not show in menu
+#    not_publish: Not publish on site
+#    seo_settings: SEO settings
+#    seo_title: Title
+#    seo_title_placeholder: <title>
+#    seo_keywords: Keywords
+#    seo_keywords_placeholder: <keywords>
+#    seo_description: Description
+#    seo_description_placeholder: <description>
+#
+#    blank_address: Cannot be blank
+#    wrong_address: Already exists
+#    wrong: Failed to create a page
+#    success: Successfully added
+#
+#  # MERGE WITH create_layout_form ~!!!~
+#  layout_settings:
+#    title: Create page
+#    name_title: Address / name
+#    not_show_in_menu: Not show in menu
+#    not_publish: Not publish on site
+#    seo_settings: SEO settings
+#    seo_title: Title
+#    seo_title_placeholder: <title>
+#    seo_keywords: Keywords
+#    seo_keywords_placeholder: <keywords>
+#    seo_description: Description
+#    seo_description_placeholder: <description>
+#
+#    blank_address: Cannot be blank
+#    wrong_address: Already exists
+#    wrong: Failed to create a page
+#    success: Successfully added
+
+
+  save_layout_form:
+    blank_address: Cannot be blank
+    address_exist: Already exists
+    wrong_address: Wrong address
+    wrong: Failed to create a page
+    success: Successfully added
+
+  update_page_properties:
+    blank_page_name: Name cannot be blank
+    name_already_exist: Page name already exists
+    page_name_incorrect: Page name is incorrect
+    error: Error, page parameters are incorrect.
+    success: Page properties successfully updated
+
+
+
+  create_component_form:
+    title: Create component
+    name_title: Component name
+    name_placeholder: Input component name…
+    blank_name: Name can not be empty
+    wrong_name: The name has invalid characters
+    component_exist: A component with the same name already exists
+    error: Impossible to create a component
+    success: The component has successfully created
+
+  save_component_form:
+    blank_name: Name can not be empty
+    wrong_name: The name has invalid characters
+    component_exist: A component with the same name already exists
+    error: Impossible to rename a component
+    success: The component has successfully renamed
+
+  settings_form:
+    default_layout: Choose startup layout
+    images_path: Modify images gallery path
+    admin_locale_name: Change CMS language
+    show_locale_in_url: Show locale in url?
+
+  ui:
+    edit_properties: Edit properties
+    delete_page: Delete page
+    delete_component: Delete component
+
+    page_single_word: page
+    page_few_word: pages
+    pages_many_word: pages
+
+    save: Save
+    cancel: Cancel
+    quit: Are you sure you want to quit CMS?
