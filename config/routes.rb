@@ -66,6 +66,7 @@ Cms::Engine.routes.draw do
       post "save_component"
       post "reorder_sources"
       post "update_cms_settings"
+      post "create_tooltips"
 
       get 'tool_bar'
       get 'get_panel_data'

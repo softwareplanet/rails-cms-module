@@ -196,6 +196,32 @@ module Cms
       @object = params[:object]
     end
 
+    def create_tooltips
+      if(params[:keys].present?)
+       
+        tooltips = params[:keys].map{|a| a}.uniq
+         
+        compiled_file_folder = Source.get_source_folder(SourceType::CONTENT) + "/"
+        compiled_file_path = compiled_file_folder + "tooltips"
+       
+        FileUtils.mkpath(compiled_file_folder) unless File.exists?(compiled_file_folder)
+        File.open(compiled_file_path, "w") do |file|
+
+          tooltips.each do |tooltip|
+            @layout = "%div{id: \"#{tooltip}\", class: \"tooltips\" }\n  "
+            @layout += ".row-fluid.title\n    %h2\n      %var:text\"#{tooltip}Title\"\n    "
+            @layout += ".close\n      X\n  %br\n  .description\n    %var:text\"#{tooltip}Description\"\n"      
+            file.write(@layout.force_encoding('utf-8'))
+          end 
+        end 
+        response = "success"
+      else
+        response = "Nothing to Build!"
+      end   
+      render :json=>{'status' => response}
+    end
+
+
 
   end
 end
