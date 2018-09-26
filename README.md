@@ -29,7 +29,7 @@ Language selector for site guests can be expanded with any number of languages.
 
 ### Installation
 
-[This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/cms/master/softwareplanet-cms/guide/compiled/setup.html)
+[This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/rails-cms-module/master/guide/compiled/setup.html)
 describes the setup process.
 
 In brief, you should not forget to run this two commands with terminal inside your project root path:
@@ -49,5 +49,5 @@ If you need real gem using, move the `softwareplanet-cms` folder into your proje
 
 ### Contributing
 
-[This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/cms/master/softwareplanet-cms/guide/compiled/contributing.html)
+[This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/rails-cms-module/master/guide/compiled/contributing.html)
 describes the contributing to the softwareplanet-cms.
