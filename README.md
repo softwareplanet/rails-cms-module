@@ -1,4 +1,4 @@
-![Cms Window](http://softwareplanetpro.com/static/img/sp_logo.png?v=2e51f "SoftwarePlanet")
+![Cms Window](https://softwareplanetgroup.co.uk/static/img/softwareplanet_group@2x.svg/ "Software Planet Group Ltd.")
 
 
 Software Planet CMS
