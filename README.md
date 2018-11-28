@@ -11,7 +11,7 @@ Very often, we require static content for our Ruby on Rails SaaS web services. T
 
 ## Languages support
 
-The SoftwarePlanet CMS is distributed with two administrative locals: en and ru.
+Rails CMS module is distributed with two administrative locals: en and ru.
 Language selector for site guests can be expanded with any number of languages.
 
 ## Installation
@@ -21,7 +21,7 @@ describes the setup process.
 
 In brief, you should not forget to run this two commands with terminal inside your project root path:
 
-- add softwareplanet-cms gem folder to your project root path
+- add rails cms module gem folder to your project root path
 - add to your Gemfile:
 
 ```ruby
@@ -37,7 +37,7 @@ If you need real gem using, move the `softwareplanet-cms` folder into your proje
 ## Contributing
 
 [This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/rails-cms-module/master/guide/compiled/contributing.html)
-describes the contributing to the softwareplanet-cms.
+describes the contributing to the Rails CMS module.
 
 ## Customer & developer Information
 
