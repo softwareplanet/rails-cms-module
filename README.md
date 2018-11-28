@@ -6,8 +6,8 @@ Very often, we require static content for our Ruby on Rails SaaS web services. T
 
 ## Technologies of Implementation
 
-* Ruby on Rails https://rubyonrails.org
-* MySQL database https://www.mysql.com
+* Ruby on Rails https://rubyonrails.org/
+* MySQL database https://www.mysql.com/
 
 ## Languages support
 
@@ -41,5 +41,5 @@ describes the contributing to the softwareplanet-cms.
 
 ## Customer & developer Information
 
-* Customer: Cubex Software Ltd http://cubexsoftware.com
-* Developer: Software Planet Group Ltd https://softwareplanetgroup.co.uk
+* Customer: Cubex Software Ltd http://cubexsoftware.com/
+* Developer: Software Planet Group Ltd https://softwareplanetgroup.co.uk/
