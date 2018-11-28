@@ -4,6 +4,13 @@
 
 Very often, we require static content for our Ruby on Rails SaaS web services. The most simple and straightforward way to achieve this is to enable a Rails view for multiple pages (including the landing page, About Us, Contact Us and Privacy Policy). This works well at the very beginning, but as soon as any changes — even small ones — are called for, an extraordinary amount of effort is then suddenly required. In such cases, you can either make use of WordPress or Drupal, or find another CMS system that is capable of performing the migration — suitable Rails CMSes are notoriously difficult to encounter. This is where Rails CMS module comes exceedingly in useful, as it consists of a custom plugin that can easily be configured for static content management and conveniently added to your company’s existing projects.
 
+![Code editor](https://github.com/softwareplanet/cms/blob/master/doc/code.png?raw=true "Code editor")
+
+* Rails CMS module suspect that you familiar with [HAML](http://haml.info/). Alternatively, you can use [converter](http://html2haml.heroku.com/).
+* Rails CMS module advise you to explore the [Bootstrap](http://twitter.github.io/bootstrap/)
+
+![Image gallery](https://github.com/softwareplanet/cms/blob/master/doc/gallery.png?raw=true "Image gallery")
+
 ## Languages support
 
 Rails CMS module is distributed with two administrative locals: en and ru.
