@@ -14,14 +14,12 @@ Very often, we require static content for our Ruby on Rails SaaS web services. T
 * Customer: Cubex Software Ltd http://cubexsoftware.com
 * Developer: Software Planet Group Ltd https://softwareplanetgroup.co.uk
 
-
-
-### Languages support
+## Languages support
 
 The SoftwarePlanet CMS is distributed with two administrative locals: en and ru.
 Language selector for site guests can be expanded with any number of languages.
 
-### Installation
+## Installation
 
 [This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/rails-cms-module/master/guide/compiled/setup.html)
 describes the setup process.
@@ -41,7 +39,17 @@ If you clone from github, you will get the folder with dummy application that in
 folder inside. It is already configured, and you can run it after both bundle and rake commands listed above.
 If you need real gem using, move the `softwareplanet-cms` folder into your project root, and change the `path` for new gem folder.
 
-### Contributing
+## Contributing
 
 [This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/rails-cms-module/master/guide/compiled/contributing.html)
 describes the contributing to the softwareplanet-cms.
+
+## Technologies of Implementation
+
+* Ruby on Rails https://rubyonrails.org
+* MySQL database https://www.mysql.com
+
+## Customer & developer Information
+
+* Customer: Cubex Software Ltd http://cubexsoftware.com
+* Developer: Software Planet Group Ltd https://softwareplanetgroup.co.uk
