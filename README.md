@@ -1,3 +1,5 @@
+![Cms Window](https://softwareplanetgroup.co.uk/static/img/softwareplanet_group@2x.svg/ "Software Planet Group Ltd.")
+
 # Rails CMS module
 
 ## Project description
