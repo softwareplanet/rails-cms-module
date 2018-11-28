@@ -8,9 +8,6 @@ Very often, we require static content for our Ruby on Rails SaaS web services. T
 
 ![Code editor](https://github.com/softwareplanet/cms/blob/master/doc/code.png?raw=true "Code editor")
 
-* Rails CMS module suspect that you familiar with [HAML](http://haml.info/). Alternatively, you can use [converter](http://html2haml.heroku.com/).
-* Rails CMS module advise you to explore the [Bootstrap](http://twitter.github.io/bootstrap/)
-
 ![Image gallery](https://github.com/softwareplanet/cms/blob/master/doc/gallery.png?raw=true "Image gallery")
 
 ## Languages support
