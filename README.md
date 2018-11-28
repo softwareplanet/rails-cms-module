@@ -1,26 +1,20 @@
-![Cms Window](https://softwareplanetgroup.co.uk/static/img/softwareplanet_group@2x.svg/ "Software Planet Group Ltd.")
+# Rails CMS module
+
+## Project description
+
+Very often, we require static content for our Ruby on Rails SaaS web services. The most simple and straightforward way to achieve this is to enable a Rails view for multiple pages (including the landing page, About Us, Contact Us and Privacy Policy). This works well at the very beginning, but as soon as any changes — even small ones — are called for, an extraordinary amount of effort is then suddenly required. In such cases, you can either make use of WordPress or Drupal, or find another CMS system that is capable of performing the migration — suitable Rails CMSes are notoriously difficult to encounter. This is where Rails CMS module comes exceedingly in useful, as it consists of a custom plugin that can easily be configured for static content management and conveniently added to your company’s existing projects.
+
+## Technologies of Implementation
+
+* Ruby on Rails https://rubyonrails.org
+* MySQL database https://www.mysql.com
+
+## Customer & developer Information
+
+* Customer: Cubex Software Ltd http://cubexsoftware.com
+* Developer: Software Planet Group Ltd https://softwareplanetgroup.co.uk
 
 
-Software Planet CMS
-==================
-
-Software Planet CMS is designed as plugin which can be added to existing Rails application.
-We are not building CMS for content managers we are building flexible content management solution
-for web developers. Software Planet CMS provides easy to use in place content editing and HAML based layouts/components.
-Administrative UI provides content versioning, structure configuration, image gallery, component management, localization & internationalization.
-
-![Code editor](https://github.com/softwareplanet/cms/blob/master/doc/code.png?raw=true "Code editor")
-
-SoftwarePlanet CMS keeps the site sources in fragmented file objects, and accelerate the page building through background precompiling.
-
-SoftwarePlanet CMS is distributed as a local ruby-gem, and can be included to existed Rails project.
-It comprises all necessary libraries. Installation process is quite simple.
-Installer checks your existing configuration automatically, and it is quite verbose.
-
-* SoftwarePlanet CMS suspect that you familiar with [HAML](http://haml.info/). Alternatively, you can use [converter](http://html2haml.heroku.com/).
-* SoftwarePlanet CMS advise you to explore the [Bootstrap](http://twitter.github.io/bootstrap/)
-
-![Image gallery](https://github.com/softwareplanet/cms/blob/master/doc/gallery.png?raw=true "Image gallery")
 
 ### Languages support
 
