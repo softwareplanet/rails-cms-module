@@ -9,11 +9,6 @@ Very often, we require static content for our Ruby on Rails SaaS web services. T
 * Ruby on Rails https://rubyonrails.org
 * MySQL database https://www.mysql.com
 
-## Customer & developer Information
-
-* Customer: Cubex Software Ltd http://cubexsoftware.com
-* Developer: Software Planet Group Ltd https://softwareplanetgroup.co.uk
-
 ## Languages support
 
 The SoftwarePlanet CMS is distributed with two administrative locals: en and ru.
@@ -43,11 +38,6 @@ If you need real gem using, move the `softwareplanet-cms` folder into your proje
 
 [This guide](http://htmlpreview.github.io/?https://raw.github.com/softwareplanet/rails-cms-module/master/guide/compiled/contributing.html)
 describes the contributing to the softwareplanet-cms.
-
-## Technologies of Implementation
-
-* Ruby on Rails https://rubyonrails.org
-* MySQL database https://www.mysql.com
 
 ## Customer & developer Information
 
